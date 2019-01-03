@@ -46,6 +46,7 @@ use std::io::prelude::*;
 use std::path::{Path, PathBuf};
 use std::process::exit;
 use wabt;
+use wasmtime_cows::instantiate_cows;
 use wasmtime_jit::{ActionOutcome, Context};
 use wasmtime_wast::instantiate_spectest;
 
@@ -133,10 +134,14 @@ fn main() {
     let isa = isa_builder.finish(settings::Flags::new(flag_builder));
     let mut context = Context::with_isa(isa);
 
-    // Make spectest available by default.
+    // Make spectest and cows available by default.
     context.name_instance(
         "spectest".to_owned(),
         instantiate_spectest().expect("instantiating spectest"),
+    );
+    namespace.name_instance(
+        "env".to_owned(), // FIXME: use env for now, as that's all that wasm-ld currently supports
+        instantiate_cows(Rc::clone(&global_exports)).expect("instantiating cows"),
     );
 
     // Enable/disable producing of debug info.

@@ -1,0 +1,29 @@
+[package]
+name = "wasmtime-cows"
+version = "0.0.0"
+authors = ["The Cranelift Project Developers"]
+publish = false
+description = "COWS API support for Wasmtime"
+categories = ["wasm"]
+repository = "https://github.com/CraneStation/wasmtime"
+license = "Apache-2.0 WITH LLVM-exception"
+readme = "README.md"
+
+[dependencies]
+wasmtime-runtime = { path = "../runtime" }
+wasmtime-environ = { path = "../environ" }
+wasmtime-jit = { path = "../jit" }
+cranelift-codegen = "0.26.0"
+cranelift-entity = "0.26.0"
+cranelift-wasm = "0.26.0"
+target-lexicon = "0.2.0"
+cast = { version = "0.2.2", default-features = false }
+log = { version = "0.4.6", default-features = false }
+
+[build-dependencies]
+cmake = "0.1.35"
+bindgen = "0.44.0"
+
+[badges]
+maintenance = { status = "experimental" }
+travis-ci = { repository = "CraneStation/wasmtime" }
