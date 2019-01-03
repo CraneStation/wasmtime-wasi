@@ -14,25 +14,26 @@ utility or as a library embedded in a larger application.
 [![Gitter chat](https://badges.gitter.im/CraneStation/CraneStation.svg)](https://gitter.im/CraneStation/Lobby)
 ![Minimum rustc 1.30](https://img.shields.io/badge/rustc-1.30+-green.svg)
 
-*Wasmtime is complete enough to pass the WebAssembly spec testsuite.* Support for
-system APIs is coming soon!
+Wasmtime is complete enough to pass the WebAssembly spec testsuite, and supports
+a new experimental system API called the Capability Oriented WebAssembly Syscalls,
+or COWS.
 
-One goal for this project is to implement [CloudABI](https://cloudabi.org/) using
-WebAssembly as the code format, provide [CloudABI system calls] as WebAssembly
-host imports, and then port the [Rust CloudABI package] and [CloudABI libc] to it
-to support Rust, C, C++, and other toolchains.
+COWS is derived from and very similar to [CloudABI], and benefits greatly from
+CloudABI's clean and thoughtful capability-based design. COWS differs from
+CloudABI by aiming to usable in more than just cloud environments, and in making
+adaptations to better fit WebAssembly's unique needs.
 
-CloudABI is a natural complement for WebAssembly, since WebAssembly provides
-sandboxing for code but doesn't have any builtin I/O, and CloudABI provides
+COWS is a natural complement for WebAssembly, since WebAssembly provides
+sandboxing for code but doesn't have any builtin I/O, and COWS provides
 sandboxed I/O.
 
+We're currently working to create Rust C, C++, and other toolchains configured to
+use this new API.
+
 [CloudABI]: https://cloudabi.org/
-[CloudABI system calls]: https://github.com/NuxiNL/cloudabi#specification-of-the-abi
-[Rust CloudABI package]: https://crates.io/crates/cloudabi
-[CloudABI libc]: https://github.com/NuxiNL/cloudlibc
 
 Additional goals for Wasmtime include:
- - Support a variety of host APIs (not just CloudABI), with fast calling sequences,
+ - Support a variety of host APIs (not just COWS), with fast calling sequences,
    and develop proposals for system calls in the WebAssembly
    [Reference Sysroot](https://github.com/WebAssembly/reference-sysroot).
  - Implement the [proposed WebAssembly C API].

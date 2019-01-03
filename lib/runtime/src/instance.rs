@@ -1,6 +1,7 @@
 //! An `Instance` contains all the runtime state used by execution of a wasm
 //! module.
 
+use super::HashMap;
 use crate::export::Export;
 use crate::imports::Imports;
 use crate::memory::LinearMemory;
