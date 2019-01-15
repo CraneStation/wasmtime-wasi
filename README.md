@@ -15,7 +15,7 @@ utility or as a library embedded in a larger application.
 ![Minimum rustc 1.30](https://img.shields.io/badge/rustc-1.30+-green.svg)
 
 Wasmtime is complete enough to pass the WebAssembly spec testsuite, and supports
-a new experimental system API called the Capability Oriented WebAssembly Syscalls,
+a new experimental system API called [Capability Oriented WebAssembly Syscalls],
 or COWS.
 
 COWS is derived from and very similar to [CloudABI], and benefits greatly from
@@ -31,6 +31,7 @@ We're currently working to create Rust C, C++, and other toolchains configured t
 use this new API.
 
 [CloudABI]: https://cloudabi.org/
+[Capability Oriented WebAssembly Syscalls]: COWS.md
 
 Additional goals for Wasmtime include:
  - Support a variety of host APIs (not just COWS), with fast calling sequences,
