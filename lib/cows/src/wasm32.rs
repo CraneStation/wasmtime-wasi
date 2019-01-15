@@ -516,6 +516,7 @@ pub struct cloudabi_event_t {
     pub __bindgen_padding_0: u32,
     pub __bindgen_anon_1: cloudabi_event_t__bindgen_ty_1,
 }
+#[allow(non_snake_case)]
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union cloudabi_event_t__bindgen_ty_1 {
@@ -531,6 +532,7 @@ pub struct cloudabi_event_t__bindgen_ty_1__bindgen_ty_1 {
     pub flags: cloudabi_eventrwflags_t,
     pub __bindgen_padding_0: u16,
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_cloudabi_event_t__bindgen_ty_1__bindgen_ty_1() {
     assert_eq!(
@@ -1601,6 +1603,7 @@ fn bindgen_test_layout_cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_4() {
 pub struct cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_5 {
     pub fd: cloudabi_fd_t,
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_5() {
     assert_eq!(
@@ -1633,6 +1636,7 @@ fn bindgen_test_layout_cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_5() {
         )
     );
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_cloudabi_subscription_t__bindgen_ty_1() {
     assert_eq!(
@@ -1709,6 +1713,7 @@ fn bindgen_test_layout_cloudabi_subscription_t__bindgen_ty_1() {
         )
     );
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_cloudabi_subscription_t() {
     assert_eq!(
