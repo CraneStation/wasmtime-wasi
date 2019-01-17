@@ -15,4 +15,4 @@ mod syscalls;
 mod translate;
 mod wasm32;
 
-pub use instantiate::instantiate_cows;
+pub use instantiate::instantiate_wasi;

@@ -1,6 +1,6 @@
-# COWS: Capability-Oriented WebAssembly Syscalls
+# WASI: Capability-Oriented WebAssembly Syscalls
 
-Capability-Oriented WebAssembly Syscalls, or COWS, is a new POSIX-style API
+Capability-Oriented WebAssembly Syscalls, or WASI, is a new POSIX-style API
 being built for non-Web WebAssembly.
 
 ## Capability-Oriented
@@ -11,16 +11,16 @@ model. Files, directories, network sockets, and other resources are
 identified by UNIX-like file descriptors, which are indices into external
 tables whose elements represent *capabilities*. Similar to how core WebAssembly
 provides no ability to access the outside world without calling imported
-functions, COWS APIs provide no ability to access the outside world without
+functions, WASI APIs provide no ability to access the outside world without
 an associated capability.
 
-For example, instead of a typical `open` system call, COWS provides an
+For example, instead of a typical `open` system call, WASI provides an
 `openat`-like system call, requiring the calling process to have a file
 descriptor for a directory that contains the file, representing the
 *capability* to open files within that directory. (These ideas are common
-in capability-based systems, and not new in COWS or CloudABI.)
+in capability-based systems, and not new in WASI or CloudABI.)
 
-However, the COWS libc implementation still does provide an implemention of
+However, the WASI libc implementation still does provide an implementation of
 `open`, by taking the approach of [libpreopen]. Programs may be granted
 capabilities for directories on launch, and the library maintains a mapping
 from their filesystem path to the file descriptor indices representing the
@@ -34,21 +34,21 @@ requiring them to use a CloudABI-like `program_main`. `main` can accept
 conventional `argv` strings, which can be passed to `open` to open files,
 and they're automatically mapped to appropriate capabilities.
 
-COWS also automatically provides file descriptors for standard input and
-output, and COWS libc provides a normal `printf`. In general, COWS is aiming
+WASI also automatically provides file descriptors for standard input and
+output, and WASI libc provides a normal `printf`. In general, WASI is aiming
 to support a fairly full-featured libc implementation, with the current
 implementation work being based on musl.
 
 ## WebAssembly Syscalls
 
-COWS is being designed from the ground up for WebAssembly, with sandboxing,
+WASI is being designed from the ground up for WebAssembly, with sandboxing,
 portability, and API tidiness in mind, making natural use of WebAssembly
 features such as `i64`, import functions with descriptive names and
 typed arguments, and aiming to avoid being tied to a particular
 implementation.
 
-COWS inherits much of its design from [CloudABI], which is a very
-well designed capability-based POSIX-like API. COWS departs from CloudABI in
+WASI inherits much of its design from [CloudABI], which is a very
+well designed capability-based POSIX-like API. WASI departs from CloudABI in
 order to better suit the needs of WebAssembly, such as in excluding functions
 such as `fork` and `exec` which aren't implementable in some of the places
 people want to run WebAssembly, and such as in having an expanded scope to
@@ -61,13 +61,13 @@ WebAssembly's tables become [more powerful][host bindings], the file
 descriptor concept can evolve from being an index into an external table to
 being an index into a WebAssembly table holding such references.
 
-## Can COWS run on the Web?
+## Can WASI run on the Web?
 
-With the help of polyfills, it will be able to. Many COWS APIs do not
+With the help of polyfills, it will be able to. Many WASI APIs do not
 directly map onto today's Web APIs, and assume the existence of a
 filesystem and Berkeley sockets. However, several projects are working
 on providing polyfills for this kinds of APIs. At the WebAssembly level,
-COWS is just a set of exports that can be imported, and these can be
+WASI is just a set of exports that can be imported, and these can be
 implemented in a variety of ways, including within browsers.
 
 And in the future, it's possible that [builtin modules] could take these
@@ -82,7 +82,7 @@ more complex and abstract, though also more capable.
 
 ## Work in Progress
 
-COWS is currently experimental. Feedback is welcome!
+WASI is currently experimental. Feedback is welcome!
 
 [CloudABI]: https://cloudabi.org/
 [capability-based security]: https://en.wikipedia.org/wiki/Capability-based_security

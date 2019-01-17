@@ -12,12 +12,12 @@ use target_lexicon::HOST;
 use wasmtime_environ::{translate_signature, Export, Module};
 use wasmtime_runtime::{Imports, Instance, InstantiationError, VMFunctionBody};
 
-pub(crate) struct COWSState {
+pub(crate) struct WASIState {
     pub curfds: Box<fd_table>,
 }
 
-/// Return an instance implementing the "cows" interface.
-pub fn instantiate_cows(
+/// Return an instance implementing the "wasi" interface.
+pub fn instantiate_wasi(
     global_exports: Rc<RefCell<HashMap<String, Option<wasmtime_runtime::Export>>>>,
 ) -> Result<Instance, InstantiationError> {
     let pointer_type = types::Type::triple_pointer_type(&HOST);
@@ -112,7 +112,7 @@ pub fn instantiate_cows(
         assert!(fd_table_insert_existing(curfds, 1, 1));
         assert!(fd_table_insert_existing(curfds, 2, 2));
     }
-    let host_state = COWSState { curfds };
+    let host_state = WASIState { curfds };
 
     Instance::new(
         Rc::new(module),
