@@ -16,25 +16,25 @@ utility or as a library embedded in a larger application.
 
 Wasmtime is complete enough to pass the WebAssembly spec testsuite, and supports
 a new experimental system API called [Capability Oriented WebAssembly Syscalls],
-or COWS.
+or WASI.
 
-COWS is derived from and very similar to [CloudABI], and benefits greatly from
-CloudABI's clean and thoughtful capability-based design. COWS differs from
+WASI is derived from and very similar to [CloudABI], and benefits greatly from
+CloudABI's clean and thoughtful capability-based design. WASI differs from
 CloudABI by aiming to usable in more than just cloud environments, and in making
 adaptations to better fit WebAssembly's unique needs.
 
-COWS is a natural complement for WebAssembly, since WebAssembly provides
-sandboxing for code but doesn't have any builtin I/O, and COWS provides
+WASI is a natural complement for WebAssembly, since WebAssembly provides
+sandboxing for code but doesn't have any builtin I/O, and WASI provides
 sandboxed I/O.
 
 We're currently working to create Rust C, C++, and other toolchains configured to
 use this new API.
 
 [CloudABI]: https://cloudabi.org/
-[Capability Oriented WebAssembly Syscalls]: COWS.md
+[Capability Oriented WebAssembly Syscalls]: WASI.md
 
 Additional goals for Wasmtime include:
- - Support a variety of host APIs (not just COWS), with fast calling sequences,
+ - Support a variety of host APIs (not just WASI), with fast calling sequences,
    and develop proposals for system calls in the WebAssembly
    [Reference Sysroot](https://github.com/WebAssembly/reference-sysroot).
  - Implement the [proposed WebAssembly C API].
