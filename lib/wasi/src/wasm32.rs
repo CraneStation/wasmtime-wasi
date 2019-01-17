@@ -342,6 +342,7 @@ pub type __pid_t = i32;
 pub struct __fsid_t {
     pub __val: [i32; 2usize],
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout___fsid_t() {
     assert_eq!(
@@ -590,6 +591,7 @@ pub struct cloudabi_event_t__bindgen_ty_1__bindgen_ty_2 {
     pub signal: cloudabi_signal_t,
     pub exitcode: cloudabi_exitcode_t,
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_cloudabi_event_t__bindgen_ty_1__bindgen_ty_2() {
     assert_eq!(
@@ -648,6 +650,7 @@ fn bindgen_test_layout_cloudabi_event_t__bindgen_ty_1__bindgen_ty_2() {
         )
     );
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_cloudabi_event_t__bindgen_ty_1() {
     assert_eq!(
@@ -933,6 +936,7 @@ pub union cloudabi_auxv_t__bindgen_ty_1 {
     pub a_ptr: intptr_t, // *mut ::std::os::raw::c_void
     _bindgen_union_align: u32,
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_cloudabi_auxv_t__bindgen_ty_1() {
     assert_eq!(
@@ -1341,6 +1345,7 @@ pub struct cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_1 {
     pub flags: cloudabi_subclockflags_t,
     pub __bindgen_padding_1: [u16; 3usize],
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_1() {
     assert_eq!(
@@ -1425,6 +1430,7 @@ pub struct cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_2 {
     pub condvar_scope: cloudabi_scope_t,
     pub lock_scope: cloudabi_scope_t,
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_2() {
     assert_eq!(
@@ -1502,6 +1508,7 @@ pub struct cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_3 {
     pub fd: cloudabi_fd_t,
     pub flags: cloudabi_subrwflags_t,
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_3() {
     assert_eq!(
@@ -1553,6 +1560,7 @@ pub struct cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_4 {
     pub lock: intptr_t, // *mut cloudabi_lock_t
     pub lock_scope: cloudabi_scope_t,
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_4() {
     assert_eq!(
