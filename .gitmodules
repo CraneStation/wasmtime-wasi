@@ -2,5 +2,5 @@
 	path = spec_testsuite
 	url = https://github.com/WebAssembly/testsuite
 [submodule "lib/cows/sandboxed-system-primitives"]
-	path = lib/cows/sandboxed-system-primitives
+	path = lib/wasi/sandboxed-system-primitives
 	url = git@github.com:sunfishcode/sandboxed-system-primitives.git

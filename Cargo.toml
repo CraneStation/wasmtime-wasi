@@ -31,7 +31,7 @@ wasmtime-runtime = { path = "lib/runtime" }
 wasmtime-jit = { path = "lib/jit" }
 wasmtime-obj = { path = "lib/obj" }
 wasmtime-wast = { path = "lib/wast" }
-wasmtime-cows = { path = "lib/cows" }
+wasmtime-wasi = { path = "lib/wasi" }
 docopt = "1.0.1"
 serde = "1.0.75"
 serde_derive = "1.0.75"

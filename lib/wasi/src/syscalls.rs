@@ -1,5 +1,5 @@
 use crate::host::fd_table;
-use crate::instantiate::COWSState;
+use crate::instantiate::WASIState;
 use host;
 use translate::*;
 use wasm32;
@@ -14,7 +14,7 @@ fn return_encoded_errno(e: host::cloudabi_errno_t) -> wasm32::cloudabi_errno_t {
 unsafe fn get_curfds(vmctx: *mut VMContext) -> *mut fd_table {
     (&mut *(&mut *vmctx)
         .host_state()
-        .downcast_mut::<COWSState>()
+        .downcast_mut::<WASIState>()
         .unwrap()
         .curfds) as *mut fd_table
 }
