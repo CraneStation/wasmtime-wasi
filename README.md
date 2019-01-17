@@ -15,8 +15,7 @@ utility or as a library embedded in a larger application.
 ![Minimum rustc 1.30](https://img.shields.io/badge/rustc-1.30+-green.svg)
 
 Wasmtime is complete enough to pass the WebAssembly spec testsuite, and supports
-a new experimental system API called [Capability Oriented WebAssembly Syscalls],
-or WASI.
+a new experimental system API called [WebAssembly System Interface], or WASI.
 
 WASI is derived from and very similar to [CloudABI], and benefits greatly from
 CloudABI's clean and thoughtful capability-based design. WASI differs from
@@ -25,13 +24,13 @@ adaptations to better fit WebAssembly's unique needs.
 
 WASI is a natural complement for WebAssembly, since WebAssembly provides
 sandboxing for code but doesn't have any builtin I/O, and WASI provides
-sandboxed I/O.
+sandboxed I/O. See [here][WebAssembly System Interface] to learn more.
 
 We're currently working to create Rust C, C++, and other toolchains configured to
 use this new API.
 
 [CloudABI]: https://cloudabi.org/
-[Capability Oriented WebAssembly Syscalls]: WASI.md
+[WebAssembly System Interface]: WASI.md
 
 Additional goals for Wasmtime include:
  - Support a variety of host APIs (not just WASI), with fast calling sequences,

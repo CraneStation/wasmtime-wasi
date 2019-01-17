@@ -1,5 +1,5 @@
 This is the `wasmtime-wasi` crate, which implements the
-Capability-Oriented WebAssembly Syscalls (WASI) API.
+WebAssembly System Interface (WASI) API.
 
 WASI is greatly inspired by and directly derived from [CloudABI].
 It differs in that it has aspirations to expand to a greater
