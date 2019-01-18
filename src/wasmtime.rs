@@ -138,8 +138,14 @@ fn main() {
         instantiate_spectest().expect("instantiating spectest"),
     );
     context.instance(
-        Some("env"), // FIXME: use env for now, as that's all that wasm-ld currently supports
-        instantiate_wasi(Rc::clone(&global_exports)).expect("instantiating wasi"),
+        Some("wasi"),
+        instantiate_wasi("", Rc::clone(&global_exports)).expect("instantiating wasi"),
+    );
+    // FIXME: Also recognize "env", for compatibility with clang/llvm 8.0. And use
+    // "cloudabi_sys_" prefixes for compaitility with prototype reference-sysroot.
+    context.instance(
+        Some("env"),
+        instantiate_wasi("cloudabi_sys_", Rc::clone(&global_exports)).expect("instantiating wasi"),
     );
 
     for filename in &args.arg_file {
