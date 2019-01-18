@@ -18,6 +18,7 @@ pub(crate) struct WASIState {
 
 /// Return an instance implementing the "wasi" interface.
 pub fn instantiate_wasi(
+    prefix: &str,
     global_exports: Rc<RefCell<HashMap<String, Option<wasmtime_runtime::Export>>>>,
 ) -> Result<Instance, InstantiationError> {
     let pointer_type = types::Type::triple_pointer_type(&HOST);
@@ -41,7 +42,7 @@ pub fn instantiate_wasi(
                 let func = module.functions.push(sig);
                 module
                     .exports
-                    .insert("cloudabi_sys_".to_owned() + stringify!($name), Export::Function(func));
+                    .insert(prefix.to_owned() + stringify!($name), Export::Function(func));
                 finished_functions.push(syscalls::$name as *const VMFunctionBody);
             }
         }
