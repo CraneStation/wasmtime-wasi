@@ -11,7 +11,7 @@ use wasmtime_runtime::{Export, VMContext};
 /// This is unsafe due to trusting the contents of vmctx. The pointer result
 /// is bounds and alignment checked.
 unsafe fn decode_ptr(
-    ptr: wasm32::intptr_t,
+    ptr: wasm32::uintptr_t,
     len: usize,
     align: usize,
     vmctx: &mut VMContext,
@@ -58,14 +58,14 @@ unsafe fn decode_ptr(
 }
 
 unsafe fn decode_ptr_to<T>(
-    ptr: wasm32::intptr_t,
+    ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
 ) -> Result<*mut T, host::cloudabi_errno_t> {
     decode_ptr(ptr, size_of::<T>(), align_of::<T>(), vmctx).map(|ptr| ptr as *mut T)
 }
 
 unsafe fn decode_pointee<T>(
-    ptr: wasm32::intptr_t,
+    ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
 ) -> Result<T, host::cloudabi_errno_t> {
     let ptr = decode_ptr_to::<T>(ptr, vmctx)?;
@@ -75,7 +75,7 @@ unsafe fn decode_pointee<T>(
 }
 
 pub unsafe fn encode_pointee<T>(
-    ptr: wasm32::intptr_t,
+    ptr: wasm32::uintptr_t,
     t: T,
     vmctx: &mut VMContext,
 ) -> Result<(), host::cloudabi_errno_t> {
@@ -86,7 +86,7 @@ pub unsafe fn encode_pointee<T>(
 }
 
 pub unsafe fn decode_slice_of<T>(
-    ptr: wasm32::intptr_t,
+    ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
     vmctx: &mut VMContext,
 ) -> Result<(*mut T, usize), host::cloudabi_errno_t> {
@@ -111,7 +111,7 @@ pub unsafe fn decode_filesize(filesize: wasm32::cloudabi_filesize_t) -> host::cl
 }
 
 pub unsafe fn decode_lookup(
-    lookup_ptr: wasm32::intptr_t,
+    lookup_ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
 ) -> Result<host::cloudabi_lookup_t, host::cloudabi_errno_t> {
     let lookup = decode_pointee::<wasm32::cloudabi_lookup_t>(lookup_ptr, vmctx)?;
@@ -194,14 +194,14 @@ pub fn decode_ulflags(ulflags: wasm32::cloudabi_ulflags_t) -> host::cloudabi_ulf
 }
 
 pub fn decode_fdstat(
-    _fdstat_ptr: wasm32::intptr_t,
+    _fdstat_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
 ) -> host::cloudabi_fdstat_t {
     unimplemented!("decode_oflags");
 }
 
 pub unsafe fn decode_char_slice(
-    ptr: wasm32::intptr_t,
+    ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
     vmctx: &mut VMContext,
 ) -> Result<(*mut host::char, usize), host::cloudabi_errno_t> {
@@ -232,7 +232,7 @@ pub unsafe fn decode_iovec(
 }
 
 pub unsafe fn decode_ciovec_slice(
-    ptr: wasm32::intptr_t,
+    ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
     vmctx: &mut VMContext,
 ) -> Result<Vec<host::cloudabi_ciovec_t>, host::cloudabi_errno_t> {
@@ -242,7 +242,7 @@ pub unsafe fn decode_ciovec_slice(
 }
 
 pub unsafe fn decode_iovec_slice(
-    ptr: wasm32::intptr_t,
+    ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
     vmctx: &mut VMContext,
 ) -> Result<Vec<host::cloudabi_iovec_t>, host::cloudabi_errno_t> {
@@ -259,7 +259,7 @@ pub unsafe fn decode_subscription(
 }
 
 pub unsafe fn decode_subscription_slice(
-    ptr: wasm32::intptr_t,
+    ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
     vmctx: &mut VMContext,
 ) -> Result<Vec<host::cloudabi_subscription_t>, host::cloudabi_errno_t> {
@@ -279,7 +279,7 @@ pub unsafe fn decode_event(
 }
 
 pub unsafe fn decode_event_slice(
-    ptr: wasm32::intptr_t,
+    ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
     vmctx: &mut VMContext,
 ) -> Result<Vec<host::cloudabi_event_t>, host::cloudabi_errno_t> {
@@ -292,7 +292,7 @@ pub unsafe fn decode_event_slice(
 }
 
 pub unsafe fn encode_event_slice(
-    _ptr: wasm32::intptr_t,
+    _ptr: wasm32::uintptr_t,
     _host: Vec<host::cloudabi_event_t>,
     _vmctx: &mut VMContext,
 ) -> Result<(), host::cloudabi_errno_t> {
@@ -300,14 +300,14 @@ pub unsafe fn encode_event_slice(
 }
 
 pub unsafe fn decode_fd_byref(
-    _fd_ptr: wasm32::intptr_t,
+    _fd_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
 ) -> Result<host::cloudabi_fd_t, host::cloudabi_errno_t> {
     unimplemented!("decode_fd_byref");
 }
 
 pub unsafe fn encode_fd_byref(
-    _fd_ptr: wasm32::intptr_t,
+    _fd_ptr: wasm32::uintptr_t,
     _fd: host::cloudabi_fd_t,
     _vmctx: &mut VMContext,
 ) -> Result<(), host::cloudabi_errno_t> {
@@ -315,7 +315,7 @@ pub unsafe fn encode_fd_byref(
 }
 
 pub unsafe fn decode_timestamp_byref(
-    timestamp_ptr: wasm32::intptr_t,
+    timestamp_ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
 ) -> Result<host::cloudabi_timestamp_t, host::cloudabi_errno_t> {
     decode_pointee::<wasm32::cloudabi_timestamp_t>(timestamp_ptr, vmctx)
@@ -323,7 +323,7 @@ pub unsafe fn decode_timestamp_byref(
 }
 
 pub unsafe fn encode_timestamp_byref(
-    timestamp_ptr: i32,
+    timestamp_ptr: wasm32::uintptr_t,
     host_timestamp: host::cloudabi_timestamp_t,
     vmctx: &mut VMContext,
 ) -> Result<(), host::cloudabi_errno_t> {
@@ -335,7 +335,7 @@ pub unsafe fn encode_timestamp_byref(
 }
 
 pub unsafe fn decode_filesize_byref(
-    filesize_ptr: wasm32::intptr_t,
+    filesize_ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
 ) -> Result<host::cloudabi_filesize_t, host::cloudabi_errno_t> {
     decode_pointee::<wasm32::cloudabi_filesize_t>(filesize_ptr, vmctx)
@@ -343,7 +343,7 @@ pub unsafe fn decode_filesize_byref(
 }
 
 pub unsafe fn encode_filesize_byref(
-    filesize_ptr: wasm32::intptr_t,
+    filesize_ptr: wasm32::uintptr_t,
     host_filesize: host::cloudabi_filesize_t,
     vmctx: &mut VMContext,
 ) -> Result<(), host::cloudabi_errno_t> {
@@ -355,14 +355,14 @@ pub unsafe fn encode_filesize_byref(
 }
 
 pub unsafe fn decode_usize_byref(
-    usize_ptr: wasm32::intptr_t,
+    usize_ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
 ) -> Result<usize, host::cloudabi_errno_t> {
     decode_pointee::<wasm32::size_t>(usize_ptr, vmctx).map(decode_usize)
 }
 
 pub unsafe fn encode_usize_byref(
-    usize_ptr: wasm32::intptr_t,
+    usize_ptr: wasm32::uintptr_t,
     host_usize: usize,
     vmctx: &mut VMContext,
 ) -> Result<(), host::cloudabi_errno_t> {
@@ -370,14 +370,14 @@ pub unsafe fn encode_usize_byref(
 }
 
 pub unsafe fn decode_fdstat_byref(
-    _fdstat_ptr: wasm32::intptr_t,
+    _fdstat_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
 ) -> Result<host::cloudabi_fdstat_t, host::cloudabi_errno_t> {
     unimplemented!("decode_fdstat_byref");
 }
 
 pub unsafe fn encode_fdstat_byref(
-    _fdstat_ptr: wasm32::intptr_t,
+    _fdstat_ptr: wasm32::uintptr_t,
     _host_fdstat: host::cloudabi_fdstat_t,
     _vmctx: &mut VMContext,
 ) -> Result<(), host::cloudabi_errno_t> {
@@ -385,14 +385,14 @@ pub unsafe fn encode_fdstat_byref(
 }
 
 pub unsafe fn decode_filestat_byref(
-    _filestat_ptr: wasm32::intptr_t,
+    _filestat_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
 ) -> Result<host::cloudabi_filestat_t, host::cloudabi_errno_t> {
     unimplemented!("decode_filestat_byref");
 }
 
 pub unsafe fn encode_filestat_byref(
-    _filestat_ptr: wasm32::intptr_t,
+    _filestat_ptr: wasm32::uintptr_t,
     _host_filestat: host::cloudabi_filestat_t,
     _vmctx: &mut VMContext,
 ) -> Result<(), host::cloudabi_errno_t> {
@@ -400,14 +400,14 @@ pub unsafe fn encode_filestat_byref(
 }
 
 pub unsafe fn decode_recv_out_byref(
-    _recv_out_ptr: wasm32::intptr_t,
+    _recv_out_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
 ) -> Result<host::cloudabi_recv_out_t, host::cloudabi_errno_t> {
     unimplemented!("decode_recv_out_byref");
 }
 
 pub unsafe fn encode_recv_out_byref(
-    _recv_out_ptr: wasm32::intptr_t,
+    _recv_out_ptr: wasm32::uintptr_t,
     _host_recv_out: host::cloudabi_recv_out_t,
     _vmctx: &mut VMContext,
 ) -> Result<(), host::cloudabi_errno_t> {
@@ -415,14 +415,14 @@ pub unsafe fn encode_recv_out_byref(
 }
 
 pub unsafe fn decode_send_out_byref(
-    _send_out_ptr: wasm32::intptr_t,
+    _send_out_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
 ) -> Result<host::cloudabi_send_out_t, host::cloudabi_errno_t> {
     unimplemented!("decode_send_out_byref");
 }
 
 pub unsafe fn encode_send_out_byref(
-    _send_out_ptr: wasm32::intptr_t,
+    _send_out_ptr: wasm32::uintptr_t,
     _host_send_out: host::cloudabi_send_out_t,
     _vmctx: &mut VMContext,
 ) -> Result<(), host::cloudabi_errno_t> {
@@ -430,14 +430,14 @@ pub unsafe fn encode_send_out_byref(
 }
 
 pub unsafe fn decode_send_in_byref(
-    _send_in_ptr: wasm32::intptr_t,
+    _send_in_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
 ) -> Result<host::cloudabi_send_in_t, host::cloudabi_errno_t> {
     unimplemented!("decode_send_in_byref");
 }
 
 pub unsafe fn decode_recv_in_byref(
-    _recv_in_ptr: wasm32::intptr_t,
+    _recv_in_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
 ) -> Result<host::cloudabi_recv_in_t, host::cloudabi_errno_t> {
     unimplemented!("decode_recv_in_byref");

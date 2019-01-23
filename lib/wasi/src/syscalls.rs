@@ -21,7 +21,7 @@ unsafe fn get_curfds(vmctx: *mut VMContext) -> *mut fd_table {
 
 pub unsafe extern "C" fn clock_res_get(
     clock_id: wasm32::cloudabi_clockid_t,
-    resolution: wasm32::intptr_t,
+    resolution: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -48,7 +48,7 @@ pub unsafe extern "C" fn clock_res_get(
 pub unsafe extern "C" fn clock_time_get(
     clock_id: wasm32::cloudabi_clockid_t,
     precision: wasm32::cloudabi_timestamp_t,
-    time: wasm32::intptr_t,
+    time: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -75,7 +75,7 @@ pub unsafe extern "C" fn clock_time_get(
 }
 
 pub unsafe extern "C" fn condvar_signal(
-    _condvar: wasm32::intptr_t,
+    _condvar: wasm32::uintptr_t,
     _scope: wasm32::cloudabi_scope_t,
     _nwaiters: wasm32::cloudabi_nthreads_t,
     _vmctx: *mut VMContext,
@@ -100,7 +100,7 @@ pub unsafe extern "C" fn fd_close(
 
 pub unsafe extern "C" fn fd_create1(
     type_: wasm32::cloudabi_filetype_t,
-    fd: wasm32::intptr_t,
+    fd: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!("fd_create1(type={:?}, fd={:#x?})", type_, fd);
@@ -123,8 +123,8 @@ pub unsafe extern "C" fn fd_create1(
 
 pub unsafe extern "C" fn fd_create2(
     type_: wasm32::cloudabi_filetype_t,
-    fd0: wasm32::intptr_t,
-    fd1: wasm32::intptr_t,
+    fd0: wasm32::uintptr_t,
+    fd1: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -174,7 +174,7 @@ pub unsafe extern "C" fn fd_datasync(
 
 pub unsafe extern "C" fn fd_dup(
     from: wasm32::cloudabi_fd_t,
-    fd: wasm32::intptr_t,
+    fd: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!("fd_dup(from={:?}, fd={:#x?})", from, fd);
@@ -197,10 +197,10 @@ pub unsafe extern "C" fn fd_dup(
 
 pub unsafe extern "C" fn fd_pread(
     fd: wasm32::cloudabi_fd_t,
-    iovs: wasm32::intptr_t,
+    iovs: wasm32::uintptr_t,
     iovs_len: wasm32::size_t,
     offset: wasm32::cloudabi_filesize_t,
-    nread: wasm32::intptr_t,
+    nread: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -242,10 +242,10 @@ pub unsafe extern "C" fn fd_pread(
 
 pub unsafe extern "C" fn fd_pwrite(
     fd: wasm32::cloudabi_fd_t,
-    iovs: wasm32::intptr_t,
+    iovs: wasm32::uintptr_t,
     iovs_len: wasm32::size_t,
     offset: wasm32::cloudabi_filesize_t,
-    nwritten: wasm32::intptr_t,
+    nwritten: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -287,9 +287,9 @@ pub unsafe extern "C" fn fd_pwrite(
 
 pub unsafe extern "C" fn fd_read(
     fd: wasm32::cloudabi_fd_t,
-    iovs: wasm32::intptr_t,
+    iovs: wasm32::uintptr_t,
     iovs_len: wasm32::size_t,
-    nread: wasm32::intptr_t,
+    nread: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -341,7 +341,7 @@ pub unsafe extern "C" fn fd_seek(
     fd: wasm32::cloudabi_fd_t,
     offset: wasm32::cloudabi_filedelta_t,
     whence: wasm32::cloudabi_whence_t,
-    newoffset: wasm32::intptr_t,
+    newoffset: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -372,7 +372,7 @@ pub unsafe extern "C" fn fd_seek(
 
 pub unsafe extern "C" fn fd_stat_get(
     fd: wasm32::cloudabi_fd_t,
-    buf: wasm32::intptr_t,
+    buf: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!("fd_stat_get(fd={:?}, buf={:#x?})", fd, buf);
@@ -395,7 +395,7 @@ pub unsafe extern "C" fn fd_stat_get(
 
 pub unsafe extern "C" fn fd_stat_put(
     fd: wasm32::cloudabi_fd_t,
-    buf: wasm32::intptr_t,
+    buf: wasm32::uintptr_t,
     flags: wasm32::cloudabi_fdsflags_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
@@ -437,9 +437,9 @@ pub unsafe extern "C" fn fd_sync(
 
 pub unsafe extern "C" fn fd_write(
     fd: wasm32::cloudabi_fd_t,
-    iovs: wasm32::intptr_t,
+    iovs: wasm32::uintptr_t,
     iovs_len: wasm32::size_t,
-    nwritten: wasm32::intptr_t,
+    nwritten: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -519,7 +519,7 @@ pub unsafe extern "C" fn file_allocate(
 
 pub unsafe extern "C" fn file_create(
     fd: wasm32::cloudabi_fd_t,
-    path: wasm32::intptr_t,
+    path: wasm32::uintptr_t,
     path_len: wasm32::size_t,
     type_: wasm32::cloudabi_filetype_t,
     vmctx: *mut VMContext,
@@ -547,11 +547,11 @@ pub unsafe extern "C" fn file_create(
 }
 
 pub unsafe extern "C" fn file_link(
-    fd0: wasm32::intptr_t,
-    path0: wasm32::intptr_t,
+    fd0: wasm32::uintptr_t,
+    path0: wasm32::uintptr_t,
     path_len0: wasm32::size_t,
     fd1: wasm32::cloudabi_fd_t,
-    path1: wasm32::intptr_t,
+    path1: wasm32::uintptr_t,
     path_len1: wasm32::size_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
@@ -589,12 +589,12 @@ pub unsafe extern "C" fn file_link(
 // TODO: When multi-value happens, switch to that instead of passing
 // the `fd` by reference?
 pub unsafe extern "C" fn file_open(
-    dirfd: wasm32::intptr_t,
-    path: wasm32::intptr_t,
+    dirfd: wasm32::uintptr_t,
+    path: wasm32::uintptr_t,
     path_len: wasm32::size_t,
     oflags: wasm32::cloudabi_oflags_t,
-    fds: wasm32::intptr_t,
-    fd: wasm32::intptr_t,
+    fds: wasm32::uintptr_t,
+    fd: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -635,10 +635,10 @@ pub unsafe extern "C" fn file_open(
 
 pub unsafe extern "C" fn file_readdir(
     fd: wasm32::cloudabi_fd_t,
-    buf: wasm32::intptr_t,
+    buf: wasm32::uintptr_t,
     buf_len: wasm32::size_t,
     cookie: wasm32::cloudabi_dircookie_t,
-    buf_used: wasm32::intptr_t,
+    buf_used: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -680,11 +680,11 @@ pub unsafe extern "C" fn file_readdir(
 
 pub unsafe extern "C" fn file_readlink(
     fd: wasm32::cloudabi_fd_t,
-    path: wasm32::intptr_t,
+    path: wasm32::uintptr_t,
     path_len: wasm32::size_t,
-    buf: wasm32::intptr_t,
+    buf: wasm32::uintptr_t,
     buf_len: wasm32::size_t,
-    buf_used: wasm32::intptr_t,
+    buf_used: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -731,10 +731,10 @@ pub unsafe extern "C" fn file_readlink(
 
 pub unsafe extern "C" fn file_rename(
     fd0: wasm32::cloudabi_fd_t,
-    path0: wasm32::intptr_t,
+    path0: wasm32::uintptr_t,
     path_len0: wasm32::size_t,
     fd1: wasm32::cloudabi_fd_t,
-    path1: wasm32::intptr_t,
+    path1: wasm32::uintptr_t,
     path_len1: wasm32::size_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
@@ -769,7 +769,7 @@ pub unsafe extern "C" fn file_rename(
 
 pub unsafe extern "C" fn file_stat_fget(
     fd: wasm32::cloudabi_fd_t,
-    buf: wasm32::intptr_t,
+    buf: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!("file_stat_fget(fd={:?}, buf={:#x?})", fd, buf);
@@ -792,7 +792,7 @@ pub unsafe extern "C" fn file_stat_fget(
 
 pub unsafe extern "C" fn file_stat_fput(
     fd: wasm32::cloudabi_fd_t,
-    buf: wasm32::intptr_t,
+    buf: wasm32::uintptr_t,
     flags: wasm32::cloudabi_fsflags_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
@@ -818,10 +818,10 @@ pub unsafe extern "C" fn file_stat_fput(
 }
 
 pub unsafe extern "C" fn file_stat_get(
-    fd: wasm32::intptr_t,
-    path: wasm32::intptr_t,
+    fd: wasm32::uintptr_t,
+    path: wasm32::uintptr_t,
     path_len: wasm32::size_t,
-    buf: wasm32::intptr_t,
+    buf: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -856,10 +856,10 @@ pub unsafe extern "C" fn file_stat_get(
 }
 
 pub unsafe extern "C" fn file_stat_put(
-    fd: wasm32::intptr_t,
-    path: wasm32::intptr_t,
+    fd: wasm32::uintptr_t,
+    path: wasm32::uintptr_t,
     path_len: wasm32::size_t,
-    buf: wasm32::intptr_t,
+    buf: wasm32::uintptr_t,
     flags: wasm32::cloudabi_fsflags_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
@@ -894,10 +894,10 @@ pub unsafe extern "C" fn file_stat_put(
 }
 
 pub unsafe extern "C" fn file_symlink(
-    path0: wasm32::intptr_t,
+    path0: wasm32::uintptr_t,
     path_len0: wasm32::size_t,
     fd: wasm32::cloudabi_fd_t,
-    path1: wasm32::intptr_t,
+    path1: wasm32::uintptr_t,
     path_len1: wasm32::size_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
@@ -929,7 +929,7 @@ pub unsafe extern "C" fn file_symlink(
 
 pub unsafe extern "C" fn file_unlink(
     fd: wasm32::cloudabi_fd_t,
-    path: wasm32::intptr_t,
+    path: wasm32::uintptr_t,
     path_len: wasm32::size_t,
     flags: wasm32::cloudabi_ulflags_t,
     vmctx: *mut VMContext,
@@ -957,7 +957,7 @@ pub unsafe extern "C" fn file_unlink(
 }
 
 pub unsafe extern "C" fn lock_unlock(
-    _lock: wasm32::intptr_t,
+    _lock: wasm32::uintptr_t,
     _scope: wasm32::cloudabi_scope_t,
     _vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
@@ -965,7 +965,7 @@ pub unsafe extern "C" fn lock_unlock(
 }
 
 pub unsafe extern "C" fn mem_advise(
-    _mapping: wasm32::intptr_t,
+    _mapping: wasm32::uintptr_t,
     _mapping_len: wasm32::size_t,
     _advice: wasm32::cloudabi_advice_t,
     _vmctx: *mut VMContext,
@@ -974,13 +974,13 @@ pub unsafe extern "C" fn mem_advise(
 }
 
 pub unsafe extern "C" fn mem_map(
-    addr: wasm32::intptr_t,
+    addr: wasm32::uintptr_t,
     len: wasm32::size_t,
     prot: wasm32::cloudabi_mprot_t,
     flags: wasm32::cloudabi_mflags_t,
     fd: wasm32::cloudabi_fd_t,
     off: wasm32::cloudabi_filesize_t,
-    mem: wasm32::intptr_t,
+    mem: wasm32::uintptr_t,
     _vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -998,7 +998,7 @@ pub unsafe extern "C" fn mem_map(
 }
 
 pub unsafe extern "C" fn mem_protect(
-    _mapping: wasm32::intptr_t,
+    _mapping: wasm32::uintptr_t,
     _mapping_len: wasm32::size_t,
     _prot: wasm32::cloudabi_mprot_t,
     _vmctx: *mut VMContext,
@@ -1007,7 +1007,7 @@ pub unsafe extern "C" fn mem_protect(
 }
 
 pub unsafe extern "C" fn mem_sync(
-    _mapping: wasm32::intptr_t,
+    _mapping: wasm32::uintptr_t,
     _mapping_len: wasm32::size_t,
     _flags: wasm32::cloudabi_msflags_t,
     _vmctx: *mut VMContext,
@@ -1016,7 +1016,7 @@ pub unsafe extern "C" fn mem_sync(
 }
 
 pub unsafe extern "C" fn mem_unmap(
-    mapping: wasm32::intptr_t,
+    mapping: wasm32::uintptr_t,
     mapping_len: wasm32::size_t,
     _vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
@@ -1030,10 +1030,10 @@ pub unsafe extern "C" fn mem_unmap(
 }
 
 pub unsafe extern "C" fn poll(
-    in_: wasm32::intptr_t,
-    out: wasm32::intptr_t,
+    in_: wasm32::uintptr_t,
+    out: wasm32::uintptr_t,
     nsubscriptions: wasm32::size_t,
-    nevents: wasm32::intptr_t,
+    nevents: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -1085,9 +1085,9 @@ pub unsafe extern "C" fn poll(
 
 pub unsafe extern "C" fn proc_exec(
     _fd: wasm32::cloudabi_fd_t,
-    _data: wasm32::intptr_t,
+    _data: wasm32::uintptr_t,
     _data_len: wasm32::size_t,
-    _fds: wasm32::intptr_t,
+    _fds: wasm32::uintptr_t,
     _fds_len: wasm32::size_t,
     _vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
@@ -1106,8 +1106,8 @@ pub unsafe extern "C" fn proc_exit(rval: u32, _vmctx: *mut VMContext) -> ! {
 }
 
 pub unsafe extern "C" fn proc_fork(
-    _fd: wasm32::intptr_t,
-    _tid: wasm32::intptr_t,
+    _fd: wasm32::uintptr_t,
+    _tid: wasm32::uintptr_t,
     _vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     unimplemented!("cloudabi_sys_proc_fork");
@@ -1121,7 +1121,7 @@ pub unsafe extern "C" fn proc_raise(
 }
 
 pub unsafe extern "C" fn random_get(
-    buf: wasm32::intptr_t,
+    buf: wasm32::uintptr_t,
     buf_len: wasm32::size_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
@@ -1140,8 +1140,8 @@ pub unsafe extern "C" fn random_get(
 
 pub unsafe extern "C" fn sock_recv(
     sock: wasm32::cloudabi_fd_t,
-    in_: wasm32::intptr_t,
-    out: wasm32::intptr_t,
+    in_: wasm32::uintptr_t,
+    out: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -1174,8 +1174,8 @@ pub unsafe extern "C" fn sock_recv(
 
 pub unsafe extern "C" fn sock_send(
     sock: wasm32::cloudabi_fd_t,
-    in_: wasm32::intptr_t,
-    out: wasm32::intptr_t,
+    in_: wasm32::uintptr_t,
+    out: wasm32::uintptr_t,
     vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     trace!(
@@ -1223,15 +1223,15 @@ pub unsafe extern "C" fn sock_shutdown(
 }
 
 pub unsafe extern "C" fn thread_create(
-    _attr: wasm32::intptr_t,
-    _tid: wasm32::intptr_t,
+    _attr: wasm32::uintptr_t,
+    _tid: wasm32::uintptr_t,
     _vmctx: *mut VMContext,
 ) -> wasm32::cloudabi_errno_t {
     unimplemented!("cloudabi_sys_thread_create");
 }
 
 pub unsafe extern "C" fn thread_exit(
-    _lock: wasm32::intptr_t,
+    _lock: wasm32::uintptr_t,
     _scope: wasm32::cloudabi_scope_t,
     _vmctx: *mut VMContext,
 ) -> ! {
