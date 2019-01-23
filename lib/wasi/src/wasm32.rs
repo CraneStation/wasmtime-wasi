@@ -270,47 +270,9 @@ pub const CLOUDABI_WHENCE_SET: cloudabi_whence_t = 3;
 pub type wchar_t = i32;
 pub type size_t = u32;
 pub type intptr_t = i32;
+pub type uintptr_t = u32;
 pub type long = i32;
 pub type unsigned_long = u32;
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct max_align_t {
-    pub __clang_max_align_nonce1: i64,
-    pub __bindgen_padding_0: [u32; 2usize],
-    pub __clang_max_align_nonce2: f64,
-}
-#[test]
-fn bindgen_test_layout_max_align_t() {
-    assert_eq!(
-        ::std::mem::size_of::<max_align_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(max_align_t))
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<max_align_t>())).__clang_max_align_nonce1 as *const _ as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(max_align_t),
-            "::",
-            stringify!(__clang_max_align_nonce1)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<max_align_t>())).__clang_max_align_nonce2 as *const _ as usize
-        },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(max_align_t),
-            "::",
-            stringify!(__clang_max_align_nonce2)
-        )
-    );
-}
 pub type __u_char = u8;
 pub type __u_short = u16;
 pub type __u_int = u32;
@@ -376,7 +338,7 @@ pub type __suseconds_t = __quad_t;
 pub type __daddr_t = i32;
 pub type __key_t = i32;
 pub type __clockid_t = i32;
-pub type __timer_t = intptr_t; // *mut ::std::os::raw::c_void
+pub type __timer_t = uintptr_t; // *mut ::std::os::raw::c_void
 pub type __blksize_t = __quad_t;
 pub type __blkcnt_t = __quad_t;
 pub type __blkcnt64_t = __quad_t;
@@ -389,8 +351,9 @@ pub type __ssize_t = i32;
 pub type __syscall_slong_t = __quad_t;
 pub type __syscall_ulong_t = __u_quad_t;
 pub type __loff_t = __off64_t;
-pub type __caddr_t = intptr_t; // *mut i8
+pub type __caddr_t = uintptr_t; // *mut i8
 pub type __intptr_t = i32;
+pub type __uintptr_t = i32;
 pub type __socklen_t = u32;
 pub type __sig_atomic_t = i32;
 pub type int_least8_t = i8;
@@ -933,7 +896,7 @@ pub struct cloudabi_auxv_t {
 #[derive(Copy, Clone)]
 pub union cloudabi_auxv_t__bindgen_ty_1 {
     pub a_val: size_t,
-    pub a_ptr: intptr_t, // *mut ::std::os::raw::c_void
+    pub a_ptr: uintptr_t, // *mut ::std::os::raw::c_void
     _bindgen_union_align: u32,
 }
 #[allow(non_snake_case)]
@@ -1000,7 +963,7 @@ fn bindgen_test_layout_cloudabi_auxv_t() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cloudabi_ciovec_t {
-    pub buf: intptr_t, // *const ::std::os::raw::c_void
+    pub buf: uintptr_t, // *const ::std::os::raw::c_void
     pub buf_len: size_t,
 }
 #[test]
@@ -1039,7 +1002,7 @@ fn bindgen_test_layout_cloudabi_ciovec_t() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cloudabi_iovec_t {
-    pub buf: intptr_t, // *mut ::std::os::raw::c_void
+    pub buf: uintptr_t, // *mut ::std::os::raw::c_void
     pub buf_len: size_t,
 }
 #[test]
@@ -1079,15 +1042,15 @@ fn bindgen_test_layout_cloudabi_iovec_t() {
 //pub type cloudabi_processentry_t =
 //    ::std::option::Option<
 //        unsafe extern "C" fn(
-//            auxv: intptr_t, // *const cloudabi_auxv_t
+//            auxv: uintptr_t, // *const cloudabi_auxv_t
 //        )
 //    >;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cloudabi_recv_in_t {
-    pub ri_data: intptr_t, // *const cloudabi_iovec_t
+    pub ri_data: uintptr_t, // *const cloudabi_iovec_t
     pub ri_data_len: size_t,
-    pub ri_fds: intptr_t, // *mut cloudabi_fd_t
+    pub ri_fds: uintptr_t, // *mut cloudabi_fd_t
     pub ri_fds_len: size_t,
     pub ri_flags: cloudabi_riflags_t,
 }
@@ -1218,9 +1181,9 @@ fn bindgen_test_layout_cloudabi_recv_out_t() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cloudabi_send_in_t {
-    pub si_data: intptr_t, // *const cloudabi_ciovec_t
+    pub si_data: uintptr_t, // *const cloudabi_ciovec_t
     pub si_data_len: size_t,
-    pub si_fds: intptr_t, // *const cloudabi_fd_t
+    pub si_fds: uintptr_t, // *const cloudabi_fd_t
     pub si_fds_len: size_t,
     pub si_flags: cloudabi_siflags_t,
 }
@@ -1425,8 +1388,8 @@ fn bindgen_test_layout_cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_1() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_2 {
-    pub condvar: intptr_t, // *mut cloudabi_condvar_t
-    pub lock: intptr_t,    // *mut cloudabi_lock_t
+    pub condvar: uintptr_t, // *mut cloudabi_condvar_t
+    pub lock: uintptr_t,    // *mut cloudabi_lock_t
     pub condvar_scope: cloudabi_scope_t,
     pub lock_scope: cloudabi_scope_t,
 }
@@ -1557,7 +1520,7 @@ fn bindgen_test_layout_cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_3() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cloudabi_subscription_t__bindgen_ty_1__bindgen_ty_4 {
-    pub lock: intptr_t, // *mut cloudabi_lock_t
+    pub lock: uintptr_t, // *mut cloudabi_lock_t
     pub lock_scope: cloudabi_scope_t,
 }
 #[allow(non_snake_case)]
@@ -1765,7 +1728,7 @@ fn bindgen_test_layout_cloudabi_subscription_t() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cloudabi_tcb_t {
-    pub parent: intptr_t, // *mut ::std::os::raw::c_void
+    pub parent: uintptr_t, // *mut ::std::os::raw::c_void
 }
 #[test]
 fn bindgen_test_layout_cloudabi_tcb_t() {
@@ -1790,19 +1753,33 @@ fn bindgen_test_layout_cloudabi_tcb_t() {
         )
     );
 }
-pub type cloudabi_threadentry_t = ::std::option::Option<
-    unsafe extern "C" fn(
-        tid: cloudabi_tid_t,
-        aux: intptr_t, // *mut ::std::os::raw::c_void
-    ),
->;
+pub type cloudabi_threadentry_t = uintptr_t;
+//pub type cloudabi_threadentry_t = ::std::option::Option<
+//    unsafe extern "C" fn(
+//        tid: cloudabi_tid_t,
+//        aux: uintptr_t, // *mut ::std::os::raw::c_void
+//    ),
+//>;
+#[test]
+fn bindgen_test_layout_cloudabi_threadentry_t() {
+    assert_eq!(
+        ::std::mem::size_of::<cloudabi_threadentry_t>(),
+        4usize,
+        concat!("Size of: ", stringify!(cloudabi_threadentry_t))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cloudabi_threadentry_t>(),
+        4usize,
+        concat!("Alignment of ", stringify!(cloudabi_threadentry_t))
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cloudabi_threadattr_t {
     pub entry_point: cloudabi_threadentry_t,
-    pub stack: intptr_t, // *mut ::std::os::raw::c_void
+    pub stack: uintptr_t, // *mut ::std::os::raw::c_void
     pub stack_len: size_t,
-    pub argument: intptr_t, // *mut ::std::os::raw::c_void
+    pub argument: uintptr_t, // *mut ::std::os::raw::c_void
 }
 #[test]
 fn bindgen_test_layout_cloudabi_threadattr_t() {
