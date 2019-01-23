@@ -2,7 +2,6 @@
 //! wasm module (except its callstack and register state). An
 //! `InstanceHandle` is a reference-counting handle for an `Instance`.
 
-use super::HashMap;
 use crate::export::Export;
 use crate::imports::Imports;
 use crate::memory::LinearMemory;
