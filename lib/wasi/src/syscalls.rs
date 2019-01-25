@@ -37,7 +37,7 @@ pub unsafe extern "C" fn clock_res_get(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_clock_res_get(clock_id, &mut host_resolution);
+    let e = host::wasmtime_ssp_clock_res_get(clock_id, &mut host_resolution);
 
     trace!("     | *resolution={:?}", host_resolution);
     encode_timestamp_byref(resolution, host_resolution, vmctx).unwrap();
@@ -66,7 +66,7 @@ pub unsafe extern "C" fn clock_time_get(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_clock_time_get(clock_id, precision, &mut host_time);
+    let e = host::wasmtime_ssp_clock_time_get(clock_id, precision, &mut host_time);
 
     trace!("     | *time={:?}", host_time);
     encode_timestamp_byref(time, host_time, vmctx).unwrap();
@@ -93,7 +93,7 @@ pub unsafe extern "C" fn fd_close(
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
 
-    let e = host::wasmtime_ssp_sys_fd_close(curfds, fd);
+    let e = host::wasmtime_ssp_fd_close(curfds, fd);
 
     return_encoded_errno(e)
 }
@@ -113,7 +113,7 @@ pub unsafe extern "C" fn fd_create1(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_fd_create1(curfds, type_, &mut host_fd);
+    let e = host::wasmtime_ssp_fd_create1(curfds, type_, &mut host_fd);
 
     trace!("     | *fd={:?}", host_fd);
     encode_fd_byref(fd, host_fd, vmctx).unwrap();
@@ -146,7 +146,7 @@ pub unsafe extern "C" fn fd_create2(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_fd_create2(curfds, type_, &mut host_fd0, &mut host_fd1);
+    let e = host::wasmtime_ssp_fd_create2(curfds, type_, &mut host_fd0, &mut host_fd1);
 
     trace!("     | *fd0={:?}", host_fd0);
     encode_fd_byref(fd0, host_fd0, vmctx).unwrap();
@@ -167,7 +167,7 @@ pub unsafe extern "C" fn fd_datasync(
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
 
-    let e = host::wasmtime_ssp_sys_fd_datasync(curfds, fd);
+    let e = host::wasmtime_ssp_fd_datasync(curfds, fd);
 
     return_encoded_errno(e)
 }
@@ -187,7 +187,7 @@ pub unsafe extern "C" fn fd_dup(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_fd_dup(curfds, from, &mut host_fd);
+    let e = host::wasmtime_ssp_fd_dup(curfds, from, &mut host_fd);
 
     trace!("     | *fd={:?}", host_fd);
     encode_fd_byref(fd, host_fd, vmctx).unwrap();
@@ -225,7 +225,7 @@ pub unsafe extern "C" fn fd_pread(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_fd_pread(
+    let e = host::wasmtime_ssp_fd_pread(
         curfds,
         fd,
         iovs.as_ptr(),
@@ -270,7 +270,7 @@ pub unsafe extern "C" fn fd_pwrite(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_fd_pwrite(
+    let e = host::wasmtime_ssp_fd_pwrite(
         curfds,
         fd,
         iovs.as_ptr(),
@@ -312,7 +312,7 @@ pub unsafe extern "C" fn fd_read(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_fd_read(curfds, fd, iovs.as_ptr(), iovs.len(), &mut host_nread);
+    let e = host::wasmtime_ssp_fd_read(curfds, fd, iovs.as_ptr(), iovs.len(), &mut host_nread);
 
     trace!("     | *nread={:?}", host_nread);
     encode_usize_byref(nread, host_nread, vmctx).unwrap();
@@ -332,7 +332,7 @@ pub unsafe extern "C" fn fd_replace(
     let from = decode_fd(from);
     let to = decode_fd(to);
 
-    let e = host::wasmtime_ssp_sys_fd_replace(curfds, from, to);
+    let e = host::wasmtime_ssp_fd_replace(curfds, from, to);
 
     return_encoded_errno(e)
 }
@@ -362,7 +362,7 @@ pub unsafe extern "C" fn fd_seek(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_fd_seek(curfds, fd, offset, whence, &mut host_newoffset);
+    let e = host::wasmtime_ssp_fd_seek(curfds, fd, offset, whence, &mut host_newoffset);
 
     trace!("     | *newoffset={:?}", host_newoffset);
     encode_filesize_byref(newoffset, host_newoffset, vmctx).unwrap();
@@ -385,7 +385,7 @@ pub unsafe extern "C" fn fd_stat_get(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_fd_stat_get(curfds, fd, &mut host_buf);
+    let e = host::wasmtime_ssp_fd_stat_get(curfds, fd, &mut host_buf);
 
     trace!("     | *buf={:?}", host_buf);
     encode_fdstat_byref(buf, host_buf, vmctx).unwrap();
@@ -415,7 +415,7 @@ pub unsafe extern "C" fn fd_stat_put(
     };
     let flags = decode_fdsflags(flags);
 
-    let e = host::wasmtime_ssp_sys_fd_stat_put(curfds, fd, &host_buf, flags);
+    let e = host::wasmtime_ssp_fd_stat_put(curfds, fd, &host_buf, flags);
 
     return_encoded_errno(e)
 }
@@ -430,7 +430,7 @@ pub unsafe extern "C" fn fd_sync(
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
 
-    let e = host::wasmtime_ssp_sys_fd_sync(curfds, fd);
+    let e = host::wasmtime_ssp_fd_sync(curfds, fd);
 
     return_encoded_errno(e)
 }
@@ -462,8 +462,7 @@ pub unsafe extern "C" fn fd_write(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e =
-        host::wasmtime_ssp_sys_fd_write(curfds, fd, iovs.as_ptr(), iovs.len(), &mut host_nwritten);
+    let e = host::wasmtime_ssp_fd_write(curfds, fd, iovs.as_ptr(), iovs.len(), &mut host_nwritten);
 
     trace!("     | *nwritten={:?}", host_nwritten);
     encode_usize_byref(nwritten, host_nwritten, vmctx).unwrap();
@@ -493,7 +492,7 @@ pub unsafe extern "C" fn file_advise(
     let len = decode_filesize(len);
     let advice = decode_advice(advice);
 
-    let e = host::wasmtime_ssp_sys_file_advise(curfds, fd, offset, len, advice);
+    let e = host::wasmtime_ssp_file_advise(curfds, fd, offset, len, advice);
 
     return_encoded_errno(e)
 }
@@ -512,7 +511,7 @@ pub unsafe extern "C" fn file_allocate(
     let offset = decode_filesize(offset);
     let len = decode_filesize(len);
 
-    let e = host::wasmtime_ssp_sys_file_allocate(curfds, fd, offset, len);
+    let e = host::wasmtime_ssp_file_allocate(curfds, fd, offset, len);
 
     return_encoded_errno(e)
 }
@@ -541,7 +540,7 @@ pub unsafe extern "C" fn file_create(
     };
     let type_ = decode_filetype(type_);
 
-    let e = host::wasmtime_ssp_sys_file_create(curfds, fd, path, path_len, type_);
+    let e = host::wasmtime_ssp_file_create(curfds, fd, path, path_len, type_);
 
     return_encoded_errno(e)
 }
@@ -581,7 +580,7 @@ pub unsafe extern "C" fn file_link(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_file_link(curfds, fd0, path0, path_len0, fd1, path1, path_len1);
+    let e = host::wasmtime_ssp_file_link(curfds, fd0, path0, path_len0, fd1, path1, path_len1);
 
     return_encoded_errno(e)
 }
@@ -624,8 +623,7 @@ pub unsafe extern "C" fn file_open(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e =
-        host::wasmtime_ssp_sys_file_open(curfds, dirfd, path, path_len, oflags, &fds, &mut host_fd);
+    let e = host::wasmtime_ssp_file_open(curfds, dirfd, path, path_len, oflags, &fds, &mut host_fd);
 
     trace!("     | *fd={:?}", host_fd);
     encode_fd_byref(fd, host_fd, vmctx).unwrap();
@@ -663,7 +661,7 @@ pub unsafe extern "C" fn file_readdir(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_file_readdir(
+    let e = host::wasmtime_ssp_file_readdir(
         curfds,
         fd,
         buf as *mut host::void,
@@ -713,7 +711,7 @@ pub unsafe extern "C" fn file_readlink(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_file_readlink(
+    let e = host::wasmtime_ssp_file_readlink(
         curfds,
         fd,
         path,
@@ -761,8 +759,7 @@ pub unsafe extern "C" fn file_rename(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e =
-        host::wasmtime_ssp_sys_file_rename(curfds, fd0, path0, path_len0, fd1, path1, path_len1);
+    let e = host::wasmtime_ssp_file_rename(curfds, fd0, path0, path_len0, fd1, path1, path_len1);
 
     return_encoded_errno(e)
 }
@@ -782,7 +779,7 @@ pub unsafe extern "C" fn file_stat_fget(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_file_stat_fget(curfds, fd, &mut host_buf);
+    let e = host::wasmtime_ssp_file_stat_fget(curfds, fd, &mut host_buf);
 
     trace!("     | *buf={:?}", host_buf);
     encode_filestat_byref(buf, host_buf, vmctx).unwrap();
@@ -812,7 +809,7 @@ pub unsafe extern "C" fn file_stat_fput(
     };
     let flags = decode_fsflags(flags);
 
-    let e = host::wasmtime_ssp_sys_file_stat_fput(curfds, fd, &host_buf, flags);
+    let e = host::wasmtime_ssp_file_stat_fput(curfds, fd, &host_buf, flags);
 
     return_encoded_errno(e)
 }
@@ -847,7 +844,7 @@ pub unsafe extern "C" fn file_stat_get(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_file_stat_get(curfds, fd, path, path_len, &mut host_buf);
+    let e = host::wasmtime_ssp_file_stat_get(curfds, fd, path, path_len, &mut host_buf);
 
     trace!("     | *buf={:?}", host_buf);
     encode_filestat_byref(buf, host_buf, vmctx).unwrap();
@@ -888,7 +885,7 @@ pub unsafe extern "C" fn file_stat_put(
     };
     let flags = decode_fsflags(flags);
 
-    let e = host::wasmtime_ssp_sys_file_stat_put(curfds, fd, path, path_len, &host_buf, flags);
+    let e = host::wasmtime_ssp_file_stat_put(curfds, fd, path, path_len, &host_buf, flags);
 
     return_encoded_errno(e)
 }
@@ -922,7 +919,7 @@ pub unsafe extern "C" fn file_symlink(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_file_symlink(curfds, path0, path_len0, fd, path1, path_len1);
+    let e = host::wasmtime_ssp_file_symlink(curfds, path0, path_len0, fd, path1, path_len1);
 
     return_encoded_errno(e)
 }
@@ -951,7 +948,7 @@ pub unsafe extern "C" fn file_unlink(
     };
     let flags = decode_ulflags(flags);
 
-    let e = host::wasmtime_ssp_sys_file_unlink(curfds, fd, path, path_len, flags);
+    let e = host::wasmtime_ssp_file_unlink(curfds, fd, path, path_len, flags);
 
     return_encoded_errno(e)
 }
@@ -1061,7 +1058,7 @@ pub unsafe extern "C" fn poll(
 
     assert!(in_.len() == host_out.len());
 
-    let e = host::wasmtime_ssp_sys_poll(
+    let e = host::wasmtime_ssp_poll(
         curfds,
         in_.as_ptr(),
         host_out.as_mut_ptr(),
@@ -1133,7 +1130,7 @@ pub unsafe extern "C" fn random_get(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_random_get(buf as *mut host::void, buf_len);
+    let e = host::wasmtime_ssp_random_get(buf as *mut host::void, buf_len);
 
     return_encoded_errno(e)
 }
@@ -1163,7 +1160,7 @@ pub unsafe extern "C" fn sock_recv(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_sock_recv(curfds, sock, &in_, &mut host_out);
+    let e = host::wasmtime_ssp_sock_recv(curfds, sock, &in_, &mut host_out);
 
     // TODO: Format the output for tracing.
     trace!("     | *out=...");
@@ -1197,7 +1194,7 @@ pub unsafe extern "C" fn sock_send(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_sys_sock_send(curfds, sock, &in_, &mut host_out);
+    let e = host::wasmtime_ssp_sock_send(curfds, sock, &in_, &mut host_out);
 
     trace!("     | *out={:?}", host_out);
     encode_send_out_byref(out, host_out, vmctx).unwrap();
@@ -1217,7 +1214,7 @@ pub unsafe extern "C" fn sock_shutdown(
     let sock = decode_fd(sock);
     let how = decode_sdflags(how);
 
-    let e = host::wasmtime_ssp_sys_sock_shutdown(curfds, sock, how);
+    let e = host::wasmtime_ssp_sock_shutdown(curfds, sock, how);
 
     return_encoded_errno(e)
 }
