@@ -1080,17 +1080,6 @@ pub unsafe extern "C" fn poll(
     return_encoded_errno(e)
 }
 
-pub unsafe extern "C" fn proc_exec(
-    _fd: wasm32::wasi_fd_t,
-    _data: wasm32::uintptr_t,
-    _data_len: wasm32::size_t,
-    _fds: wasm32::uintptr_t,
-    _fds_len: wasm32::size_t,
-    _vmctx: *mut VMContext,
-) -> wasm32::wasi_errno_t {
-    unimplemented!("wasi_proc_exec");
-}
-
 pub unsafe extern "C" fn proc_exit(rval: u32, _vmctx: *mut VMContext) -> ! {
     trace!("proc_exec(rval={:?})", rval);
 
@@ -1100,14 +1089,6 @@ pub unsafe extern "C" fn proc_exit(rval: u32, _vmctx: *mut VMContext) -> ! {
     // stack unwind similar to a trap.
 
     panic!("wasi_proc_exit({})", rval)
-}
-
-pub unsafe extern "C" fn proc_fork(
-    _fd: wasm32::uintptr_t,
-    _tid: wasm32::uintptr_t,
-    _vmctx: *mut VMContext,
-) -> wasm32::wasi_errno_t {
-    unimplemented!("wasi_proc_fork");
 }
 
 pub unsafe extern "C" fn proc_raise(

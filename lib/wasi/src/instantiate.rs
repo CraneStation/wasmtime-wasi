@@ -87,9 +87,7 @@ pub fn instantiate_wasi(
     signature!(mem_sync(I32, I32, I32) -> (I32));
     signature!(mem_unmap(I32, I32) -> (I32));
     signature!(poll(I32, I32, I32, I32) -> (I32));
-    signature!(proc_exec(I32, I32, I32, I32, I32) -> (I32));
     signature!(proc_exit(I32) -> ());
-    signature!(proc_fork(I32, I32) -> (I32));
     signature!(proc_raise(I32) -> (I32));
     signature!(random_get(I32, I32) -> (I32));
     signature!(sock_recv(I32, I32, I32) -> (I32));
