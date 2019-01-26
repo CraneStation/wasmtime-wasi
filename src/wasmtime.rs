@@ -142,10 +142,10 @@ fn main() {
         instantiate_wasi("", Rc::clone(&global_exports)).expect("instantiating wasi"),
     );
     // FIXME: Also recognize "env", for compatibility with clang/llvm 8.0. And use
-    // "cloudabi_sys_" prefixes for compaitility with prototype reference-sysroot.
+    // "wasi_" prefixes for compaitility with prototype reference-sysroot.
     context.instance(
         Some("env"),
-        instantiate_wasi("cloudabi_sys_", Rc::clone(&global_exports)).expect("instantiating wasi"),
+        instantiate_wasi("wasi_", Rc::clone(&global_exports)).expect("instantiating wasi"),
     );
 
     for filename in &args.arg_file {
