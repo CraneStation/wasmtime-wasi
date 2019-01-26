@@ -12,14 +12,14 @@ fn main() {
     println!("cargo:rustc-link-lib=static=SandboxedSystemPrimitives");
 
     let bindings_builder = bindgen::Builder::default()
-        .header("sandboxed-system-primitives/include/cloudabi_syscalls.h")
+        .header("sandboxed-system-primitives/include/wasi_syscalls.h")
         .header("sandboxed-system-primitives/src/posix.h")
         .whitelist_function("wasmtime_ssp_.*")
         .whitelist_function("fd_table_init")
         .whitelist_function("fd_table_insert_existing")
-        .whitelist_type("cloudabi_.*")
+        .whitelist_type("wasi_.*")
         .whitelist_type("fd_table")
-        .whitelist_var("CLOUDABI_.*");
+        .whitelist_var("WASI_.*");
 
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
 
