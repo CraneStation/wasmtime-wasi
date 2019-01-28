@@ -38,6 +38,21 @@ So you can launch untrusted code, and at runtime give it access to specific
 directories, without having to set permissions in the filesystem or in
 per-application or per-user configuration settings.
 
+## Berkely socket rules.
+
+Sockets aren't naturally hierarchical though, so we'll need to decide what
+capabilities look like.
+
+The basic version from CloudABI is for users to launch programs with the
+sockets they need already created. We'll probably start there, and that's
+enough for simple cases.
+
+I anticipate an eventual extension to that, where we create a capability
+that represents a set of possible sockets that can be created. A set
+might be described by ranges of permitted ports, ranges of permitted
+addresses, or sets of permitted protocols. In this case the actual socket
+wouldn't be created until the application actually requests it.
+
 ## Other info.
 
 CloudABI's intro to capability-based OS security:
