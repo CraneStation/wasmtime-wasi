@@ -92,14 +92,14 @@ Obtains the resolution of a clock.
 
 Inputs:
 
-- <a href="#clock_res_get.clock_id" name="clock_res_get.clock_id"></a><code>[cloudabi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
+- <a href="#clock_res_get.clock_id" name="clock_res_get.clock_id"></a><code>[wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
 
     The clock for which the resolution needs to be
     returned.
 
 Outputs:
 
-- <a href="#clock_res_get.resolution" name="clock_res_get.resolution"></a><code>[cloudabi\_timestamp\_t](#timestamp) <strong>resolution</strong></code>
+- <a href="#clock_res_get.resolution" name="clock_res_get.resolution"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>resolution</strong></code>
 
     The resolution of the clock.
 
@@ -109,12 +109,12 @@ Obtains the time value of a clock.
 
 Inputs:
 
-- <a href="#clock_time_get.clock_id" name="clock_time_get.clock_id"></a><code>[cloudabi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
+- <a href="#clock_time_get.clock_id" name="clock_time_get.clock_id"></a><code>[wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
 
     The clock for which the time needs to be
     returned.
 
-- <a href="#clock_time_get.precision" name="clock_time_get.precision"></a><code>[cloudabi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
+- <a href="#clock_time_get.precision" name="clock_time_get.precision"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
 
     The maximum lag (exclusive) that the returned
     time value may have, compared to its actual
@@ -122,7 +122,7 @@ Inputs:
 
 Outputs:
 
-- <a href="#clock_time_get.time" name="clock_time_get.time"></a><code>[cloudabi\_timestamp\_t](#timestamp) <strong>time</strong></code>
+- <a href="#clock_time_get.time" name="clock_time_get.time"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>time</strong></code>
 
     The time value of the clock.
 
@@ -132,23 +132,23 @@ Wakes up threads waiting on a userspace condition variable.
 
 If an invocation of this system call causes all waiting
 threads to be woken up, the value of the condition variable
-is set to [`CLOUDABI_CONDVAR_HAS_NO_WAITERS`](#condvar.has_no_waiters). As long as the condition
+is set to [`WASI_CONDVAR_HAS_NO_WAITERS`](#condvar.has_no_waiters). As long as the condition
 variable is set to this value, it is not needed to invoke this
 system call.
 
 Inputs:
 
-- <a href="#condvar_signal.condvar" name="condvar_signal.condvar"></a><code>\_Atomic([cloudabi\_condvar\_t](#condvar)) *<strong>condvar</strong></code>
+- <a href="#condvar_signal.condvar" name="condvar_signal.condvar"></a><code>\_Atomic([wasi\_condvar\_t](#condvar)) *<strong>condvar</strong></code>
 
     The userspace condition variable that has
     waiting threads.
 
-- <a href="#condvar_signal.scope" name="condvar_signal.scope"></a><code>[cloudabi\_scope\_t](#scope) <strong>scope</strong></code>
+- <a href="#condvar_signal.scope" name="condvar_signal.scope"></a><code>[wasi\_scope\_t](#scope) <strong>scope</strong></code>
 
     Whether the condition variable is stored in
     private or shared memory.
 
-- <a href="#condvar_signal.nwaiters" name="condvar_signal.nwaiters"></a><code>[cloudabi\_nthreads\_t](#nthreads) <strong>nwaiters</strong></code>
+- <a href="#condvar_signal.nwaiters" name="condvar_signal.nwaiters"></a><code>[wasi\_nthreads\_t](#nthreads) <strong>nwaiters</strong></code>
 
     The number of threads that need to be woken
     up. If it exceeds the number of waiting
@@ -160,7 +160,7 @@ Closes a file descriptor.
 
 Inputs:
 
-- <a href="#fd_close.fd" name="fd_close.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_close.fd" name="fd_close.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor that needs to be closed.
 
@@ -170,18 +170,18 @@ Creates a file descriptor.
 
 Inputs:
 
-- <a href="#fd_create1.type" name="fd_create1.type"></a><code>[cloudabi\_filetype\_t](#filetype) <strong>type</strong></code>
+- <a href="#fd_create1.type" name="fd_create1.type"></a><code>[wasi\_filetype\_t](#filetype) <strong>type</strong></code>
 
     Possible values:
 
-    - [`CLOUDABI_FILETYPE_SHARED_MEMORY`](#filetype.shared_memory)
+    - [`WASI_FILETYPE_SHARED_MEMORY`](#filetype.shared_memory)
 
         Creates an anonymous shared memory
         object.
 
 Outputs:
 
-- <a href="#fd_create1.fd" name="fd_create1.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_create1.fd" name="fd_create1.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor that has been created.
 
@@ -191,26 +191,26 @@ Creates a pair of file descriptors.
 
 Inputs:
 
-- <a href="#fd_create2.type" name="fd_create2.type"></a><code>[cloudabi\_filetype\_t](#filetype) <strong>type</strong></code>
+- <a href="#fd_create2.type" name="fd_create2.type"></a><code>[wasi\_filetype\_t](#filetype) <strong>type</strong></code>
 
     Possible values:
 
-    - [`CLOUDABI_FILETYPE_SOCKET_DGRAM`](#filetype.socket_dgram)
+    - [`WASI_FILETYPE_SOCKET_DGRAM`](#filetype.socket_dgram)
 
         Creates a UNIX datagram socket pair.
 
-    - [`CLOUDABI_FILETYPE_SOCKET_STREAM`](#filetype.socket_stream)
+    - [`WASI_FILETYPE_SOCKET_STREAM`](#filetype.socket_stream)
 
         Creates a UNIX byte-stream socket
         pair.
 
 Outputs:
 
-- <a href="#fd_create2.fd1" name="fd_create2.fd1"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd1</strong></code>
+- <a href="#fd_create2.fd1" name="fd_create2.fd1"></a><code>[wasi\_fd\_t](#fd) <strong>fd1</strong></code>
 
     The first file descriptor of the pair.
 
-- <a href="#fd_create2.fd2" name="fd_create2.fd2"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd2</strong></code>
+- <a href="#fd_create2.fd2" name="fd_create2.fd2"></a><code>[wasi\_fd\_t](#fd) <strong>fd2</strong></code>
 
     The second file descriptor of the pair.
 
@@ -220,7 +220,7 @@ Synchronizes the data of a file to disk.
 
 Inputs:
 
-- <a href="#fd_datasync.fd" name="fd_datasync.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_datasync.fd" name="fd_datasync.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor of the file whose data
     needs to be synchronized to disk.
@@ -231,14 +231,14 @@ Duplicates a file descriptor.
 
 Inputs:
 
-- <a href="#fd_dup.from" name="fd_dup.from"></a><code>[cloudabi\_fd\_t](#fd) <strong>from</strong></code>
+- <a href="#fd_dup.from" name="fd_dup.from"></a><code>[wasi\_fd\_t](#fd) <strong>from</strong></code>
 
     The file descriptor that needs to be
     duplicated.
 
 Outputs:
 
-- <a href="#fd_dup.fd" name="fd_dup.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_dup.fd" name="fd_dup.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The new file descriptor.
 
@@ -249,17 +249,17 @@ file descriptor's offset.
 
 Inputs:
 
-- <a href="#fd_pread.fd" name="fd_pread.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_pread.fd" name="fd_pread.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor from which data should be
     read.
 
-- <a href="#fd_pread.iovs" name="fd_pread.iovs"></a><code>const [cloudabi\_iovec\_t](#iovec) *<strong>iovs</strong></code> and <a href="#fd_pread.iovs_len" name="fd_pread.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_pread.iovs" name="fd_pread.iovs"></a><code>const [wasi\_iovec\_t](#iovec) *<strong>iovs</strong></code> and <a href="#fd_pread.iovs_len" name="fd_pread.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be stored.
 
-- <a href="#fd_pread.offset" name="fd_pread.offset"></a><code>[cloudabi\_filesize\_t](#filesize) <strong>offset</strong></code>
+- <a href="#fd_pread.offset" name="fd_pread.offset"></a><code>[wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
     The offset within the file at which reading
     should start.
@@ -277,17 +277,17 @@ file descriptor's offset.
 
 Inputs:
 
-- <a href="#fd_pwrite.fd" name="fd_pwrite.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_pwrite.fd" name="fd_pwrite.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor to which data should be
     written.
 
-- <a href="#fd_pwrite.iovs" name="fd_pwrite.iovs"></a><code>const [cloudabi\_ciovec\_t](#ciovec) *<strong>iovs</strong></code> and <a href="#fd_pwrite.iovs_len" name="fd_pwrite.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_pwrite.iovs" name="fd_pwrite.iovs"></a><code>const [wasi\_ciovec\_t](#ciovec) *<strong>iovs</strong></code> and <a href="#fd_pwrite.iovs_len" name="fd_pwrite.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be retrieved.
 
-- <a href="#fd_pwrite.offset" name="fd_pwrite.offset"></a><code>[cloudabi\_filesize\_t](#filesize) <strong>offset</strong></code>
+- <a href="#fd_pwrite.offset" name="fd_pwrite.offset"></a><code>[wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
     The offset within the file at which writing
     should start.
@@ -304,12 +304,12 @@ Reads from a file descriptor.
 
 Inputs:
 
-- <a href="#fd_read.fd" name="fd_read.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_read.fd" name="fd_read.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor from which data should be
     read.
 
-- <a href="#fd_read.iovs" name="fd_read.iovs"></a><code>const [cloudabi\_iovec\_t](#iovec) *<strong>iovs</strong></code> and <a href="#fd_read.iovs_len" name="fd_read.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_read.iovs" name="fd_read.iovs"></a><code>const [wasi\_iovec\_t](#iovec) *<strong>iovs</strong></code> and <a href="#fd_read.iovs_len" name="fd_read.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be stored.
@@ -337,11 +337,11 @@ removed entirely.
 
 Inputs:
 
-- <a href="#fd_replace.from" name="fd_replace.from"></a><code>[cloudabi\_fd\_t](#fd) <strong>from</strong></code>
+- <a href="#fd_replace.from" name="fd_replace.from"></a><code>[wasi\_fd\_t](#fd) <strong>from</strong></code>
 
     The file descriptor that needs to be copied.
 
-- <a href="#fd_replace.to" name="fd_replace.to"></a><code>[cloudabi\_fd\_t](#fd) <strong>to</strong></code>
+- <a href="#fd_replace.to" name="fd_replace.to"></a><code>[wasi\_fd\_t](#fd) <strong>to</strong></code>
 
     The file descriptor that needs to be
     overwritten.
@@ -352,23 +352,23 @@ Moves the offset of the file descriptor.
 
 Inputs:
 
-- <a href="#fd_seek.fd" name="fd_seek.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_seek.fd" name="fd_seek.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose offset has to be
     moved.
 
-- <a href="#fd_seek.offset" name="fd_seek.offset"></a><code>[cloudabi\_filedelta\_t](#filedelta) <strong>offset</strong></code>
+- <a href="#fd_seek.offset" name="fd_seek.offset"></a><code>[wasi\_filedelta\_t](#filedelta) <strong>offset</strong></code>
 
     The number of bytes to move.
 
-- <a href="#fd_seek.whence" name="fd_seek.whence"></a><code>[cloudabi\_whence\_t](#whence) <strong>whence</strong></code>
+- <a href="#fd_seek.whence" name="fd_seek.whence"></a><code>[wasi\_whence\_t](#whence) <strong>whence</strong></code>
 
     Relative to which position the move should
     take place.
 
 Outputs:
 
-- <a href="#fd_seek.newoffset" name="fd_seek.newoffset"></a><code>[cloudabi\_filesize\_t](#filesize) <strong>newoffset</strong></code>
+- <a href="#fd_seek.newoffset" name="fd_seek.newoffset"></a><code>[wasi\_filesize\_t](#filesize) <strong>newoffset</strong></code>
 
     The new offset of the file descriptor,
     relative to the start of the file.
@@ -379,12 +379,12 @@ Gets attributes of a file descriptor.
 
 Inputs:
 
-- <a href="#fd_stat_get.fd" name="fd_stat_get.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_stat_get.fd" name="fd_stat_get.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be obtained.
 
-- <a href="#fd_stat_get.buf" name="fd_stat_get.buf"></a><code>[cloudabi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
+- <a href="#fd_stat_get.buf" name="fd_stat_get.buf"></a><code>[wasi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
 
     The buffer where the file descriptor's
     attributes are stored.
@@ -395,17 +395,17 @@ Adjusts attributes of a file descriptor.
 
 Inputs:
 
-- <a href="#fd_stat_put.fd" name="fd_stat_put.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_stat_put.fd" name="fd_stat_put.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be adjusted.
 
-- <a href="#fd_stat_put.buf" name="fd_stat_put.buf"></a><code>const [cloudabi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
+- <a href="#fd_stat_put.buf" name="fd_stat_put.buf"></a><code>const [wasi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
 
     The desired values of the file descriptor
     attributes that are adjusted.
 
-- <a href="#fd_stat_put.flags" name="fd_stat_put.flags"></a><code>[cloudabi\_fdsflags\_t](#fdsflags) <strong>flags</strong></code>
+- <a href="#fd_stat_put.flags" name="fd_stat_put.flags"></a><code>[wasi\_fdsflags\_t](#fdsflags) <strong>flags</strong></code>
 
     A bitmask indicating which attributes have to
     be adjusted.
@@ -416,7 +416,7 @@ Synchronizes the data and metadata of a file to disk.
 
 Inputs:
 
-- <a href="#fd_sync.fd" name="fd_sync.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_sync.fd" name="fd_sync.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor of the file whose data
     and metadata needs to be synchronized to disk.
@@ -427,12 +427,12 @@ Writes to a file descriptor.
 
 Inputs:
 
-- <a href="#fd_write.fd" name="fd_write.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_write.fd" name="fd_write.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor to which data should be
     written.
 
-- <a href="#fd_write.iovs" name="fd_write.iovs"></a><code>const [cloudabi\_ciovec\_t](#ciovec) *<strong>iovs</strong></code> and <a href="#fd_write.iovs_len" name="fd_write.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_write.iovs" name="fd_write.iovs"></a><code>const [wasi\_ciovec\_t](#ciovec) *<strong>iovs</strong></code> and <a href="#fd_write.iovs_len" name="fd_write.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be retrieved.
@@ -449,22 +449,22 @@ Provides file advisory information on a file descriptor.
 
 Inputs:
 
-- <a href="#file_advise.fd" name="file_advise.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_advise.fd" name="file_advise.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor for which to provide file
     advisory information.
 
-- <a href="#file_advise.offset" name="file_advise.offset"></a><code>[cloudabi\_filesize\_t](#filesize) <strong>offset</strong></code>
+- <a href="#file_advise.offset" name="file_advise.offset"></a><code>[wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
     The offset within the file to which the
     advisory applies.
 
-- <a href="#file_advise.len" name="file_advise.len"></a><code>[cloudabi\_filesize\_t](#filesize) <strong>len</strong></code>
+- <a href="#file_advise.len" name="file_advise.len"></a><code>[wasi\_filesize\_t](#filesize) <strong>len</strong></code>
 
     The length of the region to which the advisory
     applies.
 
-- <a href="#file_advise.advice" name="file_advise.advice"></a><code>[cloudabi\_advice\_t](#advice) <strong>advice</strong></code>
+- <a href="#file_advise.advice" name="file_advise.advice"></a><code>[wasi\_advice\_t](#advice) <strong>advice</strong></code>
 
     The advice.
 
@@ -474,17 +474,17 @@ Forces the allocation of space in a file.
 
 Inputs:
 
-- <a href="#file_allocate.fd" name="file_allocate.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_allocate.fd" name="file_allocate.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file in which the space should be
     allocated.
 
-- <a href="#file_allocate.offset" name="file_allocate.offset"></a><code>[cloudabi\_filesize\_t](#filesize) <strong>offset</strong></code>
+- <a href="#file_allocate.offset" name="file_allocate.offset"></a><code>[wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
     The offset at which the allocation should
     start.
 
-- <a href="#file_allocate.len" name="file_allocate.len"></a><code>[cloudabi\_filesize\_t](#filesize) <strong>len</strong></code>
+- <a href="#file_allocate.len" name="file_allocate.len"></a><code>[wasi\_filesize\_t](#filesize) <strong>len</strong></code>
 
     The length of the area that is allocated.
 
@@ -494,7 +494,7 @@ Creates a file of a specified type.
 
 Inputs:
 
-- <a href="#file_create.fd" name="file_create.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_create.fd" name="file_create.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the file to be created starts.
@@ -503,11 +503,11 @@ Inputs:
 
     The path at which the file should be created.
 
-- <a href="#file_create.type" name="file_create.type"></a><code>[cloudabi\_filetype\_t](#filetype) <strong>type</strong></code>
+- <a href="#file_create.type" name="file_create.type"></a><code>[wasi\_filetype\_t](#filetype) <strong>type</strong></code>
 
     Possible values:
 
-    - [`CLOUDABI_FILETYPE_DIRECTORY`](#filetype.directory)
+    - [`WASI_FILETYPE_DIRECTORY`](#filetype.directory)
 
         Creates a directory.
 
@@ -517,7 +517,7 @@ Creates a hard link.
 
 Inputs:
 
-- <a href="#file_link.fd1" name="file_link.fd1"></a><code>[cloudabi\_lookup\_t](#lookup) <strong>fd1</strong></code>
+- <a href="#file_link.fd1" name="file_link.fd1"></a><code>[wasi\_lookup\_t](#lookup) <strong>fd1</strong></code>
 
     The working directory at which the resolution
     of the source path starts.
@@ -527,7 +527,7 @@ Inputs:
     The source path of the file that should be
     hard linked.
 
-- <a href="#file_link.fd2" name="file_link.fd2"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd2</strong></code>
+- <a href="#file_link.fd2" name="file_link.fd2"></a><code>[wasi\_fd\_t](#fd) <strong>fd2</strong></code>
 
     The working directory at which the resolution
     of the destination path starts.
@@ -543,7 +543,7 @@ Opens a file.
 
 Inputs:
 
-- <a href="#file_open.dirfd" name="file_open.dirfd"></a><code>[cloudabi\_lookup\_t](#lookup) <strong>dirfd</strong></code>
+- <a href="#file_open.dirfd" name="file_open.dirfd"></a><code>[wasi\_lookup\_t](#lookup) <strong>dirfd</strong></code>
 
     The working directory at which the resolution
     of the file to be opened starts.
@@ -552,28 +552,28 @@ Inputs:
 
     The path of the file that should be opened.
 
-- <a href="#file_open.oflags" name="file_open.oflags"></a><code>[cloudabi\_oflags\_t](#oflags) <strong>oflags</strong></code>
+- <a href="#file_open.oflags" name="file_open.oflags"></a><code>[wasi\_oflags\_t](#oflags) <strong>oflags</strong></code>
 
     The method at which the file should be opened.
 
-- <a href="#file_open.fds" name="file_open.fds"></a><code>const [cloudabi\_fdstat\_t](#fdstat) *<strong>fds</strong></code>
+- <a href="#file_open.fds" name="file_open.fds"></a><code>const [wasi\_fdstat\_t](#fdstat) *<strong>fds</strong></code>
 
-    [`cloudabi_fdstat_t::fs_rights_base`](#fdstat.fs_rights_base) and
-    [`cloudabi_fdstat_t::fs_rights_inheriting`](#fdstat.fs_rights_inheriting) specify the
+    [`wasi_fdstat_t::fs_rights_base`](#fdstat.fs_rights_base) and
+    [`wasi_fdstat_t::fs_rights_inheriting`](#fdstat.fs_rights_inheriting) specify the
     initial rights of the newly created file
     descriptor. The operating system is allowed to
     return a file descriptor with fewer rights
     than specified, if and only if those rights do
     not apply to the type of file being opened.
 
-    [`cloudabi_fdstat_t::fs_flags`](#fdstat.fs_flags) specifies the initial flags
+    [`wasi_fdstat_t::fs_flags`](#fdstat.fs_flags) specifies the initial flags
     of the file descriptor.
 
-    [`cloudabi_fdstat_t::fs_filetype`](#fdstat.fs_filetype) is ignored.
+    [`wasi_fdstat_t::fs_filetype`](#fdstat.fs_filetype) is ignored.
 
 Outputs:
 
-- <a href="#file_open.fd" name="file_open.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_open.fd" name="file_open.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor of the file that has been
     opened.
@@ -584,7 +584,7 @@ Reads directory entries from a directory.
 
 When successful, the contents of the output buffer consist of
 a sequence of directory entries. Each directory entry consists
-of a [`cloudabi_dirent_t`](#dirent) object, followed by [`cloudabi_dirent_t::d_namlen`](#dirent.d_namlen) bytes
+of a [`wasi_dirent_t`](#dirent) object, followed by [`wasi_dirent_t::d_namlen`](#dirent.d_namlen) bytes
 holding the name of the directory entry.
 
 This system call fills the output buffer as much as possible,
@@ -595,7 +595,7 @@ directory entry.
 
 Inputs:
 
-- <a href="#file_readdir.fd" name="file_readdir.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_readdir.fd" name="file_readdir.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The directory from which to read the directory
     entries.
@@ -604,7 +604,7 @@ Inputs:
 
     The buffer where directory entries are stored.
 
-- <a href="#file_readdir.cookie" name="file_readdir.cookie"></a><code>[cloudabi\_dircookie\_t](#dircookie) <strong>cookie</strong></code>
+- <a href="#file_readdir.cookie" name="file_readdir.cookie"></a><code>[wasi\_dircookie\_t](#dircookie) <strong>cookie</strong></code>
 
     The location within the directory to start
     reading.
@@ -623,7 +623,7 @@ Reads the contents of a symbolic link.
 
 Inputs:
 
-- <a href="#file_readlink.fd" name="file_readlink.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_readlink.fd" name="file_readlink.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path of the symbolic starts.
@@ -650,7 +650,7 @@ Renames a file.
 
 Inputs:
 
-- <a href="#file_rename.fd1" name="file_rename.fd1"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd1</strong></code>
+- <a href="#file_rename.fd1" name="file_rename.fd1"></a><code>[wasi\_fd\_t](#fd) <strong>fd1</strong></code>
 
     The working directory at which the resolution
     of the source path starts.
@@ -660,7 +660,7 @@ Inputs:
     The source path of the file that should be
     renamed.
 
-- <a href="#file_rename.fd2" name="file_rename.fd2"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd2</strong></code>
+- <a href="#file_rename.fd2" name="file_rename.fd2"></a><code>[wasi\_fd\_t](#fd) <strong>fd2</strong></code>
 
     The working directory at which the resolution
     of the destination path starts.
@@ -676,12 +676,12 @@ Gets attributes of a file by file descriptor.
 
 Inputs:
 
-- <a href="#file_stat_fget.fd" name="file_stat_fget.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_stat_fget.fd" name="file_stat_fget.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be obtained.
 
-- <a href="#file_stat_fget.buf" name="file_stat_fget.buf"></a><code>[cloudabi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_stat_fget.buf" name="file_stat_fget.buf"></a><code>[wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
 
     The buffer where the file's attributes are
     stored.
@@ -692,17 +692,17 @@ Adjusts attributes of a file by file descriptor.
 
 Inputs:
 
-- <a href="#file_stat_fput.fd" name="file_stat_fput.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_stat_fput.fd" name="file_stat_fput.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be adjusted.
 
-- <a href="#file_stat_fput.buf" name="file_stat_fput.buf"></a><code>const [cloudabi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_stat_fput.buf" name="file_stat_fput.buf"></a><code>const [wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
 
     The desired values of the file attributes that
     are adjusted.
 
-- <a href="#file_stat_fput.flags" name="file_stat_fput.flags"></a><code>[cloudabi\_fsflags\_t](#fsflags) <strong>flags</strong></code>
+- <a href="#file_stat_fput.flags" name="file_stat_fput.flags"></a><code>[wasi\_fsflags\_t](#fsflags) <strong>flags</strong></code>
 
     A bitmask indicating which attributes have to
     be adjusted.
@@ -713,7 +713,7 @@ Gets attributes of a file by path.
 
 Inputs:
 
-- <a href="#file_stat_get.fd" name="file_stat_get.fd"></a><code>[cloudabi\_lookup\_t](#lookup) <strong>fd</strong></code>
+- <a href="#file_stat_get.fd" name="file_stat_get.fd"></a><code>[wasi\_lookup\_t](#lookup) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path whose attributes have to be
@@ -724,7 +724,7 @@ Inputs:
     The path of the file whose attributes have to
     be obtained.
 
-- <a href="#file_stat_get.buf" name="file_stat_get.buf"></a><code>[cloudabi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_stat_get.buf" name="file_stat_get.buf"></a><code>[wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
 
     The buffer where the file's attributes are
     stored.
@@ -735,7 +735,7 @@ Adjusts attributes of a file by path.
 
 Inputs:
 
-- <a href="#file_stat_put.fd" name="file_stat_put.fd"></a><code>[cloudabi\_lookup\_t](#lookup) <strong>fd</strong></code>
+- <a href="#file_stat_put.fd" name="file_stat_put.fd"></a><code>[wasi\_lookup\_t](#lookup) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path whose attributes have to be
@@ -746,12 +746,12 @@ Inputs:
     The path of the file whose attributes have to
     be adjusted.
 
-- <a href="#file_stat_put.buf" name="file_stat_put.buf"></a><code>const [cloudabi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_stat_put.buf" name="file_stat_put.buf"></a><code>const [wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
 
     The desired values of the file attributes that
     are adjusted.
 
-- <a href="#file_stat_put.flags" name="file_stat_put.flags"></a><code>[cloudabi\_fsflags\_t](#fsflags) <strong>flags</strong></code>
+- <a href="#file_stat_put.flags" name="file_stat_put.flags"></a><code>[wasi\_fsflags\_t](#fsflags) <strong>flags</strong></code>
 
     A bitmask indicating which attributes have to
     be adjusted.
@@ -766,7 +766,7 @@ Inputs:
 
     The contents of the symbolic link.
 
-- <a href="#file_symlink.fd" name="file_symlink.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_symlink.fd" name="file_symlink.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the destination path starts.
@@ -782,7 +782,7 @@ Unlinks a file, or removes a directory.
 
 Inputs:
 
-- <a href="#file_unlink.fd" name="file_unlink.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_unlink.fd" name="file_unlink.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path starts.
@@ -791,11 +791,11 @@ Inputs:
 
     The path that needs to be unlinked or removed.
 
-- <a href="#file_unlink.flags" name="file_unlink.flags"></a><code>[cloudabi\_ulflags\_t](#ulflags) <strong>flags</strong></code>
+- <a href="#file_unlink.flags" name="file_unlink.flags"></a><code>[wasi\_ulflags\_t](#ulflags) <strong>flags</strong></code>
 
     Possible values:
 
-    - [`CLOUDABI_UNLINK_REMOVEDIR`](#ulflags.removedir)
+    - [`WASI_UNLINK_REMOVEDIR`](#ulflags.removedir)
 
         If set, attempt to remove a directory.
         Otherwise, unlink a file.
@@ -805,7 +805,7 @@ Inputs:
 Unlocks a write-locked userspace lock.
 
 If a userspace lock is unlocked while having its
-[`CLOUDABI_LOCK_KERNEL_MANAGED`](#lock.kernel_managed) flag set, the lock cannot be unlocked in
+[`WASI_LOCK_KERNEL_MANAGED`](#lock.kernel_managed) flag set, the lock cannot be unlocked in
 userspace directly. This system call needs to be performed
 instead, so that any waiting threads can be woken up.
 
@@ -817,12 +817,12 @@ be upgraded to a write lock.
 
 Inputs:
 
-- <a href="#lock_unlock.lock" name="lock_unlock.lock"></a><code>\_Atomic([cloudabi\_lock\_t](#lock)) *<strong>lock</strong></code>
+- <a href="#lock_unlock.lock" name="lock_unlock.lock"></a><code>\_Atomic([wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
 
     The userspace lock that is locked for writing
     by the calling thread.
 
-- <a href="#lock_unlock.scope" name="lock_unlock.scope"></a><code>[cloudabi\_scope\_t](#scope) <strong>scope</strong></code>
+- <a href="#lock_unlock.scope" name="lock_unlock.scope"></a><code>[wasi\_scope\_t](#scope) <strong>scope</strong></code>
 
     Whether the lock is stored in private or
     shared memory.
@@ -838,7 +838,7 @@ Inputs:
     The pages for which to provide memory advisory
     information.
 
-- <a href="#mem_advise.advice" name="mem_advise.advice"></a><code>[cloudabi\_advice\_t](#advice) <strong>advice</strong></code>
+- <a href="#mem_advise.advice" name="mem_advise.advice"></a><code>[wasi\_advice\_t](#advice) <strong>advice</strong></code>
 
     The advice.
 
@@ -851,7 +851,7 @@ Inputs:
 
 - <a href="#mem_map.addr" name="mem_map.addr"></a><code>void *<strong>addr</strong></code>
 
-    If [`CLOUDABI_MAP_FIXED`](#mflags.fixed) is set, specifies to which
+    If [`WASI_MAP_FIXED`](#mflags.fixed) is set, specifies to which
     address the file region is mapped. Otherwise,
     the mapping is performed at an unused
     location.
@@ -861,25 +861,25 @@ Inputs:
     The length of the memory mapping to be
     created.
 
-- <a href="#mem_map.prot" name="mem_map.prot"></a><code>[cloudabi\_mprot\_t](#mprot) <strong>prot</strong></code>
+- <a href="#mem_map.prot" name="mem_map.prot"></a><code>[wasi\_mprot\_t](#mprot) <strong>prot</strong></code>
 
     Initial memory protection options for the
     memory mapping.
 
-- <a href="#mem_map.flags" name="mem_map.flags"></a><code>[cloudabi\_mflags\_t](#mflags) <strong>flags</strong></code>
+- <a href="#mem_map.flags" name="mem_map.flags"></a><code>[wasi\_mflags\_t](#mflags) <strong>flags</strong></code>
 
     Memory mapping flags.
 
-- <a href="#mem_map.fd" name="mem_map.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#mem_map.fd" name="mem_map.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    If [`CLOUDABI_MAP_ANON`](#mflags.anon) is set, this argument must be
-    [`CLOUDABI_MAP_ANON_FD`](#fd.map_anon_fd). Otherwise, this argument
+    If [`WASI_MAP_ANON`](#mflags.anon) is set, this argument must be
+    [`WASI_MAP_ANON_FD`](#fd.map_anon_fd). Otherwise, this argument
     specifies the file whose contents need to be
     mapped.
 
-- <a href="#mem_map.off" name="mem_map.off"></a><code>[cloudabi\_filesize\_t](#filesize) <strong>off</strong></code>
+- <a href="#mem_map.off" name="mem_map.off"></a><code>[wasi\_filesize\_t](#filesize) <strong>off</strong></code>
 
-    If [`CLOUDABI_MAP_ANON`](#mflags.anon) is set, this argument must be
+    If [`WASI_MAP_ANON`](#mflags.anon) is set, this argument must be
     zero. Otherwise, this argument specifies the
     offset within the file at which the mapping
     starts.
@@ -900,7 +900,7 @@ Inputs:
 
     The pages that need their protection changed.
 
-- <a href="#mem_protect.prot" name="mem_protect.prot"></a><code>[cloudabi\_mprot\_t](#mprot) <strong>prot</strong></code>
+- <a href="#mem_protect.prot" name="mem_protect.prot"></a><code>[wasi\_mprot\_t](#mprot) <strong>prot</strong></code>
 
     New protection options.
 
@@ -914,7 +914,7 @@ Inputs:
 
     The pages that need to be synchronized.
 
-- <a href="#mem_sync.flags" name="mem_sync.flags"></a><code>[cloudabi\_msflags\_t](#msflags) <strong>flags</strong></code>
+- <a href="#mem_sync.flags" name="mem_sync.flags"></a><code>[wasi\_msflags\_t](#msflags) <strong>flags</strong></code>
 
     The method of synchronization.
 
@@ -934,11 +934,11 @@ Concurrently polls for the occurrence of a set of events.
 
 Inputs:
 
-- <a href="#poll.in" name="poll.in"></a><code>const [cloudabi\_subscription\_t](#subscription) *<strong>in</strong></code>
+- <a href="#poll.in" name="poll.in"></a><code>const [wasi\_subscription\_t](#subscription) *<strong>in</strong></code>
 
     The events to which to subscribe.
 
-- <a href="#poll.out" name="poll.out"></a><code>[cloudabi\_event\_t](#event) *<strong>out</strong></code>
+- <a href="#poll.out" name="poll.out"></a><code>[wasi\_event\_t](#event) *<strong>out</strong></code>
 
     The events that have occurred.
 
@@ -958,11 +958,11 @@ Terminates the process normally.
 
 Inputs:
 
-- <a href="#proc_exit.rval" name="proc_exit.rval"></a><code>[cloudabi\_exitcode\_t](#exitcode) <strong>rval</strong></code>
+- <a href="#proc_exit.rval" name="proc_exit.rval"></a><code>[wasi\_exitcode\_t](#exitcode) <strong>rval</strong></code>
 
     The exit code returned by the process. The
     exit code can be obtained by other processes
-    through [`cloudabi_event_t::proc_terminate.exitcode`](#event.proc_terminate.exitcode).
+    through [`wasi_event_t::proc_terminate.exitcode`](#event.proc_terminate.exitcode).
 
 Does not return.
 
@@ -972,13 +972,13 @@ Sends a signal to the process of the calling thread.
 
 Inputs:
 
-- <a href="#proc_raise.sig" name="proc_raise.sig"></a><code>[cloudabi\_signal\_t](#signal) <strong>sig</strong></code>
+- <a href="#proc_raise.sig" name="proc_raise.sig"></a><code>[wasi\_signal\_t](#signal) <strong>sig</strong></code>
 
     The signal condition that should be triggered.
     If the signal causes the process to terminate,
     its condition can be obtained by other
     processes through
-    [`cloudabi_event_t::proc_terminate.signal`](#event.proc_terminate.signal).
+    [`wasi_event_t::proc_terminate.signal`](#event.proc_terminate.signal).
 
 ### <a href="#random_get" name="random_get"></a>`wasi_random_get()`
 
@@ -1001,16 +1001,16 @@ Receives a message on a socket.
 
 Inputs:
 
-- <a href="#sock_recv.sock" name="sock_recv.sock"></a><code>[cloudabi\_fd\_t](#fd) <strong>sock</strong></code>
+- <a href="#sock_recv.sock" name="sock_recv.sock"></a><code>[wasi\_fd\_t](#fd) <strong>sock</strong></code>
 
     The socket on which a message should be
     received.
 
-- <a href="#sock_recv.in" name="sock_recv.in"></a><code>const [cloudabi\_recv\_in\_t](#recv_in) *<strong>in</strong></code>
+- <a href="#sock_recv.in" name="sock_recv.in"></a><code>const [wasi\_recv\_in\_t](#recv_in) *<strong>in</strong></code>
 
     Input parameters.
 
-- <a href="#sock_recv.out" name="sock_recv.out"></a><code>[cloudabi\_recv\_out\_t](#recv_out) *<strong>out</strong></code>
+- <a href="#sock_recv.out" name="sock_recv.out"></a><code>[wasi\_recv\_out\_t](#recv_out) *<strong>out</strong></code>
 
     Output parameters.
 
@@ -1020,15 +1020,15 @@ Sends a message on a socket.
 
 Inputs:
 
-- <a href="#sock_send.sock" name="sock_send.sock"></a><code>[cloudabi\_fd\_t](#fd) <strong>sock</strong></code>
+- <a href="#sock_send.sock" name="sock_send.sock"></a><code>[wasi\_fd\_t](#fd) <strong>sock</strong></code>
 
     The socket on which a message should be sent.
 
-- <a href="#sock_send.in" name="sock_send.in"></a><code>const [cloudabi\_send\_in\_t](#send_in) *<strong>in</strong></code>
+- <a href="#sock_send.in" name="sock_send.in"></a><code>const [wasi\_send\_in\_t](#send_in) *<strong>in</strong></code>
 
     Input parameters.
 
-- <a href="#sock_send.out" name="sock_send.out"></a><code>[cloudabi\_send\_out\_t](#send_out) *<strong>out</strong></code>
+- <a href="#sock_send.out" name="sock_send.out"></a><code>[wasi\_send\_out\_t](#send_out) *<strong>out</strong></code>
 
     Output parameters.
 
@@ -1038,11 +1038,11 @@ Shuts down socket send and receive channels.
 
 Inputs:
 
-- <a href="#sock_shutdown.sock" name="sock_shutdown.sock"></a><code>[cloudabi\_fd\_t](#fd) <strong>sock</strong></code>
+- <a href="#sock_shutdown.sock" name="sock_shutdown.sock"></a><code>[wasi\_fd\_t](#fd) <strong>sock</strong></code>
 
     The socket that needs its channels shut down.
 
-- <a href="#sock_shutdown.how" name="sock_shutdown.how"></a><code>[cloudabi\_sdflags\_t](#sdflags) <strong>how</strong></code>
+- <a href="#sock_shutdown.how" name="sock_shutdown.how"></a><code>[wasi\_sdflags\_t](#sdflags) <strong>how</strong></code>
 
     Which channels on the socket need to be shut
     down.
@@ -1053,13 +1053,13 @@ Creates a new thread within the current process.
 
 Inputs:
 
-- <a href="#thread_create.attr" name="thread_create.attr"></a><code>[cloudabi\_threadattr\_t](#threadattr) *<strong>attr</strong></code>
+- <a href="#thread_create.attr" name="thread_create.attr"></a><code>[wasi\_threadattr\_t](#threadattr) *<strong>attr</strong></code>
 
     The desired attributes of the new thread.
 
 Outputs:
 
-- <a href="#thread_create.tid" name="thread_create.tid"></a><code>[cloudabi\_tid\_t](#tid) <strong>tid</strong></code>
+- <a href="#thread_create.tid" name="thread_create.tid"></a><code>[wasi\_tid\_t](#tid) <strong>tid</strong></code>
 
     The thread ID of the new thread.
 
@@ -1073,12 +1073,12 @@ joining.
 
 Inputs:
 
-- <a href="#thread_exit.lock" name="thread_exit.lock"></a><code>\_Atomic([cloudabi\_lock\_t](#lock)) *<strong>lock</strong></code>
+- <a href="#thread_exit.lock" name="thread_exit.lock"></a><code>\_Atomic([wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
 
     Userspace lock that is locked for writing by
     the calling thread.
 
-- <a href="#thread_exit.scope" name="thread_exit.scope"></a><code>[cloudabi\_scope\_t](#scope) <strong>scope</strong></code>
+- <a href="#thread_exit.scope" name="thread_exit.scope"></a><code>[wasi\_scope\_t](#scope) <strong>scope</strong></code>
 
     Whether the lock is stored in private or
     shared memory.
@@ -1091,7 +1091,7 @@ Temporarily yields execution of the calling thread.
 
 ## Types
 
-### <a href="#advice" name="advice"></a>`cloudabi_advice_t` (`uint8_t`)
+### <a href="#advice" name="advice"></a>`wasi_advice_t` (`uint8_t`)
 
 File or memory access pattern advisory information.
 
@@ -1099,93 +1099,93 @@ Used by [`wasi_file_advise()`](#file_advise) and [`wasi_mem_advise()`](#mem_advi
 
 Possible values:
 
-- <a href="#advice.dontneed" name="advice.dontneed"></a>**`CLOUDABI_ADVICE_DONTNEED`**
+- <a href="#advice.dontneed" name="advice.dontneed"></a>**`WASI_ADVICE_DONTNEED`**
 
     The application expects that it will not access the
     specified data in the near future.
 
-- <a href="#advice.noreuse" name="advice.noreuse"></a>**`CLOUDABI_ADVICE_NOREUSE`**
+- <a href="#advice.noreuse" name="advice.noreuse"></a>**`WASI_ADVICE_NOREUSE`**
 
     The application expects to access the specified data
     once and then not reuse it thereafter.
 
-- <a href="#advice.normal" name="advice.normal"></a>**`CLOUDABI_ADVICE_NORMAL`**
+- <a href="#advice.normal" name="advice.normal"></a>**`WASI_ADVICE_NORMAL`**
 
     The application has no advice to give on its behavior
     with respect to the specified data.
 
-- <a href="#advice.random" name="advice.random"></a>**`CLOUDABI_ADVICE_RANDOM`**
+- <a href="#advice.random" name="advice.random"></a>**`WASI_ADVICE_RANDOM`**
 
     The application expects to access the specified data
     in a random order.
 
-- <a href="#advice.sequential" name="advice.sequential"></a>**`CLOUDABI_ADVICE_SEQUENTIAL`**
+- <a href="#advice.sequential" name="advice.sequential"></a>**`WASI_ADVICE_SEQUENTIAL`**
 
     The application expects to access the specified data
     sequentially from lower offsets to higher offsets.
 
-- <a href="#advice.willneed" name="advice.willneed"></a>**`CLOUDABI_ADVICE_WILLNEED`**
+- <a href="#advice.willneed" name="advice.willneed"></a>**`WASI_ADVICE_WILLNEED`**
 
     The application expects to access the specified data
     in the near future.
 
-### <a href="#auxtype" name="auxtype"></a>`cloudabi_auxtype_t` (`uint32_t`)
+### <a href="#auxtype" name="auxtype"></a>`wasi_auxtype_t` (`uint32_t`)
 
-Enumeration describing the kind of value stored in [`cloudabi_auxv_t`](#auxv).
+Enumeration describing the kind of value stored in [`wasi_auxv_t`](#auxv).
 
 Possible values:
 
-- <a href="#auxtype.argdata" name="auxtype.argdata"></a>**`CLOUDABI_AT_ARGDATA`**
+- <a href="#auxtype.argdata" name="auxtype.argdata"></a>**`WASI_AT_ARGDATA`**
 
     Base address of the binary argument data provided to
     [`wasi_proc_exec()`](#proc_exec).
 
-- <a href="#auxtype.argdatalen" name="auxtype.argdatalen"></a>**`CLOUDABI_AT_ARGDATALEN`**
+- <a href="#auxtype.argdatalen" name="auxtype.argdatalen"></a>**`WASI_AT_ARGDATALEN`**
 
     Length of the binary argument data provided to
     [`wasi_proc_exec()`](#proc_exec).
 
-- <a href="#auxtype.base" name="auxtype.base"></a>**`CLOUDABI_AT_BASE`**
+- <a href="#auxtype.base" name="auxtype.base"></a>**`WASI_AT_BASE`**
 
     Base address at which the executable is placed in
     memory.
 
-- <a href="#auxtype.canary" name="auxtype.canary"></a>**`CLOUDABI_AT_CANARY`**
+- <a href="#auxtype.canary" name="auxtype.canary"></a>**`WASI_AT_CANARY`**
 
     Base address of a buffer of random data that may be
     used for non-cryptographic purposes, for example as a
     canary for stack smashing protection.
 
-- <a href="#auxtype.canarylen" name="auxtype.canarylen"></a>**`CLOUDABI_AT_CANARYLEN`**
+- <a href="#auxtype.canarylen" name="auxtype.canarylen"></a>**`WASI_AT_CANARYLEN`**
 
     Length of a buffer of random data that may be used
     for non-cryptographic purposes, for example as a
     canary for stack smashing protection.
 
-- <a href="#auxtype.ncpus" name="auxtype.ncpus"></a>**`CLOUDABI_AT_NCPUS`**
+- <a href="#auxtype.ncpus" name="auxtype.ncpus"></a>**`WASI_AT_NCPUS`**
 
     Number of CPUs that the system this process is running
     on has.
 
-- <a href="#auxtype.null" name="auxtype.null"></a>**`CLOUDABI_AT_NULL`**
+- <a href="#auxtype.null" name="auxtype.null"></a>**`WASI_AT_NULL`**
 
     Terminator of the auxiliary vector.
 
-- <a href="#auxtype.pagesz" name="auxtype.pagesz"></a>**`CLOUDABI_AT_PAGESZ`**
+- <a href="#auxtype.pagesz" name="auxtype.pagesz"></a>**`WASI_AT_PAGESZ`**
 
     Smallest memory object size for which individual
     memory protection controls can be configured.
 
-- <a href="#auxtype.phdr" name="auxtype.phdr"></a>**`CLOUDABI_AT_PHDR`**
+- <a href="#auxtype.phdr" name="auxtype.phdr"></a>**`WASI_AT_PHDR`**
 
     Address of the first ELF program header of the
     executable.
 
-- <a href="#auxtype.phnum" name="auxtype.phnum"></a>**`CLOUDABI_AT_PHNUM`**
+- <a href="#auxtype.phnum" name="auxtype.phnum"></a>**`WASI_AT_PHNUM`**
 
     Number of ELF program headers of the executable.
 
-- <a href="#auxtype.pid" name="auxtype.pid"></a>**`CLOUDABI_AT_PID`**
+- <a href="#auxtype.pid" name="auxtype.pid"></a>**`WASI_AT_PID`**
 
     Identifier of the process.
 
@@ -1197,7 +1197,7 @@ Possible values:
     This record should point to sixteen bytes of binary
     data, containing a version 4 UUID (fully random).
 
-- <a href="#auxtype.sysinfo_ehdr" name="auxtype.sysinfo_ehdr"></a>**`CLOUDABI_AT_SYSINFO_EHDR`**
+- <a href="#auxtype.sysinfo_ehdr" name="auxtype.sysinfo_ehdr"></a>**`WASI_AT_SYSINFO_EHDR`**
 
     Address of the ELF header of the vDSO.
 
@@ -1220,11 +1220,11 @@ Possible values:
     a more dynamic way of adding, removing or replacing
     system calls.
 
-- <a href="#auxtype.tid" name="auxtype.tid"></a>**`CLOUDABI_AT_TID`**
+- <a href="#auxtype.tid" name="auxtype.tid"></a>**`WASI_AT_TID`**
 
     Thread ID of the initial thread of the process.
 
-### <a href="#auxv" name="auxv"></a>`cloudabi_auxv_t` (`struct`)
+### <a href="#auxv" name="auxv"></a>`wasi_auxv_t` (`struct`)
 
 Auxiliary vector entry.
 
@@ -1232,36 +1232,36 @@ The auxiliary vector is a list of key-value pairs that is
 provided to the process on startup. Unlike structures, it is
 extensible, as it is possible to add new records later on.
 The auxiliary vector is always terminated by an entry having
-type [`CLOUDABI_AT_NULL`](#auxtype.null).
+type [`WASI_AT_NULL`](#auxtype.null).
 
 The auxiliary vector is part of the x86-64 ABI, but is used by
 this environment on all architectures.
 
-Used by [`cloudabi_processentry_t`](#processentry).
+Used by [`wasi_processentry_t`](#processentry).
 
 Members:
 
-- <a href="#auxv.a_type" name="auxv.a_type"></a><code>[cloudabi\_auxtype\_t](#auxtype) <strong>a\_type</strong></code>
+- <a href="#auxv.a_type" name="auxv.a_type"></a><code>[wasi\_auxtype\_t](#auxtype) <strong>a\_type</strong></code>
 
     The type of the auxiliary vector entry.
 
-- When `a_type` is [`CLOUDABI_AT_ARGDATALEN`](#auxtype.argdatalen), [`CLOUDABI_AT_CANARYLEN`](#auxtype.canarylen), [`CLOUDABI_AT_NCPUS`](#auxtype.ncpus), [`CLOUDABI_AT_PAGESZ`](#auxtype.pagesz), [`CLOUDABI_AT_PHNUM`](#auxtype.phnum), or [`CLOUDABI_AT_TID`](#auxtype.tid):
+- When `a_type` is [`WASI_AT_ARGDATALEN`](#auxtype.argdatalen), [`WASI_AT_CANARYLEN`](#auxtype.canarylen), [`WASI_AT_NCPUS`](#auxtype.ncpus), [`WASI_AT_PAGESZ`](#auxtype.pagesz), [`WASI_AT_PHNUM`](#auxtype.phnum), or [`WASI_AT_TID`](#auxtype.tid):
 
     - <a href="#auxv.a_val" name="auxv.a_val"></a><code>size\_t <strong>a\_val</strong></code>
 
         A numerical value.
 
-- When `a_type` is [`CLOUDABI_AT_ARGDATA`](#auxtype.argdata), [`CLOUDABI_AT_BASE`](#auxtype.base), [`CLOUDABI_AT_CANARY`](#auxtype.canary), [`CLOUDABI_AT_PHDR`](#auxtype.phdr), [`CLOUDABI_AT_PID`](#auxtype.pid), or [`CLOUDABI_AT_SYSINFO_EHDR`](#auxtype.sysinfo_ehdr):
+- When `a_type` is [`WASI_AT_ARGDATA`](#auxtype.argdata), [`WASI_AT_BASE`](#auxtype.base), [`WASI_AT_CANARY`](#auxtype.canary), [`WASI_AT_PHDR`](#auxtype.phdr), [`WASI_AT_PID`](#auxtype.pid), or [`WASI_AT_SYSINFO_EHDR`](#auxtype.sysinfo_ehdr):
 
     - <a href="#auxv.a_ptr" name="auxv.a_ptr"></a><code>void *<strong>a\_ptr</strong></code>
 
         A pointer value.
 
-### <a href="#ciovec" name="ciovec"></a>`cloudabi_ciovec_t` (`struct`)
+### <a href="#ciovec" name="ciovec"></a>`wasi_ciovec_t` (`struct`)
 
 A region of memory for scatter/gather writes.
 
-Used by [`cloudabi_send_in_t`](#send_in), [`wasi_fd_pwrite()`](#fd_pwrite), and [`wasi_fd_write()`](#fd_write).
+Used by [`wasi_send_in_t`](#send_in), [`wasi_fd_pwrite()`](#fd_pwrite), and [`wasi_fd_write()`](#fd_write).
 
 Members:
 
@@ -1269,15 +1269,15 @@ Members:
 
     The address and length of the buffer to be written.
 
-### <a href="#clockid" name="clockid"></a>`cloudabi_clockid_t` (`uint32_t`)
+### <a href="#clockid" name="clockid"></a>`wasi_clockid_t` (`uint32_t`)
 
 Identifiers for clocks.
 
-Used by [`cloudabi_subscription_t`](#subscription), [`wasi_clock_res_get()`](#clock_res_get), and [`wasi_clock_time_get()`](#clock_time_get).
+Used by [`wasi_subscription_t`](#subscription), [`wasi_clock_res_get()`](#clock_res_get), and [`wasi_clock_time_get()`](#clock_time_get).
 
 Possible values:
 
-- <a href="#clockid.monotonic" name="clockid.monotonic"></a>**`CLOUDABI_CLOCK_MONOTONIC`**
+- <a href="#clockid.monotonic" name="clockid.monotonic"></a>**`WASI_CLOCK_MONOTONIC`**
 
     The system-wide monotonic clock, which is defined as a
     clock measuring real time, whose value cannot be
@@ -1286,68 +1286,68 @@ Possible values:
     The epoch of this clock is undefined. The absolute
     time value of this clock therefore has no meaning.
 
-- <a href="#clockid.process_cputime_id" name="clockid.process_cputime_id"></a>**`CLOUDABI_CLOCK_PROCESS_CPUTIME_ID`**
+- <a href="#clockid.process_cputime_id" name="clockid.process_cputime_id"></a>**`WASI_CLOCK_PROCESS_CPUTIME_ID`**
 
     The CPU-time clock associated with the current
     process.
 
-- <a href="#clockid.realtime" name="clockid.realtime"></a>**`CLOUDABI_CLOCK_REALTIME`**
+- <a href="#clockid.realtime" name="clockid.realtime"></a>**`WASI_CLOCK_REALTIME`**
 
     The system-wide clock measuring real time. Time value
     zero corresponds with 1970-01-01T00:00:00Z.
 
-- <a href="#clockid.thread_cputime_id" name="clockid.thread_cputime_id"></a>**`CLOUDABI_CLOCK_THREAD_CPUTIME_ID`**
+- <a href="#clockid.thread_cputime_id" name="clockid.thread_cputime_id"></a>**`WASI_CLOCK_THREAD_CPUTIME_ID`**
 
     The CPU-time clock associated with the current thread.
 
-### <a href="#condvar" name="condvar"></a>`cloudabi_condvar_t` (`uint32_t`)
+### <a href="#condvar" name="condvar"></a>`wasi_condvar_t` (`uint32_t`)
 
 A userspace condition variable.
 
-Used by [`cloudabi_subscription_t`](#subscription) and [`wasi_condvar_signal()`](#condvar_signal).
+Used by [`wasi_subscription_t`](#subscription) and [`wasi_condvar_signal()`](#condvar_signal).
 
 Special values:
 
-- <a href="#condvar.has_no_waiters" name="condvar.has_no_waiters"></a>**`CLOUDABI_CONDVAR_HAS_NO_WAITERS`**
+- <a href="#condvar.has_no_waiters" name="condvar.has_no_waiters"></a>**`WASI_CONDVAR_HAS_NO_WAITERS`**
 
     The condition variable is in its initial state. There
     are no threads waiting to be woken up. If the
     condition variable has any other value, the kernel
     must be called to wake up any sleeping threads.
 
-### <a href="#device" name="device"></a>`cloudabi_device_t` (`uint64_t`)
+### <a href="#device" name="device"></a>`wasi_device_t` (`uint64_t`)
 
 Identifier for a device containing a file system. Can be used
-in combination with [`cloudabi_inode_t`](#inode) to uniquely identify a file on the
+in combination with [`wasi_inode_t`](#inode) to uniquely identify a file on the
 local system.
 
-Used by [`cloudabi_filestat_t`](#filestat).
+Used by [`wasi_filestat_t`](#filestat).
 
-### <a href="#dircookie" name="dircookie"></a>`cloudabi_dircookie_t` (`uint64_t`)
+### <a href="#dircookie" name="dircookie"></a>`wasi_dircookie_t` (`uint64_t`)
 
 A reference to the offset of a directory entry.
 
-Used by [`cloudabi_dirent_t`](#dirent) and [`wasi_file_readdir()`](#file_readdir).
+Used by [`wasi_dirent_t`](#dirent) and [`wasi_file_readdir()`](#file_readdir).
 
 Special values:
 
-- <a href="#dircookie.start" name="dircookie.start"></a>**`CLOUDABI_DIRCOOKIE_START`**
+- <a href="#dircookie.start" name="dircookie.start"></a>**`WASI_DIRCOOKIE_START`**
 
     Permanent reference to the first directory entry
     within a directory.
 
-### <a href="#dirent" name="dirent"></a>`cloudabi_dirent_t` (`struct`)
+### <a href="#dirent" name="dirent"></a>`wasi_dirent_t` (`struct`)
 
 A directory entry.
 
 Members:
 
-- <a href="#dirent.d_next" name="dirent.d_next"></a><code>[cloudabi\_dircookie\_t](#dircookie) <strong>d\_next</strong></code>
+- <a href="#dirent.d_next" name="dirent.d_next"></a><code>[wasi\_dircookie\_t](#dircookie) <strong>d\_next</strong></code>
 
     The offset of the next directory entry stored in this
     directory.
 
-- <a href="#dirent.d_ino" name="dirent.d_ino"></a><code>[cloudabi\_inode\_t](#inode) <strong>d\_ino</strong></code>
+- <a href="#dirent.d_ino" name="dirent.d_ino"></a><code>[wasi\_inode\_t](#inode) <strong>d\_ino</strong></code>
 
     The serial number of the file referred to by this
     directory entry.
@@ -1356,12 +1356,12 @@ Members:
 
     The length of the name of the directory entry.
 
-- <a href="#dirent.d_type" name="dirent.d_type"></a><code>[cloudabi\_filetype\_t](#filetype) <strong>d\_type</strong></code>
+- <a href="#dirent.d_type" name="dirent.d_type"></a><code>[wasi\_filetype\_t](#filetype) <strong>d\_type</strong></code>
 
     The type of the file referred to by this directory
     entry.
 
-### <a href="#errno" name="errno"></a>`cloudabi_errno_t` (`uint16_t`)
+### <a href="#errno" name="errno"></a>`wasi_errno_t` (`uint16_t`)
 
 Error codes returned by system calls.
 
@@ -1369,319 +1369,319 @@ Not all of these error codes are returned by the system calls
 provided by this environment, but are either used in userspace
 exclusively or merely provided for alignment with POSIX.
 
-Used by [`cloudabi_event_t`](#event).
+Used by [`wasi_event_t`](#event).
 
 Possible values:
 
-- <a href="#errno.success" name="errno.success"></a>**`CLOUDABI_ESUCCESS`**
+- <a href="#errno.success" name="errno.success"></a>**`WASI_ESUCCESS`**
 
     No error occurred. System call completed successfully.
 
-- <a href="#errno.2big" name="errno.2big"></a>**`CLOUDABI_E2BIG`**
+- <a href="#errno.2big" name="errno.2big"></a>**`WASI_E2BIG`**
 
     Argument list too long.
 
-- <a href="#errno.acces" name="errno.acces"></a>**`CLOUDABI_EACCES`**
+- <a href="#errno.acces" name="errno.acces"></a>**`WASI_EACCES`**
 
     Permission denied.
 
-- <a href="#errno.addrinuse" name="errno.addrinuse"></a>**`CLOUDABI_EADDRINUSE`**
+- <a href="#errno.addrinuse" name="errno.addrinuse"></a>**`WASI_EADDRINUSE`**
 
     Address in use.
 
-- <a href="#errno.addrnotavail" name="errno.addrnotavail"></a>**`CLOUDABI_EADDRNOTAVAIL`**
+- <a href="#errno.addrnotavail" name="errno.addrnotavail"></a>**`WASI_EADDRNOTAVAIL`**
 
     Address not available.
 
-- <a href="#errno.afnosupport" name="errno.afnosupport"></a>**`CLOUDABI_EAFNOSUPPORT`**
+- <a href="#errno.afnosupport" name="errno.afnosupport"></a>**`WASI_EAFNOSUPPORT`**
 
     Address family not supported.
 
-- <a href="#errno.again" name="errno.again"></a>**`CLOUDABI_EAGAIN`**
+- <a href="#errno.again" name="errno.again"></a>**`WASI_EAGAIN`**
 
     Resource unavailable, or operation would block.
 
-- <a href="#errno.already" name="errno.already"></a>**`CLOUDABI_EALREADY`**
+- <a href="#errno.already" name="errno.already"></a>**`WASI_EALREADY`**
 
     Connection already in progress.
 
-- <a href="#errno.badf" name="errno.badf"></a>**`CLOUDABI_EBADF`**
+- <a href="#errno.badf" name="errno.badf"></a>**`WASI_EBADF`**
 
     Bad file descriptor.
 
-- <a href="#errno.badmsg" name="errno.badmsg"></a>**`CLOUDABI_EBADMSG`**
+- <a href="#errno.badmsg" name="errno.badmsg"></a>**`WASI_EBADMSG`**
 
     Bad message.
 
-- <a href="#errno.busy" name="errno.busy"></a>**`CLOUDABI_EBUSY`**
+- <a href="#errno.busy" name="errno.busy"></a>**`WASI_EBUSY`**
 
     Device or resource busy.
 
-- <a href="#errno.canceled" name="errno.canceled"></a>**`CLOUDABI_ECANCELED`**
+- <a href="#errno.canceled" name="errno.canceled"></a>**`WASI_ECANCELED`**
 
     Operation canceled.
 
-- <a href="#errno.child" name="errno.child"></a>**`CLOUDABI_ECHILD`**
+- <a href="#errno.child" name="errno.child"></a>**`WASI_ECHILD`**
 
     No child processes.
 
-- <a href="#errno.connaborted" name="errno.connaborted"></a>**`CLOUDABI_ECONNABORTED`**
+- <a href="#errno.connaborted" name="errno.connaborted"></a>**`WASI_ECONNABORTED`**
 
     Connection aborted.
 
-- <a href="#errno.connrefused" name="errno.connrefused"></a>**`CLOUDABI_ECONNREFUSED`**
+- <a href="#errno.connrefused" name="errno.connrefused"></a>**`WASI_ECONNREFUSED`**
 
     Connection refused.
 
-- <a href="#errno.connreset" name="errno.connreset"></a>**`CLOUDABI_ECONNRESET`**
+- <a href="#errno.connreset" name="errno.connreset"></a>**`WASI_ECONNRESET`**
 
     Connection reset.
 
-- <a href="#errno.deadlk" name="errno.deadlk"></a>**`CLOUDABI_EDEADLK`**
+- <a href="#errno.deadlk" name="errno.deadlk"></a>**`WASI_EDEADLK`**
 
     Resource deadlock would occur.
 
-- <a href="#errno.destaddrreq" name="errno.destaddrreq"></a>**`CLOUDABI_EDESTADDRREQ`**
+- <a href="#errno.destaddrreq" name="errno.destaddrreq"></a>**`WASI_EDESTADDRREQ`**
 
     Destination address required.
 
-- <a href="#errno.dom" name="errno.dom"></a>**`CLOUDABI_EDOM`**
+- <a href="#errno.dom" name="errno.dom"></a>**`WASI_EDOM`**
 
     Mathematics argument out of domain of function.
 
-- <a href="#errno.dquot" name="errno.dquot"></a>**`CLOUDABI_EDQUOT`**
+- <a href="#errno.dquot" name="errno.dquot"></a>**`WASI_EDQUOT`**
 
     Reserved.
 
-- <a href="#errno.exist" name="errno.exist"></a>**`CLOUDABI_EEXIST`**
+- <a href="#errno.exist" name="errno.exist"></a>**`WASI_EEXIST`**
 
     File exists.
 
-- <a href="#errno.fault" name="errno.fault"></a>**`CLOUDABI_EFAULT`**
+- <a href="#errno.fault" name="errno.fault"></a>**`WASI_EFAULT`**
 
     Bad address.
 
-- <a href="#errno.fbig" name="errno.fbig"></a>**`CLOUDABI_EFBIG`**
+- <a href="#errno.fbig" name="errno.fbig"></a>**`WASI_EFBIG`**
 
     File too large.
 
-- <a href="#errno.hostunreach" name="errno.hostunreach"></a>**`CLOUDABI_EHOSTUNREACH`**
+- <a href="#errno.hostunreach" name="errno.hostunreach"></a>**`WASI_EHOSTUNREACH`**
 
     Host is unreachable.
 
-- <a href="#errno.idrm" name="errno.idrm"></a>**`CLOUDABI_EIDRM`**
+- <a href="#errno.idrm" name="errno.idrm"></a>**`WASI_EIDRM`**
 
     Identifier removed.
 
-- <a href="#errno.ilseq" name="errno.ilseq"></a>**`CLOUDABI_EILSEQ`**
+- <a href="#errno.ilseq" name="errno.ilseq"></a>**`WASI_EILSEQ`**
 
     Illegal byte sequence.
 
-- <a href="#errno.inprogress" name="errno.inprogress"></a>**`CLOUDABI_EINPROGRESS`**
+- <a href="#errno.inprogress" name="errno.inprogress"></a>**`WASI_EINPROGRESS`**
 
     Operation in progress.
 
-- <a href="#errno.intr" name="errno.intr"></a>**`CLOUDABI_EINTR`**
+- <a href="#errno.intr" name="errno.intr"></a>**`WASI_EINTR`**
 
     Interrupted function.
 
-- <a href="#errno.inval" name="errno.inval"></a>**`CLOUDABI_EINVAL`**
+- <a href="#errno.inval" name="errno.inval"></a>**`WASI_EINVAL`**
 
     Invalid argument.
 
-- <a href="#errno.io" name="errno.io"></a>**`CLOUDABI_EIO`**
+- <a href="#errno.io" name="errno.io"></a>**`WASI_EIO`**
 
     I/O error.
 
-- <a href="#errno.isconn" name="errno.isconn"></a>**`CLOUDABI_EISCONN`**
+- <a href="#errno.isconn" name="errno.isconn"></a>**`WASI_EISCONN`**
 
     Socket is connected.
 
-- <a href="#errno.isdir" name="errno.isdir"></a>**`CLOUDABI_EISDIR`**
+- <a href="#errno.isdir" name="errno.isdir"></a>**`WASI_EISDIR`**
 
     Is a directory.
 
-- <a href="#errno.loop" name="errno.loop"></a>**`CLOUDABI_ELOOP`**
+- <a href="#errno.loop" name="errno.loop"></a>**`WASI_ELOOP`**
 
     Too many levels of symbolic links.
 
-- <a href="#errno.mfile" name="errno.mfile"></a>**`CLOUDABI_EMFILE`**
+- <a href="#errno.mfile" name="errno.mfile"></a>**`WASI_EMFILE`**
 
     File descriptor value too large.
 
-- <a href="#errno.mlink" name="errno.mlink"></a>**`CLOUDABI_EMLINK`**
+- <a href="#errno.mlink" name="errno.mlink"></a>**`WASI_EMLINK`**
 
     Too many links.
 
-- <a href="#errno.msgsize" name="errno.msgsize"></a>**`CLOUDABI_EMSGSIZE`**
+- <a href="#errno.msgsize" name="errno.msgsize"></a>**`WASI_EMSGSIZE`**
 
     Message too large.
 
-- <a href="#errno.multihop" name="errno.multihop"></a>**`CLOUDABI_EMULTIHOP`**
+- <a href="#errno.multihop" name="errno.multihop"></a>**`WASI_EMULTIHOP`**
 
     Reserved.
 
-- <a href="#errno.nametoolong" name="errno.nametoolong"></a>**`CLOUDABI_ENAMETOOLONG`**
+- <a href="#errno.nametoolong" name="errno.nametoolong"></a>**`WASI_ENAMETOOLONG`**
 
     Filename too long.
 
-- <a href="#errno.netdown" name="errno.netdown"></a>**`CLOUDABI_ENETDOWN`**
+- <a href="#errno.netdown" name="errno.netdown"></a>**`WASI_ENETDOWN`**
 
     Network is down.
 
-- <a href="#errno.netreset" name="errno.netreset"></a>**`CLOUDABI_ENETRESET`**
+- <a href="#errno.netreset" name="errno.netreset"></a>**`WASI_ENETRESET`**
 
     Connection aborted by network.
 
-- <a href="#errno.netunreach" name="errno.netunreach"></a>**`CLOUDABI_ENETUNREACH`**
+- <a href="#errno.netunreach" name="errno.netunreach"></a>**`WASI_ENETUNREACH`**
 
     Network unreachable.
 
-- <a href="#errno.nfile" name="errno.nfile"></a>**`CLOUDABI_ENFILE`**
+- <a href="#errno.nfile" name="errno.nfile"></a>**`WASI_ENFILE`**
 
     Too many files open in system.
 
-- <a href="#errno.nobufs" name="errno.nobufs"></a>**`CLOUDABI_ENOBUFS`**
+- <a href="#errno.nobufs" name="errno.nobufs"></a>**`WASI_ENOBUFS`**
 
     No buffer space available.
 
-- <a href="#errno.nodev" name="errno.nodev"></a>**`CLOUDABI_ENODEV`**
+- <a href="#errno.nodev" name="errno.nodev"></a>**`WASI_ENODEV`**
 
     No such device.
 
-- <a href="#errno.noent" name="errno.noent"></a>**`CLOUDABI_ENOENT`**
+- <a href="#errno.noent" name="errno.noent"></a>**`WASI_ENOENT`**
 
     No such file or directory.
 
-- <a href="#errno.noexec" name="errno.noexec"></a>**`CLOUDABI_ENOEXEC`**
+- <a href="#errno.noexec" name="errno.noexec"></a>**`WASI_ENOEXEC`**
 
     Executable file format error.
 
-- <a href="#errno.nolck" name="errno.nolck"></a>**`CLOUDABI_ENOLCK`**
+- <a href="#errno.nolck" name="errno.nolck"></a>**`WASI_ENOLCK`**
 
     No locks available.
 
-- <a href="#errno.nolink" name="errno.nolink"></a>**`CLOUDABI_ENOLINK`**
+- <a href="#errno.nolink" name="errno.nolink"></a>**`WASI_ENOLINK`**
 
     Reserved.
 
-- <a href="#errno.nomem" name="errno.nomem"></a>**`CLOUDABI_ENOMEM`**
+- <a href="#errno.nomem" name="errno.nomem"></a>**`WASI_ENOMEM`**
 
     Not enough space.
 
-- <a href="#errno.nomsg" name="errno.nomsg"></a>**`CLOUDABI_ENOMSG`**
+- <a href="#errno.nomsg" name="errno.nomsg"></a>**`WASI_ENOMSG`**
 
     No message of the desired type.
 
-- <a href="#errno.noprotoopt" name="errno.noprotoopt"></a>**`CLOUDABI_ENOPROTOOPT`**
+- <a href="#errno.noprotoopt" name="errno.noprotoopt"></a>**`WASI_ENOPROTOOPT`**
 
     Protocol not available.
 
-- <a href="#errno.nospc" name="errno.nospc"></a>**`CLOUDABI_ENOSPC`**
+- <a href="#errno.nospc" name="errno.nospc"></a>**`WASI_ENOSPC`**
 
     No space left on device.
 
-- <a href="#errno.nosys" name="errno.nosys"></a>**`CLOUDABI_ENOSYS`**
+- <a href="#errno.nosys" name="errno.nosys"></a>**`WASI_ENOSYS`**
 
     Function not supported.
 
-- <a href="#errno.notconn" name="errno.notconn"></a>**`CLOUDABI_ENOTCONN`**
+- <a href="#errno.notconn" name="errno.notconn"></a>**`WASI_ENOTCONN`**
 
     The socket is not connected.
 
-- <a href="#errno.notdir" name="errno.notdir"></a>**`CLOUDABI_ENOTDIR`**
+- <a href="#errno.notdir" name="errno.notdir"></a>**`WASI_ENOTDIR`**
 
     Not a directory or a symbolic link to a directory.
 
-- <a href="#errno.notempty" name="errno.notempty"></a>**`CLOUDABI_ENOTEMPTY`**
+- <a href="#errno.notempty" name="errno.notempty"></a>**`WASI_ENOTEMPTY`**
 
     Directory not empty.
 
-- <a href="#errno.notrecoverable" name="errno.notrecoverable"></a>**`CLOUDABI_ENOTRECOVERABLE`**
+- <a href="#errno.notrecoverable" name="errno.notrecoverable"></a>**`WASI_ENOTRECOVERABLE`**
 
     State not recoverable.
 
-- <a href="#errno.notsock" name="errno.notsock"></a>**`CLOUDABI_ENOTSOCK`**
+- <a href="#errno.notsock" name="errno.notsock"></a>**`WASI_ENOTSOCK`**
 
     Not a socket.
 
-- <a href="#errno.notsup" name="errno.notsup"></a>**`CLOUDABI_ENOTSUP`**
+- <a href="#errno.notsup" name="errno.notsup"></a>**`WASI_ENOTSUP`**
 
     Not supported, or operation not supported on socket.
 
-- <a href="#errno.notty" name="errno.notty"></a>**`CLOUDABI_ENOTTY`**
+- <a href="#errno.notty" name="errno.notty"></a>**`WASI_ENOTTY`**
 
     Inappropriate I/O control operation.
 
-- <a href="#errno.nxio" name="errno.nxio"></a>**`CLOUDABI_ENXIO`**
+- <a href="#errno.nxio" name="errno.nxio"></a>**`WASI_ENXIO`**
 
     No such device or address.
 
-- <a href="#errno.overflow" name="errno.overflow"></a>**`CLOUDABI_EOVERFLOW`**
+- <a href="#errno.overflow" name="errno.overflow"></a>**`WASI_EOVERFLOW`**
 
     Value too large to be stored in data type.
 
-- <a href="#errno.ownerdead" name="errno.ownerdead"></a>**`CLOUDABI_EOWNERDEAD`**
+- <a href="#errno.ownerdead" name="errno.ownerdead"></a>**`WASI_EOWNERDEAD`**
 
     Previous owner died.
 
-- <a href="#errno.perm" name="errno.perm"></a>**`CLOUDABI_EPERM`**
+- <a href="#errno.perm" name="errno.perm"></a>**`WASI_EPERM`**
 
     Operation not permitted.
 
-- <a href="#errno.pipe" name="errno.pipe"></a>**`CLOUDABI_EPIPE`**
+- <a href="#errno.pipe" name="errno.pipe"></a>**`WASI_EPIPE`**
 
     Broken pipe.
 
-- <a href="#errno.proto" name="errno.proto"></a>**`CLOUDABI_EPROTO`**
+- <a href="#errno.proto" name="errno.proto"></a>**`WASI_EPROTO`**
 
     Protocol error.
 
-- <a href="#errno.protonosupport" name="errno.protonosupport"></a>**`CLOUDABI_EPROTONOSUPPORT`**
+- <a href="#errno.protonosupport" name="errno.protonosupport"></a>**`WASI_EPROTONOSUPPORT`**
 
     Protocol not supported.
 
-- <a href="#errno.prototype" name="errno.prototype"></a>**`CLOUDABI_EPROTOTYPE`**
+- <a href="#errno.prototype" name="errno.prototype"></a>**`WASI_EPROTOTYPE`**
 
     Protocol wrong type for socket.
 
-- <a href="#errno.range" name="errno.range"></a>**`CLOUDABI_ERANGE`**
+- <a href="#errno.range" name="errno.range"></a>**`WASI_ERANGE`**
 
     Result too large.
 
-- <a href="#errno.rofs" name="errno.rofs"></a>**`CLOUDABI_EROFS`**
+- <a href="#errno.rofs" name="errno.rofs"></a>**`WASI_EROFS`**
 
     Read-only file system.
 
-- <a href="#errno.spipe" name="errno.spipe"></a>**`CLOUDABI_ESPIPE`**
+- <a href="#errno.spipe" name="errno.spipe"></a>**`WASI_ESPIPE`**
 
     Invalid seek.
 
-- <a href="#errno.srch" name="errno.srch"></a>**`CLOUDABI_ESRCH`**
+- <a href="#errno.srch" name="errno.srch"></a>**`WASI_ESRCH`**
 
     No such process.
 
-- <a href="#errno.stale" name="errno.stale"></a>**`CLOUDABI_ESTALE`**
+- <a href="#errno.stale" name="errno.stale"></a>**`WASI_ESTALE`**
 
     Reserved.
 
-- <a href="#errno.timedout" name="errno.timedout"></a>**`CLOUDABI_ETIMEDOUT`**
+- <a href="#errno.timedout" name="errno.timedout"></a>**`WASI_ETIMEDOUT`**
 
     Connection timed out.
 
-- <a href="#errno.txtbsy" name="errno.txtbsy"></a>**`CLOUDABI_ETXTBSY`**
+- <a href="#errno.txtbsy" name="errno.txtbsy"></a>**`WASI_ETXTBSY`**
 
     Text file busy.
 
-- <a href="#errno.xdev" name="errno.xdev"></a>**`CLOUDABI_EXDEV`**
+- <a href="#errno.xdev" name="errno.xdev"></a>**`WASI_EXDEV`**
 
     Cross-device link.
 
-- <a href="#errno.notcapable" name="errno.notcapable"></a>**`CLOUDABI_ENOTCAPABLE`**
+- <a href="#errno.notcapable" name="errno.notcapable"></a>**`WASI_ENOTCAPABLE`**
 
     Extension: Capabilities insufficient.
 
-### <a href="#event" name="event"></a>`cloudabi_event_t` (`struct`)
+### <a href="#event" name="event"></a>`wasi_event_t` (`struct`)
 
 An event that occurred.
 
@@ -1689,25 +1689,25 @@ Used by [`wasi_poll()`](#poll).
 
 Members:
 
-- <a href="#event.userdata" name="event.userdata"></a><code>[cloudabi\_userdata\_t](#userdata) <strong>userdata</strong></code>
+- <a href="#event.userdata" name="event.userdata"></a><code>[wasi\_userdata\_t](#userdata) <strong>userdata</strong></code>
 
     User-provided value that got attached to
-    [`cloudabi_subscription_t::userdata`](#subscription.userdata).
+    [`wasi_subscription_t::userdata`](#subscription.userdata).
 
-- <a href="#event.error" name="event.error"></a><code>[cloudabi\_errno\_t](#errno) <strong>error</strong></code>
+- <a href="#event.error" name="event.error"></a><code>[wasi\_errno\_t](#errno) <strong>error</strong></code>
 
     If non-zero, an error that occurred while processing
     the subscription request.
 
-- <a href="#event.type" name="event.type"></a><code>[cloudabi\_eventtype\_t](#eventtype) <strong>type</strong></code>
+- <a href="#event.type" name="event.type"></a><code>[wasi\_eventtype\_t](#eventtype) <strong>type</strong></code>
 
     The type of the event that occurred.
 
-- When `type` is [`CLOUDABI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`CLOUDABI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
+- When `type` is [`WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
 
     - <a href="#event.fd_readwrite" name="event.fd_readwrite"></a>**`fd_readwrite`**
 
-        - <a href="#event.fd_readwrite.nbytes" name="event.fd_readwrite.nbytes"></a><code>[cloudabi\_filesize\_t](#filesize) <strong>nbytes</strong></code>
+        - <a href="#event.fd_readwrite.nbytes" name="event.fd_readwrite.nbytes"></a><code>[wasi\_filesize\_t](#filesize) <strong>nbytes</strong></code>
 
             The number of bytes available
             for reading or writing.
@@ -1716,12 +1716,12 @@ Members:
 
             Obsolete.
 
-        - <a href="#event.fd_readwrite.flags" name="event.fd_readwrite.flags"></a><code>[cloudabi\_eventrwflags\_t](#eventrwflags) <strong>flags</strong></code>
+        - <a href="#event.fd_readwrite.flags" name="event.fd_readwrite.flags"></a><code>[wasi\_eventrwflags\_t](#eventrwflags) <strong>flags</strong></code>
 
             The state of the file
             descriptor.
 
-- When `type` is [`CLOUDABI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate):
+- When `type` is [`WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate):
 
     - <a href="#event.proc_terminate" name="event.proc_terminate"></a>**`proc_terminate`**
 
@@ -1729,7 +1729,7 @@ Members:
 
             Obsolete.
 
-        - <a href="#event.proc_terminate.signal" name="event.proc_terminate.signal"></a><code>[cloudabi\_signal\_t](#signal) <strong>signal</strong></code>
+        - <a href="#event.proc_terminate.signal" name="event.proc_terminate.signal"></a><code>[wasi\_signal\_t](#signal) <strong>signal</strong></code>
 
             If zero, the process has
             exited.
@@ -1737,77 +1737,77 @@ Members:
             condition causing it to
             terminated.
 
-        - <a href="#event.proc_terminate.exitcode" name="event.proc_terminate.exitcode"></a><code>[cloudabi\_exitcode\_t](#exitcode) <strong>exitcode</strong></code>
+        - <a href="#event.proc_terminate.exitcode" name="event.proc_terminate.exitcode"></a><code>[wasi\_exitcode\_t](#exitcode) <strong>exitcode</strong></code>
 
             If exited, the exit code of
             the process.
 
-### <a href="#eventrwflags" name="eventrwflags"></a>`cloudabi_eventrwflags_t` (`uint16_t` bitfield)
+### <a href="#eventrwflags" name="eventrwflags"></a>`wasi_eventrwflags_t` (`uint16_t` bitfield)
 
 The state of the file descriptor subscribed to with
-[`CLOUDABI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`CLOUDABI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
+[`WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
 
-Used by [`cloudabi_event_t`](#event).
+Used by [`wasi_event_t`](#event).
 
 Possible values:
 
-- <a href="#eventrwflags.hangup" name="eventrwflags.hangup"></a>**`CLOUDABI_EVENT_FD_READWRITE_HANGUP`**
+- <a href="#eventrwflags.hangup" name="eventrwflags.hangup"></a>**`WASI_EVENT_FD_READWRITE_HANGUP`**
 
     The peer of this socket has closed or disconnected.
 
-### <a href="#eventtype" name="eventtype"></a>`cloudabi_eventtype_t` (`uint8_t`)
+### <a href="#eventtype" name="eventtype"></a>`wasi_eventtype_t` (`uint8_t`)
 
 Type of a subscription to an event or its occurrence.
 
-Used by [`cloudabi_event_t`](#event) and [`cloudabi_subscription_t`](#subscription).
+Used by [`wasi_event_t`](#event) and [`wasi_subscription_t`](#subscription).
 
 Possible values:
 
-- <a href="#eventtype.clock" name="eventtype.clock"></a>**`CLOUDABI_EVENTTYPE_CLOCK`**
+- <a href="#eventtype.clock" name="eventtype.clock"></a>**`WASI_EVENTTYPE_CLOCK`**
 
-    The time value of clock [`cloudabi_subscription_t::clock.clock_id`](#subscription.clock.clock_id)
-    has reached timestamp [`cloudabi_subscription_t::clock.timeout`](#subscription.clock.timeout).
+    The time value of clock [`wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id)
+    has reached timestamp [`wasi_subscription_t::clock.timeout`](#subscription.clock.timeout).
 
-- <a href="#eventtype.condvar" name="eventtype.condvar"></a>**`CLOUDABI_EVENTTYPE_CONDVAR`**
+- <a href="#eventtype.condvar" name="eventtype.condvar"></a>**`WASI_EVENTTYPE_CONDVAR`**
 
-    Condition variable [`cloudabi_subscription_t::condvar.condvar`](#subscription.condvar.condvar) has
-    been woken up and [`cloudabi_subscription_t::condvar.lock`](#subscription.condvar.lock) has been
+    Condition variable [`wasi_subscription_t::condvar.condvar`](#subscription.condvar.condvar) has
+    been woken up and [`wasi_subscription_t::condvar.lock`](#subscription.condvar.lock) has been
     acquired for writing.
 
-- <a href="#eventtype.fd_read" name="eventtype.fd_read"></a>**`CLOUDABI_EVENTTYPE_FD_READ`**
+- <a href="#eventtype.fd_read" name="eventtype.fd_read"></a>**`WASI_EVENTTYPE_FD_READ`**
 
-    File descriptor [`cloudabi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
+    File descriptor [`wasi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
     data available for reading. This event always triggers
     for regular files.
 
-- <a href="#eventtype.fd_write" name="eventtype.fd_write"></a>**`CLOUDABI_EVENTTYPE_FD_WRITE`**
+- <a href="#eventtype.fd_write" name="eventtype.fd_write"></a>**`WASI_EVENTTYPE_FD_WRITE`**
 
-    File descriptor [`cloudabi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
+    File descriptor [`wasi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
     capacity available for writing. This event always
     triggers for regular files.
 
-- <a href="#eventtype.lock_rdlock" name="eventtype.lock_rdlock"></a>**`CLOUDABI_EVENTTYPE_LOCK_RDLOCK`**
+- <a href="#eventtype.lock_rdlock" name="eventtype.lock_rdlock"></a>**`WASI_EVENTTYPE_LOCK_RDLOCK`**
 
-    Lock [`cloudabi_subscription_t::lock.lock`](#subscription.lock.lock) has been acquired for
+    Lock [`wasi_subscription_t::lock.lock`](#subscription.lock.lock) has been acquired for
     reading.
 
-- <a href="#eventtype.lock_wrlock" name="eventtype.lock_wrlock"></a>**`CLOUDABI_EVENTTYPE_LOCK_WRLOCK`**
+- <a href="#eventtype.lock_wrlock" name="eventtype.lock_wrlock"></a>**`WASI_EVENTTYPE_LOCK_WRLOCK`**
 
-    Lock [`cloudabi_subscription_t::lock.lock`](#subscription.lock.lock) has been acquired for
+    Lock [`wasi_subscription_t::lock.lock`](#subscription.lock.lock) has been acquired for
     writing.
 
-- <a href="#eventtype.proc_terminate" name="eventtype.proc_terminate"></a>**`CLOUDABI_EVENTTYPE_PROC_TERMINATE`**
+- <a href="#eventtype.proc_terminate" name="eventtype.proc_terminate"></a>**`WASI_EVENTTYPE_PROC_TERMINATE`**
 
     The process associated with process descriptor
-    [`cloudabi_subscription_t::proc_terminate.fd`](#subscription.proc_terminate.fd) has terminated.
+    [`wasi_subscription_t::proc_terminate.fd`](#subscription.proc_terminate.fd) has terminated.
 
-### <a href="#exitcode" name="exitcode"></a>`cloudabi_exitcode_t` (`uint32_t`)
+### <a href="#exitcode" name="exitcode"></a>`wasi_exitcode_t` (`uint32_t`)
 
 Exit code generated by a process when exiting.
 
-Used by [`cloudabi_event_t`](#event) and [`wasi_proc_exit()`](#proc_exit).
+Used by [`wasi_event_t`](#event) and [`wasi_proc_exit()`](#proc_exit).
 
-### <a href="#fd" name="fd"></a>`cloudabi_fd_t` (`uint32_t`)
+### <a href="#fd" name="fd"></a>`wasi_fd_t` (`uint32_t`)
 
 A file descriptor number.
 
@@ -1818,46 +1818,46 @@ file descriptors in ascending order.
 
 Special values:
 
-- <a href="#fd.map_anon_fd" name="fd.map_anon_fd"></a>**`CLOUDABI_MAP_ANON_FD`**
+- <a href="#fd.map_anon_fd" name="fd.map_anon_fd"></a>**`WASI_MAP_ANON_FD`**
 
     Passed to [`wasi_mem_map()`](#mem_map) when creating a mapping to
     anonymous memory.
 
-### <a href="#fdflags" name="fdflags"></a>`cloudabi_fdflags_t` (`uint16_t` bitfield)
+### <a href="#fdflags" name="fdflags"></a>`wasi_fdflags_t` (`uint16_t` bitfield)
 
 File descriptor flags.
 
-Used by [`cloudabi_fdstat_t`](#fdstat).
+Used by [`wasi_fdstat_t`](#fdstat).
 
 Possible values:
 
-- <a href="#fdflags.append" name="fdflags.append"></a>**`CLOUDABI_FDFLAG_APPEND`**
+- <a href="#fdflags.append" name="fdflags.append"></a>**`WASI_FDFLAG_APPEND`**
 
     Append mode: Data written to the file is always
     appended to the file's end.
 
-- <a href="#fdflags.dsync" name="fdflags.dsync"></a>**`CLOUDABI_FDFLAG_DSYNC`**
+- <a href="#fdflags.dsync" name="fdflags.dsync"></a>**`WASI_FDFLAG_DSYNC`**
 
     Write according to synchronized I/O data integrity
     completion. Only the data stored in the file is
     synchronized.
 
-- <a href="#fdflags.nonblock" name="fdflags.nonblock"></a>**`CLOUDABI_FDFLAG_NONBLOCK`**
+- <a href="#fdflags.nonblock" name="fdflags.nonblock"></a>**`WASI_FDFLAG_NONBLOCK`**
 
     Non-blocking mode.
 
-- <a href="#fdflags.rsync" name="fdflags.rsync"></a>**`CLOUDABI_FDFLAG_RSYNC`**
+- <a href="#fdflags.rsync" name="fdflags.rsync"></a>**`WASI_FDFLAG_RSYNC`**
 
     Synchronized read I/O operations.
 
-- <a href="#fdflags.sync" name="fdflags.sync"></a>**`CLOUDABI_FDFLAG_SYNC`**
+- <a href="#fdflags.sync" name="fdflags.sync"></a>**`WASI_FDFLAG_SYNC`**
 
     Write according to synchronized I/O file integrity
     completion. In addition to synchronizing the data
     stored in the file, the system may also synchronously
     update the file's metadata.
 
-### <a href="#fdsflags" name="fdsflags"></a>`cloudabi_fdsflags_t` (`uint16_t` bitfield)
+### <a href="#fdsflags" name="fdsflags"></a>`wasi_fdsflags_t` (`uint16_t` bitfield)
 
 Which file descriptor attributes to adjust.
 
@@ -1865,18 +1865,18 @@ Used by [`wasi_fd_stat_put()`](#fd_stat_put).
 
 Possible values:
 
-- <a href="#fdsflags.flags" name="fdsflags.flags"></a>**`CLOUDABI_FDSTAT_FLAGS`**
+- <a href="#fdsflags.flags" name="fdsflags.flags"></a>**`WASI_FDSTAT_FLAGS`**
 
     Adjust the file descriptor flags stored in
-    [`cloudabi_fdstat_t::fs_flags`](#fdstat.fs_flags).
+    [`wasi_fdstat_t::fs_flags`](#fdstat.fs_flags).
 
-- <a href="#fdsflags.rights" name="fdsflags.rights"></a>**`CLOUDABI_FDSTAT_RIGHTS`**
+- <a href="#fdsflags.rights" name="fdsflags.rights"></a>**`WASI_FDSTAT_RIGHTS`**
 
     Restrict the rights of the file descriptor to the
-    rights stored in [`cloudabi_fdstat_t::fs_rights_base`](#fdstat.fs_rights_base) and
-    [`cloudabi_fdstat_t::fs_rights_inheriting`](#fdstat.fs_rights_inheriting).
+    rights stored in [`wasi_fdstat_t::fs_rights_base`](#fdstat.fs_rights_base) and
+    [`wasi_fdstat_t::fs_rights_inheriting`](#fdstat.fs_rights_inheriting).
 
-### <a href="#fdstat" name="fdstat"></a>`cloudabi_fdstat_t` (`struct`)
+### <a href="#fdstat" name="fdstat"></a>`wasi_fdstat_t` (`struct`)
 
 File descriptor attributes.
 
@@ -1884,37 +1884,37 @@ Used by [`wasi_fd_stat_get()`](#fd_stat_get), [`wasi_fd_stat_put()`](#fd_stat_pu
 
 Members:
 
-- <a href="#fdstat.fs_filetype" name="fdstat.fs_filetype"></a><code>[cloudabi\_filetype\_t](#filetype) <strong>fs\_filetype</strong></code>
+- <a href="#fdstat.fs_filetype" name="fdstat.fs_filetype"></a><code>[wasi\_filetype\_t](#filetype) <strong>fs\_filetype</strong></code>
 
     File type.
 
-- <a href="#fdstat.fs_flags" name="fdstat.fs_flags"></a><code>[cloudabi\_fdflags\_t](#fdflags) <strong>fs\_flags</strong></code>
+- <a href="#fdstat.fs_flags" name="fdstat.fs_flags"></a><code>[wasi\_fdflags\_t](#fdflags) <strong>fs\_flags</strong></code>
 
     File descriptor flags.
 
-- <a href="#fdstat.fs_rights_base" name="fdstat.fs_rights_base"></a><code>[cloudabi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code>
+- <a href="#fdstat.fs_rights_base" name="fdstat.fs_rights_base"></a><code>[wasi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code>
 
     Rights that apply to this file descriptor.
 
-- <a href="#fdstat.fs_rights_inheriting" name="fdstat.fs_rights_inheriting"></a><code>[cloudabi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
+- <a href="#fdstat.fs_rights_inheriting" name="fdstat.fs_rights_inheriting"></a><code>[wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
 
     Maximum set of rights that can be installed on new
     file descriptors that are created through this file
     descriptor, e.g., through [`wasi_file_open()`](#file_open).
 
-### <a href="#filedelta" name="filedelta"></a>`cloudabi_filedelta_t` (`int64_t`)
+### <a href="#filedelta" name="filedelta"></a>`wasi_filedelta_t` (`int64_t`)
 
 Relative offset within a file.
 
 Used by [`wasi_fd_seek()`](#fd_seek).
 
-### <a href="#filesize" name="filesize"></a>`cloudabi_filesize_t` (`uint64_t`)
+### <a href="#filesize" name="filesize"></a>`wasi_filesize_t` (`uint64_t`)
 
 Non-negative file size or length of a region within a file.
 
-Used by [`cloudabi_event_t`](#event), [`cloudabi_filestat_t`](#filestat), [`wasi_fd_pread()`](#fd_pread), [`wasi_fd_pwrite()`](#fd_pwrite), [`wasi_fd_seek()`](#fd_seek), [`wasi_file_advise()`](#file_advise), [`wasi_file_allocate()`](#file_allocate), and [`wasi_mem_map()`](#mem_map).
+Used by [`wasi_event_t`](#event), [`wasi_filestat_t`](#filestat), [`wasi_fd_pread()`](#fd_pread), [`wasi_fd_pwrite()`](#fd_pwrite), [`wasi_fd_seek()`](#fd_seek), [`wasi_file_advise()`](#file_advise), [`wasi_file_allocate()`](#file_allocate), and [`wasi_mem_map()`](#mem_map).
 
-### <a href="#filestat" name="filestat"></a>`cloudabi_filestat_t` (`struct`)
+### <a href="#filestat" name="filestat"></a>`wasi_filestat_t` (`struct`)
 
 File attributes.
 
@@ -1922,96 +1922,96 @@ Used by [`wasi_file_stat_fget()`](#file_stat_fget), [`wasi_file_stat_fput()`](#f
 
 Members:
 
-- <a href="#filestat.st_dev" name="filestat.st_dev"></a><code>[cloudabi\_device\_t](#device) <strong>st\_dev</strong></code>
+- <a href="#filestat.st_dev" name="filestat.st_dev"></a><code>[wasi\_device\_t](#device) <strong>st\_dev</strong></code>
 
     Device ID of device containing the file.
 
-- <a href="#filestat.st_ino" name="filestat.st_ino"></a><code>[cloudabi\_inode\_t](#inode) <strong>st\_ino</strong></code>
+- <a href="#filestat.st_ino" name="filestat.st_ino"></a><code>[wasi\_inode\_t](#inode) <strong>st\_ino</strong></code>
 
     File serial number.
 
-- <a href="#filestat.st_filetype" name="filestat.st_filetype"></a><code>[cloudabi\_filetype\_t](#filetype) <strong>st\_filetype</strong></code>
+- <a href="#filestat.st_filetype" name="filestat.st_filetype"></a><code>[wasi\_filetype\_t](#filetype) <strong>st\_filetype</strong></code>
 
     File type.
 
-- <a href="#filestat.st_nlink" name="filestat.st_nlink"></a><code>[cloudabi\_linkcount\_t](#linkcount) <strong>st\_nlink</strong></code>
+- <a href="#filestat.st_nlink" name="filestat.st_nlink"></a><code>[wasi\_linkcount\_t](#linkcount) <strong>st\_nlink</strong></code>
 
     Number of hard links to the file.
 
-- <a href="#filestat.st_size" name="filestat.st_size"></a><code>[cloudabi\_filesize\_t](#filesize) <strong>st\_size</strong></code>
+- <a href="#filestat.st_size" name="filestat.st_size"></a><code>[wasi\_filesize\_t](#filesize) <strong>st\_size</strong></code>
 
     For regular files, the file size in bytes. For
     symbolic links, the length in bytes of the pathname
     contained in the symbolic link.
 
-- <a href="#filestat.st_atim" name="filestat.st_atim"></a><code>[cloudabi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
+- <a href="#filestat.st_atim" name="filestat.st_atim"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
 
     Last data access timestamp.
 
-- <a href="#filestat.st_mtim" name="filestat.st_mtim"></a><code>[cloudabi\_timestamp\_t](#timestamp) <strong>st\_mtim</strong></code>
+- <a href="#filestat.st_mtim" name="filestat.st_mtim"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>st\_mtim</strong></code>
 
     Last data modification timestamp.
 
-- <a href="#filestat.st_ctim" name="filestat.st_ctim"></a><code>[cloudabi\_timestamp\_t](#timestamp) <strong>st\_ctim</strong></code>
+- <a href="#filestat.st_ctim" name="filestat.st_ctim"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>st\_ctim</strong></code>
 
     Last file status change timestamp.
 
-### <a href="#filetype" name="filetype"></a>`cloudabi_filetype_t` (`uint8_t`)
+### <a href="#filetype" name="filetype"></a>`wasi_filetype_t` (`uint8_t`)
 
 The type of a file descriptor or file.
 
-Used by [`cloudabi_dirent_t`](#dirent), [`cloudabi_fdstat_t`](#fdstat), [`cloudabi_filestat_t`](#filestat), [`wasi_fd_create1()`](#fd_create1), [`wasi_fd_create2()`](#fd_create2), and [`wasi_file_create()`](#file_create).
+Used by [`wasi_dirent_t`](#dirent), [`wasi_fdstat_t`](#fdstat), [`wasi_filestat_t`](#filestat), [`wasi_fd_create1()`](#fd_create1), [`wasi_fd_create2()`](#fd_create2), and [`wasi_file_create()`](#file_create).
 
 Possible values:
 
-- <a href="#filetype.unknown" name="filetype.unknown"></a>**`CLOUDABI_FILETYPE_UNKNOWN`**
+- <a href="#filetype.unknown" name="filetype.unknown"></a>**`WASI_FILETYPE_UNKNOWN`**
 
     The type of the file descriptor or file is unknown or
     is different from any of the other types specified.
 
-- <a href="#filetype.block_device" name="filetype.block_device"></a>**`CLOUDABI_FILETYPE_BLOCK_DEVICE`**
+- <a href="#filetype.block_device" name="filetype.block_device"></a>**`WASI_FILETYPE_BLOCK_DEVICE`**
 
     The file descriptor or file refers to a block device
     inode.
 
-- <a href="#filetype.character_device" name="filetype.character_device"></a>**`CLOUDABI_FILETYPE_CHARACTER_DEVICE`**
+- <a href="#filetype.character_device" name="filetype.character_device"></a>**`WASI_FILETYPE_CHARACTER_DEVICE`**
 
     The file descriptor or file refers to a character
     device inode.
 
-- <a href="#filetype.directory" name="filetype.directory"></a>**`CLOUDABI_FILETYPE_DIRECTORY`**
+- <a href="#filetype.directory" name="filetype.directory"></a>**`WASI_FILETYPE_DIRECTORY`**
 
     The file descriptor or file refers to a directory
     inode.
 
-- <a href="#filetype.process" name="filetype.process"></a>**`CLOUDABI_FILETYPE_PROCESS`**
+- <a href="#filetype.process" name="filetype.process"></a>**`WASI_FILETYPE_PROCESS`**
 
     The file descriptor refers to a process handle.
 
-- <a href="#filetype.regular_file" name="filetype.regular_file"></a>**`CLOUDABI_FILETYPE_REGULAR_FILE`**
+- <a href="#filetype.regular_file" name="filetype.regular_file"></a>**`WASI_FILETYPE_REGULAR_FILE`**
 
     The file descriptor or file refers to a regular file
     inode.
 
-- <a href="#filetype.shared_memory" name="filetype.shared_memory"></a>**`CLOUDABI_FILETYPE_SHARED_MEMORY`**
+- <a href="#filetype.shared_memory" name="filetype.shared_memory"></a>**`WASI_FILETYPE_SHARED_MEMORY`**
 
     The file descriptor refers to a shared memory object.
 
-- <a href="#filetype.socket_dgram" name="filetype.socket_dgram"></a>**`CLOUDABI_FILETYPE_SOCKET_DGRAM`**
+- <a href="#filetype.socket_dgram" name="filetype.socket_dgram"></a>**`WASI_FILETYPE_SOCKET_DGRAM`**
 
     The file descriptor or file refers to a datagram
     socket.
 
-- <a href="#filetype.socket_stream" name="filetype.socket_stream"></a>**`CLOUDABI_FILETYPE_SOCKET_STREAM`**
+- <a href="#filetype.socket_stream" name="filetype.socket_stream"></a>**`WASI_FILETYPE_SOCKET_STREAM`**
 
     The file descriptor or file refers to a byte-stream
     socket.
 
-- <a href="#filetype.symbolic_link" name="filetype.symbolic_link"></a>**`CLOUDABI_FILETYPE_SYMBOLIC_LINK`**
+- <a href="#filetype.symbolic_link" name="filetype.symbolic_link"></a>**`WASI_FILETYPE_SYMBOLIC_LINK`**
 
     The file refers to a symbolic link inode.
 
-### <a href="#fsflags" name="fsflags"></a>`cloudabi_fsflags_t` (`uint16_t` bitfield)
+### <a href="#fsflags" name="fsflags"></a>`wasi_fsflags_t` (`uint16_t` bitfield)
 
 Which file attributes to adjust.
 
@@ -2019,42 +2019,42 @@ Used by [`wasi_file_stat_fput()`](#file_stat_fput) and [`wasi_file_stat_put()`](
 
 Possible values:
 
-- <a href="#fsflags.atim" name="fsflags.atim"></a>**`CLOUDABI_FILESTAT_ATIM`**
+- <a href="#fsflags.atim" name="fsflags.atim"></a>**`WASI_FILESTAT_ATIM`**
 
     Adjust the last data access timestamp to the value
-    stored in [`cloudabi_filestat_t::st_atim`](#filestat.st_atim).
+    stored in [`wasi_filestat_t::st_atim`](#filestat.st_atim).
 
-- <a href="#fsflags.atim_now" name="fsflags.atim_now"></a>**`CLOUDABI_FILESTAT_ATIM_NOW`**
+- <a href="#fsflags.atim_now" name="fsflags.atim_now"></a>**`WASI_FILESTAT_ATIM_NOW`**
 
     Adjust the last data access timestamp to the time
-    of clock [`CLOUDABI_CLOCK_REALTIME`](#clockid.realtime).
+    of clock [`WASI_CLOCK_REALTIME`](#clockid.realtime).
 
-- <a href="#fsflags.mtim" name="fsflags.mtim"></a>**`CLOUDABI_FILESTAT_MTIM`**
-
-    Adjust the last data modification timestamp to the
-    value stored in [`cloudabi_filestat_t::st_mtim`](#filestat.st_mtim).
-
-- <a href="#fsflags.mtim_now" name="fsflags.mtim_now"></a>**`CLOUDABI_FILESTAT_MTIM_NOW`**
+- <a href="#fsflags.mtim" name="fsflags.mtim"></a>**`WASI_FILESTAT_MTIM`**
 
     Adjust the last data modification timestamp to the
-    time of clock [`CLOUDABI_CLOCK_REALTIME`](#clockid.realtime).
+    value stored in [`wasi_filestat_t::st_mtim`](#filestat.st_mtim).
 
-- <a href="#fsflags.size" name="fsflags.size"></a>**`CLOUDABI_FILESTAT_SIZE`**
+- <a href="#fsflags.mtim_now" name="fsflags.mtim_now"></a>**`WASI_FILESTAT_MTIM_NOW`**
+
+    Adjust the last data modification timestamp to the
+    time of clock [`WASI_CLOCK_REALTIME`](#clockid.realtime).
+
+- <a href="#fsflags.size" name="fsflags.size"></a>**`WASI_FILESTAT_SIZE`**
 
     Truncate or extend the file to the size stored in
-    [`cloudabi_filestat_t::st_size`](#filestat.st_size).
+    [`wasi_filestat_t::st_size`](#filestat.st_size).
 
-### <a href="#inode" name="inode"></a>`cloudabi_inode_t` (`uint64_t`)
+### <a href="#inode" name="inode"></a>`wasi_inode_t` (`uint64_t`)
 
 File serial number that is unique within its file system.
 
-Used by [`cloudabi_dirent_t`](#dirent) and [`cloudabi_filestat_t`](#filestat).
+Used by [`wasi_dirent_t`](#dirent) and [`wasi_filestat_t`](#filestat).
 
-### <a href="#iovec" name="iovec"></a>`cloudabi_iovec_t` (`struct`)
+### <a href="#iovec" name="iovec"></a>`wasi_iovec_t` (`struct`)
 
 A region of memory for scatter/gather reads.
 
-Used by [`cloudabi_recv_in_t`](#recv_in), [`wasi_fd_pread()`](#fd_pread), and [`wasi_fd_read()`](#fd_read).
+Used by [`wasi_recv_in_t`](#recv_in), [`wasi_fd_pread()`](#fd_pread), and [`wasi_fd_read()`](#fd_read).
 
 Members:
 
@@ -2062,27 +2062,27 @@ Members:
 
     The address and length of the buffer to be filled.
 
-### <a href="#linkcount" name="linkcount"></a>`cloudabi_linkcount_t` (`uint32_t`)
+### <a href="#linkcount" name="linkcount"></a>`wasi_linkcount_t` (`uint32_t`)
 
 Number of hard links to an inode.
 
-Used by [`cloudabi_filestat_t`](#filestat).
+Used by [`wasi_filestat_t`](#filestat).
 
-### <a href="#lock" name="lock"></a>`cloudabi_lock_t` (`uint32_t`)
+### <a href="#lock" name="lock"></a>`wasi_lock_t` (`uint32_t`)
 
 A userspace read-recursive readers-writer lock, similar to a
 Linux futex or a FreeBSD umtx.
 
-Used by [`cloudabi_subscription_t`](#subscription), [`wasi_lock_unlock()`](#lock_unlock), and [`wasi_thread_exit()`](#thread_exit).
+Used by [`wasi_subscription_t`](#subscription), [`wasi_lock_unlock()`](#lock_unlock), and [`wasi_thread_exit()`](#thread_exit).
 
 Special values:
 
-- <a href="#lock.unlocked" name="lock.unlocked"></a>**`CLOUDABI_LOCK_UNLOCKED`**
+- <a href="#lock.unlocked" name="lock.unlocked"></a>**`WASI_LOCK_UNLOCKED`**
 
     Value indicating that the lock is in its initial
     unlocked state.
 
-- <a href="#lock.wrlocked" name="lock.wrlocked"></a>**`CLOUDABI_LOCK_WRLOCKED`**
+- <a href="#lock.wrlocked" name="lock.wrlocked"></a>**`WASI_LOCK_WRLOCKED`**
 
     Bitmask indicating that the lock is write-locked. If
     set, the lower 30 bits of the lock contain the
@@ -2090,7 +2090,7 @@ Special values:
     Otherwise, the lower 30 bits of the lock contain the
     number of acquired read locks.
 
-- <a href="#lock.kernel_managed" name="lock.kernel_managed"></a>**`CLOUDABI_LOCK_KERNEL_MANAGED`**
+- <a href="#lock.kernel_managed" name="lock.kernel_managed"></a>**`WASI_LOCK_KERNEL_MANAGED`**
 
     Bitmask indicating that the lock is either read locked
     or write locked, and that one or more threads have
@@ -2106,13 +2106,13 @@ Special values:
     preferred to suspend execution, as this prevents
     starvation of writers.
 
-- <a href="#lock.bogus" name="lock.bogus"></a>**`CLOUDABI_LOCK_BOGUS`**
+- <a href="#lock.bogus" name="lock.bogus"></a>**`WASI_LOCK_BOGUS`**
 
     Value indicating that the lock is in an incorrect
     state. A lock cannot be in its initial unlocked state,
     while also managed by the kernel.
 
-### <a href="#lookup" name="lookup"></a>`cloudabi_lookup_t` (`struct`)
+### <a href="#lookup" name="lookup"></a>`wasi_lookup_t` (`struct`)
 
 Path lookup properties.
 
@@ -2120,30 +2120,30 @@ Used by [`wasi_file_link()`](#file_link), [`wasi_file_open()`](#file_open), [`wa
 
 Members:
 
-- <a href="#lookup.fd" name="lookup.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#lookup.fd" name="lookup.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution of the
     path starts.
 
-- <a href="#lookup.flags" name="lookup.flags"></a><code>[cloudabi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
+- <a href="#lookup.flags" name="lookup.flags"></a><code>[wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
 
     Flags determining the method of how the path is
     resolved.
 
-### <a href="#lookupflags" name="lookupflags"></a>`cloudabi_lookupflags_t` (`uint32_t` bitfield)
+### <a href="#lookupflags" name="lookupflags"></a>`wasi_lookupflags_t` (`uint32_t` bitfield)
 
 Flags determining the method of how paths are resolved.
 
-Used by [`cloudabi_lookup_t`](#lookup).
+Used by [`wasi_lookup_t`](#lookup).
 
 Possible values:
 
-- <a href="#lookupflags.symlink_follow" name="lookupflags.symlink_follow"></a>**`CLOUDABI_LOOKUP_SYMLINK_FOLLOW`**
+- <a href="#lookupflags.symlink_follow" name="lookupflags.symlink_follow"></a>**`WASI_LOOKUP_SYMLINK_FOLLOW`**
 
     As long as the resolved path corresponds to a symbolic
     link, it is expanded.
 
-### <a href="#mflags" name="mflags"></a>`cloudabi_mflags_t` (`uint8_t` bitfield)
+### <a href="#mflags" name="mflags"></a>`wasi_mflags_t` (`uint8_t` bitfield)
 
 Memory mapping flags.
 
@@ -2151,27 +2151,27 @@ Used by [`wasi_mem_map()`](#mem_map).
 
 Possible values:
 
-- <a href="#mflags.anon" name="mflags.anon"></a>**`CLOUDABI_MAP_ANON`**
+- <a href="#mflags.anon" name="mflags.anon"></a>**`WASI_MAP_ANON`**
 
     Instead of mapping the contents of the file provided,
     create a mapping to anonymous memory. The file
-    descriptor argument must be set to [`CLOUDABI_MAP_ANON_FD`](#fd.map_anon_fd),
+    descriptor argument must be set to [`WASI_MAP_ANON_FD`](#fd.map_anon_fd),
     and the offset must be set to zero.
 
-- <a href="#mflags.fixed" name="mflags.fixed"></a>**`CLOUDABI_MAP_FIXED`**
+- <a href="#mflags.fixed" name="mflags.fixed"></a>**`WASI_MAP_FIXED`**
 
     Require that the mapping is performed at the base
     address provided.
 
-- <a href="#mflags.private" name="mflags.private"></a>**`CLOUDABI_MAP_PRIVATE`**
+- <a href="#mflags.private" name="mflags.private"></a>**`WASI_MAP_PRIVATE`**
 
     Changes are private.
 
-- <a href="#mflags.shared" name="mflags.shared"></a>**`CLOUDABI_MAP_SHARED`**
+- <a href="#mflags.shared" name="mflags.shared"></a>**`WASI_MAP_SHARED`**
 
     Changes are shared.
 
-### <a href="#mprot" name="mprot"></a>`cloudabi_mprot_t` (`uint8_t` bitfield)
+### <a href="#mprot" name="mprot"></a>`wasi_mprot_t` (`uint8_t` bitfield)
 
 Memory page protection options.
 
@@ -2182,19 +2182,19 @@ Used by [`wasi_mem_map()`](#mem_map) and [`wasi_mem_protect()`](#mem_protect).
 
 Possible values:
 
-- <a href="#mprot.exec" name="mprot.exec"></a>**`CLOUDABI_PROT_EXEC`**
+- <a href="#mprot.exec" name="mprot.exec"></a>**`WASI_PROT_EXEC`**
 
     Page can be executed.
 
-- <a href="#mprot.write" name="mprot.write"></a>**`CLOUDABI_PROT_WRITE`**
+- <a href="#mprot.write" name="mprot.write"></a>**`WASI_PROT_WRITE`**
 
     Page can be written.
 
-- <a href="#mprot.read" name="mprot.read"></a>**`CLOUDABI_PROT_READ`**
+- <a href="#mprot.read" name="mprot.read"></a>**`WASI_PROT_READ`**
 
     Page can be read.
 
-### <a href="#msflags" name="msflags"></a>`cloudabi_msflags_t` (`uint8_t` bitfield)
+### <a href="#msflags" name="msflags"></a>`wasi_msflags_t` (`uint8_t` bitfield)
 
 Methods of synchronizing memory with physical storage.
 
@@ -2202,78 +2202,78 @@ Used by [`wasi_mem_sync()`](#mem_sync).
 
 Possible values:
 
-- <a href="#msflags.async" name="msflags.async"></a>**`CLOUDABI_MS_ASYNC`**
+- <a href="#msflags.async" name="msflags.async"></a>**`WASI_MS_ASYNC`**
 
     Perform asynchronous writes.
 
-- <a href="#msflags.invalidate" name="msflags.invalidate"></a>**`CLOUDABI_MS_INVALIDATE`**
+- <a href="#msflags.invalidate" name="msflags.invalidate"></a>**`WASI_MS_INVALIDATE`**
 
     Invalidate cached data.
 
-- <a href="#msflags.sync" name="msflags.sync"></a>**`CLOUDABI_MS_SYNC`**
+- <a href="#msflags.sync" name="msflags.sync"></a>**`WASI_MS_SYNC`**
 
     Perform synchronous writes.
 
-### <a href="#nthreads" name="nthreads"></a>`cloudabi_nthreads_t` (`uint32_t`)
+### <a href="#nthreads" name="nthreads"></a>`wasi_nthreads_t` (`uint32_t`)
 
 Specifies the number of threads sleeping on a condition
 variable that should be woken up.
 
 Used by [`wasi_condvar_signal()`](#condvar_signal).
 
-### <a href="#oflags" name="oflags"></a>`cloudabi_oflags_t` (`uint16_t` bitfield)
+### <a href="#oflags" name="oflags"></a>`wasi_oflags_t` (`uint16_t` bitfield)
 
 Open flags used by [`wasi_file_open()`](#file_open).
 
 Possible values:
 
-- <a href="#oflags.creat" name="oflags.creat"></a>**`CLOUDABI_O_CREAT`**
+- <a href="#oflags.creat" name="oflags.creat"></a>**`WASI_O_CREAT`**
 
     Create file if it does not exist.
 
-- <a href="#oflags.directory" name="oflags.directory"></a>**`CLOUDABI_O_DIRECTORY`**
+- <a href="#oflags.directory" name="oflags.directory"></a>**`WASI_O_DIRECTORY`**
 
     Fail if not a directory.
 
-- <a href="#oflags.excl" name="oflags.excl"></a>**`CLOUDABI_O_EXCL`**
+- <a href="#oflags.excl" name="oflags.excl"></a>**`WASI_O_EXCL`**
 
     Fail if file already exists.
 
-- <a href="#oflags.trunc" name="oflags.trunc"></a>**`CLOUDABI_O_TRUNC`**
+- <a href="#oflags.trunc" name="oflags.trunc"></a>**`WASI_O_TRUNC`**
 
     Truncate file to size 0.
 
-### <a href="#processentry" name="processentry"></a>`cloudabi_processentry_t` (function type)
+### <a href="#processentry" name="processentry"></a>`wasi_processentry_t` (function type)
 
 Entry point for a process (`_start`).
 
 Parameters:
 
-- <a href="#processentry.auxv" name="processentry.auxv"></a><code>const [cloudabi\_auxv\_t](#auxv) *<strong>auxv</strong></code>
+- <a href="#processentry.auxv" name="processentry.auxv"></a><code>const [wasi\_auxv\_t](#auxv) *<strong>auxv</strong></code>
 
-    The auxiliary vector. See [`cloudabi_auxv_t`](#auxv).
+    The auxiliary vector. See [`wasi_auxv_t`](#auxv).
 
-### <a href="#recv_in" name="recv_in"></a>`cloudabi_recv_in_t` (`struct`)
+### <a href="#recv_in" name="recv_in"></a>`wasi_recv_in_t` (`struct`)
 
 Arguments of [`wasi_sock_recv()`](#sock_recv).
 
 Members:
 
-- <a href="#recv_in.ri_data" name="recv_in.ri_data"></a><code>const [cloudabi\_iovec\_t](#iovec) *<strong>ri\_data</strong></code> and <a href="#recv_in.ri_data_len" name="recv_in.ri_data_len"></a><code>size\_t <strong>ri\_data\_len</strong></code>
+- <a href="#recv_in.ri_data" name="recv_in.ri_data"></a><code>const [wasi\_iovec\_t](#iovec) *<strong>ri\_data</strong></code> and <a href="#recv_in.ri_data_len" name="recv_in.ri_data_len"></a><code>size\_t <strong>ri\_data\_len</strong></code>
 
     List of scatter/gather vectors where message data
     should be stored.
 
-- <a href="#recv_in.ri_fds" name="recv_in.ri_fds"></a><code>[cloudabi\_fd\_t](#fd) *<strong>ri\_fds</strong></code> and <a href="#recv_in.ri_fds_len" name="recv_in.ri_fds_len"></a><code>size\_t <strong>ri\_fds\_len</strong></code>
+- <a href="#recv_in.ri_fds" name="recv_in.ri_fds"></a><code>[wasi\_fd\_t](#fd) *<strong>ri\_fds</strong></code> and <a href="#recv_in.ri_fds_len" name="recv_in.ri_fds_len"></a><code>size\_t <strong>ri\_fds\_len</strong></code>
 
     Buffer where numbers of incoming file descriptors
     should be stored.
 
-- <a href="#recv_in.ri_flags" name="recv_in.ri_flags"></a><code>[cloudabi\_riflags\_t](#riflags) <strong>ri\_flags</strong></code>
+- <a href="#recv_in.ri_flags" name="recv_in.ri_flags"></a><code>[wasi\_riflags\_t](#riflags) <strong>ri\_flags</strong></code>
 
     Message flags.
 
-### <a href="#recv_out" name="recv_out"></a>`cloudabi_recv_out_t` (`struct`)
+### <a href="#recv_out" name="recv_out"></a>`wasi_recv_out_t` (`struct`)
 
 Results of [`wasi_sock_recv()`](#sock_recv).
 
@@ -2281,244 +2281,244 @@ Members:
 
 - <a href="#recv_out.ro_datalen" name="recv_out.ro_datalen"></a><code>size\_t <strong>ro\_datalen</strong></code>
 
-    Number of bytes stored in [`cloudabi_recv_in_t::ri_data`](#recv_in.ri_data).
+    Number of bytes stored in [`wasi_recv_in_t::ri_data`](#recv_in.ri_data).
 
 - <a href="#recv_out.ro_fdslen" name="recv_out.ro_fdslen"></a><code>size\_t <strong>ro\_fdslen</strong></code>
 
-    Number of file descriptors stored in [`cloudabi_recv_in_t::ri_fds`](#recv_in.ri_fds).
+    Number of file descriptors stored in [`wasi_recv_in_t::ri_fds`](#recv_in.ri_fds).
 
 - <a href="#recv_out.ro_unused" name="recv_out.ro_unused"></a><code>char <strong>ro\_unused</strong>[40]</code>
 
     Fields that were used by previous implementations.
 
-- <a href="#recv_out.ro_flags" name="recv_out.ro_flags"></a><code>[cloudabi\_roflags\_t](#roflags) <strong>ro\_flags</strong></code>
+- <a href="#recv_out.ro_flags" name="recv_out.ro_flags"></a><code>[wasi\_roflags\_t](#roflags) <strong>ro\_flags</strong></code>
 
     Message flags.
 
-### <a href="#riflags" name="riflags"></a>`cloudabi_riflags_t` (`uint16_t` bitfield)
+### <a href="#riflags" name="riflags"></a>`wasi_riflags_t` (`uint16_t` bitfield)
 
 Flags provided to [`wasi_sock_recv()`](#sock_recv).
 
-Used by [`cloudabi_recv_in_t`](#recv_in).
+Used by [`wasi_recv_in_t`](#recv_in).
 
 Possible values:
 
-- <a href="#riflags.peek" name="riflags.peek"></a>**`CLOUDABI_SOCK_RECV_PEEK`**
+- <a href="#riflags.peek" name="riflags.peek"></a>**`WASI_SOCK_RECV_PEEK`**
 
     Returns the message without removing it from the
     socket's receive queue.
 
-- <a href="#riflags.waitall" name="riflags.waitall"></a>**`CLOUDABI_SOCK_RECV_WAITALL`**
+- <a href="#riflags.waitall" name="riflags.waitall"></a>**`WASI_SOCK_RECV_WAITALL`**
 
     On byte-stream sockets, block until the full amount
     of data can be returned.
 
-### <a href="#rights" name="rights"></a>`cloudabi_rights_t` (`uint64_t` bitfield)
+### <a href="#rights" name="rights"></a>`wasi_rights_t` (`uint64_t` bitfield)
 
 File descriptor rights, determining which actions may be
 performed.
 
-Used by [`cloudabi_fdstat_t`](#fdstat).
+Used by [`wasi_fdstat_t`](#fdstat).
 
 Possible values:
 
-- <a href="#rights.fd_datasync" name="rights.fd_datasync"></a>**`CLOUDABI_RIGHT_FD_DATASYNC`**
+- <a href="#rights.fd_datasync" name="rights.fd_datasync"></a>**`WASI_RIGHT_FD_DATASYNC`**
 
     The right to invoke [`wasi_fd_datasync()`](#fd_datasync).
 
-    If [`CLOUDABI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
-    invoke [`wasi_file_open()`](#file_open) with [`CLOUDABI_FDFLAG_DSYNC`](#fdflags.dsync).
+    If [`WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
+    invoke [`wasi_file_open()`](#file_open) with [`WASI_FDFLAG_DSYNC`](#fdflags.dsync).
 
-- <a href="#rights.fd_read" name="rights.fd_read"></a>**`CLOUDABI_RIGHT_FD_READ`**
+- <a href="#rights.fd_read" name="rights.fd_read"></a>**`WASI_RIGHT_FD_READ`**
 
     The right to invoke [`wasi_fd_read()`](#fd_read) and [`wasi_sock_recv()`](#sock_recv).
 
-    If [`CLOUDABI_RIGHT_MEM_MAP`](#rights.mem_map) is set, includes the right to
+    If [`WASI_RIGHT_MEM_MAP`](#rights.mem_map) is set, includes the right to
     invoke [`wasi_mem_map()`](#mem_map) with memory protection option
-    [`CLOUDABI_PROT_READ`](#mprot.read).
+    [`WASI_PROT_READ`](#mprot.read).
 
-    If [`CLOUDABI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to invoke
+    If [`WASI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to invoke
     [`wasi_fd_pread()`](#fd_pread).
 
-- <a href="#rights.fd_seek" name="rights.fd_seek"></a>**`CLOUDABI_RIGHT_FD_SEEK`**
+- <a href="#rights.fd_seek" name="rights.fd_seek"></a>**`WASI_RIGHT_FD_SEEK`**
 
     The right to invoke [`wasi_fd_seek()`](#fd_seek). This flag implies
-    [`CLOUDABI_RIGHT_FD_TELL`](#rights.fd_tell).
+    [`WASI_RIGHT_FD_TELL`](#rights.fd_tell).
 
-- <a href="#rights.fd_stat_put_flags" name="rights.fd_stat_put_flags"></a>**`CLOUDABI_RIGHT_FD_STAT_PUT_FLAGS`**
+- <a href="#rights.fd_stat_put_flags" name="rights.fd_stat_put_flags"></a>**`WASI_RIGHT_FD_STAT_PUT_FLAGS`**
 
     The right to invoke [`wasi_fd_stat_put()`](#fd_stat_put) with
-    [`CLOUDABI_FDSTAT_FLAGS`](#fdsflags.flags).
+    [`WASI_FDSTAT_FLAGS`](#fdsflags.flags).
 
-- <a href="#rights.fd_sync" name="rights.fd_sync"></a>**`CLOUDABI_RIGHT_FD_SYNC`**
+- <a href="#rights.fd_sync" name="rights.fd_sync"></a>**`WASI_RIGHT_FD_SYNC`**
 
     The right to invoke [`wasi_fd_sync()`](#fd_sync).
 
-    If [`CLOUDABI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
-    invoke [`wasi_file_open()`](#file_open) with [`CLOUDABI_FDFLAG_RSYNC`](#fdflags.rsync) and
-    [`CLOUDABI_FDFLAG_DSYNC`](#fdflags.dsync).
+    If [`WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
+    invoke [`wasi_file_open()`](#file_open) with [`WASI_FDFLAG_RSYNC`](#fdflags.rsync) and
+    [`WASI_FDFLAG_DSYNC`](#fdflags.dsync).
 
-- <a href="#rights.fd_tell" name="rights.fd_tell"></a>**`CLOUDABI_RIGHT_FD_TELL`**
+- <a href="#rights.fd_tell" name="rights.fd_tell"></a>**`WASI_RIGHT_FD_TELL`**
 
     The right to invoke [`wasi_fd_seek()`](#fd_seek) in such a way that the
-    file offset remains unaltered (i.e., [`CLOUDABI_WHENCE_CUR`](#whence.cur) with
+    file offset remains unaltered (i.e., [`WASI_WHENCE_CUR`](#whence.cur) with
     offset zero).
 
-- <a href="#rights.fd_write" name="rights.fd_write"></a>**`CLOUDABI_RIGHT_FD_WRITE`**
+- <a href="#rights.fd_write" name="rights.fd_write"></a>**`WASI_RIGHT_FD_WRITE`**
 
     The right to invoke [`wasi_fd_write()`](#fd_write) and [`wasi_sock_send()`](#sock_send).
 
-    If [`CLOUDABI_RIGHT_MEM_MAP`](#rights.mem_map) is set, includes the right to
+    If [`WASI_RIGHT_MEM_MAP`](#rights.mem_map) is set, includes the right to
     invoke [`wasi_mem_map()`](#mem_map) with memory protection option
-    [`CLOUDABI_PROT_WRITE`](#mprot.write).
+    [`WASI_PROT_WRITE`](#mprot.write).
 
-    If [`CLOUDABI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to
+    If [`WASI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to
     invoke [`wasi_fd_pwrite()`](#fd_pwrite).
 
-- <a href="#rights.file_advise" name="rights.file_advise"></a>**`CLOUDABI_RIGHT_FILE_ADVISE`**
+- <a href="#rights.file_advise" name="rights.file_advise"></a>**`WASI_RIGHT_FILE_ADVISE`**
 
     The right to invoke [`wasi_file_advise()`](#file_advise).
 
-- <a href="#rights.file_allocate" name="rights.file_allocate"></a>**`CLOUDABI_RIGHT_FILE_ALLOCATE`**
+- <a href="#rights.file_allocate" name="rights.file_allocate"></a>**`WASI_RIGHT_FILE_ALLOCATE`**
 
     The right to invoke [`wasi_file_allocate()`](#file_allocate).
 
-- <a href="#rights.file_create_directory" name="rights.file_create_directory"></a>**`CLOUDABI_RIGHT_FILE_CREATE_DIRECTORY`**
+- <a href="#rights.file_create_directory" name="rights.file_create_directory"></a>**`WASI_RIGHT_FILE_CREATE_DIRECTORY`**
 
     The right to invoke [`wasi_file_create()`](#file_create) with
-    [`CLOUDABI_FILETYPE_DIRECTORY`](#filetype.directory).
+    [`WASI_FILETYPE_DIRECTORY`](#filetype.directory).
 
-- <a href="#rights.file_create_file" name="rights.file_create_file"></a>**`CLOUDABI_RIGHT_FILE_CREATE_FILE`**
+- <a href="#rights.file_create_file" name="rights.file_create_file"></a>**`WASI_RIGHT_FILE_CREATE_FILE`**
 
-    If [`CLOUDABI_RIGHT_FILE_OPEN`](#rights.file_open) is set, the right to invoke
-    [`wasi_file_open()`](#file_open) with [`CLOUDABI_O_CREAT`](#oflags.creat).
+    If [`WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, the right to invoke
+    [`wasi_file_open()`](#file_open) with [`WASI_O_CREAT`](#oflags.creat).
 
-- <a href="#rights.file_link_source" name="rights.file_link_source"></a>**`CLOUDABI_RIGHT_FILE_LINK_SOURCE`**
+- <a href="#rights.file_link_source" name="rights.file_link_source"></a>**`WASI_RIGHT_FILE_LINK_SOURCE`**
 
     The right to invoke [`wasi_file_link()`](#file_link) with the file
     descriptor as the source directory.
 
-- <a href="#rights.file_link_target" name="rights.file_link_target"></a>**`CLOUDABI_RIGHT_FILE_LINK_TARGET`**
+- <a href="#rights.file_link_target" name="rights.file_link_target"></a>**`WASI_RIGHT_FILE_LINK_TARGET`**
 
     The right to invoke [`wasi_file_link()`](#file_link) with the file
     descriptor as the target directory.
 
-- <a href="#rights.file_open" name="rights.file_open"></a>**`CLOUDABI_RIGHT_FILE_OPEN`**
+- <a href="#rights.file_open" name="rights.file_open"></a>**`WASI_RIGHT_FILE_OPEN`**
 
     The right to invoke [`wasi_file_open()`](#file_open).
 
-- <a href="#rights.file_readdir" name="rights.file_readdir"></a>**`CLOUDABI_RIGHT_FILE_READDIR`**
+- <a href="#rights.file_readdir" name="rights.file_readdir"></a>**`WASI_RIGHT_FILE_READDIR`**
 
     The right to invoke [`wasi_file_readdir()`](#file_readdir).
 
-- <a href="#rights.file_readlink" name="rights.file_readlink"></a>**`CLOUDABI_RIGHT_FILE_READLINK`**
+- <a href="#rights.file_readlink" name="rights.file_readlink"></a>**`WASI_RIGHT_FILE_READLINK`**
 
     The right to invoke [`wasi_file_readlink()`](#file_readlink).
 
-- <a href="#rights.file_rename_source" name="rights.file_rename_source"></a>**`CLOUDABI_RIGHT_FILE_RENAME_SOURCE`**
+- <a href="#rights.file_rename_source" name="rights.file_rename_source"></a>**`WASI_RIGHT_FILE_RENAME_SOURCE`**
 
     The right to invoke [`wasi_file_rename()`](#file_rename) with the file
     descriptor as the source directory.
 
-- <a href="#rights.file_rename_target" name="rights.file_rename_target"></a>**`CLOUDABI_RIGHT_FILE_RENAME_TARGET`**
+- <a href="#rights.file_rename_target" name="rights.file_rename_target"></a>**`WASI_RIGHT_FILE_RENAME_TARGET`**
 
     The right to invoke [`wasi_file_rename()`](#file_rename) with the file
     descriptor as the target directory.
 
-- <a href="#rights.file_stat_fget" name="rights.file_stat_fget"></a>**`CLOUDABI_RIGHT_FILE_STAT_FGET`**
+- <a href="#rights.file_stat_fget" name="rights.file_stat_fget"></a>**`WASI_RIGHT_FILE_STAT_FGET`**
 
     The right to invoke [`wasi_file_stat_fget()`](#file_stat_fget).
 
-- <a href="#rights.file_stat_fput_size" name="rights.file_stat_fput_size"></a>**`CLOUDABI_RIGHT_FILE_STAT_FPUT_SIZE`**
+- <a href="#rights.file_stat_fput_size" name="rights.file_stat_fput_size"></a>**`WASI_RIGHT_FILE_STAT_FPUT_SIZE`**
 
     The right to invoke [`wasi_file_stat_fput()`](#file_stat_fput) with
-    [`CLOUDABI_FILESTAT_SIZE`](#fsflags.size).
+    [`WASI_FILESTAT_SIZE`](#fsflags.size).
 
-    If [`CLOUDABI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
-    invoke [`wasi_file_open()`](#file_open) with [`CLOUDABI_O_TRUNC`](#oflags.trunc).
+    If [`WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
+    invoke [`wasi_file_open()`](#file_open) with [`WASI_O_TRUNC`](#oflags.trunc).
 
-- <a href="#rights.file_stat_fput_times" name="rights.file_stat_fput_times"></a>**`CLOUDABI_RIGHT_FILE_STAT_FPUT_TIMES`**
+- <a href="#rights.file_stat_fput_times" name="rights.file_stat_fput_times"></a>**`WASI_RIGHT_FILE_STAT_FPUT_TIMES`**
 
     The right to invoke [`wasi_file_stat_fput()`](#file_stat_fput) with
-    [`CLOUDABI_FILESTAT_ATIM`](#fsflags.atim), [`CLOUDABI_FILESTAT_ATIM_NOW`](#fsflags.atim_now), [`CLOUDABI_FILESTAT_MTIM`](#fsflags.mtim),
-    and [`CLOUDABI_FILESTAT_MTIM_NOW`](#fsflags.mtim_now).
+    [`WASI_FILESTAT_ATIM`](#fsflags.atim), [`WASI_FILESTAT_ATIM_NOW`](#fsflags.atim_now), [`WASI_FILESTAT_MTIM`](#fsflags.mtim),
+    and [`WASI_FILESTAT_MTIM_NOW`](#fsflags.mtim_now).
 
-- <a href="#rights.file_stat_get" name="rights.file_stat_get"></a>**`CLOUDABI_RIGHT_FILE_STAT_GET`**
+- <a href="#rights.file_stat_get" name="rights.file_stat_get"></a>**`WASI_RIGHT_FILE_STAT_GET`**
 
     The right to invoke [`wasi_file_stat_get()`](#file_stat_get).
 
-- <a href="#rights.file_stat_put_times" name="rights.file_stat_put_times"></a>**`CLOUDABI_RIGHT_FILE_STAT_PUT_TIMES`**
+- <a href="#rights.file_stat_put_times" name="rights.file_stat_put_times"></a>**`WASI_RIGHT_FILE_STAT_PUT_TIMES`**
 
     The right to invoke [`wasi_file_stat_put()`](#file_stat_put) with
-    [`CLOUDABI_FILESTAT_ATIM`](#fsflags.atim), [`CLOUDABI_FILESTAT_ATIM_NOW`](#fsflags.atim_now), [`CLOUDABI_FILESTAT_MTIM`](#fsflags.mtim),
-    and [`CLOUDABI_FILESTAT_MTIM_NOW`](#fsflags.mtim_now).
+    [`WASI_FILESTAT_ATIM`](#fsflags.atim), [`WASI_FILESTAT_ATIM_NOW`](#fsflags.atim_now), [`WASI_FILESTAT_MTIM`](#fsflags.mtim),
+    and [`WASI_FILESTAT_MTIM_NOW`](#fsflags.mtim_now).
 
-- <a href="#rights.file_symlink" name="rights.file_symlink"></a>**`CLOUDABI_RIGHT_FILE_SYMLINK`**
+- <a href="#rights.file_symlink" name="rights.file_symlink"></a>**`WASI_RIGHT_FILE_SYMLINK`**
 
     The right to invoke [`wasi_file_symlink()`](#file_symlink).
 
-- <a href="#rights.file_unlink" name="rights.file_unlink"></a>**`CLOUDABI_RIGHT_FILE_UNLINK`**
+- <a href="#rights.file_unlink" name="rights.file_unlink"></a>**`WASI_RIGHT_FILE_UNLINK`**
 
     The right to invoke [`wasi_file_unlink()`](#file_unlink).
 
-- <a href="#rights.mem_map" name="rights.mem_map"></a>**`CLOUDABI_RIGHT_MEM_MAP`**
+- <a href="#rights.mem_map" name="rights.mem_map"></a>**`WASI_RIGHT_MEM_MAP`**
 
-    The right to invoke [`wasi_mem_map()`](#mem_map) with [`cloudabi_mprot_t`](#mprot) set to
+    The right to invoke [`wasi_mem_map()`](#mem_map) with [`wasi_mprot_t`](#mprot) set to
     zero.
 
-- <a href="#rights.poll_fd_readwrite" name="rights.poll_fd_readwrite"></a>**`CLOUDABI_RIGHT_POLL_FD_READWRITE`**
+- <a href="#rights.poll_fd_readwrite" name="rights.poll_fd_readwrite"></a>**`WASI_RIGHT_POLL_FD_READWRITE`**
 
-    If [`CLOUDABI_RIGHT_FD_READ`](#rights.fd_read) is set, includes the right to
-    invoke [`wasi_poll()`](#poll) to subscribe to [`CLOUDABI_EVENTTYPE_FD_READ`](#eventtype.fd_read).
+    If [`WASI_RIGHT_FD_READ`](#rights.fd_read) is set, includes the right to
+    invoke [`wasi_poll()`](#poll) to subscribe to [`WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read).
 
-    If [`CLOUDABI_RIGHT_FD_WRITE`](#rights.fd_write) is set, includes the right to
-    invoke [`wasi_poll()`](#poll) to subscribe to [`CLOUDABI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
+    If [`WASI_RIGHT_FD_WRITE`](#rights.fd_write) is set, includes the right to
+    invoke [`wasi_poll()`](#poll) to subscribe to [`WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
 
-- <a href="#rights.poll_proc_terminate" name="rights.poll_proc_terminate"></a>**`CLOUDABI_RIGHT_POLL_PROC_TERMINATE`**
+- <a href="#rights.poll_proc_terminate" name="rights.poll_proc_terminate"></a>**`WASI_RIGHT_POLL_PROC_TERMINATE`**
 
     The right to invoke [`wasi_poll()`](#poll) to subscribe to
-    [`CLOUDABI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate).
+    [`WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate).
 
-- <a href="#rights.sock_shutdown" name="rights.sock_shutdown"></a>**`CLOUDABI_RIGHT_SOCK_SHUTDOWN`**
+- <a href="#rights.sock_shutdown" name="rights.sock_shutdown"></a>**`WASI_RIGHT_SOCK_SHUTDOWN`**
 
     The right to invoke [`wasi_sock_shutdown()`](#sock_shutdown).
 
-### <a href="#roflags" name="roflags"></a>`cloudabi_roflags_t` (`uint16_t` bitfield)
+### <a href="#roflags" name="roflags"></a>`wasi_roflags_t` (`uint16_t` bitfield)
 
 Flags returned by [`wasi_sock_recv()`](#sock_recv).
 
-Used by [`cloudabi_recv_out_t`](#recv_out).
+Used by [`wasi_recv_out_t`](#recv_out).
 
 Possible values:
 
-- <a href="#roflags.fds_truncated" name="roflags.fds_truncated"></a>**`CLOUDABI_SOCK_RECV_FDS_TRUNCATED`**
+- <a href="#roflags.fds_truncated" name="roflags.fds_truncated"></a>**`WASI_SOCK_RECV_FDS_TRUNCATED`**
 
     Returned by [`wasi_sock_recv()`](#sock_recv): List of file descriptors
     has been truncated.
 
-- <a href="#roflags.data_truncated" name="roflags.data_truncated"></a>**`CLOUDABI_SOCK_RECV_DATA_TRUNCATED`**
+- <a href="#roflags.data_truncated" name="roflags.data_truncated"></a>**`WASI_SOCK_RECV_DATA_TRUNCATED`**
 
     Returned by [`wasi_sock_recv()`](#sock_recv): Message data has been
     truncated.
 
-### <a href="#scope" name="scope"></a>`cloudabi_scope_t` (`uint8_t`)
+### <a href="#scope" name="scope"></a>`wasi_scope_t` (`uint8_t`)
 
 Indicates whether an object is stored in private or shared
 memory.
 
-Used by [`cloudabi_subscription_t`](#subscription), [`wasi_condvar_signal()`](#condvar_signal), [`wasi_lock_unlock()`](#lock_unlock), and [`wasi_thread_exit()`](#thread_exit).
+Used by [`wasi_subscription_t`](#subscription), [`wasi_condvar_signal()`](#condvar_signal), [`wasi_lock_unlock()`](#lock_unlock), and [`wasi_thread_exit()`](#thread_exit).
 
 Possible values:
 
-- <a href="#scope.private" name="scope.private"></a>**`CLOUDABI_SCOPE_PRIVATE`**
+- <a href="#scope.private" name="scope.private"></a>**`WASI_SCOPE_PRIVATE`**
 
     The object is stored in private memory.
 
-- <a href="#scope.shared" name="scope.shared"></a>**`CLOUDABI_SCOPE_SHARED`**
+- <a href="#scope.shared" name="scope.shared"></a>**`WASI_SCOPE_SHARED`**
 
     The object is stored in shared memory.
 
-### <a href="#sdflags" name="sdflags"></a>`cloudabi_sdflags_t` (`uint8_t` bitfield)
+### <a href="#sdflags" name="sdflags"></a>`wasi_sdflags_t` (`uint8_t` bitfield)
 
 Which channels on a socket need to be shut down.
 
@@ -2526,35 +2526,35 @@ Used by [`wasi_sock_shutdown()`](#sock_shutdown).
 
 Possible values:
 
-- <a href="#sdflags.rd" name="sdflags.rd"></a>**`CLOUDABI_SHUT_RD`**
+- <a href="#sdflags.rd" name="sdflags.rd"></a>**`WASI_SHUT_RD`**
 
     Disables further receive operations.
 
-- <a href="#sdflags.wr" name="sdflags.wr"></a>**`CLOUDABI_SHUT_WR`**
+- <a href="#sdflags.wr" name="sdflags.wr"></a>**`WASI_SHUT_WR`**
 
     Disables further send operations.
 
-### <a href="#send_in" name="send_in"></a>`cloudabi_send_in_t` (`struct`)
+### <a href="#send_in" name="send_in"></a>`wasi_send_in_t` (`struct`)
 
 Arguments of [`wasi_sock_send()`](#sock_send).
 
 Members:
 
-- <a href="#send_in.si_data" name="send_in.si_data"></a><code>const [cloudabi\_ciovec\_t](#ciovec) *<strong>si\_data</strong></code> and <a href="#send_in.si_data_len" name="send_in.si_data_len"></a><code>size\_t <strong>si\_data\_len</strong></code>
+- <a href="#send_in.si_data" name="send_in.si_data"></a><code>const [wasi\_ciovec\_t](#ciovec) *<strong>si\_data</strong></code> and <a href="#send_in.si_data_len" name="send_in.si_data_len"></a><code>size\_t <strong>si\_data\_len</strong></code>
 
     List of scatter/gather vectors where message data
     should be retrieved.
 
-- <a href="#send_in.si_fds" name="send_in.si_fds"></a><code>const [cloudabi\_fd\_t](#fd) *<strong>si\_fds</strong></code> and <a href="#send_in.si_fds_len" name="send_in.si_fds_len"></a><code>size\_t <strong>si\_fds\_len</strong></code>
+- <a href="#send_in.si_fds" name="send_in.si_fds"></a><code>const [wasi\_fd\_t](#fd) *<strong>si\_fds</strong></code> and <a href="#send_in.si_fds_len" name="send_in.si_fds_len"></a><code>size\_t <strong>si\_fds\_len</strong></code>
 
     File descriptors that need to be attached to the
     message.
 
-- <a href="#send_in.si_flags" name="send_in.si_flags"></a><code>[cloudabi\_siflags\_t](#siflags) <strong>si\_flags</strong></code>
+- <a href="#send_in.si_flags" name="send_in.si_flags"></a><code>[wasi\_siflags\_t](#siflags) <strong>si\_flags</strong></code>
 
     Message flags.
 
-### <a href="#send_out" name="send_out"></a>`cloudabi_send_out_t` (`struct`)
+### <a href="#send_out" name="send_out"></a>`wasi_send_out_t` (`struct`)
 
 Results of [`wasi_sock_send()`](#sock_send).
 
@@ -2564,211 +2564,211 @@ Members:
 
     Number of bytes transmitted.
 
-### <a href="#siflags" name="siflags"></a>`cloudabi_siflags_t` (`uint16_t` bitfield)
+### <a href="#siflags" name="siflags"></a>`wasi_siflags_t` (`uint16_t` bitfield)
 
 Flags provided to [`wasi_sock_send()`](#sock_send). As there are currently no flags
 defined, it must be set to zero.
 
-Used by [`cloudabi_send_in_t`](#send_in).
+Used by [`wasi_send_in_t`](#send_in).
 
-### <a href="#signal" name="signal"></a>`cloudabi_signal_t` (`uint8_t`)
+### <a href="#signal" name="signal"></a>`wasi_signal_t` (`uint8_t`)
 
 Signal condition.
 
-Used by [`cloudabi_event_t`](#event) and [`wasi_proc_raise()`](#proc_raise).
+Used by [`wasi_event_t`](#event) and [`wasi_proc_raise()`](#proc_raise).
 
 Possible values:
 
-- <a href="#signal.abrt" name="signal.abrt"></a>**`CLOUDABI_SIGABRT`**
+- <a href="#signal.abrt" name="signal.abrt"></a>**`WASI_SIGABRT`**
 
     Process abort signal.
 
     Action: Terminates the process.
 
-- <a href="#signal.alrm" name="signal.alrm"></a>**`CLOUDABI_SIGALRM`**
+- <a href="#signal.alrm" name="signal.alrm"></a>**`WASI_SIGALRM`**
 
     Alarm clock.
 
     Action: Terminates the process.
 
-- <a href="#signal.bus" name="signal.bus"></a>**`CLOUDABI_SIGBUS`**
+- <a href="#signal.bus" name="signal.bus"></a>**`WASI_SIGBUS`**
 
     Access to an undefined portion of a memory object.
 
     Action: Terminates the process.
 
-- <a href="#signal.chld" name="signal.chld"></a>**`CLOUDABI_SIGCHLD`**
+- <a href="#signal.chld" name="signal.chld"></a>**`WASI_SIGCHLD`**
 
     Child process terminated, stopped, or continued.
 
     Action: Ignored.
 
-- <a href="#signal.cont" name="signal.cont"></a>**`CLOUDABI_SIGCONT`**
+- <a href="#signal.cont" name="signal.cont"></a>**`WASI_SIGCONT`**
 
     Continue executing, if stopped.
 
     Action: Continues executing, if stopped.
 
-- <a href="#signal.fpe" name="signal.fpe"></a>**`CLOUDABI_SIGFPE`**
+- <a href="#signal.fpe" name="signal.fpe"></a>**`WASI_SIGFPE`**
 
     Erroneous arithmetic operation.
 
     Action: Terminates the process.
 
-- <a href="#signal.hup" name="signal.hup"></a>**`CLOUDABI_SIGHUP`**
+- <a href="#signal.hup" name="signal.hup"></a>**`WASI_SIGHUP`**
 
     Hangup.
 
     Action: Terminates the process.
 
-- <a href="#signal.ill" name="signal.ill"></a>**`CLOUDABI_SIGILL`**
+- <a href="#signal.ill" name="signal.ill"></a>**`WASI_SIGILL`**
 
     Illegal instruction.
 
     Action: Terminates the process.
 
-- <a href="#signal.int" name="signal.int"></a>**`CLOUDABI_SIGINT`**
+- <a href="#signal.int" name="signal.int"></a>**`WASI_SIGINT`**
 
     Terminate interrupt signal.
 
     Action: Terminates the process.
 
-- <a href="#signal.kill" name="signal.kill"></a>**`CLOUDABI_SIGKILL`**
+- <a href="#signal.kill" name="signal.kill"></a>**`WASI_SIGKILL`**
 
     Kill.
 
     Action: Terminates the process.
 
-- <a href="#signal.pipe" name="signal.pipe"></a>**`CLOUDABI_SIGPIPE`**
+- <a href="#signal.pipe" name="signal.pipe"></a>**`WASI_SIGPIPE`**
 
     Write on a pipe with no one to read it.
 
     Action: Ignored.
 
-- <a href="#signal.quit" name="signal.quit"></a>**`CLOUDABI_SIGQUIT`**
+- <a href="#signal.quit" name="signal.quit"></a>**`WASI_SIGQUIT`**
 
     Terminal quit signal.
 
     Action: Terminates the process.
 
-- <a href="#signal.segv" name="signal.segv"></a>**`CLOUDABI_SIGSEGV`**
+- <a href="#signal.segv" name="signal.segv"></a>**`WASI_SIGSEGV`**
 
     Invalid memory reference.
 
     Action: Terminates the process.
 
-- <a href="#signal.stop" name="signal.stop"></a>**`CLOUDABI_SIGSTOP`**
+- <a href="#signal.stop" name="signal.stop"></a>**`WASI_SIGSTOP`**
 
     Stop executing.
 
     Action: Stops executing.
 
-- <a href="#signal.sys" name="signal.sys"></a>**`CLOUDABI_SIGSYS`**
+- <a href="#signal.sys" name="signal.sys"></a>**`WASI_SIGSYS`**
 
     Bad system call.
 
     Action: Terminates the process.
 
-- <a href="#signal.term" name="signal.term"></a>**`CLOUDABI_SIGTERM`**
+- <a href="#signal.term" name="signal.term"></a>**`WASI_SIGTERM`**
 
     Termination signal.
 
     Action: Terminates the process.
 
-- <a href="#signal.trap" name="signal.trap"></a>**`CLOUDABI_SIGTRAP`**
+- <a href="#signal.trap" name="signal.trap"></a>**`WASI_SIGTRAP`**
 
     Trace/breakpoint trap.
 
     Action: Terminates the process.
 
-- <a href="#signal.tstp" name="signal.tstp"></a>**`CLOUDABI_SIGTSTP`**
+- <a href="#signal.tstp" name="signal.tstp"></a>**`WASI_SIGTSTP`**
 
     Terminal stop signal.
 
     Action: Stops executing.
 
-- <a href="#signal.ttin" name="signal.ttin"></a>**`CLOUDABI_SIGTTIN`**
+- <a href="#signal.ttin" name="signal.ttin"></a>**`WASI_SIGTTIN`**
 
     Background process attempting read.
 
     Action: Stops executing.
 
-- <a href="#signal.ttou" name="signal.ttou"></a>**`CLOUDABI_SIGTTOU`**
+- <a href="#signal.ttou" name="signal.ttou"></a>**`WASI_SIGTTOU`**
 
     Background process attempting write.
 
     Action: Stops executing.
 
-- <a href="#signal.urg" name="signal.urg"></a>**`CLOUDABI_SIGURG`**
+- <a href="#signal.urg" name="signal.urg"></a>**`WASI_SIGURG`**
 
     High bandwidth data is available at a socket.
 
     Action: Ignored.
 
-- <a href="#signal.usr1" name="signal.usr1"></a>**`CLOUDABI_SIGUSR1`**
+- <a href="#signal.usr1" name="signal.usr1"></a>**`WASI_SIGUSR1`**
 
     User-defined signal 1.
 
     Action: Terminates the process.
 
-- <a href="#signal.usr2" name="signal.usr2"></a>**`CLOUDABI_SIGUSR2`**
+- <a href="#signal.usr2" name="signal.usr2"></a>**`WASI_SIGUSR2`**
 
     User-defined signal 2.
 
     Action: Terminates the process.
 
-- <a href="#signal.vtalrm" name="signal.vtalrm"></a>**`CLOUDABI_SIGVTALRM`**
+- <a href="#signal.vtalrm" name="signal.vtalrm"></a>**`WASI_SIGVTALRM`**
 
     Virtual timer expired.
 
     Action: Terminates the process.
 
-- <a href="#signal.xcpu" name="signal.xcpu"></a>**`CLOUDABI_SIGXCPU`**
+- <a href="#signal.xcpu" name="signal.xcpu"></a>**`WASI_SIGXCPU`**
 
     CPU time limit exceeded.
 
     Action: Terminates the process.
 
-- <a href="#signal.xfsz" name="signal.xfsz"></a>**`CLOUDABI_SIGXFSZ`**
+- <a href="#signal.xfsz" name="signal.xfsz"></a>**`WASI_SIGXFSZ`**
 
     File size limit exceeded.
 
     Action: Terminates the process.
 
-### <a href="#subclockflags" name="subclockflags"></a>`cloudabi_subclockflags_t` (`uint16_t` bitfield)
+### <a href="#subclockflags" name="subclockflags"></a>`wasi_subclockflags_t` (`uint16_t` bitfield)
 
 Flags determining how the timestamp provided in
-[`cloudabi_subscription_t::clock.timeout`](#subscription.clock.timeout) should be interpreted.
+[`wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) should be interpreted.
 
-Used by [`cloudabi_subscription_t`](#subscription).
+Used by [`wasi_subscription_t`](#subscription).
 
 Possible values:
 
-- <a href="#subclockflags.abstime" name="subclockflags.abstime"></a>**`CLOUDABI_SUBSCRIPTION_CLOCK_ABSTIME`**
+- <a href="#subclockflags.abstime" name="subclockflags.abstime"></a>**`WASI_SUBSCRIPTION_CLOCK_ABSTIME`**
 
     If set, treat the timestamp provided in
-    [`cloudabi_subscription_t::clock.timeout`](#subscription.clock.timeout) as an absolute timestamp
-    of clock [`cloudabi_subscription_t::clock.clock_id`](#subscription.clock.clock_id).
+    [`wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) as an absolute timestamp
+    of clock [`wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id).
 
     If clear, treat the timestamp provided in
-    [`cloudabi_subscription_t::clock.timeout`](#subscription.clock.timeout) relative to the current
-    time value of clock [`cloudabi_subscription_t::clock.clock_id`](#subscription.clock.clock_id).
+    [`wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) relative to the current
+    time value of clock [`wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id).
 
-### <a href="#subrwflags" name="subrwflags"></a>`cloudabi_subrwflags_t` (`uint16_t` bitfield)
+### <a href="#subrwflags" name="subrwflags"></a>`wasi_subrwflags_t` (`uint16_t` bitfield)
 
 Flags influencing the method of polling for read or writing on
 a file descriptor.
 
-Used by [`cloudabi_subscription_t`](#subscription).
+Used by [`wasi_subscription_t`](#subscription).
 
 Possible values:
 
-- <a href="#subrwflags.poll" name="subrwflags.poll"></a>**`CLOUDABI_SUBSCRIPTION_FD_READWRITE_POLL`**
+- <a href="#subrwflags.poll" name="subrwflags.poll"></a>**`WASI_SUBSCRIPTION_FD_READWRITE_POLL`**
 
     Deprecated. Must be set by callers and ignored by
     implementations.
 
-### <a href="#subscription" name="subscription"></a>`cloudabi_subscription_t` (`struct`)
+### <a href="#subscription" name="subscription"></a>`wasi_subscription_t` (`struct`)
 
 Subscription to an event.
 
@@ -2776,67 +2776,67 @@ Used by [`wasi_poll()`](#poll).
 
 Members:
 
-- <a href="#subscription.userdata" name="subscription.userdata"></a><code>[cloudabi\_userdata\_t](#userdata) <strong>userdata</strong></code>
+- <a href="#subscription.userdata" name="subscription.userdata"></a><code>[wasi\_userdata\_t](#userdata) <strong>userdata</strong></code>
 
     User-provided value that is attached to the
     subscription in the kernel and returned through
-    [`cloudabi_event_t::userdata`](#event.userdata).
+    [`wasi_event_t::userdata`](#event.userdata).
 
 - <a href="#subscription.unused" name="subscription.unused"></a><code>uint16\_t <strong>unused</strong></code>
 
     Used by previous implementations. Ignored.
 
-- <a href="#subscription.type" name="subscription.type"></a><code>[cloudabi\_eventtype\_t](#eventtype) <strong>type</strong></code>
+- <a href="#subscription.type" name="subscription.type"></a><code>[wasi\_eventtype\_t](#eventtype) <strong>type</strong></code>
 
     The type of the event to which to subscribe.
 
-    Currently, [`CLOUDABI_EVENTTYPE_CONDVAR`](#eventtype.condvar),
-    [`CLOUDABI_EVENTTYPE_LOCK_RDLOCK`](#eventtype.lock_rdlock), and [`CLOUDABI_EVENTTYPE_LOCK_WRLOCK`](#eventtype.lock_wrlock)
+    Currently, [`WASI_EVENTTYPE_CONDVAR`](#eventtype.condvar),
+    [`WASI_EVENTTYPE_LOCK_RDLOCK`](#eventtype.lock_rdlock), and [`WASI_EVENTTYPE_LOCK_WRLOCK`](#eventtype.lock_wrlock)
     must be provided as the first subscription and may
     only be followed by up to one other subscription,
-    having type [`CLOUDABI_EVENTTYPE_CLOCK`](#eventtype.clock).
+    having type [`WASI_EVENTTYPE_CLOCK`](#eventtype.clock).
 
-- When `type` is [`CLOUDABI_EVENTTYPE_CLOCK`](#eventtype.clock):
+- When `type` is [`WASI_EVENTTYPE_CLOCK`](#eventtype.clock):
 
     - <a href="#subscription.clock" name="subscription.clock"></a>**`clock`**
 
-        - <a href="#subscription.clock.identifier" name="subscription.clock.identifier"></a><code>[cloudabi\_userdata\_t](#userdata) <strong>identifier</strong></code>
+        - <a href="#subscription.clock.identifier" name="subscription.clock.identifier"></a><code>[wasi\_userdata\_t](#userdata) <strong>identifier</strong></code>
 
             The user-defined unique
             identifier of the clock.
 
-        - <a href="#subscription.clock.clock_id" name="subscription.clock.clock_id"></a><code>[cloudabi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
+        - <a href="#subscription.clock.clock_id" name="subscription.clock.clock_id"></a><code>[wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
 
             The clock against which the
             timestamp should be compared.
 
-        - <a href="#subscription.clock.timeout" name="subscription.clock.timeout"></a><code>[cloudabi\_timestamp\_t](#timestamp) <strong>timeout</strong></code>
+        - <a href="#subscription.clock.timeout" name="subscription.clock.timeout"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>timeout</strong></code>
 
             The absolute or relative
             timestamp.
 
-        - <a href="#subscription.clock.precision" name="subscription.clock.precision"></a><code>[cloudabi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
+        - <a href="#subscription.clock.precision" name="subscription.clock.precision"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
 
             The amount of time that the
             kernel may wait additionally
             to coalesce with other events.
 
-        - <a href="#subscription.clock.flags" name="subscription.clock.flags"></a><code>[cloudabi\_subclockflags\_t](#subclockflags) <strong>flags</strong></code>
+        - <a href="#subscription.clock.flags" name="subscription.clock.flags"></a><code>[wasi\_subclockflags\_t](#subclockflags) <strong>flags</strong></code>
 
             Flags specifying whether the
             timeout is absolute or
             relative.
 
-- When `type` is [`CLOUDABI_EVENTTYPE_CONDVAR`](#eventtype.condvar):
+- When `type` is [`WASI_EVENTTYPE_CONDVAR`](#eventtype.condvar):
 
     - <a href="#subscription.condvar" name="subscription.condvar"></a>**`condvar`**
 
-        - <a href="#subscription.condvar.condvar" name="subscription.condvar.condvar"></a><code>\_Atomic([cloudabi\_condvar\_t](#condvar)) *<strong>condvar</strong></code>
+        - <a href="#subscription.condvar.condvar" name="subscription.condvar.condvar"></a><code>\_Atomic([wasi\_condvar\_t](#condvar)) *<strong>condvar</strong></code>
 
             The condition variable on
             which to wait to be woken up.
 
-        - <a href="#subscription.condvar.lock" name="subscription.condvar.lock"></a><code>\_Atomic([cloudabi\_lock\_t](#lock)) *<strong>lock</strong></code>
+        - <a href="#subscription.condvar.lock" name="subscription.condvar.lock"></a><code>\_Atomic([wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
 
             The lock that will be
             released while waiting.
@@ -2845,57 +2845,57 @@ Members:
             for writing when the condition
             variable triggers.
 
-        - <a href="#subscription.condvar.condvar_scope" name="subscription.condvar.condvar_scope"></a><code>[cloudabi\_scope\_t](#scope) <strong>condvar\_scope</strong></code>
+        - <a href="#subscription.condvar.condvar_scope" name="subscription.condvar.condvar_scope"></a><code>[wasi\_scope\_t](#scope) <strong>condvar\_scope</strong></code>
 
             Whether the condition variable
             is stored in private or shared
             memory.
 
-        - <a href="#subscription.condvar.lock_scope" name="subscription.condvar.lock_scope"></a><code>[cloudabi\_scope\_t](#scope) <strong>lock\_scope</strong></code>
+        - <a href="#subscription.condvar.lock_scope" name="subscription.condvar.lock_scope"></a><code>[wasi\_scope\_t](#scope) <strong>lock\_scope</strong></code>
 
             Whether the lock is stored in
             private or shared memory.
 
-- When `type` is [`CLOUDABI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`CLOUDABI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
+- When `type` is [`WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
 
     - <a href="#subscription.fd_readwrite" name="subscription.fd_readwrite"></a>**`fd_readwrite`**
 
-        - <a href="#subscription.fd_readwrite.fd" name="subscription.fd_readwrite.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+        - <a href="#subscription.fd_readwrite.fd" name="subscription.fd_readwrite.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
             The file descriptor on which
             to wait for it to become ready
             for reading or writing.
 
-        - <a href="#subscription.fd_readwrite.flags" name="subscription.fd_readwrite.flags"></a><code>[cloudabi\_subrwflags\_t](#subrwflags) <strong>flags</strong></code>
+        - <a href="#subscription.fd_readwrite.flags" name="subscription.fd_readwrite.flags"></a><code>[wasi\_subrwflags\_t](#subrwflags) <strong>flags</strong></code>
 
             Under which conditions to
             trigger.
 
-- When `type` is [`CLOUDABI_EVENTTYPE_LOCK_RDLOCK`](#eventtype.lock_rdlock) or [`CLOUDABI_EVENTTYPE_LOCK_WRLOCK`](#eventtype.lock_wrlock):
+- When `type` is [`WASI_EVENTTYPE_LOCK_RDLOCK`](#eventtype.lock_rdlock) or [`WASI_EVENTTYPE_LOCK_WRLOCK`](#eventtype.lock_wrlock):
 
     - <a href="#subscription.lock" name="subscription.lock"></a>**`lock`**
 
-        - <a href="#subscription.lock.lock" name="subscription.lock.lock"></a><code>\_Atomic([cloudabi\_lock\_t](#lock)) *<strong>lock</strong></code>
+        - <a href="#subscription.lock.lock" name="subscription.lock.lock"></a><code>\_Atomic([wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
 
             The lock that will be acquired
             for reading or writing.
 
-        - <a href="#subscription.lock.lock_scope" name="subscription.lock.lock_scope"></a><code>[cloudabi\_scope\_t](#scope) <strong>lock\_scope</strong></code>
+        - <a href="#subscription.lock.lock_scope" name="subscription.lock.lock_scope"></a><code>[wasi\_scope\_t](#scope) <strong>lock\_scope</strong></code>
 
             Whether the lock is stored in
             private or shared memory.
 
-- When `type` is [`CLOUDABI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate):
+- When `type` is [`WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate):
 
     - <a href="#subscription.proc_terminate" name="subscription.proc_terminate"></a>**`proc_terminate`**
 
-        - <a href="#subscription.proc_terminate.fd" name="subscription.proc_terminate.fd"></a><code>[cloudabi\_fd\_t](#fd) <strong>fd</strong></code>
+        - <a href="#subscription.proc_terminate.fd" name="subscription.proc_terminate.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
             The process descriptor on
             which to wait for process
             termination.
 
-### <a href="#tcb" name="tcb"></a>`cloudabi_tcb_t` (`struct`)
+### <a href="#tcb" name="tcb"></a>`wasi_tcb_t` (`struct`)
 
 The Thread Control Block (TCB).
 
@@ -2924,7 +2924,7 @@ Members:
     Pointer that may be freely assigned by the system. Its
     value cannot be interpreted by the application.
 
-### <a href="#threadattr" name="threadattr"></a>`cloudabi_threadattr_t` (`struct`)
+### <a href="#threadattr" name="threadattr"></a>`wasi_threadattr_t` (`struct`)
 
 Attributes for thread creation.
 
@@ -2932,7 +2932,7 @@ Used by [`wasi_thread_create()`](#thread_create).
 
 Members:
 
-- <a href="#threadattr.entry_point" name="threadattr.entry_point"></a><code>[cloudabi\_threadentry\_t](#threadentry) *<strong>entry\_point</strong></code>
+- <a href="#threadattr.entry_point" name="threadattr.entry_point"></a><code>[wasi\_threadentry\_t](#threadentry) *<strong>entry\_point</strong></code>
 
     Initial program counter value.
 
@@ -2944,24 +2944,24 @@ Members:
 
     Argument to be forwarded to the entry point function.
 
-### <a href="#threadentry" name="threadentry"></a>`cloudabi_threadentry_t` (function type)
+### <a href="#threadentry" name="threadentry"></a>`wasi_threadentry_t` (function type)
 
 Entry point for additionally created threads.
 
-Used by [`cloudabi_threadattr_t`](#threadattr).
+Used by [`wasi_threadattr_t`](#threadattr).
 
 Parameters:
 
-- <a href="#threadentry.tid" name="threadentry.tid"></a><code>[cloudabi\_tid\_t](#tid) <strong>tid</strong></code>
+- <a href="#threadentry.tid" name="threadentry.tid"></a><code>[wasi\_tid\_t](#tid) <strong>tid</strong></code>
 
     Thread ID of the current thread.
 
 - <a href="#threadentry.aux" name="threadentry.aux"></a><code>void *<strong>aux</strong></code>
 
     Copy of the value stored in
-    [`cloudabi_threadattr_t::argument`](#threadattr.argument).
+    [`wasi_threadattr_t::argument`](#threadattr.argument).
 
-### <a href="#tid" name="tid"></a>`cloudabi_tid_t` (`uint32_t`)
+### <a href="#tid" name="tid"></a>`wasi_tid_t` (`uint32_t`)
 
 Unique system-local identifier of a thread. This identifier is
 only valid during the lifetime of the thread.
@@ -2970,19 +2970,19 @@ Threads must be aware of their thread identifier, as it is
 written it into locks when acquiring them for writing. It is
 not advised to use these identifiers for any other purpose.
 
-As the thread identifier is also stored in [`cloudabi_lock_t`](#lock) when
-[`CLOUDABI_LOCK_WRLOCKED`](#lock.wrlocked) is set, the top two bits of the thread
+As the thread identifier is also stored in [`wasi_lock_t`](#lock) when
+[`WASI_LOCK_WRLOCKED`](#lock.wrlocked) is set, the top two bits of the thread
 must always be set to zero.
 
-Used by [`cloudabi_threadentry_t`](#threadentry) and [`wasi_thread_create()`](#thread_create).
+Used by [`wasi_threadentry_t`](#threadentry) and [`wasi_thread_create()`](#thread_create).
 
-### <a href="#timestamp" name="timestamp"></a>`cloudabi_timestamp_t` (`uint64_t`)
+### <a href="#timestamp" name="timestamp"></a>`wasi_timestamp_t` (`uint64_t`)
 
 Timestamp in nanoseconds.
 
-Used by [`cloudabi_filestat_t`](#filestat), [`cloudabi_subscription_t`](#subscription), [`wasi_clock_res_get()`](#clock_res_get), and [`wasi_clock_time_get()`](#clock_time_get).
+Used by [`wasi_filestat_t`](#filestat), [`wasi_subscription_t`](#subscription), [`wasi_clock_res_get()`](#clock_res_get), and [`wasi_clock_time_get()`](#clock_time_get).
 
-### <a href="#ulflags" name="ulflags"></a>`cloudabi_ulflags_t` (`uint8_t` bitfield)
+### <a href="#ulflags" name="ulflags"></a>`wasi_ulflags_t` (`uint8_t` bitfield)
 
 Specifies whether files are unlinked or directories are
 removed.
@@ -2991,19 +2991,19 @@ Used by [`wasi_file_unlink()`](#file_unlink).
 
 Possible values:
 
-- <a href="#ulflags.removedir" name="ulflags.removedir"></a>**`CLOUDABI_UNLINK_REMOVEDIR`**
+- <a href="#ulflags.removedir" name="ulflags.removedir"></a>**`WASI_UNLINK_REMOVEDIR`**
 
     If set, removes a directory. Otherwise, unlinks any
     non-directory file.
 
-### <a href="#userdata" name="userdata"></a>`cloudabi_userdata_t` (`uint64_t`)
+### <a href="#userdata" name="userdata"></a>`wasi_userdata_t` (`uint64_t`)
 
 User-provided value that can be attached to objects that is
 retained when extracted from the kernel.
 
-Used by [`cloudabi_event_t`](#event) and [`cloudabi_subscription_t`](#subscription).
+Used by [`wasi_event_t`](#event) and [`wasi_subscription_t`](#subscription).
 
-### <a href="#whence" name="whence"></a>`cloudabi_whence_t` (`uint8_t`)
+### <a href="#whence" name="whence"></a>`wasi_whence_t` (`uint8_t`)
 
 Relative to which position the offset of the file descriptor
 should be set.
@@ -3012,15 +3012,15 @@ Used by [`wasi_fd_seek()`](#fd_seek).
 
 Possible values:
 
-- <a href="#whence.cur" name="whence.cur"></a>**`CLOUDABI_WHENCE_CUR`**
+- <a href="#whence.cur" name="whence.cur"></a>**`WASI_WHENCE_CUR`**
 
     Seek relative to current position.
 
-- <a href="#whence.end" name="whence.end"></a>**`CLOUDABI_WHENCE_END`**
+- <a href="#whence.end" name="whence.end"></a>**`WASI_WHENCE_END`**
 
     Seek relative to end-of-file.
 
-- <a href="#whence.set" name="whence.set"></a>**`CLOUDABI_WHENCE_SET`**
+- <a href="#whence.set" name="whence.set"></a>**`WASI_WHENCE_SET`**
 
     Seek relative to start-of-file.
 
