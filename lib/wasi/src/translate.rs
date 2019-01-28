@@ -179,8 +179,25 @@ pub fn decode_filetype(filetype: wasm32::wasi_filetype_t) -> host::wasi_filetype
     filetype
 }
 
+pub fn encode_filetype(filetype: host::wasi_filetype_t) -> wasm32::wasi_filetype_t {
+    filetype
+}
+
 pub fn decode_fsflags(fsflags: wasm32::wasi_fsflags_t) -> host::wasi_fsflags_t {
     fsflags
+}
+
+#[allow(dead_code)]
+pub fn encode_fsflags(fsflags: host::wasi_fsflags_t) -> wasm32::wasi_fsflags_t {
+    fsflags
+}
+
+pub fn decode_fdflags(fdflags: wasm32::wasi_fdflags_t) -> host::wasi_fdflags_t {
+    fdflags
+}
+
+pub fn encode_fdflags(fdflags: host::wasi_fdflags_t) -> wasm32::wasi_fdflags_t {
+    fdflags
 }
 
 pub fn decode_sdflags(sdflags: wasm32::wasi_sdflags_t) -> host::wasi_sdflags_t {
@@ -189,6 +206,14 @@ pub fn decode_sdflags(sdflags: wasm32::wasi_sdflags_t) -> host::wasi_sdflags_t {
 
 pub fn decode_ulflags(ulflags: wasm32::wasi_ulflags_t) -> host::wasi_ulflags_t {
     ulflags
+}
+
+pub fn decode_rights(rights: wasm32::wasi_rights_t) -> host::wasi_rights_t {
+    rights
+}
+
+pub fn encode_rights(rights: host::wasi_rights_t) -> wasm32::wasi_rights_t {
+    rights
 }
 
 pub fn decode_fdstat(
@@ -367,18 +392,33 @@ pub unsafe fn encode_usize_byref(
 }
 
 pub unsafe fn decode_fdstat_byref(
-    _fdstat_ptr: wasm32::uintptr_t,
-    _vmctx: &mut VMContext,
+    fdstat_ptr: wasm32::uintptr_t,
+    vmctx: &mut VMContext,
 ) -> Result<host::wasi_fdstat_t, host::wasi_errno_t> {
-    unimplemented!("decode_fdstat_byref");
+    let wasm32_fdstat = decode_pointee::<wasm32::wasi_fdstat_t>(fdstat_ptr, vmctx)?;
+
+    Ok(host::wasi_fdstat_t {
+        fs_filetype: decode_filetype(wasm32_fdstat.fs_filetype),
+        fs_flags: decode_fdflags(wasm32_fdstat.fs_flags),
+        fs_rights_base: decode_rights(wasm32_fdstat.fs_rights_base),
+        fs_rights_inheriting: decode_rights(wasm32_fdstat.fs_rights_inheriting),
+    })
 }
 
 pub unsafe fn encode_fdstat_byref(
-    _fdstat_ptr: wasm32::uintptr_t,
-    _host_fdstat: host::wasi_fdstat_t,
-    _vmctx: &mut VMContext,
+    fdstat_ptr: wasm32::uintptr_t,
+    host_fdstat: host::wasi_fdstat_t,
+    vmctx: &mut VMContext,
 ) -> Result<(), host::wasi_errno_t> {
-    unimplemented!("encode_fdstat_byref");
+    let wasm32_fdstat = wasm32::wasi_fdstat_t {
+        fs_filetype: encode_filetype(host_fdstat.fs_filetype),
+        fs_flags: encode_fdflags(host_fdstat.fs_flags),
+        __bindgen_padding_0: 0,
+        fs_rights_base: encode_rights(host_fdstat.fs_rights_base),
+        fs_rights_inheriting: encode_rights(host_fdstat.fs_rights_inheriting),
+    };
+
+    encode_pointee::<wasm32::wasi_fdstat_t>(fdstat_ptr, wasm32_fdstat, vmctx)
 }
 
 pub unsafe fn decode_filestat_byref(
