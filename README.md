@@ -26,6 +26,11 @@ WASI is a natural complement for WebAssembly, since WebAssembly provides
 sandboxing for code but doesn't have any builtin I/O, and WASI provides
 sandboxed I/O. See [here][WebAssembly System Interface] to learn more.
 
+Wasmtime does not yet implement Spectre mitiations, such as those being
+pioneered [by](https://www.wasmjit.org/blog/spectre-mitigations-part-1.html)
+[wasmjit](https://www.wasmjit.org/blog/spectre-mitigations-part-2.html),
+however it's a goal to add this.
+
 We're currently working to create Rust C, C++, and other toolchains configured to
 use this new API.
 
