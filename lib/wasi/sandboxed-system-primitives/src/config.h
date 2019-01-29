@@ -1,6 +1,13 @@
-// Copyright (c) 2016 Nuxi, https://nuxi.nl/
+// Part of the Wasmtime Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://github.com/CraneStation/wasmtime/blob/master/LICENSE for license information.
 //
-// SPDX-License-Identifier: BSD-2-Clause
+// Significant parts of this file are derived from cloudabi-utils. See
+// https://github.com/CraneStation/wasmtime/blob/master/lib/wasi/sandboxed-system-primitives/src/LICENSE
+// for license information.
+//
+// The upstream file contains the following copyright notice:
+//
+// Copyright (c) 2016 Nuxi, https://nuxi.nl/
 
 #ifndef CONFIG_H
 #define CONFIG_H
@@ -9,6 +16,12 @@
 #define CONFIG_HAS_ARC4RANDOM_BUF 1
 #else
 #define CONFIG_HAS_ARC4RANDOM_BUF 0
+#endif
+
+#ifdef __linux__
+#define CONFIG_HAS_GETENTROPY 1
+#else
+#define CONFIG_HAS_GETENTROPY 0
 #endif
 
 #if defined(__CloudABI__)
@@ -69,12 +82,6 @@
 #define st_atimespec st_atim
 #define st_mtimespec st_mtim
 #define st_ctimespec st_ctim
-#endif
-
-#ifndef __linux__
-#define CONFIG_HAS_STRLCPY 1
-#else
-#define CONFIG_HAS_STRLCPY 0
 #endif
 
 #ifdef __APPLE__

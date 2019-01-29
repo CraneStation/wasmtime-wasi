@@ -1,6 +1,13 @@
-// Copyright (c) 2016 Nuxi, https://nuxi.nl/
+// Part of the Wasmtime Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://github.com/CraneStation/wasmtime/blob/master/LICENSE for license information.
 //
-// SPDX-License-Identifier: BSD-2-Clause
+// Significant parts of this file are derived from cloudabi-utils. See
+// https://github.com/CraneStation/wasmtime/blob/master/lib/wasi/sandboxed-system-primitives/src/LICENSE
+// for license information.
+//
+// The upstream file contains the following copyright notice:
+//
+// Copyright (c) 2016 Nuxi, https://nuxi.nl/
 
 #include <assert.h>
 #include <stdatomic.h>
@@ -8,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <wasi_types.h>
+#include <wasmtime_ssp.h>
 
 #include "futex.h"
 #include "locking.h"
@@ -23,7 +30,7 @@ struct futex_queue {
 // Condition variables.
 struct futex_condvar {
   // Address of the condition variable.
-  _Atomic(wasi_condvar_t) * fc_address;
+  _Atomic(__wasi_condvar_t) * fc_address;
   // The lock the waiters should be moved to when signalled.
   struct futex_lock *fc_lock;
   // Threads waiting on the condition variable.
@@ -38,11 +45,11 @@ struct futex_condvar {
 // Read-write locks.
 struct futex_lock {
   // Address of the lock.
-  _Atomic(wasi_lock_t) * fl_address;
+  _Atomic(__wasi_lock_t) * fl_address;
   // Current owner of the lock. LOCK_UNMANAGED if the lock is currently
   // not owned by the kernel. LOCK_OWNER_UNKNOWN in case the owner is
   // not known (e.g., when the lock is read-locked).
-  wasi_tid_t fl_owner;
+  __wasi_tid_t fl_owner;
 #define LOCK_UNMANAGED 0x0
 #define LOCK_OWNER_UNKNOWN 0x1
   // Writers blocked on the lock.
@@ -57,7 +64,7 @@ struct futex_lock {
 
 struct futex_waiter {
   // Thread ID.
-  wasi_tid_t fw_tid;
+  __wasi_tid_t fw_tid;
   // Condition variable used for waiting.
   struct cond fw_wait;
   // Queue this waiter is currently placed in.
@@ -77,11 +84,11 @@ static LIST_HEAD(, futex_condvar)
 
 // Utility functions.
 static void futex_lock_assert(const struct futex_lock *) REQUIRES_FUTEX_LOCK;
-static struct futex_lock *futex_lock_lookup_locked(_Atomic(wasi_lock_t) *)
+static struct futex_lock *futex_lock_lookup_locked(_Atomic(__wasi_lock_t) *)
     REQUIRES_FUTEX_LOCK;
 static void futex_lock_release(struct futex_lock *fl)
     UNLOCKS(futex_global_lock);
-static wasi_errno_t futex_lock_tryrdlock(struct futex_lock *)
+static __wasi_errno_t futex_lock_tryrdlock(struct futex_lock *)
     REQUIRES_FUTEX_LOCK;
 static void futex_lock_unmanage(struct futex_lock *) REQUIRES_FUTEX_LOCK;
 static void futex_lock_update_owner(struct futex_lock *) REQUIRES_FUTEX_LOCK;
@@ -91,12 +98,12 @@ static unsigned int futex_queue_count(const struct futex_queue *)
 static void futex_queue_init(struct futex_queue *) REQUIRES_FUTEX_LOCK;
 static void futex_queue_requeue(struct futex_queue *, struct futex_queue *,
                                 unsigned int) REQUIRES_FUTEX_LOCK;
-static wasi_errno_t futex_queue_sleep(struct futex_queue *,
-                                          struct futex_lock *, wasi_tid_t,
-                                          wasi_clockid_t,
-                                          wasi_timestamp_t,
+static __wasi_errno_t futex_queue_sleep(struct futex_queue *,
+                                          struct futex_lock *, __wasi_tid_t,
+                                          __wasi_clockid_t,
+                                          __wasi_timestamp_t,
                                           bool) REQUIRES_FUTEX_LOCK;
-static wasi_tid_t futex_queue_tid_best(const struct futex_queue *)
+static __wasi_tid_t futex_queue_tid_best(const struct futex_queue *)
     REQUIRES_FUTEX_LOCK;
 static void futex_queue_wake_up_all(struct futex_queue *) REQUIRES_FUTEX_LOCK;
 static void futex_queue_wake_up_best(struct futex_queue *) REQUIRES_FUTEX_LOCK;
@@ -110,7 +117,7 @@ static void futex_condvar_assert(const struct futex_condvar *fc)
   futex_lock_assert(fc->fc_lock);
 }
 
-static bool futex_condvar_lookup(const _Atomic(wasi_condvar_t) * address,
+static bool futex_condvar_lookup(const _Atomic(__wasi_condvar_t) * address,
                                  struct futex_condvar **fcret)
     TRYLOCKS_EXCLUSIVE(true, futex_global_lock) {
   mutex_lock(&futex_global_lock);
@@ -126,8 +133,8 @@ static bool futex_condvar_lookup(const _Atomic(wasi_condvar_t) * address,
   return false;
 }
 
-static wasi_errno_t futex_condvar_lookup_or_create(
-    _Atomic(wasi_condvar_t) * condvar, _Atomic(wasi_lock_t) * lock,
+static __wasi_errno_t futex_condvar_lookup_or_create(
+    _Atomic(__wasi_condvar_t) * condvar, _Atomic(__wasi_lock_t) * lock,
     struct futex_condvar **fcret) TRYLOCKS_EXCLUSIVE(0, futex_global_lock) {
   mutex_lock(&futex_global_lock);
   struct futex_condvar *fc;
@@ -138,7 +145,7 @@ static wasi_errno_t futex_condvar_lookup_or_create(
     if (fl->fl_address != lock) {
       // Condition variable is owned by a different lock.
       mutex_unlock(&futex_global_lock);
-      return WASI_EINVAL;
+      return __WASI_EINVAL;
     }
 
     // Found fully matching condition variable.
@@ -151,14 +158,14 @@ static wasi_errno_t futex_condvar_lookup_or_create(
   fc = malloc(sizeof(*fc));
   if (fc == NULL) {
     mutex_unlock(&futex_global_lock);
-    return WASI_ENOMEM;
+    return __WASI_ENOMEM;
   }
   fc->fc_address = condvar;
   fc->fc_lock = futex_lock_lookup_locked(lock);
   if (fc->fc_lock == NULL) {
     free(fc);
     mutex_unlock(&futex_global_lock);
-    return WASI_ENOMEM;
+    return __WASI_ENOMEM;
   }
   futex_queue_init(&fc->fc_waiters);
   fc->fc_waitcount = 0;
@@ -182,7 +189,7 @@ static void futex_condvar_release(struct futex_condvar *fc)
 static void futex_condvar_unmanage(struct futex_condvar *fc)
     REQUIRES_FUTEX_LOCK {
   if (futex_queue_count(&fc->fc_waiters) == 0)
-    atomic_store(fc->fc_address, WASI_CONDVAR_HAS_NO_WAITERS);
+    atomic_store(fc->fc_address, __WASI_CONDVAR_HAS_NO_WAITERS);
 }
 
 // futex_lock operations.
@@ -198,7 +205,7 @@ static void futex_lock_assert(const struct futex_lock *fl) {
          "Lock with no waiters must be unmanaged");
 }
 
-static bool futex_lock_lookup(_Atomic(wasi_lock_t) * lock,
+static bool futex_lock_lookup(_Atomic(__wasi_lock_t) * lock,
                               struct futex_lock **fl)
     TRYLOCKS_EXCLUSIVE(true, futex_global_lock) {
   mutex_lock(&futex_global_lock);
@@ -210,7 +217,7 @@ static bool futex_lock_lookup(_Atomic(wasi_lock_t) * lock,
   return true;
 }
 
-static struct futex_lock *futex_lock_lookup_locked(_Atomic(wasi_lock_t) *
+static struct futex_lock *futex_lock_lookup_locked(_Atomic(__wasi_lock_t) *
                                                    lock) {
   struct futex_lock *fl;
   LIST_FOREACH(fl, &futex_lock_list, fl_next) {
@@ -234,13 +241,13 @@ static struct futex_lock *futex_lock_lookup_locked(_Atomic(wasi_lock_t) *
   return fl;
 }
 
-static wasi_errno_t futex_lock_rdlock(struct futex_lock *fl,
-                                          wasi_tid_t tid,
-                                          wasi_clockid_t clock_id,
-                                          wasi_timestamp_t timeout,
+static __wasi_errno_t futex_lock_rdlock(struct futex_lock *fl,
+                                          __wasi_tid_t tid,
+                                          __wasi_clockid_t clock_id,
+                                          __wasi_timestamp_t timeout,
                                           bool abstime) REQUIRES_FUTEX_LOCK {
-  wasi_errno_t error = futex_lock_tryrdlock(fl);
-  if (error == WASI_EBUSY) {
+  __wasi_errno_t error = futex_lock_tryrdlock(fl);
+  if (error == __WASI_EBUSY) {
     // Suspend execution.
     assert(fl->fl_owner != LOCK_UNMANAGED &&
            "Attempted to sleep on an unmanaged lock");
@@ -259,9 +266,9 @@ static void futex_lock_unmanage(struct futex_lock *fl) {
     fl->fl_owner = LOCK_UNMANAGED;
 
     // Clear kernel-managed bit.
-    wasi_lock_t old = atomic_load(fl->fl_address);
+    __wasi_lock_t old = atomic_load(fl->fl_address);
     while (!atomic_compare_exchange_weak(fl->fl_address, &old,
-                                         old & ~WASI_LOCK_KERNEL_MANAGED))
+                                         old & ~__WASI_LOCK_KERNEL_MANAGED))
       ;
   }
 }
@@ -278,13 +285,13 @@ static void futex_lock_release(struct futex_lock *fl) {
   mutex_unlock(&futex_global_lock);
 }
 
-static void futex_lock_set_owner(struct futex_lock *fl, wasi_lock_t lock) {
+static void futex_lock_set_owner(struct futex_lock *fl, __wasi_lock_t lock) {
   // Lock has no explicit owner.
-  if ((lock & ~WASI_LOCK_WRLOCKED) == 0) {
+  if ((lock & ~__WASI_LOCK_WRLOCKED) == 0) {
     fl->fl_owner = LOCK_OWNER_UNKNOWN;
     return;
   }
-  lock &= ~(WASI_LOCK_WRLOCKED | WASI_LOCK_KERNEL_MANAGED);
+  lock &= ~(__WASI_LOCK_WRLOCKED | __WASI_LOCK_KERNEL_MANAGED);
 
   // Don't allow userspace to silently unlock.
   if (lock == LOCK_UNMANAGED) {
@@ -294,12 +301,12 @@ static void futex_lock_set_owner(struct futex_lock *fl, wasi_lock_t lock) {
   fl->fl_owner = lock;
 }
 
-static wasi_errno_t futex_lock_unlock(
-    struct futex_lock *fl, wasi_tid_t tid) REQUIRES_FUTEX_LOCK {
+static __wasi_errno_t futex_lock_unlock(
+    struct futex_lock *fl, __wasi_tid_t tid) REQUIRES_FUTEX_LOCK {
   // Validate that this thread is allowed to unlock.
   futex_lock_update_owner(fl);
   if (fl->fl_owner != LOCK_UNMANAGED && fl->fl_owner != tid)
-    return WASI_EPERM;
+    return __WASI_EPERM;
   futex_lock_wake_up_next(fl);
   return 0;
 }
@@ -309,61 +316,61 @@ static void futex_lock_update_owner(struct futex_lock *fl) {
     futex_lock_set_owner(fl, atomic_load(fl->fl_address));
 }
 
-static wasi_errno_t futex_lock_tryrdlock(struct futex_lock *fl) {
+static __wasi_errno_t futex_lock_tryrdlock(struct futex_lock *fl) {
   if (fl->fl_owner != LOCK_UNMANAGED) {
     // Lock is already acquired.
-    return WASI_EBUSY;
+    return __WASI_EBUSY;
   }
 
-  wasi_lock_t old = WASI_LOCK_UNLOCKED;
+  __wasi_lock_t old = __WASI_LOCK_UNLOCKED;
   for (;;) {
-    if ((old & WASI_LOCK_KERNEL_MANAGED) != 0) {
+    if ((old & __WASI_LOCK_KERNEL_MANAGED) != 0) {
       // Userspace lock is kernel-managed, even though we don't have an
       // entry for it.
-      return WASI_EINVAL;
+      return __WASI_EINVAL;
     }
 
-    if ((old & WASI_LOCK_WRLOCKED) == 0) {
+    if ((old & __WASI_LOCK_WRLOCKED) == 0) {
       if (atomic_compare_exchange_weak(fl->fl_address, &old, old + 1))
         return 0;
     } else {
       if (atomic_compare_exchange_weak(fl->fl_address, &old,
-                                       old | WASI_LOCK_KERNEL_MANAGED)) {
+                                       old | __WASI_LOCK_KERNEL_MANAGED)) {
         futex_lock_set_owner(fl, old);
-        return WASI_EBUSY;
+        return __WASI_EBUSY;
       }
     }
   }
 }
 
-static wasi_errno_t futex_lock_trywrlock(
-    struct futex_lock *fl, wasi_tid_t tid,
+static __wasi_errno_t futex_lock_trywrlock(
+    struct futex_lock *fl, __wasi_tid_t tid,
     bool force_kernel_managed) REQUIRES_FUTEX_LOCK {
   if (fl->fl_owner == tid) {
     // Attempted to acquire lock recursively.
-    return WASI_EDEADLK;
+    return __WASI_EDEADLK;
   }
   if (fl->fl_owner != LOCK_UNMANAGED) {
     // Lock is already acquired.
-    return WASI_EBUSY;
+    return __WASI_EBUSY;
   }
 
-  wasi_lock_t old = WASI_LOCK_UNLOCKED;
+  __wasi_lock_t old = __WASI_LOCK_UNLOCKED;
   for (;;) {
-    if ((old & WASI_LOCK_KERNEL_MANAGED) != 0) {
+    if ((old & __WASI_LOCK_KERNEL_MANAGED) != 0) {
       // Userspace lock is kernel-managed, even though we don't have an
       // entry for it.
-      return WASI_EINVAL;
+      return __WASI_EINVAL;
     }
-    if (old == (tid | WASI_LOCK_WRLOCKED)) {
+    if (old == (tid | __WASI_LOCK_WRLOCKED)) {
       // Attempted to acquire lock recursively.
-      return WASI_EDEADLK;
+      return __WASI_EDEADLK;
     }
 
-    if (old == WASI_LOCK_UNLOCKED) {
-      wasi_lock_t new = tid | WASI_LOCK_WRLOCKED;
+    if (old == __WASI_LOCK_UNLOCKED) {
+      __wasi_lock_t new = tid | __WASI_LOCK_WRLOCKED;
       if (force_kernel_managed)
-        new |= WASI_LOCK_KERNEL_MANAGED;
+        new |= __WASI_LOCK_KERNEL_MANAGED;
       if (atomic_compare_exchange_weak(fl->fl_address, &old, new)) {
         if (force_kernel_managed)
           fl->fl_owner = tid;
@@ -371,9 +378,9 @@ static wasi_errno_t futex_lock_trywrlock(
       }
     } else {
       if (atomic_compare_exchange_weak(fl->fl_address, &old,
-                                       old | WASI_LOCK_KERNEL_MANAGED)) {
+                                       old | __WASI_LOCK_KERNEL_MANAGED)) {
         futex_lock_set_owner(fl, old);
-        return WASI_EBUSY;
+        return __WASI_EBUSY;
       }
     }
   }
@@ -387,16 +394,16 @@ static void futex_lock_wake_up_next(struct futex_lock *fl) {
     if (futex_queue_count(&fl->fl_writers) > 1 ||
         futex_queue_count(&fl->fl_readers) > 0) {
       // Lock should remain managed afterwards.
-      wasi_tid_t tid = futex_queue_tid_best(&fl->fl_writers);
+      __wasi_tid_t tid = futex_queue_tid_best(&fl->fl_writers);
       atomic_store(fl->fl_address,
-                   tid | WASI_LOCK_WRLOCKED | WASI_LOCK_KERNEL_MANAGED);
+                   tid | __WASI_LOCK_WRLOCKED | __WASI_LOCK_KERNEL_MANAGED);
 
       futex_queue_wake_up_best(&fl->fl_writers);
       fl->fl_owner = tid;
     } else {
       // Lock can become unmanaged afterwards.
       atomic_store(fl->fl_address, futex_queue_tid_best(&fl->fl_writers) |
-                                       WASI_LOCK_WRLOCKED);
+                                       __WASI_LOCK_WRLOCKED);
 
       futex_queue_wake_up_best(&fl->fl_writers);
       fl->fl_owner = LOCK_UNMANAGED;
@@ -411,13 +418,13 @@ static void futex_lock_wake_up_next(struct futex_lock *fl) {
   }
 }
 
-static wasi_errno_t futex_lock_wrlock(struct futex_lock *fl,
-                                          wasi_tid_t tid,
-                                          wasi_clockid_t clock_id,
-                                          wasi_timestamp_t timeout,
+static __wasi_errno_t futex_lock_wrlock(struct futex_lock *fl,
+                                          __wasi_tid_t tid,
+                                          __wasi_clockid_t clock_id,
+                                          __wasi_timestamp_t timeout,
                                           bool abstime) REQUIRES_FUTEX_LOCK {
-  wasi_errno_t error = futex_lock_trywrlock(fl, tid, false);
-  if (error == WASI_EBUSY) {
+  __wasi_errno_t error = futex_lock_trywrlock(fl, tid, false);
+  if (error == __WASI_EBUSY) {
     assert(fl->fl_owner != LOCK_UNMANAGED &&
            "Attempted to sleep on an unmanaged lock");
     error =
@@ -430,7 +437,7 @@ static wasi_errno_t futex_lock_wrlock(struct futex_lock *fl,
 
 // futex_queue operations.
 
-static wasi_tid_t futex_queue_tid_best(const struct futex_queue *fq) {
+static __wasi_tid_t futex_queue_tid_best(const struct futex_queue *fq) {
   return TAILQ_FIRST(&fq->fq_list)->fw_tid;
 }
 
@@ -443,23 +450,23 @@ static void futex_queue_init(struct futex_queue *fq) {
   fq->fq_count = 0;
 }
 
-static wasi_errno_t futex_queue_sleep(
-    struct futex_queue *fq, struct futex_lock *fl, wasi_tid_t tid,
-    wasi_clockid_t clock_id, wasi_timestamp_t timeout, bool abstime) {
+static __wasi_errno_t futex_queue_sleep(
+    struct futex_queue *fq, struct futex_lock *fl, __wasi_tid_t tid,
+    __wasi_clockid_t clock_id, __wasi_timestamp_t timeout, bool abstime) {
   // Initialize futex_waiter object.
   struct futex_waiter fw = {
       .fw_tid = tid,
       .fw_queue = fq,
   };
   switch (clock_id) {
-    case WASI_CLOCK_MONOTONIC:
+    case __WASI_CLOCK_MONOTONIC:
       cond_init_monotonic(&fw.fw_wait);
       break;
-    case WASI_CLOCK_REALTIME:
+    case __WASI_CLOCK_REALTIME:
       cond_init_realtime(&fw.fw_wait);
       break;
     default:
-      return WASI_ENOTSUP;
+      return __WASI_ENOTSUP;
   }
 
   // Place object in the queue.
@@ -489,7 +496,7 @@ static wasi_errno_t futex_queue_sleep(
     // Thread is still enqueued. Remove it.
     TAILQ_REMOVE(&fq->fq_list, &fw, fw_next);
     --fq->fq_count;
-    return WASI_ETIMEDOUT;
+    return __WASI_ETIMEDOUT;
   }
 }
 
@@ -534,26 +541,26 @@ static void futex_queue_wake_up_best(struct futex_queue *fq) {
   --fq->fq_count;
 }
 
-static wasi_errno_t futex_op_condvar_wait(
-    wasi_tid_t tid, _Atomic(wasi_condvar_t) * condvar,
-    wasi_scope_t condvar_scope, _Atomic(wasi_lock_t) * lock,
-    wasi_scope_t lock_scope, wasi_clockid_t clock_id,
-    wasi_timestamp_t timeout, bool abstime) {
-  if (lock_scope != WASI_SCOPE_PRIVATE ||
-      condvar_scope != WASI_SCOPE_PRIVATE)
-    return WASI_ENOTSUP;
+static __wasi_errno_t futex_op_condvar_wait(
+    __wasi_tid_t tid, _Atomic(__wasi_condvar_t) * condvar,
+    __wasi_scope_t condvar_scope, _Atomic(__wasi_lock_t) * lock,
+    __wasi_scope_t lock_scope, __wasi_clockid_t clock_id,
+    __wasi_timestamp_t timeout, bool abstime) {
+  if (lock_scope != __WASI_SCOPE_PRIVATE ||
+      condvar_scope != __WASI_SCOPE_PRIVATE)
+    return __WASI_ENOTSUP;
 
   // Lookup condition variable object.
   struct futex_condvar *fc;
-  wasi_errno_t error = futex_condvar_lookup_or_create(condvar, lock, &fc);
+  __wasi_errno_t error = futex_condvar_lookup_or_create(condvar, lock, &fc);
   if (error != 0)
     return error;
   struct futex_lock *fl = fc->fc_lock;
 
   // Set the condition variable to something other than
-  // WASI_CONDVAR_HAS_NO_WAITERS to make userspace threads
+  // __WASI_CONDVAR_HAS_NO_WAITERS to make userspace threads
   // call into the kernel to perform wakeups.
-  atomic_store(condvar, ~WASI_CONDVAR_HAS_NO_WAITERS);
+  atomic_store(condvar, ~__WASI_CONDVAR_HAS_NO_WAITERS);
 
   // Drop the lock.
   error = futex_lock_unlock(fl, tid);
@@ -570,8 +577,8 @@ static wasi_errno_t futex_op_condvar_wait(
   if (error != 0) {
     // We observed a timeout. Reacquire the lock.
     futex_condvar_unmanage(fc);
-    wasi_errno_t error2 =
-        futex_lock_wrlock(fl, tid, WASI_CLOCK_REALTIME, UINT64_MAX, true);
+    __wasi_errno_t error2 =
+        futex_lock_wrlock(fl, tid, __WASI_CLOCK_REALTIME, UINT64_MAX, true);
     if (error2 != 0)
       error = error2;
   }
@@ -580,11 +587,11 @@ static wasi_errno_t futex_op_condvar_wait(
   return error;
 }
 
-wasi_errno_t futex_op_condvar_signal(_Atomic(wasi_condvar_t) * condvar,
-                                         wasi_scope_t scope,
-                                         wasi_nthreads_t nwaiters) {
-  if (scope != WASI_SCOPE_PRIVATE)
-    return WASI_ENOTSUP;
+__wasi_errno_t futex_op_condvar_signal(_Atomic(__wasi_condvar_t) * condvar,
+                                         __wasi_scope_t scope,
+                                         __wasi_nthreads_t nwaiters) {
+  if (scope != __WASI_SCOPE_PRIVATE)
+    return __WASI_ENOTSUP;
 
   if (nwaiters == 0) {
     // No threads to wake up.
@@ -593,21 +600,21 @@ wasi_errno_t futex_op_condvar_signal(_Atomic(wasi_condvar_t) * condvar,
 
   struct futex_condvar *fc;
   if (!futex_condvar_lookup(condvar, &fc))
-    return WASI_ENOENT;
+    return __WASI_ENOENT;
   struct futex_lock *fl = fc->fc_lock;
 
   // Attempt to acquire the lock on behalf of the first waiting thread.
   // Already set the kernel managed flag on the lock if there are
   // additional threads that we are going to wake up.
   struct futex_queue *fq = &fc->fc_waiters;
-  wasi_errno_t error = futex_lock_trywrlock(
+  __wasi_errno_t error = futex_lock_trywrlock(
       fl, futex_queue_tid_best(fq), nwaiters > 1 && futex_queue_count(fq) > 1);
   if (error == 0) {
     // Wake up the first thread and requeue the other threads to the
     // lock, so they can be woken up when the first thread unlocks.
     futex_queue_wake_up_best(fq);
     futex_queue_requeue(fq, &fl->fl_writers, nwaiters - 1);
-  } else if (error == WASI_EBUSY) {
+  } else if (error == __WASI_EBUSY) {
     // Lock is already locked. Requeue all threads to the lock.
     assert(fl->fl_owner != LOCK_UNMANAGED &&
            "Attempted to sleep on an unmanaged lock");
@@ -623,80 +630,80 @@ wasi_errno_t futex_op_condvar_signal(_Atomic(wasi_condvar_t) * condvar,
   return 0;
 }
 
-static wasi_errno_t futex_op_lock_rdlock(
-    wasi_tid_t tid, _Atomic(wasi_lock_t) * lock, wasi_scope_t scope,
-    wasi_clockid_t clock_id, wasi_timestamp_t timeout, bool abstime) {
-  if (scope != WASI_SCOPE_PRIVATE)
-    return WASI_ENOTSUP;
+static __wasi_errno_t futex_op_lock_rdlock(
+    __wasi_tid_t tid, _Atomic(__wasi_lock_t) * lock, __wasi_scope_t scope,
+    __wasi_clockid_t clock_id, __wasi_timestamp_t timeout, bool abstime) {
+  if (scope != __WASI_SCOPE_PRIVATE)
+    return __WASI_ENOTSUP;
 
   struct futex_lock *fl;
   if (!futex_lock_lookup(lock, &fl))
-    return WASI_ENOMEM;
-  wasi_errno_t error =
+    return __WASI_ENOMEM;
+  __wasi_errno_t error =
       futex_lock_rdlock(fl, tid, clock_id, timeout, abstime);
   futex_lock_release(fl);
   return error;
 }
 
-static wasi_errno_t futex_op_lock_wrlock(
-    wasi_tid_t tid, _Atomic(wasi_lock_t) * lock, wasi_scope_t scope,
-    wasi_clockid_t clock_id, wasi_timestamp_t timeout, bool abstime) {
-  if (scope != WASI_SCOPE_PRIVATE)
-    return WASI_ENOTSUP;
+static __wasi_errno_t futex_op_lock_wrlock(
+    __wasi_tid_t tid, _Atomic(__wasi_lock_t) * lock, __wasi_scope_t scope,
+    __wasi_clockid_t clock_id, __wasi_timestamp_t timeout, bool abstime) {
+  if (scope != __WASI_SCOPE_PRIVATE)
+    return __WASI_ENOTSUP;
 
   struct futex_lock *fl;
   if (!futex_lock_lookup(lock, &fl))
-    return WASI_ENOMEM;
-  wasi_errno_t error =
+    return __WASI_ENOMEM;
+  __wasi_errno_t error =
       futex_lock_wrlock(fl, tid, clock_id, timeout, abstime);
   futex_lock_release(fl);
   return error;
 }
 
-wasi_errno_t futex_op_lock_unlock(wasi_tid_t tid,
-                                      _Atomic(wasi_lock_t) * lock,
-                                      wasi_scope_t scope) {
-  if (scope != WASI_SCOPE_PRIVATE)
-    return WASI_ENOTSUP;
+__wasi_errno_t futex_op_lock_unlock(__wasi_tid_t tid,
+                                      _Atomic(__wasi_lock_t) * lock,
+                                      __wasi_scope_t scope) {
+  if (scope != __WASI_SCOPE_PRIVATE)
+    return __WASI_ENOTSUP;
 
   struct futex_lock *fl;
   if (!futex_lock_lookup(lock, &fl))
-    return WASI_ENOMEM;
-  wasi_errno_t error = futex_lock_unlock(fl, tid);
+    return __WASI_ENOMEM;
+  __wasi_errno_t error = futex_lock_unlock(fl, tid);
   futex_lock_release(fl);
   return error;
 }
 
-bool futex_op_poll(wasi_tid_t tid, const wasi_subscription_t *in,
-                   wasi_event_t *out, size_t nsubscriptions,
+bool futex_op_poll(__wasi_tid_t tid, const __wasi_subscription_t *in,
+                   __wasi_event_t *out, size_t nsubscriptions,
                    size_t *nevents) {
   // Intercept all calls to poll() that want to sleep on a futex, either
   // with or without a timeout.
   if (!(nsubscriptions == 1 ||
-        (nsubscriptions == 2 && in[1].type == WASI_EVENTTYPE_CLOCK)))
+        (nsubscriptions == 2 && in[1].type == __WASI_EVENTTYPE_CLOCK)))
     return false;
 
   // Simply use a very high timeout value for waits without a timeout.
-  wasi_clockid_t clock_id =
-      nsubscriptions == 1 ? WASI_CLOCK_REALTIME : in[1].clock.clock_id;
-  wasi_timestamp_t timeout =
+  __wasi_clockid_t clock_id =
+      nsubscriptions == 1 ? __WASI_CLOCK_REALTIME : in[1].clock.clock_id;
+  __wasi_timestamp_t timeout =
       nsubscriptions == 1 ? UINT64_MAX : in[1].clock.timeout;
   bool abstime = nsubscriptions == 1 ||
-                 (in[1].clock.flags & WASI_SUBSCRIPTION_CLOCK_ABSTIME) != 0;
+                 (in[1].clock.flags & __WASI_SUBSCRIPTION_CLOCK_ABSTIME) != 0;
 
   switch (in[0].type) {
-    case WASI_EVENTTYPE_CONDVAR:
+    case __WASI_EVENTTYPE_CONDVAR:
       out->error = futex_op_condvar_wait(
           tid, in[0].condvar.condvar, in[0].condvar.condvar_scope,
           in[0].condvar.lock, in[0].condvar.lock_scope, clock_id, timeout,
           abstime);
       break;
-    case WASI_EVENTTYPE_LOCK_RDLOCK:
+    case __WASI_EVENTTYPE_LOCK_RDLOCK:
       out->error =
           futex_op_lock_rdlock(tid, in[0].lock.lock, in[0].lock.lock_scope,
                                clock_id, timeout, abstime);
       break;
-    case WASI_EVENTTYPE_LOCK_WRLOCK:
+    case __WASI_EVENTTYPE_LOCK_WRLOCK:
       out->error =
           futex_op_lock_wrlock(tid, in[0].lock.lock, in[0].lock.lock_scope,
                                clock_id, timeout, abstime);
@@ -706,7 +713,7 @@ bool futex_op_poll(wasi_tid_t tid, const wasi_subscription_t *in,
   }
 
   // If the wait timed out, return the clock event instead.
-  if (out->error == WASI_ETIMEDOUT) {
+  if (out->error == __WASI_ETIMEDOUT) {
     out->userdata = in[1].userdata;
     out->error = 0;
     out->type = in[1].type;

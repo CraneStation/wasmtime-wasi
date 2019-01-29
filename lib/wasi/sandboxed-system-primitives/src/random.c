@@ -1,6 +1,13 @@
-// Copyright (c) 2016 Nuxi, https://nuxi.nl/
+// Part of the Wasmtime Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://github.com/CraneStation/wasmtime/blob/master/LICENSE for license information.
 //
-// SPDX-License-Identifier: BSD-2-Clause
+// Significant parts of this file are derived from cloudabi-utils. See
+// https://github.com/CraneStation/wasmtime/blob/master/lib/wasi/sandboxed-system-primitives/src/LICENSE
+// for license information.
+//
+// The upstream file contains the following copyright notice:
+//
+// Copyright (c) 2016 Nuxi, https://nuxi.nl/
 
 #include "config.h"
 
@@ -16,6 +23,12 @@
 
 void random_buf(void *buf, size_t len) {
   arc4random_buf(buf, len);
+}
+
+#elif CONFIG_HAS_GETENTROPY
+
+void random_buf(void *buf, size_t len) {
+  getentropy(buf, len);
 }
 
 #else
