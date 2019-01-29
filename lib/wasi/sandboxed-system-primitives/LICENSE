@@ -1,0 +1,6 @@
+Please see the LICENSE file in each top-level directory for the terms applicable to that directory and its relative sub-directories.
+
+The relevant directories and licenses are:
+
+src/                  - BSD-2-Clause; see src/LICENSE for details
+include/              - BSD-2-Clause; see include/LICENSE for details
