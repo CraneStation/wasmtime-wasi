@@ -1,26 +1,33 @@
-// Copyright (c) 2016 Nuxi, https://nuxi.nl/
+// Part of the Wasmtime Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://github.com/CraneStation/wasmtime/blob/master/LICENSE for license information.
 //
-// SPDX-License-Identifier: BSD-2-Clause
+// Significant parts of this file are derived from cloudabi-utils. See
+// https://github.com/CraneStation/wasmtime/blob/master/lib/wasi/sandboxed-system-primitives/src/LICENSE
+// for license information.
+//
+// The upstream file contains the following copyright notice:
+//
+// Copyright (c) 2016 Nuxi, https://nuxi.nl/
 
 #ifndef RIGHTS_H
 #define RIGHTS_H
 
 #define RIGHTS_ALL                                                             \
-  (WASI_RIGHT_FD_DATASYNC | WASI_RIGHT_FD_READ |                       \
-   WASI_RIGHT_FD_SEEK | WASI_RIGHT_FD_STAT_PUT_FLAGS |                 \
-   WASI_RIGHT_FD_SYNC | WASI_RIGHT_FD_TELL | WASI_RIGHT_FD_WRITE | \
-   WASI_RIGHT_FILE_ADVISE | WASI_RIGHT_FILE_ALLOCATE |                 \
-   WASI_RIGHT_FILE_CREATE_DIRECTORY | WASI_RIGHT_FILE_CREATE_FILE |    \
-   WASI_RIGHT_FILE_LINK_SOURCE | WASI_RIGHT_FILE_LINK_TARGET |         \
-   WASI_RIGHT_FILE_OPEN | WASI_RIGHT_FILE_READDIR |                    \
-   WASI_RIGHT_FILE_READLINK | WASI_RIGHT_FILE_RENAME_SOURCE |          \
-   WASI_RIGHT_FILE_RENAME_TARGET | WASI_RIGHT_FILE_STAT_FGET |         \
-   WASI_RIGHT_FILE_STAT_FPUT_SIZE | WASI_RIGHT_FILE_STAT_FPUT_TIMES |  \
-   WASI_RIGHT_FILE_STAT_GET | WASI_RIGHT_FILE_STAT_PUT_TIMES |         \
-   WASI_RIGHT_FILE_SYMLINK | WASI_RIGHT_FILE_UNLINK |                  \
-   WASI_RIGHT_MEM_MAP | WASI_RIGHT_MEM_MAP_EXEC |                      \
-   WASI_RIGHT_POLL_FD_READWRITE | WASI_RIGHT_POLL_PROC_TERMINATE |     \
-   WASI_RIGHT_PROC_EXEC | WASI_RIGHT_SOCK_SHUTDOWN)
+  (__WASI_RIGHT_FD_DATASYNC | __WASI_RIGHT_FD_READ |                       \
+   __WASI_RIGHT_FD_SEEK | __WASI_RIGHT_FD_STAT_PUT_FLAGS |                 \
+   __WASI_RIGHT_FD_SYNC | __WASI_RIGHT_FD_TELL | __WASI_RIGHT_FD_WRITE | \
+   __WASI_RIGHT_FILE_ADVISE | __WASI_RIGHT_FILE_ALLOCATE |                 \
+   __WASI_RIGHT_FILE_CREATE_DIRECTORY | __WASI_RIGHT_FILE_CREATE_FILE |    \
+   __WASI_RIGHT_FILE_LINK_SOURCE | __WASI_RIGHT_FILE_LINK_TARGET |         \
+   __WASI_RIGHT_FILE_OPEN | __WASI_RIGHT_FILE_READDIR |                    \
+   __WASI_RIGHT_FILE_READLINK | __WASI_RIGHT_FILE_RENAME_SOURCE |          \
+   __WASI_RIGHT_FILE_RENAME_TARGET | __WASI_RIGHT_FILE_STAT_FGET |         \
+   __WASI_RIGHT_FILE_STAT_FPUT_SIZE | __WASI_RIGHT_FILE_STAT_FPUT_TIMES |  \
+   __WASI_RIGHT_FILE_STAT_GET | __WASI_RIGHT_FILE_STAT_PUT_TIMES |         \
+   __WASI_RIGHT_FILE_SYMLINK | __WASI_RIGHT_FILE_UNLINK |                  \
+   __WASI_RIGHT_MEM_MAP |                                                \
+   __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_POLL_PROC_TERMINATE |     \
+   __WASI_RIGHT_SOCK_SHUTDOWN)
 
 // Block and character device interaction is outside the scope of
 // CloudABI. Simply allow everything.
@@ -32,50 +39,50 @@
 // Only allow directory operations on directories. Directories can only
 // yield file descriptors to other directories and files.
 #define RIGHTS_DIRECTORY_BASE                                              \
-  (WASI_RIGHT_FD_STAT_PUT_FLAGS | WASI_RIGHT_FD_SYNC |             \
-   WASI_RIGHT_FILE_ADVISE | WASI_RIGHT_FILE_CREATE_DIRECTORY |     \
-   WASI_RIGHT_FILE_CREATE_FILE | WASI_RIGHT_FILE_LINK_SOURCE |     \
-   WASI_RIGHT_FILE_LINK_TARGET | WASI_RIGHT_FILE_OPEN |            \
-   WASI_RIGHT_FILE_READDIR | WASI_RIGHT_FILE_READLINK |            \
-   WASI_RIGHT_FILE_RENAME_SOURCE | WASI_RIGHT_FILE_RENAME_TARGET | \
-   WASI_RIGHT_FILE_STAT_FGET | WASI_RIGHT_FILE_STAT_FPUT_TIMES |   \
-   WASI_RIGHT_FILE_STAT_GET | WASI_RIGHT_FILE_STAT_PUT_TIMES |     \
-   WASI_RIGHT_FILE_SYMLINK | WASI_RIGHT_FILE_UNLINK |              \
-   WASI_RIGHT_POLL_FD_READWRITE)
+  (__WASI_RIGHT_FD_STAT_PUT_FLAGS | __WASI_RIGHT_FD_SYNC |             \
+   __WASI_RIGHT_FILE_ADVISE | __WASI_RIGHT_FILE_CREATE_DIRECTORY |     \
+   __WASI_RIGHT_FILE_CREATE_FILE | __WASI_RIGHT_FILE_LINK_SOURCE |     \
+   __WASI_RIGHT_FILE_LINK_TARGET | __WASI_RIGHT_FILE_OPEN |            \
+   __WASI_RIGHT_FILE_READDIR | __WASI_RIGHT_FILE_READLINK |            \
+   __WASI_RIGHT_FILE_RENAME_SOURCE | __WASI_RIGHT_FILE_RENAME_TARGET | \
+   __WASI_RIGHT_FILE_STAT_FGET | __WASI_RIGHT_FILE_STAT_FPUT_TIMES |   \
+   __WASI_RIGHT_FILE_STAT_GET | __WASI_RIGHT_FILE_STAT_PUT_TIMES |     \
+   __WASI_RIGHT_FILE_SYMLINK | __WASI_RIGHT_FILE_UNLINK |              \
+   __WASI_RIGHT_POLL_FD_READWRITE)
 #define RIGHTS_DIRECTORY_INHERITING \
   (RIGHTS_DIRECTORY_BASE | RIGHTS_REGULAR_FILE_BASE)
 
 // Operations that apply to regular files.
 #define RIGHTS_REGULAR_FILE_BASE                                               \
-  (WASI_RIGHT_FD_DATASYNC | WASI_RIGHT_FD_READ |                       \
-   WASI_RIGHT_FD_SEEK | WASI_RIGHT_FD_STAT_PUT_FLAGS |                 \
-   WASI_RIGHT_FD_SYNC | WASI_RIGHT_FD_TELL | WASI_RIGHT_FD_WRITE | \
-   WASI_RIGHT_FILE_ADVISE | WASI_RIGHT_FILE_ALLOCATE |                 \
-   WASI_RIGHT_FILE_STAT_FGET | WASI_RIGHT_FILE_STAT_FPUT_SIZE |        \
-   WASI_RIGHT_FILE_STAT_FPUT_TIMES | WASI_RIGHT_MEM_MAP |              \
-   WASI_RIGHT_MEM_MAP_EXEC | WASI_RIGHT_POLL_FD_READWRITE |            \
-   WASI_RIGHT_PROC_EXEC)
+  (__WASI_RIGHT_FD_DATASYNC | __WASI_RIGHT_FD_READ |                       \
+   __WASI_RIGHT_FD_SEEK | __WASI_RIGHT_FD_STAT_PUT_FLAGS |                 \
+   __WASI_RIGHT_FD_SYNC | __WASI_RIGHT_FD_TELL | __WASI_RIGHT_FD_WRITE | \
+   __WASI_RIGHT_FILE_ADVISE | __WASI_RIGHT_FILE_ALLOCATE |                 \
+   __WASI_RIGHT_FILE_STAT_FGET | __WASI_RIGHT_FILE_STAT_FPUT_SIZE |        \
+   __WASI_RIGHT_FILE_STAT_FPUT_TIMES | __WASI_RIGHT_MEM_MAP |              \
+   __WASI_RIGHT_POLL_FD_READWRITE                                        \
+   )
 #define RIGHTS_REGULAR_FILE_INHERITING 0
 
 // Operations that apply to shared memory objects.
 #define RIGHTS_SHARED_MEMORY_BASE                                       \
-  (WASI_RIGHT_FD_READ | WASI_RIGHT_FD_WRITE |                   \
-   WASI_RIGHT_FILE_STAT_FGET | WASI_RIGHT_FILE_STAT_FPUT_SIZE | \
-   WASI_RIGHT_MEM_MAP | WASI_RIGHT_MEM_MAP_EXEC)
+  (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FD_WRITE |                   \
+   __WASI_RIGHT_FILE_STAT_FGET | __WASI_RIGHT_FILE_STAT_FPUT_SIZE | \
+   __WASI_RIGHT_MEM_MAP)
 #define RIGHTS_SHARED_MEMORY_INHERITING 0
 
 // Operations that apply to sockets and socket pairs.
 #define RIGHTS_SOCKET_BASE                                     \
-  (WASI_RIGHT_FD_READ | WASI_RIGHT_FD_STAT_PUT_FLAGS | \
-   WASI_RIGHT_FD_WRITE | WASI_RIGHT_FILE_STAT_FGET |   \
-   WASI_RIGHT_POLL_FD_READWRITE | WASI_RIGHT_SOCK_SHUTDOWN)
+  (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FD_STAT_PUT_FLAGS | \
+   __WASI_RIGHT_FD_WRITE | __WASI_RIGHT_FILE_STAT_FGET |   \
+   __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_SOCK_SHUTDOWN)
 #define RIGHTS_SOCKET_INHERITING RIGHTS_ALL
 
 // Operations that apply to TTYs.
 #define RIGHTS_TTY_BASE                                        \
-  (WASI_RIGHT_FD_READ | WASI_RIGHT_FD_STAT_PUT_FLAGS | \
-   WASI_RIGHT_FD_WRITE | WASI_RIGHT_FILE_STAT_FGET |   \
-   WASI_RIGHT_POLL_FD_READWRITE)
+  (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FD_STAT_PUT_FLAGS | \
+   __WASI_RIGHT_FD_WRITE | __WASI_RIGHT_FILE_STAT_FGET |   \
+   __WASI_RIGHT_POLL_FD_READWRITE)
 #define RIGHTS_TTY_INHERITING 0
 
 #endif
