@@ -30,7 +30,7 @@ We're currently working to create Rust C, C++, and other toolchains configured t
 use this new API.
 
 [CloudABI]: https://cloudabi.org/
-[WebAssembly System Interface]: WASI.md
+[WebAssembly System Interface]: docs/WASI-overview.md
 
 Additional goals for Wasmtime include:
  - Support a variety of host APIs (not just WASI), with fast calling sequences,
