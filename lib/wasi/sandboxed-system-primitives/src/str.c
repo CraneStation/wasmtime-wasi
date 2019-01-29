@@ -1,6 +1,13 @@
-// Copyright (c) 2016 Nuxi, https://nuxi.nl/
+// Part of the Wasmtime Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://github.com/CraneStation/wasmtime/blob/master/LICENSE for license information.
 //
-// SPDX-License-Identifier: BSD-2-Clause
+// Significant parts of this file are derived from cloudabi-utils. See
+// https://github.com/CraneStation/wasmtime/blob/master/lib/wasi/sandboxed-system-primitives/src/LICENSE
+// for license information.
+//
+// The upstream file contains the following copyright notice:
+//
+// Copyright (c) 2016 Nuxi, https://nuxi.nl/
 
 #include "config.h"
 
@@ -9,32 +16,6 @@
 #include <string.h>
 
 #include "str.h"
-
-#ifdef WASMTIME_UNMODIFIED
-#if !CONFIG_HAS_STRLCPY
-size_t strlcpy(char *s1, const char *s2, size_t n) {
-  // Copy up to n - 1 characters into the destination buffer.
-  const char *begin = s2;
-  while (n > 1) {
-    *s1 = *s2;
-    if (*s2 == '\0')
-      return s2 - begin;
-    ++s1;
-    ++s2;
-    --n;
-  }
-
-  // Nul-terminate the destination buffer if space is available.
-  if (n > 0)
-    *s1 = '\0';
-
-  // Continue computing the length of s2.
-  while (*s2 != '\0')
-    ++s2;
-  return s2 - begin;
-}
-#endif
-#endif
 
 char *str_nullterminate(const char *s, size_t len) {
   // Copy string.

@@ -4,6 +4,6 @@ standard native platform support. See the README.md and LICENSE files in
 the individual subdirectories for details.
 
 src/                  - cloudabi-utils' libemulator; see src/README.md for details
-include/              - cloudabi's headers; see include/README.md for details
+include/              - wasi headers
 
 This is currently an experimental prototype.
