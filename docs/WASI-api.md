@@ -38,55 +38,55 @@ Source: https://github.com/NuxiNL/cloudabi
 
 ## System calls
 
-- [`wasi_clock_res_get()`](#clock_res_get)
-- [`wasi_clock_time_get()`](#clock_time_get)
-- [`wasi_condvar_signal()`](#condvar_signal)
-- [`wasi_fd_close()`](#fd_close)
-- [`wasi_fd_create1()`](#fd_create1)
-- [`wasi_fd_create2()`](#fd_create2)
-- [`wasi_fd_datasync()`](#fd_datasync)
-- [`wasi_fd_dup()`](#fd_dup)
-- [`wasi_fd_pread()`](#fd_pread)
-- [`wasi_fd_pwrite()`](#fd_pwrite)
-- [`wasi_fd_read()`](#fd_read)
-- [`wasi_fd_replace()`](#fd_replace)
-- [`wasi_fd_seek()`](#fd_seek)
-- [`wasi_fd_stat_get()`](#fd_stat_get)
-- [`wasi_fd_stat_put()`](#fd_stat_put)
-- [`wasi_fd_sync()`](#fd_sync)
-- [`wasi_fd_write()`](#fd_write)
-- [`wasi_file_advise()`](#file_advise)
-- [`wasi_file_allocate()`](#file_allocate)
-- [`wasi_file_create()`](#file_create)
-- [`wasi_file_link()`](#file_link)
-- [`wasi_file_open()`](#file_open)
-- [`wasi_file_readdir()`](#file_readdir)
-- [`wasi_file_readlink()`](#file_readlink)
-- [`wasi_file_rename()`](#file_rename)
-- [`wasi_file_stat_fget()`](#file_stat_fget)
-- [`wasi_file_stat_fput()`](#file_stat_fput)
-- [`wasi_file_stat_get()`](#file_stat_get)
-- [`wasi_file_stat_put()`](#file_stat_put)
-- [`wasi_file_symlink()`](#file_symlink)
-- [`wasi_file_unlink()`](#file_unlink)
-- [`wasi_lock_unlock()`](#lock_unlock)
-- [`wasi_mem_advise()`](#mem_advise)
-- [`wasi_mem_map()`](#mem_map)
-- [`wasi_mem_protect()`](#mem_protect)
-- [`wasi_mem_sync()`](#mem_sync)
-- [`wasi_mem_unmap()`](#mem_unmap)
-- [`wasi_poll()`](#poll)
-- [`wasi_proc_exit()`](#proc_exit)
-- [`wasi_proc_raise()`](#proc_raise)
-- [`wasi_random_get()`](#random_get)
-- [`wasi_sock_recv()`](#sock_recv)
-- [`wasi_sock_send()`](#sock_send)
-- [`wasi_sock_shutdown()`](#sock_shutdown)
-- [`wasi_thread_create()`](#thread_create)
-- [`wasi_thread_exit()`](#thread_exit)
-- [`wasi_thread_yield()`](#thread_yield)
+- [`__wasi_clock_res_get()`](#clock_res_get)
+- [`__wasi_clock_time_get()`](#clock_time_get)
+- [`__wasi_condvar_signal()`](#condvar_signal)
+- [`__wasi_fd_close()`](#fd_close)
+- [`__wasi_fd_create1()`](#fd_create1)
+- [`__wasi_fd_create2()`](#fd_create2)
+- [`__wasi_fd_datasync()`](#fd_datasync)
+- [`__wasi_fd_dup()`](#fd_dup)
+- [`__wasi_fd_pread()`](#fd_pread)
+- [`__wasi_fd_pwrite()`](#fd_pwrite)
+- [`__wasi_fd_read()`](#fd_read)
+- [`__wasi_fd_replace()`](#fd_replace)
+- [`__wasi_fd_seek()`](#fd_seek)
+- [`__wasi_fd_stat_get()`](#fd_stat_get)
+- [`__wasi_fd_stat_put()`](#fd_stat_put)
+- [`__wasi_fd_sync()`](#fd_sync)
+- [`__wasi_fd_write()`](#fd_write)
+- [`__wasi_file_advise()`](#file_advise)
+- [`__wasi_file_allocate()`](#file_allocate)
+- [`__wasi_file_create()`](#file_create)
+- [`__wasi_file_link()`](#file_link)
+- [`__wasi_file_open()`](#file_open)
+- [`__wasi_file_readdir()`](#file_readdir)
+- [`__wasi_file_readlink()`](#file_readlink)
+- [`__wasi_file_rename()`](#file_rename)
+- [`__wasi_file_stat_fget()`](#file_stat_fget)
+- [`__wasi_file_stat_fput()`](#file_stat_fput)
+- [`__wasi_file_stat_get()`](#file_stat_get)
+- [`__wasi_file_stat_put()`](#file_stat_put)
+- [`__wasi_file_symlink()`](#file_symlink)
+- [`__wasi_file_unlink()`](#file_unlink)
+- [`__wasi_lock_unlock()`](#lock_unlock)
+- [`__wasi_mem_advise()`](#mem_advise)
+- [`__wasi_mem_map()`](#mem_map)
+- [`__wasi_mem_protect()`](#mem_protect)
+- [`__wasi_mem_sync()`](#mem_sync)
+- [`__wasi_mem_unmap()`](#mem_unmap)
+- [`__wasi_poll()`](#poll)
+- [`__wasi_proc_exit()`](#proc_exit)
+- [`__wasi_proc_raise()`](#proc_raise)
+- [`__wasi_random_get()`](#random_get)
+- [`__wasi_sock_recv()`](#sock_recv)
+- [`__wasi_sock_send()`](#sock_send)
+- [`__wasi_sock_shutdown()`](#sock_shutdown)
+- [`__wasi_thread_create()`](#thread_create)
+- [`__wasi_thread_exit()`](#thread_exit)
+- [`__wasi_thread_yield()`](#thread_yield)
 
-### <a href="#clock_res_get" name="clock_res_get"></a>`wasi_clock_res_get()`
+### <a href="#clock_res_get" name="clock_res_get"></a>`__wasi_clock_res_get()`
 
 Obtains the resolution of a clock.
 
@@ -103,7 +103,7 @@ Outputs:
 
     The resolution of the clock.
 
-### <a href="#clock_time_get" name="clock_time_get"></a>`wasi_clock_time_get()`
+### <a href="#clock_time_get" name="clock_time_get"></a>`__wasi_clock_time_get()`
 
 Obtains the time value of a clock.
 
@@ -126,13 +126,13 @@ Outputs:
 
     The time value of the clock.
 
-### <a href="#condvar_signal" name="condvar_signal"></a>`wasi_condvar_signal()`
+### <a href="#condvar_signal" name="condvar_signal"></a>`__wasi_condvar_signal()`
 
 Wakes up threads waiting on a userspace condition variable.
 
 If an invocation of this system call causes all waiting
 threads to be woken up, the value of the condition variable
-is set to [`WASI_CONDVAR_HAS_NO_WAITERS`](#condvar.has_no_waiters). As long as the condition
+is set to [`__WASI_CONDVAR_HAS_NO_WAITERS`](#condvar.has_no_waiters). As long as the condition
 variable is set to this value, it is not needed to invoke this
 system call.
 
@@ -154,7 +154,7 @@ Inputs:
     up. If it exceeds the number of waiting
     threads, all threads are woken up.
 
-### <a href="#fd_close" name="fd_close"></a>`wasi_fd_close()`
+### <a href="#fd_close" name="fd_close"></a>`__wasi_fd_close()`
 
 Closes a file descriptor.
 
@@ -164,7 +164,7 @@ Inputs:
 
     The file descriptor that needs to be closed.
 
-### <a href="#fd_create1" name="fd_create1"></a>`wasi_fd_create1()`
+### <a href="#fd_create1" name="fd_create1"></a>`__wasi_fd_create1()`
 
 Creates a file descriptor.
 
@@ -174,7 +174,7 @@ Inputs:
 
     Possible values:
 
-    - [`WASI_FILETYPE_SHARED_MEMORY`](#filetype.shared_memory)
+    - [`__WASI_FILETYPE_SHARED_MEMORY`](#filetype.shared_memory)
 
         Creates an anonymous shared memory
         object.
@@ -185,7 +185,7 @@ Outputs:
 
     The file descriptor that has been created.
 
-### <a href="#fd_create2" name="fd_create2"></a>`wasi_fd_create2()`
+### <a href="#fd_create2" name="fd_create2"></a>`__wasi_fd_create2()`
 
 Creates a pair of file descriptors.
 
@@ -195,11 +195,11 @@ Inputs:
 
     Possible values:
 
-    - [`WASI_FILETYPE_SOCKET_DGRAM`](#filetype.socket_dgram)
+    - [`__WASI_FILETYPE_SOCKET_DGRAM`](#filetype.socket_dgram)
 
         Creates a UNIX datagram socket pair.
 
-    - [`WASI_FILETYPE_SOCKET_STREAM`](#filetype.socket_stream)
+    - [`__WASI_FILETYPE_SOCKET_STREAM`](#filetype.socket_stream)
 
         Creates a UNIX byte-stream socket
         pair.
@@ -214,7 +214,7 @@ Outputs:
 
     The second file descriptor of the pair.
 
-### <a href="#fd_datasync" name="fd_datasync"></a>`wasi_fd_datasync()`
+### <a href="#fd_datasync" name="fd_datasync"></a>`__wasi_fd_datasync()`
 
 Synchronizes the data of a file to disk.
 
@@ -225,7 +225,7 @@ Inputs:
     The file descriptor of the file whose data
     needs to be synchronized to disk.
 
-### <a href="#fd_dup" name="fd_dup"></a>`wasi_fd_dup()`
+### <a href="#fd_dup" name="fd_dup"></a>`__wasi_fd_dup()`
 
 Duplicates a file descriptor.
 
@@ -242,7 +242,7 @@ Outputs:
 
     The new file descriptor.
 
-### <a href="#fd_pread" name="fd_pread"></a>`wasi_fd_pread()`
+### <a href="#fd_pread" name="fd_pread"></a>`__wasi_fd_pread()`
 
 Reads from a file descriptor, without using and updating the
 file descriptor's offset.
@@ -270,7 +270,7 @@ Outputs:
 
     The number of bytes read.
 
-### <a href="#fd_pwrite" name="fd_pwrite"></a>`wasi_fd_pwrite()`
+### <a href="#fd_pwrite" name="fd_pwrite"></a>`__wasi_fd_pwrite()`
 
 Writes to a file descriptor, without using and updating the
 file descriptor's offset.
@@ -298,7 +298,7 @@ Outputs:
 
     The number of bytes written.
 
-### <a href="#fd_read" name="fd_read"></a>`wasi_fd_read()`
+### <a href="#fd_read" name="fd_read"></a>`__wasi_fd_read()`
 
 Reads from a file descriptor.
 
@@ -320,7 +320,7 @@ Outputs:
 
     The number of bytes read.
 
-### <a href="#fd_replace" name="fd_replace"></a>`wasi_fd_replace()`
+### <a href="#fd_replace" name="fd_replace"></a>`__wasi_fd_replace()`
 
 Atomically replaces a file descriptor by a copy of another
 file descriptor.
@@ -346,7 +346,7 @@ Inputs:
     The file descriptor that needs to be
     overwritten.
 
-### <a href="#fd_seek" name="fd_seek"></a>`wasi_fd_seek()`
+### <a href="#fd_seek" name="fd_seek"></a>`__wasi_fd_seek()`
 
 Moves the offset of the file descriptor.
 
@@ -373,7 +373,7 @@ Outputs:
     The new offset of the file descriptor,
     relative to the start of the file.
 
-### <a href="#fd_stat_get" name="fd_stat_get"></a>`wasi_fd_stat_get()`
+### <a href="#fd_stat_get" name="fd_stat_get"></a>`__wasi_fd_stat_get()`
 
 Gets attributes of a file descriptor.
 
@@ -389,7 +389,7 @@ Inputs:
     The buffer where the file descriptor's
     attributes are stored.
 
-### <a href="#fd_stat_put" name="fd_stat_put"></a>`wasi_fd_stat_put()`
+### <a href="#fd_stat_put" name="fd_stat_put"></a>`__wasi_fd_stat_put()`
 
 Adjusts attributes of a file descriptor.
 
@@ -410,7 +410,7 @@ Inputs:
     A bitmask indicating which attributes have to
     be adjusted.
 
-### <a href="#fd_sync" name="fd_sync"></a>`wasi_fd_sync()`
+### <a href="#fd_sync" name="fd_sync"></a>`__wasi_fd_sync()`
 
 Synchronizes the data and metadata of a file to disk.
 
@@ -421,7 +421,7 @@ Inputs:
     The file descriptor of the file whose data
     and metadata needs to be synchronized to disk.
 
-### <a href="#fd_write" name="fd_write"></a>`wasi_fd_write()`
+### <a href="#fd_write" name="fd_write"></a>`__wasi_fd_write()`
 
 Writes to a file descriptor.
 
@@ -443,7 +443,7 @@ Outputs:
 
     The number of bytes written.
 
-### <a href="#file_advise" name="file_advise"></a>`wasi_file_advise()`
+### <a href="#file_advise" name="file_advise"></a>`__wasi_file_advise()`
 
 Provides file advisory information on a file descriptor.
 
@@ -468,7 +468,7 @@ Inputs:
 
     The advice.
 
-### <a href="#file_allocate" name="file_allocate"></a>`wasi_file_allocate()`
+### <a href="#file_allocate" name="file_allocate"></a>`__wasi_file_allocate()`
 
 Forces the allocation of space in a file.
 
@@ -488,7 +488,7 @@ Inputs:
 
     The length of the area that is allocated.
 
-### <a href="#file_create" name="file_create"></a>`wasi_file_create()`
+### <a href="#file_create" name="file_create"></a>`__wasi_file_create()`
 
 Creates a file of a specified type.
 
@@ -507,11 +507,11 @@ Inputs:
 
     Possible values:
 
-    - [`WASI_FILETYPE_DIRECTORY`](#filetype.directory)
+    - [`__WASI_FILETYPE_DIRECTORY`](#filetype.directory)
 
         Creates a directory.
 
-### <a href="#file_link" name="file_link"></a>`wasi_file_link()`
+### <a href="#file_link" name="file_link"></a>`__wasi_file_link()`
 
 Creates a hard link.
 
@@ -537,7 +537,7 @@ Inputs:
     The destination path at which the hard link
     should be created.
 
-### <a href="#file_open" name="file_open"></a>`wasi_file_open()`
+### <a href="#file_open" name="file_open"></a>`__wasi_file_open()`
 
 Opens a file.
 
@@ -558,18 +558,18 @@ Inputs:
 
 - <a href="#file_open.fds" name="file_open.fds"></a><code>const [wasi\_fdstat\_t](#fdstat) *<strong>fds</strong></code>
 
-    [`wasi_fdstat_t::fs_rights_base`](#fdstat.fs_rights_base) and
-    [`wasi_fdstat_t::fs_rights_inheriting`](#fdstat.fs_rights_inheriting) specify the
+    [`__wasi_fdstat_t::fs_rights_base`](#fdstat.fs_rights_base) and
+    [`__wasi_fdstat_t::fs_rights_inheriting`](#fdstat.fs_rights_inheriting) specify the
     initial rights of the newly created file
     descriptor. The operating system is allowed to
     return a file descriptor with fewer rights
     than specified, if and only if those rights do
     not apply to the type of file being opened.
 
-    [`wasi_fdstat_t::fs_flags`](#fdstat.fs_flags) specifies the initial flags
+    [`__wasi_fdstat_t::fs_flags`](#fdstat.fs_flags) specifies the initial flags
     of the file descriptor.
 
-    [`wasi_fdstat_t::fs_filetype`](#fdstat.fs_filetype) is ignored.
+    [`__wasi_fdstat_t::fs_filetype`](#fdstat.fs_filetype) is ignored.
 
 Outputs:
 
@@ -578,13 +578,13 @@ Outputs:
     The file descriptor of the file that has been
     opened.
 
-### <a href="#file_readdir" name="file_readdir"></a>`wasi_file_readdir()`
+### <a href="#file_readdir" name="file_readdir"></a>`__wasi_file_readdir()`
 
 Reads directory entries from a directory.
 
 When successful, the contents of the output buffer consist of
 a sequence of directory entries. Each directory entry consists
-of a [`wasi_dirent_t`](#dirent) object, followed by [`wasi_dirent_t::d_namlen`](#dirent.d_namlen) bytes
+of a [`__wasi_dirent_t`](#dirent) object, followed by [`__wasi_dirent_t::d_namlen`](#dirent.d_namlen) bytes
 holding the name of the directory entry.
 
 This system call fills the output buffer as much as possible,
@@ -617,7 +617,7 @@ Outputs:
     If less than the size of the read buffer, the
     end of the directory has been reached.
 
-### <a href="#file_readlink" name="file_readlink"></a>`wasi_file_readlink()`
+### <a href="#file_readlink" name="file_readlink"></a>`__wasi_file_readlink()`
 
 Reads the contents of a symbolic link.
 
@@ -644,7 +644,7 @@ Outputs:
 
     The number of bytes placed in the buffer.
 
-### <a href="#file_rename" name="file_rename"></a>`wasi_file_rename()`
+### <a href="#file_rename" name="file_rename"></a>`__wasi_file_rename()`
 
 Renames a file.
 
@@ -670,7 +670,7 @@ Inputs:
     The destination path to which the file should
     be renamed.
 
-### <a href="#file_stat_fget" name="file_stat_fget"></a>`wasi_file_stat_fget()`
+### <a href="#file_stat_fget" name="file_stat_fget"></a>`__wasi_file_stat_fget()`
 
 Gets attributes of a file by file descriptor.
 
@@ -686,7 +686,7 @@ Inputs:
     The buffer where the file's attributes are
     stored.
 
-### <a href="#file_stat_fput" name="file_stat_fput"></a>`wasi_file_stat_fput()`
+### <a href="#file_stat_fput" name="file_stat_fput"></a>`__wasi_file_stat_fput()`
 
 Adjusts attributes of a file by file descriptor.
 
@@ -707,7 +707,7 @@ Inputs:
     A bitmask indicating which attributes have to
     be adjusted.
 
-### <a href="#file_stat_get" name="file_stat_get"></a>`wasi_file_stat_get()`
+### <a href="#file_stat_get" name="file_stat_get"></a>`__wasi_file_stat_get()`
 
 Gets attributes of a file by path.
 
@@ -729,7 +729,7 @@ Inputs:
     The buffer where the file's attributes are
     stored.
 
-### <a href="#file_stat_put" name="file_stat_put"></a>`wasi_file_stat_put()`
+### <a href="#file_stat_put" name="file_stat_put"></a>`__wasi_file_stat_put()`
 
 Adjusts attributes of a file by path.
 
@@ -756,7 +756,7 @@ Inputs:
     A bitmask indicating which attributes have to
     be adjusted.
 
-### <a href="#file_symlink" name="file_symlink"></a>`wasi_file_symlink()`
+### <a href="#file_symlink" name="file_symlink"></a>`__wasi_file_symlink()`
 
 Creates a symbolic link.
 
@@ -776,7 +776,7 @@ Inputs:
     The destination path at which the symbolic
     link should be created.
 
-### <a href="#file_unlink" name="file_unlink"></a>`wasi_file_unlink()`
+### <a href="#file_unlink" name="file_unlink"></a>`__wasi_file_unlink()`
 
 Unlinks a file, or removes a directory.
 
@@ -795,17 +795,17 @@ Inputs:
 
     Possible values:
 
-    - [`WASI_UNLINK_REMOVEDIR`](#ulflags.removedir)
+    - [`__WASI_UNLINK_REMOVEDIR`](#ulflags.removedir)
 
         If set, attempt to remove a directory.
         Otherwise, unlink a file.
 
-### <a href="#lock_unlock" name="lock_unlock"></a>`wasi_lock_unlock()`
+### <a href="#lock_unlock" name="lock_unlock"></a>`__wasi_lock_unlock()`
 
 Unlocks a write-locked userspace lock.
 
 If a userspace lock is unlocked while having its
-[`WASI_LOCK_KERNEL_MANAGED`](#lock.kernel_managed) flag set, the lock cannot be unlocked in
+[`__WASI_LOCK_KERNEL_MANAGED`](#lock.kernel_managed) flag set, the lock cannot be unlocked in
 userspace directly. This system call needs to be performed
 instead, so that any waiting threads can be woken up.
 
@@ -827,7 +827,7 @@ Inputs:
     Whether the lock is stored in private or
     shared memory.
 
-### <a href="#mem_advise" name="mem_advise"></a>`wasi_mem_advise()`
+### <a href="#mem_advise" name="mem_advise"></a>`__wasi_mem_advise()`
 
 Provides memory advisory information on a region of memory.
 
@@ -842,7 +842,7 @@ Inputs:
 
     The advice.
 
-### <a href="#mem_map" name="mem_map"></a>`wasi_mem_map()`
+### <a href="#mem_map" name="mem_map"></a>`__wasi_mem_map()`
 
 Creates a memory mapping, making the contents of a file
 accessible through memory.
@@ -851,7 +851,7 @@ Inputs:
 
 - <a href="#mem_map.addr" name="mem_map.addr"></a><code>void *<strong>addr</strong></code>
 
-    If [`WASI_MAP_FIXED`](#mflags.fixed) is set, specifies to which
+    If [`__WASI_MAP_FIXED`](#mflags.fixed) is set, specifies to which
     address the file region is mapped. Otherwise,
     the mapping is performed at an unused
     location.
@@ -872,14 +872,14 @@ Inputs:
 
 - <a href="#mem_map.fd" name="mem_map.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    If [`WASI_MAP_ANON`](#mflags.anon) is set, this argument must be
-    [`WASI_MAP_ANON_FD`](#fd.map_anon_fd). Otherwise, this argument
+    If [`__WASI_MAP_ANON`](#mflags.anon) is set, this argument must be
+    [`__WASI_MAP_ANON_FD`](#fd.map_anon_fd). Otherwise, this argument
     specifies the file whose contents need to be
     mapped.
 
 - <a href="#mem_map.off" name="mem_map.off"></a><code>[wasi\_filesize\_t](#filesize) <strong>off</strong></code>
 
-    If [`WASI_MAP_ANON`](#mflags.anon) is set, this argument must be
+    If [`__WASI_MAP_ANON`](#mflags.anon) is set, this argument must be
     zero. Otherwise, this argument specifies the
     offset within the file at which the mapping
     starts.
@@ -890,7 +890,7 @@ Outputs:
 
     The starting address of the memory mapping.
 
-### <a href="#mem_protect" name="mem_protect"></a>`wasi_mem_protect()`
+### <a href="#mem_protect" name="mem_protect"></a>`__wasi_mem_protect()`
 
 Change the protection of a memory mapping.
 
@@ -904,7 +904,7 @@ Inputs:
 
     New protection options.
 
-### <a href="#mem_sync" name="mem_sync"></a>`wasi_mem_sync()`
+### <a href="#mem_sync" name="mem_sync"></a>`__wasi_mem_sync()`
 
 Synchronize a region of memory with its physical storage.
 
@@ -918,7 +918,7 @@ Inputs:
 
     The method of synchronization.
 
-### <a href="#mem_unmap" name="mem_unmap"></a>`wasi_mem_unmap()`
+### <a href="#mem_unmap" name="mem_unmap"></a>`__wasi_mem_unmap()`
 
 Unmaps a region of memory.
 
@@ -928,7 +928,7 @@ Inputs:
 
     The pages that needs to be unmapped.
 
-### <a href="#poll" name="poll"></a>`wasi_poll()`
+### <a href="#poll" name="poll"></a>`__wasi_poll()`
 
 Concurrently polls for the occurrence of a set of events.
 
@@ -952,7 +952,7 @@ Outputs:
 
     The number of events stored.
 
-### <a href="#proc_exit" name="proc_exit"></a>`wasi_proc_exit()`
+### <a href="#proc_exit" name="proc_exit"></a>`__wasi_proc_exit()`
 
 Terminates the process normally.
 
@@ -962,11 +962,11 @@ Inputs:
 
     The exit code returned by the process. The
     exit code can be obtained by other processes
-    through [`wasi_event_t::proc_terminate.exitcode`](#event.proc_terminate.exitcode).
+    through [`__wasi_event_t::proc_terminate.exitcode`](#event.proc_terminate.exitcode).
 
 Does not return.
 
-### <a href="#proc_raise" name="proc_raise"></a>`wasi_proc_raise()`
+### <a href="#proc_raise" name="proc_raise"></a>`__wasi_proc_raise()`
 
 Sends a signal to the process of the calling thread.
 
@@ -978,9 +978,9 @@ Inputs:
     If the signal causes the process to terminate,
     its condition can be obtained by other
     processes through
-    [`wasi_event_t::proc_terminate.signal`](#event.proc_terminate.signal).
+    [`__wasi_event_t::proc_terminate.signal`](#event.proc_terminate.signal).
 
-### <a href="#random_get" name="random_get"></a>`wasi_random_get()`
+### <a href="#random_get" name="random_get"></a>`__wasi_random_get()`
 
 Obtains random data from the kernel random number generator.
 
@@ -995,7 +995,7 @@ Inputs:
     The buffer that needs to be filled with random
     data.
 
-### <a href="#sock_recv" name="sock_recv"></a>`wasi_sock_recv()`
+### <a href="#sock_recv" name="sock_recv"></a>`__wasi_sock_recv()`
 
 Receives a message on a socket.
 
@@ -1014,7 +1014,7 @@ Inputs:
 
     Output parameters.
 
-### <a href="#sock_send" name="sock_send"></a>`wasi_sock_send()`
+### <a href="#sock_send" name="sock_send"></a>`__wasi_sock_send()`
 
 Sends a message on a socket.
 
@@ -1032,7 +1032,7 @@ Inputs:
 
     Output parameters.
 
-### <a href="#sock_shutdown" name="sock_shutdown"></a>`wasi_sock_shutdown()`
+### <a href="#sock_shutdown" name="sock_shutdown"></a>`__wasi_sock_shutdown()`
 
 Shuts down socket send and receive channels.
 
@@ -1047,7 +1047,7 @@ Inputs:
     Which channels on the socket need to be shut
     down.
 
-### <a href="#thread_create" name="thread_create"></a>`wasi_thread_create()`
+### <a href="#thread_create" name="thread_create"></a>`__wasi_thread_create()`
 
 Creates a new thread within the current process.
 
@@ -1063,7 +1063,7 @@ Outputs:
 
     The thread ID of the new thread.
 
-### <a href="#thread_exit" name="thread_exit"></a>`wasi_thread_exit()`
+### <a href="#thread_exit" name="thread_exit"></a>`__wasi_thread_exit()`
 
 Terminates the calling thread.
 
@@ -1085,107 +1085,107 @@ Inputs:
 
 Does not return.
 
-### <a href="#thread_yield" name="thread_yield"></a>`wasi_thread_yield()`
+### <a href="#thread_yield" name="thread_yield"></a>`__wasi_thread_yield()`
 
 Temporarily yields execution of the calling thread.
 
 ## Types
 
-### <a href="#advice" name="advice"></a>`wasi_advice_t` (`uint8_t`)
+### <a href="#advice" name="advice"></a>`__wasi_advice_t` (`uint8_t`)
 
 File or memory access pattern advisory information.
 
-Used by [`wasi_file_advise()`](#file_advise) and [`wasi_mem_advise()`](#mem_advise).
+Used by [`__wasi_file_advise()`](#file_advise) and [`__wasi_mem_advise()`](#mem_advise).
 
 Possible values:
 
-- <a href="#advice.dontneed" name="advice.dontneed"></a>**`WASI_ADVICE_DONTNEED`**
+- <a href="#advice.dontneed" name="advice.dontneed"></a>**`__WASI_ADVICE_DONTNEED`**
 
     The application expects that it will not access the
     specified data in the near future.
 
-- <a href="#advice.noreuse" name="advice.noreuse"></a>**`WASI_ADVICE_NOREUSE`**
+- <a href="#advice.noreuse" name="advice.noreuse"></a>**`__WASI_ADVICE_NOREUSE`**
 
     The application expects to access the specified data
     once and then not reuse it thereafter.
 
-- <a href="#advice.normal" name="advice.normal"></a>**`WASI_ADVICE_NORMAL`**
+- <a href="#advice.normal" name="advice.normal"></a>**`__WASI_ADVICE_NORMAL`**
 
     The application has no advice to give on its behavior
     with respect to the specified data.
 
-- <a href="#advice.random" name="advice.random"></a>**`WASI_ADVICE_RANDOM`**
+- <a href="#advice.random" name="advice.random"></a>**`__WASI_ADVICE_RANDOM`**
 
     The application expects to access the specified data
     in a random order.
 
-- <a href="#advice.sequential" name="advice.sequential"></a>**`WASI_ADVICE_SEQUENTIAL`**
+- <a href="#advice.sequential" name="advice.sequential"></a>**`__WASI_ADVICE_SEQUENTIAL`**
 
     The application expects to access the specified data
     sequentially from lower offsets to higher offsets.
 
-- <a href="#advice.willneed" name="advice.willneed"></a>**`WASI_ADVICE_WILLNEED`**
+- <a href="#advice.willneed" name="advice.willneed"></a>**`__WASI_ADVICE_WILLNEED`**
 
     The application expects to access the specified data
     in the near future.
 
-### <a href="#auxtype" name="auxtype"></a>`wasi_auxtype_t` (`uint32_t`)
+### <a href="#auxtype" name="auxtype"></a>`__wasi_auxtype_t` (`uint32_t`)
 
-Enumeration describing the kind of value stored in [`wasi_auxv_t`](#auxv).
+Enumeration describing the kind of value stored in [`__wasi_auxv_t`](#auxv).
 
 Possible values:
 
-- <a href="#auxtype.argdata" name="auxtype.argdata"></a>**`WASI_AT_ARGDATA`**
+- <a href="#auxtype.argdata" name="auxtype.argdata"></a>**`__WASI_AT_ARGDATA`**
 
     Base address of the binary argument data provided to
-    [`wasi_proc_exec()`](#proc_exec).
+    [`__wasi_proc_exec()`](#proc_exec).
 
-- <a href="#auxtype.argdatalen" name="auxtype.argdatalen"></a>**`WASI_AT_ARGDATALEN`**
+- <a href="#auxtype.argdatalen" name="auxtype.argdatalen"></a>**`__WASI_AT_ARGDATALEN`**
 
     Length of the binary argument data provided to
-    [`wasi_proc_exec()`](#proc_exec).
+    [`__wasi_proc_exec()`](#proc_exec).
 
-- <a href="#auxtype.base" name="auxtype.base"></a>**`WASI_AT_BASE`**
+- <a href="#auxtype.base" name="auxtype.base"></a>**`__WASI_AT_BASE`**
 
     Base address at which the executable is placed in
     memory.
 
-- <a href="#auxtype.canary" name="auxtype.canary"></a>**`WASI_AT_CANARY`**
+- <a href="#auxtype.canary" name="auxtype.canary"></a>**`__WASI_AT_CANARY`**
 
     Base address of a buffer of random data that may be
     used for non-cryptographic purposes, for example as a
     canary for stack smashing protection.
 
-- <a href="#auxtype.canarylen" name="auxtype.canarylen"></a>**`WASI_AT_CANARYLEN`**
+- <a href="#auxtype.canarylen" name="auxtype.canarylen"></a>**`__WASI_AT_CANARYLEN`**
 
     Length of a buffer of random data that may be used
     for non-cryptographic purposes, for example as a
     canary for stack smashing protection.
 
-- <a href="#auxtype.ncpus" name="auxtype.ncpus"></a>**`WASI_AT_NCPUS`**
+- <a href="#auxtype.ncpus" name="auxtype.ncpus"></a>**`__WASI_AT_NCPUS`**
 
     Number of CPUs that the system this process is running
     on has.
 
-- <a href="#auxtype.null" name="auxtype.null"></a>**`WASI_AT_NULL`**
+- <a href="#auxtype.null" name="auxtype.null"></a>**`__WASI_AT_NULL`**
 
     Terminator of the auxiliary vector.
 
-- <a href="#auxtype.pagesz" name="auxtype.pagesz"></a>**`WASI_AT_PAGESZ`**
+- <a href="#auxtype.pagesz" name="auxtype.pagesz"></a>**`__WASI_AT_PAGESZ`**
 
     Smallest memory object size for which individual
     memory protection controls can be configured.
 
-- <a href="#auxtype.phdr" name="auxtype.phdr"></a>**`WASI_AT_PHDR`**
+- <a href="#auxtype.phdr" name="auxtype.phdr"></a>**`__WASI_AT_PHDR`**
 
     Address of the first ELF program header of the
     executable.
 
-- <a href="#auxtype.phnum" name="auxtype.phnum"></a>**`WASI_AT_PHNUM`**
+- <a href="#auxtype.phnum" name="auxtype.phnum"></a>**`__WASI_AT_PHNUM`**
 
     Number of ELF program headers of the executable.
 
-- <a href="#auxtype.pid" name="auxtype.pid"></a>**`WASI_AT_PID`**
+- <a href="#auxtype.pid" name="auxtype.pid"></a>**`__WASI_AT_PID`**
 
     Identifier of the process.
 
@@ -1197,7 +1197,7 @@ Possible values:
     This record should point to sixteen bytes of binary
     data, containing a version 4 UUID (fully random).
 
-- <a href="#auxtype.sysinfo_ehdr" name="auxtype.sysinfo_ehdr"></a>**`WASI_AT_SYSINFO_EHDR`**
+- <a href="#auxtype.sysinfo_ehdr" name="auxtype.sysinfo_ehdr"></a>**`__WASI_AT_SYSINFO_EHDR`**
 
     Address of the ELF header of the vDSO.
 
@@ -1205,7 +1205,7 @@ Possible values:
     address space of the process. It provides entry points
     for every system call supported by the environment,
     all having a corresponding symbol that is prefixed
-    with `wasi_`. System calls should be invoked
+    with `__wasi_`. System calls should be invoked
     through these entry points.
 
     The first advantage of letting processes call into a
@@ -1216,15 +1216,15 @@ Possible values:
     system provides native support for CloudABI executables,
     it may still implement partial userspace
     implementations of these system calls to improve
-    performance (e.g., [`wasi_clock_time_get()`](#clock_time_get)). It also provides
+    performance (e.g., [`__wasi_clock_time_get()`](#clock_time_get)). It also provides
     a more dynamic way of adding, removing or replacing
     system calls.
 
-- <a href="#auxtype.tid" name="auxtype.tid"></a>**`WASI_AT_TID`**
+- <a href="#auxtype.tid" name="auxtype.tid"></a>**`__WASI_AT_TID`**
 
     Thread ID of the initial thread of the process.
 
-### <a href="#auxv" name="auxv"></a>`wasi_auxv_t` (`struct`)
+### <a href="#auxv" name="auxv"></a>`__wasi_auxv_t` (`struct`)
 
 Auxiliary vector entry.
 
@@ -1232,12 +1232,12 @@ The auxiliary vector is a list of key-value pairs that is
 provided to the process on startup. Unlike structures, it is
 extensible, as it is possible to add new records later on.
 The auxiliary vector is always terminated by an entry having
-type [`WASI_AT_NULL`](#auxtype.null).
+type [`__WASI_AT_NULL`](#auxtype.null).
 
 The auxiliary vector is part of the x86-64 ABI, but is used by
 this environment on all architectures.
 
-Used by [`wasi_processentry_t`](#processentry).
+Used by [`__wasi_processentry_t`](#processentry).
 
 Members:
 
@@ -1245,23 +1245,23 @@ Members:
 
     The type of the auxiliary vector entry.
 
-- When `a_type` is [`WASI_AT_ARGDATALEN`](#auxtype.argdatalen), [`WASI_AT_CANARYLEN`](#auxtype.canarylen), [`WASI_AT_NCPUS`](#auxtype.ncpus), [`WASI_AT_PAGESZ`](#auxtype.pagesz), [`WASI_AT_PHNUM`](#auxtype.phnum), or [`WASI_AT_TID`](#auxtype.tid):
+- When `a_type` is [`__WASI_AT_ARGDATALEN`](#auxtype.argdatalen), [`__WASI_AT_CANARYLEN`](#auxtype.canarylen), [`__WASI_AT_NCPUS`](#auxtype.ncpus), [`__WASI_AT_PAGESZ`](#auxtype.pagesz), [`__WASI_AT_PHNUM`](#auxtype.phnum), or [`__WASI_AT_TID`](#auxtype.tid):
 
     - <a href="#auxv.a_val" name="auxv.a_val"></a><code>size\_t <strong>a\_val</strong></code>
 
         A numerical value.
 
-- When `a_type` is [`WASI_AT_ARGDATA`](#auxtype.argdata), [`WASI_AT_BASE`](#auxtype.base), [`WASI_AT_CANARY`](#auxtype.canary), [`WASI_AT_PHDR`](#auxtype.phdr), [`WASI_AT_PID`](#auxtype.pid), or [`WASI_AT_SYSINFO_EHDR`](#auxtype.sysinfo_ehdr):
+- When `a_type` is [`__WASI_AT_ARGDATA`](#auxtype.argdata), [`__WASI_AT_BASE`](#auxtype.base), [`__WASI_AT_CANARY`](#auxtype.canary), [`__WASI_AT_PHDR`](#auxtype.phdr), [`__WASI_AT_PID`](#auxtype.pid), or [`__WASI_AT_SYSINFO_EHDR`](#auxtype.sysinfo_ehdr):
 
     - <a href="#auxv.a_ptr" name="auxv.a_ptr"></a><code>void *<strong>a\_ptr</strong></code>
 
         A pointer value.
 
-### <a href="#ciovec" name="ciovec"></a>`wasi_ciovec_t` (`struct`)
+### <a href="#ciovec" name="ciovec"></a>`__wasi_ciovec_t` (`struct`)
 
 A region of memory for scatter/gather writes.
 
-Used by [`wasi_send_in_t`](#send_in), [`wasi_fd_pwrite()`](#fd_pwrite), and [`wasi_fd_write()`](#fd_write).
+Used by [`__wasi_send_in_t`](#send_in), [`__wasi_fd_pwrite()`](#fd_pwrite), and [`__wasi_fd_write()`](#fd_write).
 
 Members:
 
@@ -1269,15 +1269,15 @@ Members:
 
     The address and length of the buffer to be written.
 
-### <a href="#clockid" name="clockid"></a>`wasi_clockid_t` (`uint32_t`)
+### <a href="#clockid" name="clockid"></a>`__wasi_clockid_t` (`uint32_t`)
 
 Identifiers for clocks.
 
-Used by [`wasi_subscription_t`](#subscription), [`wasi_clock_res_get()`](#clock_res_get), and [`wasi_clock_time_get()`](#clock_time_get).
+Used by [`__wasi_subscription_t`](#subscription), [`__wasi_clock_res_get()`](#clock_res_get), and [`__wasi_clock_time_get()`](#clock_time_get).
 
 Possible values:
 
-- <a href="#clockid.monotonic" name="clockid.monotonic"></a>**`WASI_CLOCK_MONOTONIC`**
+- <a href="#clockid.monotonic" name="clockid.monotonic"></a>**`__WASI_CLOCK_MONOTONIC`**
 
     The system-wide monotonic clock, which is defined as a
     clock measuring real time, whose value cannot be
@@ -1286,57 +1286,57 @@ Possible values:
     The epoch of this clock is undefined. The absolute
     time value of this clock therefore has no meaning.
 
-- <a href="#clockid.process_cputime_id" name="clockid.process_cputime_id"></a>**`WASI_CLOCK_PROCESS_CPUTIME_ID`**
+- <a href="#clockid.process_cputime_id" name="clockid.process_cputime_id"></a>**`__WASI_CLOCK_PROCESS_CPUTIME_ID`**
 
     The CPU-time clock associated with the current
     process.
 
-- <a href="#clockid.realtime" name="clockid.realtime"></a>**`WASI_CLOCK_REALTIME`**
+- <a href="#clockid.realtime" name="clockid.realtime"></a>**`__WASI_CLOCK_REALTIME`**
 
     The system-wide clock measuring real time. Time value
     zero corresponds with 1970-01-01T00:00:00Z.
 
-- <a href="#clockid.thread_cputime_id" name="clockid.thread_cputime_id"></a>**`WASI_CLOCK_THREAD_CPUTIME_ID`**
+- <a href="#clockid.thread_cputime_id" name="clockid.thread_cputime_id"></a>**`__WASI_CLOCK_THREAD_CPUTIME_ID`**
 
     The CPU-time clock associated with the current thread.
 
-### <a href="#condvar" name="condvar"></a>`wasi_condvar_t` (`uint32_t`)
+### <a href="#condvar" name="condvar"></a>`__wasi_condvar_t` (`uint32_t`)
 
 A userspace condition variable.
 
-Used by [`wasi_subscription_t`](#subscription) and [`wasi_condvar_signal()`](#condvar_signal).
+Used by [`__wasi_subscription_t`](#subscription) and [`__wasi_condvar_signal()`](#condvar_signal).
 
 Special values:
 
-- <a href="#condvar.has_no_waiters" name="condvar.has_no_waiters"></a>**`WASI_CONDVAR_HAS_NO_WAITERS`**
+- <a href="#condvar.has_no_waiters" name="condvar.has_no_waiters"></a>**`__WASI_CONDVAR_HAS_NO_WAITERS`**
 
     The condition variable is in its initial state. There
     are no threads waiting to be woken up. If the
     condition variable has any other value, the kernel
     must be called to wake up any sleeping threads.
 
-### <a href="#device" name="device"></a>`wasi_device_t` (`uint64_t`)
+### <a href="#device" name="device"></a>`__wasi_device_t` (`uint64_t`)
 
 Identifier for a device containing a file system. Can be used
-in combination with [`wasi_inode_t`](#inode) to uniquely identify a file on the
+in combination with [`__wasi_inode_t`](#inode) to uniquely identify a file on the
 local system.
 
-Used by [`wasi_filestat_t`](#filestat).
+Used by [`__wasi_filestat_t`](#filestat).
 
-### <a href="#dircookie" name="dircookie"></a>`wasi_dircookie_t` (`uint64_t`)
+### <a href="#dircookie" name="dircookie"></a>`__wasi_dircookie_t` (`uint64_t`)
 
 A reference to the offset of a directory entry.
 
-Used by [`wasi_dirent_t`](#dirent) and [`wasi_file_readdir()`](#file_readdir).
+Used by [`__wasi_dirent_t`](#dirent) and [`__wasi_file_readdir()`](#file_readdir).
 
 Special values:
 
-- <a href="#dircookie.start" name="dircookie.start"></a>**`WASI_DIRCOOKIE_START`**
+- <a href="#dircookie.start" name="dircookie.start"></a>**`__WASI_DIRCOOKIE_START`**
 
     Permanent reference to the first directory entry
     within a directory.
 
-### <a href="#dirent" name="dirent"></a>`wasi_dirent_t` (`struct`)
+### <a href="#dirent" name="dirent"></a>`__wasi_dirent_t` (`struct`)
 
 A directory entry.
 
@@ -1361,7 +1361,7 @@ Members:
     The type of the file referred to by this directory
     entry.
 
-### <a href="#errno" name="errno"></a>`wasi_errno_t` (`uint16_t`)
+### <a href="#errno" name="errno"></a>`__wasi_errno_t` (`uint16_t`)
 
 Error codes returned by system calls.
 
@@ -1369,330 +1369,330 @@ Not all of these error codes are returned by the system calls
 provided by this environment, but are either used in userspace
 exclusively or merely provided for alignment with POSIX.
 
-Used by [`wasi_event_t`](#event).
+Used by [`__wasi_event_t`](#event).
 
 Possible values:
 
-- <a href="#errno.success" name="errno.success"></a>**`WASI_ESUCCESS`**
+- <a href="#errno.success" name="errno.success"></a>**`__WASI_ESUCCESS`**
 
     No error occurred. System call completed successfully.
 
-- <a href="#errno.2big" name="errno.2big"></a>**`WASI_E2BIG`**
+- <a href="#errno.2big" name="errno.2big"></a>**`__WASI_E2BIG`**
 
     Argument list too long.
 
-- <a href="#errno.acces" name="errno.acces"></a>**`WASI_EACCES`**
+- <a href="#errno.acces" name="errno.acces"></a>**`__WASI_EACCES`**
 
     Permission denied.
 
-- <a href="#errno.addrinuse" name="errno.addrinuse"></a>**`WASI_EADDRINUSE`**
+- <a href="#errno.addrinuse" name="errno.addrinuse"></a>**`__WASI_EADDRINUSE`**
 
     Address in use.
 
-- <a href="#errno.addrnotavail" name="errno.addrnotavail"></a>**`WASI_EADDRNOTAVAIL`**
+- <a href="#errno.addrnotavail" name="errno.addrnotavail"></a>**`__WASI_EADDRNOTAVAIL`**
 
     Address not available.
 
-- <a href="#errno.afnosupport" name="errno.afnosupport"></a>**`WASI_EAFNOSUPPORT`**
+- <a href="#errno.afnosupport" name="errno.afnosupport"></a>**`__WASI_EAFNOSUPPORT`**
 
     Address family not supported.
 
-- <a href="#errno.again" name="errno.again"></a>**`WASI_EAGAIN`**
+- <a href="#errno.again" name="errno.again"></a>**`__WASI_EAGAIN`**
 
     Resource unavailable, or operation would block.
 
-- <a href="#errno.already" name="errno.already"></a>**`WASI_EALREADY`**
+- <a href="#errno.already" name="errno.already"></a>**`__WASI_EALREADY`**
 
     Connection already in progress.
 
-- <a href="#errno.badf" name="errno.badf"></a>**`WASI_EBADF`**
+- <a href="#errno.badf" name="errno.badf"></a>**`__WASI_EBADF`**
 
     Bad file descriptor.
 
-- <a href="#errno.badmsg" name="errno.badmsg"></a>**`WASI_EBADMSG`**
+- <a href="#errno.badmsg" name="errno.badmsg"></a>**`__WASI_EBADMSG`**
 
     Bad message.
 
-- <a href="#errno.busy" name="errno.busy"></a>**`WASI_EBUSY`**
+- <a href="#errno.busy" name="errno.busy"></a>**`__WASI_EBUSY`**
 
     Device or resource busy.
 
-- <a href="#errno.canceled" name="errno.canceled"></a>**`WASI_ECANCELED`**
+- <a href="#errno.canceled" name="errno.canceled"></a>**`__WASI_ECANCELED`**
 
     Operation canceled.
 
-- <a href="#errno.child" name="errno.child"></a>**`WASI_ECHILD`**
+- <a href="#errno.child" name="errno.child"></a>**`__WASI_ECHILD`**
 
     No child processes.
 
-- <a href="#errno.connaborted" name="errno.connaborted"></a>**`WASI_ECONNABORTED`**
+- <a href="#errno.connaborted" name="errno.connaborted"></a>**`__WASI_ECONNABORTED`**
 
     Connection aborted.
 
-- <a href="#errno.connrefused" name="errno.connrefused"></a>**`WASI_ECONNREFUSED`**
+- <a href="#errno.connrefused" name="errno.connrefused"></a>**`__WASI_ECONNREFUSED`**
 
     Connection refused.
 
-- <a href="#errno.connreset" name="errno.connreset"></a>**`WASI_ECONNRESET`**
+- <a href="#errno.connreset" name="errno.connreset"></a>**`__WASI_ECONNRESET`**
 
     Connection reset.
 
-- <a href="#errno.deadlk" name="errno.deadlk"></a>**`WASI_EDEADLK`**
+- <a href="#errno.deadlk" name="errno.deadlk"></a>**`__WASI_EDEADLK`**
 
     Resource deadlock would occur.
 
-- <a href="#errno.destaddrreq" name="errno.destaddrreq"></a>**`WASI_EDESTADDRREQ`**
+- <a href="#errno.destaddrreq" name="errno.destaddrreq"></a>**`__WASI_EDESTADDRREQ`**
 
     Destination address required.
 
-- <a href="#errno.dom" name="errno.dom"></a>**`WASI_EDOM`**
+- <a href="#errno.dom" name="errno.dom"></a>**`__WASI_EDOM`**
 
     Mathematics argument out of domain of function.
 
-- <a href="#errno.dquot" name="errno.dquot"></a>**`WASI_EDQUOT`**
+- <a href="#errno.dquot" name="errno.dquot"></a>**`__WASI_EDQUOT`**
 
     Reserved.
 
-- <a href="#errno.exist" name="errno.exist"></a>**`WASI_EEXIST`**
+- <a href="#errno.exist" name="errno.exist"></a>**`__WASI_EEXIST`**
 
     File exists.
 
-- <a href="#errno.fault" name="errno.fault"></a>**`WASI_EFAULT`**
+- <a href="#errno.fault" name="errno.fault"></a>**`__WASI_EFAULT`**
 
     Bad address.
 
-- <a href="#errno.fbig" name="errno.fbig"></a>**`WASI_EFBIG`**
+- <a href="#errno.fbig" name="errno.fbig"></a>**`__WASI_EFBIG`**
 
     File too large.
 
-- <a href="#errno.hostunreach" name="errno.hostunreach"></a>**`WASI_EHOSTUNREACH`**
+- <a href="#errno.hostunreach" name="errno.hostunreach"></a>**`__WASI_EHOSTUNREACH`**
 
     Host is unreachable.
 
-- <a href="#errno.idrm" name="errno.idrm"></a>**`WASI_EIDRM`**
+- <a href="#errno.idrm" name="errno.idrm"></a>**`__WASI_EIDRM`**
 
     Identifier removed.
 
-- <a href="#errno.ilseq" name="errno.ilseq"></a>**`WASI_EILSEQ`**
+- <a href="#errno.ilseq" name="errno.ilseq"></a>**`__WASI_EILSEQ`**
 
     Illegal byte sequence.
 
-- <a href="#errno.inprogress" name="errno.inprogress"></a>**`WASI_EINPROGRESS`**
+- <a href="#errno.inprogress" name="errno.inprogress"></a>**`__WASI_EINPROGRESS`**
 
     Operation in progress.
 
-- <a href="#errno.intr" name="errno.intr"></a>**`WASI_EINTR`**
+- <a href="#errno.intr" name="errno.intr"></a>**`__WASI_EINTR`**
 
     Interrupted function.
 
-- <a href="#errno.inval" name="errno.inval"></a>**`WASI_EINVAL`**
+- <a href="#errno.inval" name="errno.inval"></a>**`__WASI_EINVAL`**
 
     Invalid argument.
 
-- <a href="#errno.io" name="errno.io"></a>**`WASI_EIO`**
+- <a href="#errno.io" name="errno.io"></a>**`__WASI_EIO`**
 
     I/O error.
 
-- <a href="#errno.isconn" name="errno.isconn"></a>**`WASI_EISCONN`**
+- <a href="#errno.isconn" name="errno.isconn"></a>**`__WASI_EISCONN`**
 
     Socket is connected.
 
-- <a href="#errno.isdir" name="errno.isdir"></a>**`WASI_EISDIR`**
+- <a href="#errno.isdir" name="errno.isdir"></a>**`__WASI_EISDIR`**
 
     Is a directory.
 
-- <a href="#errno.loop" name="errno.loop"></a>**`WASI_ELOOP`**
+- <a href="#errno.loop" name="errno.loop"></a>**`__WASI_ELOOP`**
 
     Too many levels of symbolic links.
 
-- <a href="#errno.mfile" name="errno.mfile"></a>**`WASI_EMFILE`**
+- <a href="#errno.mfile" name="errno.mfile"></a>**`__WASI_EMFILE`**
 
     File descriptor value too large.
 
-- <a href="#errno.mlink" name="errno.mlink"></a>**`WASI_EMLINK`**
+- <a href="#errno.mlink" name="errno.mlink"></a>**`__WASI_EMLINK`**
 
     Too many links.
 
-- <a href="#errno.msgsize" name="errno.msgsize"></a>**`WASI_EMSGSIZE`**
+- <a href="#errno.msgsize" name="errno.msgsize"></a>**`__WASI_EMSGSIZE`**
 
     Message too large.
 
-- <a href="#errno.multihop" name="errno.multihop"></a>**`WASI_EMULTIHOP`**
+- <a href="#errno.multihop" name="errno.multihop"></a>**`__WASI_EMULTIHOP`**
 
     Reserved.
 
-- <a href="#errno.nametoolong" name="errno.nametoolong"></a>**`WASI_ENAMETOOLONG`**
+- <a href="#errno.nametoolong" name="errno.nametoolong"></a>**`__WASI_ENAMETOOLONG`**
 
     Filename too long.
 
-- <a href="#errno.netdown" name="errno.netdown"></a>**`WASI_ENETDOWN`**
+- <a href="#errno.netdown" name="errno.netdown"></a>**`__WASI_ENETDOWN`**
 
     Network is down.
 
-- <a href="#errno.netreset" name="errno.netreset"></a>**`WASI_ENETRESET`**
+- <a href="#errno.netreset" name="errno.netreset"></a>**`__WASI_ENETRESET`**
 
     Connection aborted by network.
 
-- <a href="#errno.netunreach" name="errno.netunreach"></a>**`WASI_ENETUNREACH`**
+- <a href="#errno.netunreach" name="errno.netunreach"></a>**`__WASI_ENETUNREACH`**
 
     Network unreachable.
 
-- <a href="#errno.nfile" name="errno.nfile"></a>**`WASI_ENFILE`**
+- <a href="#errno.nfile" name="errno.nfile"></a>**`__WASI_ENFILE`**
 
     Too many files open in system.
 
-- <a href="#errno.nobufs" name="errno.nobufs"></a>**`WASI_ENOBUFS`**
+- <a href="#errno.nobufs" name="errno.nobufs"></a>**`__WASI_ENOBUFS`**
 
     No buffer space available.
 
-- <a href="#errno.nodev" name="errno.nodev"></a>**`WASI_ENODEV`**
+- <a href="#errno.nodev" name="errno.nodev"></a>**`__WASI_ENODEV`**
 
     No such device.
 
-- <a href="#errno.noent" name="errno.noent"></a>**`WASI_ENOENT`**
+- <a href="#errno.noent" name="errno.noent"></a>**`__WASI_ENOENT`**
 
     No such file or directory.
 
-- <a href="#errno.noexec" name="errno.noexec"></a>**`WASI_ENOEXEC`**
+- <a href="#errno.noexec" name="errno.noexec"></a>**`__WASI_ENOEXEC`**
 
     Executable file format error.
 
-- <a href="#errno.nolck" name="errno.nolck"></a>**`WASI_ENOLCK`**
+- <a href="#errno.nolck" name="errno.nolck"></a>**`__WASI_ENOLCK`**
 
     No locks available.
 
-- <a href="#errno.nolink" name="errno.nolink"></a>**`WASI_ENOLINK`**
+- <a href="#errno.nolink" name="errno.nolink"></a>**`__WASI_ENOLINK`**
 
     Reserved.
 
-- <a href="#errno.nomem" name="errno.nomem"></a>**`WASI_ENOMEM`**
+- <a href="#errno.nomem" name="errno.nomem"></a>**`__WASI_ENOMEM`**
 
     Not enough space.
 
-- <a href="#errno.nomsg" name="errno.nomsg"></a>**`WASI_ENOMSG`**
+- <a href="#errno.nomsg" name="errno.nomsg"></a>**`__WASI_ENOMSG`**
 
     No message of the desired type.
 
-- <a href="#errno.noprotoopt" name="errno.noprotoopt"></a>**`WASI_ENOPROTOOPT`**
+- <a href="#errno.noprotoopt" name="errno.noprotoopt"></a>**`__WASI_ENOPROTOOPT`**
 
     Protocol not available.
 
-- <a href="#errno.nospc" name="errno.nospc"></a>**`WASI_ENOSPC`**
+- <a href="#errno.nospc" name="errno.nospc"></a>**`__WASI_ENOSPC`**
 
     No space left on device.
 
-- <a href="#errno.nosys" name="errno.nosys"></a>**`WASI_ENOSYS`**
+- <a href="#errno.nosys" name="errno.nosys"></a>**`__WASI_ENOSYS`**
 
     Function not supported.
 
-- <a href="#errno.notconn" name="errno.notconn"></a>**`WASI_ENOTCONN`**
+- <a href="#errno.notconn" name="errno.notconn"></a>**`__WASI_ENOTCONN`**
 
     The socket is not connected.
 
-- <a href="#errno.notdir" name="errno.notdir"></a>**`WASI_ENOTDIR`**
+- <a href="#errno.notdir" name="errno.notdir"></a>**`__WASI_ENOTDIR`**
 
     Not a directory or a symbolic link to a directory.
 
-- <a href="#errno.notempty" name="errno.notempty"></a>**`WASI_ENOTEMPTY`**
+- <a href="#errno.notempty" name="errno.notempty"></a>**`__WASI_ENOTEMPTY`**
 
     Directory not empty.
 
-- <a href="#errno.notrecoverable" name="errno.notrecoverable"></a>**`WASI_ENOTRECOVERABLE`**
+- <a href="#errno.notrecoverable" name="errno.notrecoverable"></a>**`__WASI_ENOTRECOVERABLE`**
 
     State not recoverable.
 
-- <a href="#errno.notsock" name="errno.notsock"></a>**`WASI_ENOTSOCK`**
+- <a href="#errno.notsock" name="errno.notsock"></a>**`__WASI_ENOTSOCK`**
 
     Not a socket.
 
-- <a href="#errno.notsup" name="errno.notsup"></a>**`WASI_ENOTSUP`**
+- <a href="#errno.notsup" name="errno.notsup"></a>**`__WASI_ENOTSUP`**
 
     Not supported, or operation not supported on socket.
 
-- <a href="#errno.notty" name="errno.notty"></a>**`WASI_ENOTTY`**
+- <a href="#errno.notty" name="errno.notty"></a>**`__WASI_ENOTTY`**
 
     Inappropriate I/O control operation.
 
-- <a href="#errno.nxio" name="errno.nxio"></a>**`WASI_ENXIO`**
+- <a href="#errno.nxio" name="errno.nxio"></a>**`__WASI_ENXIO`**
 
     No such device or address.
 
-- <a href="#errno.overflow" name="errno.overflow"></a>**`WASI_EOVERFLOW`**
+- <a href="#errno.overflow" name="errno.overflow"></a>**`__WASI_EOVERFLOW`**
 
     Value too large to be stored in data type.
 
-- <a href="#errno.ownerdead" name="errno.ownerdead"></a>**`WASI_EOWNERDEAD`**
+- <a href="#errno.ownerdead" name="errno.ownerdead"></a>**`__WASI_EOWNERDEAD`**
 
     Previous owner died.
 
-- <a href="#errno.perm" name="errno.perm"></a>**`WASI_EPERM`**
+- <a href="#errno.perm" name="errno.perm"></a>**`__WASI_EPERM`**
 
     Operation not permitted.
 
-- <a href="#errno.pipe" name="errno.pipe"></a>**`WASI_EPIPE`**
+- <a href="#errno.pipe" name="errno.pipe"></a>**`__WASI_EPIPE`**
 
     Broken pipe.
 
-- <a href="#errno.proto" name="errno.proto"></a>**`WASI_EPROTO`**
+- <a href="#errno.proto" name="errno.proto"></a>**`__WASI_EPROTO`**
 
     Protocol error.
 
-- <a href="#errno.protonosupport" name="errno.protonosupport"></a>**`WASI_EPROTONOSUPPORT`**
+- <a href="#errno.protonosupport" name="errno.protonosupport"></a>**`__WASI_EPROTONOSUPPORT`**
 
     Protocol not supported.
 
-- <a href="#errno.prototype" name="errno.prototype"></a>**`WASI_EPROTOTYPE`**
+- <a href="#errno.prototype" name="errno.prototype"></a>**`__WASI_EPROTOTYPE`**
 
     Protocol wrong type for socket.
 
-- <a href="#errno.range" name="errno.range"></a>**`WASI_ERANGE`**
+- <a href="#errno.range" name="errno.range"></a>**`__WASI_ERANGE`**
 
     Result too large.
 
-- <a href="#errno.rofs" name="errno.rofs"></a>**`WASI_EROFS`**
+- <a href="#errno.rofs" name="errno.rofs"></a>**`__WASI_EROFS`**
 
     Read-only file system.
 
-- <a href="#errno.spipe" name="errno.spipe"></a>**`WASI_ESPIPE`**
+- <a href="#errno.spipe" name="errno.spipe"></a>**`__WASI_ESPIPE`**
 
     Invalid seek.
 
-- <a href="#errno.srch" name="errno.srch"></a>**`WASI_ESRCH`**
+- <a href="#errno.srch" name="errno.srch"></a>**`__WASI_ESRCH`**
 
     No such process.
 
-- <a href="#errno.stale" name="errno.stale"></a>**`WASI_ESTALE`**
+- <a href="#errno.stale" name="errno.stale"></a>**`__WASI_ESTALE`**
 
     Reserved.
 
-- <a href="#errno.timedout" name="errno.timedout"></a>**`WASI_ETIMEDOUT`**
+- <a href="#errno.timedout" name="errno.timedout"></a>**`__WASI_ETIMEDOUT`**
 
     Connection timed out.
 
-- <a href="#errno.txtbsy" name="errno.txtbsy"></a>**`WASI_ETXTBSY`**
+- <a href="#errno.txtbsy" name="errno.txtbsy"></a>**`__WASI_ETXTBSY`**
 
     Text file busy.
 
-- <a href="#errno.xdev" name="errno.xdev"></a>**`WASI_EXDEV`**
+- <a href="#errno.xdev" name="errno.xdev"></a>**`__WASI_EXDEV`**
 
     Cross-device link.
 
-- <a href="#errno.notcapable" name="errno.notcapable"></a>**`WASI_ENOTCAPABLE`**
+- <a href="#errno.notcapable" name="errno.notcapable"></a>**`__WASI_ENOTCAPABLE`**
 
     Extension: Capabilities insufficient.
 
-### <a href="#event" name="event"></a>`wasi_event_t` (`struct`)
+### <a href="#event" name="event"></a>`__wasi_event_t` (`struct`)
 
 An event that occurred.
 
-Used by [`wasi_poll()`](#poll).
+Used by [`__wasi_poll()`](#poll).
 
 Members:
 
 - <a href="#event.userdata" name="event.userdata"></a><code>[wasi\_userdata\_t](#userdata) <strong>userdata</strong></code>
 
     User-provided value that got attached to
-    [`wasi_subscription_t::userdata`](#subscription.userdata).
+    [`__wasi_subscription_t::userdata`](#subscription.userdata).
 
 - <a href="#event.error" name="event.error"></a><code>[wasi\_errno\_t](#errno) <strong>error</strong></code>
 
@@ -1703,7 +1703,7 @@ Members:
 
     The type of the event that occurred.
 
-- When `type` is [`WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
+- When `type` is [`__WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
 
     - <a href="#event.fd_readwrite" name="event.fd_readwrite"></a>**`fd_readwrite`**
 
@@ -1721,7 +1721,7 @@ Members:
             The state of the file
             descriptor.
 
-- When `type` is [`WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate):
+- When `type` is [`__WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate):
 
     - <a href="#event.proc_terminate" name="event.proc_terminate"></a>**`proc_terminate`**
 
@@ -1742,72 +1742,72 @@ Members:
             If exited, the exit code of
             the process.
 
-### <a href="#eventrwflags" name="eventrwflags"></a>`wasi_eventrwflags_t` (`uint16_t` bitfield)
+### <a href="#eventrwflags" name="eventrwflags"></a>`__wasi_eventrwflags_t` (`uint16_t` bitfield)
 
 The state of the file descriptor subscribed to with
-[`WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
+[`__WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
 
-Used by [`wasi_event_t`](#event).
+Used by [`__wasi_event_t`](#event).
 
 Possible values:
 
-- <a href="#eventrwflags.hangup" name="eventrwflags.hangup"></a>**`WASI_EVENT_FD_READWRITE_HANGUP`**
+- <a href="#eventrwflags.hangup" name="eventrwflags.hangup"></a>**`__WASI_EVENT_FD_READWRITE_HANGUP`**
 
     The peer of this socket has closed or disconnected.
 
-### <a href="#eventtype" name="eventtype"></a>`wasi_eventtype_t` (`uint8_t`)
+### <a href="#eventtype" name="eventtype"></a>`__wasi_eventtype_t` (`uint8_t`)
 
 Type of a subscription to an event or its occurrence.
 
-Used by [`wasi_event_t`](#event) and [`wasi_subscription_t`](#subscription).
+Used by [`__wasi_event_t`](#event) and [`__wasi_subscription_t`](#subscription).
 
 Possible values:
 
-- <a href="#eventtype.clock" name="eventtype.clock"></a>**`WASI_EVENTTYPE_CLOCK`**
+- <a href="#eventtype.clock" name="eventtype.clock"></a>**`__WASI_EVENTTYPE_CLOCK`**
 
-    The time value of clock [`wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id)
-    has reached timestamp [`wasi_subscription_t::clock.timeout`](#subscription.clock.timeout).
+    The time value of clock [`__wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id)
+    has reached timestamp [`__wasi_subscription_t::clock.timeout`](#subscription.clock.timeout).
 
-- <a href="#eventtype.condvar" name="eventtype.condvar"></a>**`WASI_EVENTTYPE_CONDVAR`**
+- <a href="#eventtype.condvar" name="eventtype.condvar"></a>**`__WASI_EVENTTYPE_CONDVAR`**
 
-    Condition variable [`wasi_subscription_t::condvar.condvar`](#subscription.condvar.condvar) has
-    been woken up and [`wasi_subscription_t::condvar.lock`](#subscription.condvar.lock) has been
+    Condition variable [`__wasi_subscription_t::condvar.condvar`](#subscription.condvar.condvar) has
+    been woken up and [`__wasi_subscription_t::condvar.lock`](#subscription.condvar.lock) has been
     acquired for writing.
 
-- <a href="#eventtype.fd_read" name="eventtype.fd_read"></a>**`WASI_EVENTTYPE_FD_READ`**
+- <a href="#eventtype.fd_read" name="eventtype.fd_read"></a>**`__WASI_EVENTTYPE_FD_READ`**
 
-    File descriptor [`wasi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
+    File descriptor [`__wasi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
     data available for reading. This event always triggers
     for regular files.
 
-- <a href="#eventtype.fd_write" name="eventtype.fd_write"></a>**`WASI_EVENTTYPE_FD_WRITE`**
+- <a href="#eventtype.fd_write" name="eventtype.fd_write"></a>**`__WASI_EVENTTYPE_FD_WRITE`**
 
-    File descriptor [`wasi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
+    File descriptor [`__wasi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
     capacity available for writing. This event always
     triggers for regular files.
 
-- <a href="#eventtype.lock_rdlock" name="eventtype.lock_rdlock"></a>**`WASI_EVENTTYPE_LOCK_RDLOCK`**
+- <a href="#eventtype.lock_rdlock" name="eventtype.lock_rdlock"></a>**`__WASI_EVENTTYPE_LOCK_RDLOCK`**
 
-    Lock [`wasi_subscription_t::lock.lock`](#subscription.lock.lock) has been acquired for
+    Lock [`__wasi_subscription_t::lock.lock`](#subscription.lock.lock) has been acquired for
     reading.
 
-- <a href="#eventtype.lock_wrlock" name="eventtype.lock_wrlock"></a>**`WASI_EVENTTYPE_LOCK_WRLOCK`**
+- <a href="#eventtype.lock_wrlock" name="eventtype.lock_wrlock"></a>**`__WASI_EVENTTYPE_LOCK_WRLOCK`**
 
-    Lock [`wasi_subscription_t::lock.lock`](#subscription.lock.lock) has been acquired for
+    Lock [`__wasi_subscription_t::lock.lock`](#subscription.lock.lock) has been acquired for
     writing.
 
-- <a href="#eventtype.proc_terminate" name="eventtype.proc_terminate"></a>**`WASI_EVENTTYPE_PROC_TERMINATE`**
+- <a href="#eventtype.proc_terminate" name="eventtype.proc_terminate"></a>**`__WASI_EVENTTYPE_PROC_TERMINATE`**
 
     The process associated with process descriptor
-    [`wasi_subscription_t::proc_terminate.fd`](#subscription.proc_terminate.fd) has terminated.
+    [`__wasi_subscription_t::proc_terminate.fd`](#subscription.proc_terminate.fd) has terminated.
 
-### <a href="#exitcode" name="exitcode"></a>`wasi_exitcode_t` (`uint32_t`)
+### <a href="#exitcode" name="exitcode"></a>`__wasi_exitcode_t` (`uint32_t`)
 
 Exit code generated by a process when exiting.
 
-Used by [`wasi_event_t`](#event) and [`wasi_proc_exit()`](#proc_exit).
+Used by [`__wasi_event_t`](#event) and [`__wasi_proc_exit()`](#proc_exit).
 
-### <a href="#fd" name="fd"></a>`wasi_fd_t` (`uint32_t`)
+### <a href="#fd" name="fd"></a>`__wasi_fd_t` (`uint32_t`)
 
 A file descriptor number.
 
@@ -1818,69 +1818,69 @@ file descriptors in ascending order.
 
 Special values:
 
-- <a href="#fd.map_anon_fd" name="fd.map_anon_fd"></a>**`WASI_MAP_ANON_FD`**
+- <a href="#fd.map_anon_fd" name="fd.map_anon_fd"></a>**`__WASI_MAP_ANON_FD`**
 
-    Passed to [`wasi_mem_map()`](#mem_map) when creating a mapping to
+    Passed to [`__wasi_mem_map()`](#mem_map) when creating a mapping to
     anonymous memory.
 
-### <a href="#fdflags" name="fdflags"></a>`wasi_fdflags_t` (`uint16_t` bitfield)
+### <a href="#fdflags" name="fdflags"></a>`__wasi_fdflags_t` (`uint16_t` bitfield)
 
 File descriptor flags.
 
-Used by [`wasi_fdstat_t`](#fdstat).
+Used by [`__wasi_fdstat_t`](#fdstat).
 
 Possible values:
 
-- <a href="#fdflags.append" name="fdflags.append"></a>**`WASI_FDFLAG_APPEND`**
+- <a href="#fdflags.append" name="fdflags.append"></a>**`__WASI_FDFLAG_APPEND`**
 
     Append mode: Data written to the file is always
     appended to the file's end.
 
-- <a href="#fdflags.dsync" name="fdflags.dsync"></a>**`WASI_FDFLAG_DSYNC`**
+- <a href="#fdflags.dsync" name="fdflags.dsync"></a>**`__WASI_FDFLAG_DSYNC`**
 
     Write according to synchronized I/O data integrity
     completion. Only the data stored in the file is
     synchronized.
 
-- <a href="#fdflags.nonblock" name="fdflags.nonblock"></a>**`WASI_FDFLAG_NONBLOCK`**
+- <a href="#fdflags.nonblock" name="fdflags.nonblock"></a>**`__WASI_FDFLAG_NONBLOCK`**
 
     Non-blocking mode.
 
-- <a href="#fdflags.rsync" name="fdflags.rsync"></a>**`WASI_FDFLAG_RSYNC`**
+- <a href="#fdflags.rsync" name="fdflags.rsync"></a>**`__WASI_FDFLAG_RSYNC`**
 
     Synchronized read I/O operations.
 
-- <a href="#fdflags.sync" name="fdflags.sync"></a>**`WASI_FDFLAG_SYNC`**
+- <a href="#fdflags.sync" name="fdflags.sync"></a>**`__WASI_FDFLAG_SYNC`**
 
     Write according to synchronized I/O file integrity
     completion. In addition to synchronizing the data
     stored in the file, the system may also synchronously
     update the file's metadata.
 
-### <a href="#fdsflags" name="fdsflags"></a>`wasi_fdsflags_t` (`uint16_t` bitfield)
+### <a href="#fdsflags" name="fdsflags"></a>`__wasi_fdsflags_t` (`uint16_t` bitfield)
 
 Which file descriptor attributes to adjust.
 
-Used by [`wasi_fd_stat_put()`](#fd_stat_put).
+Used by [`__wasi_fd_stat_put()`](#fd_stat_put).
 
 Possible values:
 
-- <a href="#fdsflags.flags" name="fdsflags.flags"></a>**`WASI_FDSTAT_FLAGS`**
+- <a href="#fdsflags.flags" name="fdsflags.flags"></a>**`__WASI_FDSTAT_FLAGS`**
 
     Adjust the file descriptor flags stored in
-    [`wasi_fdstat_t::fs_flags`](#fdstat.fs_flags).
+    [`__wasi_fdstat_t::fs_flags`](#fdstat.fs_flags).
 
-- <a href="#fdsflags.rights" name="fdsflags.rights"></a>**`WASI_FDSTAT_RIGHTS`**
+- <a href="#fdsflags.rights" name="fdsflags.rights"></a>**`__WASI_FDSTAT_RIGHTS`**
 
     Restrict the rights of the file descriptor to the
-    rights stored in [`wasi_fdstat_t::fs_rights_base`](#fdstat.fs_rights_base) and
-    [`wasi_fdstat_t::fs_rights_inheriting`](#fdstat.fs_rights_inheriting).
+    rights stored in [`__wasi_fdstat_t::fs_rights_base`](#fdstat.fs_rights_base) and
+    [`__wasi_fdstat_t::fs_rights_inheriting`](#fdstat.fs_rights_inheriting).
 
-### <a href="#fdstat" name="fdstat"></a>`wasi_fdstat_t` (`struct`)
+### <a href="#fdstat" name="fdstat"></a>`__wasi_fdstat_t` (`struct`)
 
 File descriptor attributes.
 
-Used by [`wasi_fd_stat_get()`](#fd_stat_get), [`wasi_fd_stat_put()`](#fd_stat_put), and [`wasi_file_open()`](#file_open).
+Used by [`__wasi_fd_stat_get()`](#fd_stat_get), [`__wasi_fd_stat_put()`](#fd_stat_put), and [`__wasi_file_open()`](#file_open).
 
 Members:
 
@@ -1900,25 +1900,25 @@ Members:
 
     Maximum set of rights that can be installed on new
     file descriptors that are created through this file
-    descriptor, e.g., through [`wasi_file_open()`](#file_open).
+    descriptor, e.g., through [`__wasi_file_open()`](#file_open).
 
-### <a href="#filedelta" name="filedelta"></a>`wasi_filedelta_t` (`int64_t`)
+### <a href="#filedelta" name="filedelta"></a>`__wasi_filedelta_t` (`int64_t`)
 
 Relative offset within a file.
 
-Used by [`wasi_fd_seek()`](#fd_seek).
+Used by [`__wasi_fd_seek()`](#fd_seek).
 
-### <a href="#filesize" name="filesize"></a>`wasi_filesize_t` (`uint64_t`)
+### <a href="#filesize" name="filesize"></a>`__wasi_filesize_t` (`uint64_t`)
 
 Non-negative file size or length of a region within a file.
 
-Used by [`wasi_event_t`](#event), [`wasi_filestat_t`](#filestat), [`wasi_fd_pread()`](#fd_pread), [`wasi_fd_pwrite()`](#fd_pwrite), [`wasi_fd_seek()`](#fd_seek), [`wasi_file_advise()`](#file_advise), [`wasi_file_allocate()`](#file_allocate), and [`wasi_mem_map()`](#mem_map).
+Used by [`__wasi_event_t`](#event), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_pread()`](#fd_pread), [`__wasi_fd_pwrite()`](#fd_pwrite), [`__wasi_fd_seek()`](#fd_seek), [`__wasi_file_advise()`](#file_advise), [`__wasi_file_allocate()`](#file_allocate), and [`__wasi_mem_map()`](#mem_map).
 
-### <a href="#filestat" name="filestat"></a>`wasi_filestat_t` (`struct`)
+### <a href="#filestat" name="filestat"></a>`__wasi_filestat_t` (`struct`)
 
 File attributes.
 
-Used by [`wasi_file_stat_fget()`](#file_stat_fget), [`wasi_file_stat_fput()`](#file_stat_fput), [`wasi_file_stat_get()`](#file_stat_get), and [`wasi_file_stat_put()`](#file_stat_put).
+Used by [`__wasi_file_stat_fget()`](#file_stat_fget), [`__wasi_file_stat_fput()`](#file_stat_fput), [`__wasi_file_stat_get()`](#file_stat_get), and [`__wasi_file_stat_put()`](#file_stat_put).
 
 Members:
 
@@ -1956,105 +1956,105 @@ Members:
 
     Last file status change timestamp.
 
-### <a href="#filetype" name="filetype"></a>`wasi_filetype_t` (`uint8_t`)
+### <a href="#filetype" name="filetype"></a>`__wasi_filetype_t` (`uint8_t`)
 
 The type of a file descriptor or file.
 
-Used by [`wasi_dirent_t`](#dirent), [`wasi_fdstat_t`](#fdstat), [`wasi_filestat_t`](#filestat), [`wasi_fd_create1()`](#fd_create1), [`wasi_fd_create2()`](#fd_create2), and [`wasi_file_create()`](#file_create).
+Used by [`__wasi_dirent_t`](#dirent), [`__wasi_fdstat_t`](#fdstat), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_create1()`](#fd_create1), [`__wasi_fd_create2()`](#fd_create2), and [`__wasi_file_create()`](#file_create).
 
 Possible values:
 
-- <a href="#filetype.unknown" name="filetype.unknown"></a>**`WASI_FILETYPE_UNKNOWN`**
+- <a href="#filetype.unknown" name="filetype.unknown"></a>**`__WASI_FILETYPE_UNKNOWN`**
 
     The type of the file descriptor or file is unknown or
     is different from any of the other types specified.
 
-- <a href="#filetype.block_device" name="filetype.block_device"></a>**`WASI_FILETYPE_BLOCK_DEVICE`**
+- <a href="#filetype.block_device" name="filetype.block_device"></a>**`__WASI_FILETYPE_BLOCK_DEVICE`**
 
     The file descriptor or file refers to a block device
     inode.
 
-- <a href="#filetype.character_device" name="filetype.character_device"></a>**`WASI_FILETYPE_CHARACTER_DEVICE`**
+- <a href="#filetype.character_device" name="filetype.character_device"></a>**`__WASI_FILETYPE_CHARACTER_DEVICE`**
 
     The file descriptor or file refers to a character
     device inode.
 
-- <a href="#filetype.directory" name="filetype.directory"></a>**`WASI_FILETYPE_DIRECTORY`**
+- <a href="#filetype.directory" name="filetype.directory"></a>**`__WASI_FILETYPE_DIRECTORY`**
 
     The file descriptor or file refers to a directory
     inode.
 
-- <a href="#filetype.process" name="filetype.process"></a>**`WASI_FILETYPE_PROCESS`**
+- <a href="#filetype.process" name="filetype.process"></a>**`__WASI_FILETYPE_PROCESS`**
 
     The file descriptor refers to a process handle.
 
-- <a href="#filetype.regular_file" name="filetype.regular_file"></a>**`WASI_FILETYPE_REGULAR_FILE`**
+- <a href="#filetype.regular_file" name="filetype.regular_file"></a>**`__WASI_FILETYPE_REGULAR_FILE`**
 
     The file descriptor or file refers to a regular file
     inode.
 
-- <a href="#filetype.shared_memory" name="filetype.shared_memory"></a>**`WASI_FILETYPE_SHARED_MEMORY`**
+- <a href="#filetype.shared_memory" name="filetype.shared_memory"></a>**`__WASI_FILETYPE_SHARED_MEMORY`**
 
     The file descriptor refers to a shared memory object.
 
-- <a href="#filetype.socket_dgram" name="filetype.socket_dgram"></a>**`WASI_FILETYPE_SOCKET_DGRAM`**
+- <a href="#filetype.socket_dgram" name="filetype.socket_dgram"></a>**`__WASI_FILETYPE_SOCKET_DGRAM`**
 
     The file descriptor or file refers to a datagram
     socket.
 
-- <a href="#filetype.socket_stream" name="filetype.socket_stream"></a>**`WASI_FILETYPE_SOCKET_STREAM`**
+- <a href="#filetype.socket_stream" name="filetype.socket_stream"></a>**`__WASI_FILETYPE_SOCKET_STREAM`**
 
     The file descriptor or file refers to a byte-stream
     socket.
 
-- <a href="#filetype.symbolic_link" name="filetype.symbolic_link"></a>**`WASI_FILETYPE_SYMBOLIC_LINK`**
+- <a href="#filetype.symbolic_link" name="filetype.symbolic_link"></a>**`__WASI_FILETYPE_SYMBOLIC_LINK`**
 
     The file refers to a symbolic link inode.
 
-### <a href="#fsflags" name="fsflags"></a>`wasi_fsflags_t` (`uint16_t` bitfield)
+### <a href="#fsflags" name="fsflags"></a>`__wasi_fsflags_t` (`uint16_t` bitfield)
 
 Which file attributes to adjust.
 
-Used by [`wasi_file_stat_fput()`](#file_stat_fput) and [`wasi_file_stat_put()`](#file_stat_put).
+Used by [`__wasi_file_stat_fput()`](#file_stat_fput) and [`__wasi_file_stat_put()`](#file_stat_put).
 
 Possible values:
 
-- <a href="#fsflags.atim" name="fsflags.atim"></a>**`WASI_FILESTAT_ATIM`**
+- <a href="#fsflags.atim" name="fsflags.atim"></a>**`__WASI_FILESTAT_ATIM`**
 
     Adjust the last data access timestamp to the value
-    stored in [`wasi_filestat_t::st_atim`](#filestat.st_atim).
+    stored in [`__wasi_filestat_t::st_atim`](#filestat.st_atim).
 
-- <a href="#fsflags.atim_now" name="fsflags.atim_now"></a>**`WASI_FILESTAT_ATIM_NOW`**
+- <a href="#fsflags.atim_now" name="fsflags.atim_now"></a>**`__WASI_FILESTAT_ATIM_NOW`**
 
     Adjust the last data access timestamp to the time
-    of clock [`WASI_CLOCK_REALTIME`](#clockid.realtime).
+    of clock [`__WASI_CLOCK_REALTIME`](#clockid.realtime).
 
-- <a href="#fsflags.mtim" name="fsflags.mtim"></a>**`WASI_FILESTAT_MTIM`**
-
-    Adjust the last data modification timestamp to the
-    value stored in [`wasi_filestat_t::st_mtim`](#filestat.st_mtim).
-
-- <a href="#fsflags.mtim_now" name="fsflags.mtim_now"></a>**`WASI_FILESTAT_MTIM_NOW`**
+- <a href="#fsflags.mtim" name="fsflags.mtim"></a>**`__WASI_FILESTAT_MTIM`**
 
     Adjust the last data modification timestamp to the
-    time of clock [`WASI_CLOCK_REALTIME`](#clockid.realtime).
+    value stored in [`__wasi_filestat_t::st_mtim`](#filestat.st_mtim).
 
-- <a href="#fsflags.size" name="fsflags.size"></a>**`WASI_FILESTAT_SIZE`**
+- <a href="#fsflags.mtim_now" name="fsflags.mtim_now"></a>**`__WASI_FILESTAT_MTIM_NOW`**
+
+    Adjust the last data modification timestamp to the
+    time of clock [`__WASI_CLOCK_REALTIME`](#clockid.realtime).
+
+- <a href="#fsflags.size" name="fsflags.size"></a>**`__WASI_FILESTAT_SIZE`**
 
     Truncate or extend the file to the size stored in
-    [`wasi_filestat_t::st_size`](#filestat.st_size).
+    [`__wasi_filestat_t::st_size`](#filestat.st_size).
 
-### <a href="#inode" name="inode"></a>`wasi_inode_t` (`uint64_t`)
+### <a href="#inode" name="inode"></a>`__wasi_inode_t` (`uint64_t`)
 
 File serial number that is unique within its file system.
 
-Used by [`wasi_dirent_t`](#dirent) and [`wasi_filestat_t`](#filestat).
+Used by [`__wasi_dirent_t`](#dirent) and [`__wasi_filestat_t`](#filestat).
 
-### <a href="#iovec" name="iovec"></a>`wasi_iovec_t` (`struct`)
+### <a href="#iovec" name="iovec"></a>`__wasi_iovec_t` (`struct`)
 
 A region of memory for scatter/gather reads.
 
-Used by [`wasi_recv_in_t`](#recv_in), [`wasi_fd_pread()`](#fd_pread), and [`wasi_fd_read()`](#fd_read).
+Used by [`__wasi_recv_in_t`](#recv_in), [`__wasi_fd_pread()`](#fd_pread), and [`__wasi_fd_read()`](#fd_read).
 
 Members:
 
@@ -2062,27 +2062,27 @@ Members:
 
     The address and length of the buffer to be filled.
 
-### <a href="#linkcount" name="linkcount"></a>`wasi_linkcount_t` (`uint32_t`)
+### <a href="#linkcount" name="linkcount"></a>`__wasi_linkcount_t` (`uint32_t`)
 
 Number of hard links to an inode.
 
-Used by [`wasi_filestat_t`](#filestat).
+Used by [`__wasi_filestat_t`](#filestat).
 
-### <a href="#lock" name="lock"></a>`wasi_lock_t` (`uint32_t`)
+### <a href="#lock" name="lock"></a>`__wasi_lock_t` (`uint32_t`)
 
 A userspace read-recursive readers-writer lock, similar to a
 Linux futex or a FreeBSD umtx.
 
-Used by [`wasi_subscription_t`](#subscription), [`wasi_lock_unlock()`](#lock_unlock), and [`wasi_thread_exit()`](#thread_exit).
+Used by [`__wasi_subscription_t`](#subscription), [`__wasi_lock_unlock()`](#lock_unlock), and [`__wasi_thread_exit()`](#thread_exit).
 
 Special values:
 
-- <a href="#lock.unlocked" name="lock.unlocked"></a>**`WASI_LOCK_UNLOCKED`**
+- <a href="#lock.unlocked" name="lock.unlocked"></a>**`__WASI_LOCK_UNLOCKED`**
 
     Value indicating that the lock is in its initial
     unlocked state.
 
-- <a href="#lock.wrlocked" name="lock.wrlocked"></a>**`WASI_LOCK_WRLOCKED`**
+- <a href="#lock.wrlocked" name="lock.wrlocked"></a>**`__WASI_LOCK_WRLOCKED`**
 
     Bitmask indicating that the lock is write-locked. If
     set, the lower 30 bits of the lock contain the
@@ -2090,7 +2090,7 @@ Special values:
     Otherwise, the lower 30 bits of the lock contain the
     number of acquired read locks.
 
-- <a href="#lock.kernel_managed" name="lock.kernel_managed"></a>**`WASI_LOCK_KERNEL_MANAGED`**
+- <a href="#lock.kernel_managed" name="lock.kernel_managed"></a>**`__WASI_LOCK_KERNEL_MANAGED`**
 
     Bitmask indicating that the lock is either read locked
     or write locked, and that one or more threads have
@@ -2106,17 +2106,17 @@ Special values:
     preferred to suspend execution, as this prevents
     starvation of writers.
 
-- <a href="#lock.bogus" name="lock.bogus"></a>**`WASI_LOCK_BOGUS`**
+- <a href="#lock.bogus" name="lock.bogus"></a>**`__WASI_LOCK_BOGUS`**
 
     Value indicating that the lock is in an incorrect
     state. A lock cannot be in its initial unlocked state,
     while also managed by the kernel.
 
-### <a href="#lookup" name="lookup"></a>`wasi_lookup_t` (`struct`)
+### <a href="#lookup" name="lookup"></a>`__wasi_lookup_t` (`struct`)
 
 Path lookup properties.
 
-Used by [`wasi_file_link()`](#file_link), [`wasi_file_open()`](#file_open), [`wasi_file_stat_get()`](#file_stat_get), and [`wasi_file_stat_put()`](#file_stat_put).
+Used by [`__wasi_file_link()`](#file_link), [`__wasi_file_open()`](#file_open), [`__wasi_file_stat_get()`](#file_stat_get), and [`__wasi_file_stat_put()`](#file_stat_put).
 
 Members:
 
@@ -2130,120 +2130,120 @@ Members:
     Flags determining the method of how the path is
     resolved.
 
-### <a href="#lookupflags" name="lookupflags"></a>`wasi_lookupflags_t` (`uint32_t` bitfield)
+### <a href="#lookupflags" name="lookupflags"></a>`__wasi_lookupflags_t` (`uint32_t` bitfield)
 
 Flags determining the method of how paths are resolved.
 
-Used by [`wasi_lookup_t`](#lookup).
+Used by [`__wasi_lookup_t`](#lookup).
 
 Possible values:
 
-- <a href="#lookupflags.symlink_follow" name="lookupflags.symlink_follow"></a>**`WASI_LOOKUP_SYMLINK_FOLLOW`**
+- <a href="#lookupflags.symlink_follow" name="lookupflags.symlink_follow"></a>**`__WASI_LOOKUP_SYMLINK_FOLLOW`**
 
     As long as the resolved path corresponds to a symbolic
     link, it is expanded.
 
-### <a href="#mflags" name="mflags"></a>`wasi_mflags_t` (`uint8_t` bitfield)
+### <a href="#mflags" name="mflags"></a>`__wasi_mflags_t` (`uint8_t` bitfield)
 
 Memory mapping flags.
 
-Used by [`wasi_mem_map()`](#mem_map).
+Used by [`__wasi_mem_map()`](#mem_map).
 
 Possible values:
 
-- <a href="#mflags.anon" name="mflags.anon"></a>**`WASI_MAP_ANON`**
+- <a href="#mflags.anon" name="mflags.anon"></a>**`__WASI_MAP_ANON`**
 
     Instead of mapping the contents of the file provided,
     create a mapping to anonymous memory. The file
-    descriptor argument must be set to [`WASI_MAP_ANON_FD`](#fd.map_anon_fd),
+    descriptor argument must be set to [`__WASI_MAP_ANON_FD`](#fd.map_anon_fd),
     and the offset must be set to zero.
 
-- <a href="#mflags.fixed" name="mflags.fixed"></a>**`WASI_MAP_FIXED`**
+- <a href="#mflags.fixed" name="mflags.fixed"></a>**`__WASI_MAP_FIXED`**
 
     Require that the mapping is performed at the base
     address provided.
 
-- <a href="#mflags.private" name="mflags.private"></a>**`WASI_MAP_PRIVATE`**
+- <a href="#mflags.private" name="mflags.private"></a>**`__WASI_MAP_PRIVATE`**
 
     Changes are private.
 
-- <a href="#mflags.shared" name="mflags.shared"></a>**`WASI_MAP_SHARED`**
+- <a href="#mflags.shared" name="mflags.shared"></a>**`__WASI_MAP_SHARED`**
 
     Changes are shared.
 
-### <a href="#mprot" name="mprot"></a>`wasi_mprot_t` (`uint8_t` bitfield)
+### <a href="#mprot" name="mprot"></a>`__wasi_mprot_t` (`uint8_t` bitfield)
 
 Memory page protection options.
 
 This implementation enforces the `W^X` property: Pages cannot be
 mapped for execution while also mapped for writing.
 
-Used by [`wasi_mem_map()`](#mem_map) and [`wasi_mem_protect()`](#mem_protect).
+Used by [`__wasi_mem_map()`](#mem_map) and [`__wasi_mem_protect()`](#mem_protect).
 
 Possible values:
 
-- <a href="#mprot.exec" name="mprot.exec"></a>**`WASI_PROT_EXEC`**
+- <a href="#mprot.exec" name="mprot.exec"></a>**`__WASI_PROT_EXEC`**
 
     Page can be executed.
 
-- <a href="#mprot.write" name="mprot.write"></a>**`WASI_PROT_WRITE`**
+- <a href="#mprot.write" name="mprot.write"></a>**`__WASI_PROT_WRITE`**
 
     Page can be written.
 
-- <a href="#mprot.read" name="mprot.read"></a>**`WASI_PROT_READ`**
+- <a href="#mprot.read" name="mprot.read"></a>**`__WASI_PROT_READ`**
 
     Page can be read.
 
-### <a href="#msflags" name="msflags"></a>`wasi_msflags_t` (`uint8_t` bitfield)
+### <a href="#msflags" name="msflags"></a>`__wasi_msflags_t` (`uint8_t` bitfield)
 
 Methods of synchronizing memory with physical storage.
 
-Used by [`wasi_mem_sync()`](#mem_sync).
+Used by [`__wasi_mem_sync()`](#mem_sync).
 
 Possible values:
 
-- <a href="#msflags.async" name="msflags.async"></a>**`WASI_MS_ASYNC`**
+- <a href="#msflags.async" name="msflags.async"></a>**`__WASI_MS_ASYNC`**
 
     Perform asynchronous writes.
 
-- <a href="#msflags.invalidate" name="msflags.invalidate"></a>**`WASI_MS_INVALIDATE`**
+- <a href="#msflags.invalidate" name="msflags.invalidate"></a>**`__WASI_MS_INVALIDATE`**
 
     Invalidate cached data.
 
-- <a href="#msflags.sync" name="msflags.sync"></a>**`WASI_MS_SYNC`**
+- <a href="#msflags.sync" name="msflags.sync"></a>**`__WASI_MS_SYNC`**
 
     Perform synchronous writes.
 
-### <a href="#nthreads" name="nthreads"></a>`wasi_nthreads_t` (`uint32_t`)
+### <a href="#nthreads" name="nthreads"></a>`__wasi_nthreads_t` (`uint32_t`)
 
 Specifies the number of threads sleeping on a condition
 variable that should be woken up.
 
-Used by [`wasi_condvar_signal()`](#condvar_signal).
+Used by [`__wasi_condvar_signal()`](#condvar_signal).
 
-### <a href="#oflags" name="oflags"></a>`wasi_oflags_t` (`uint16_t` bitfield)
+### <a href="#oflags" name="oflags"></a>`__wasi_oflags_t` (`uint16_t` bitfield)
 
-Open flags used by [`wasi_file_open()`](#file_open).
+Open flags used by [`__wasi_file_open()`](#file_open).
 
 Possible values:
 
-- <a href="#oflags.creat" name="oflags.creat"></a>**`WASI_O_CREAT`**
+- <a href="#oflags.creat" name="oflags.creat"></a>**`__WASI_O_CREAT`**
 
     Create file if it does not exist.
 
-- <a href="#oflags.directory" name="oflags.directory"></a>**`WASI_O_DIRECTORY`**
+- <a href="#oflags.directory" name="oflags.directory"></a>**`__WASI_O_DIRECTORY`**
 
     Fail if not a directory.
 
-- <a href="#oflags.excl" name="oflags.excl"></a>**`WASI_O_EXCL`**
+- <a href="#oflags.excl" name="oflags.excl"></a>**`__WASI_O_EXCL`**
 
     Fail if file already exists.
 
-- <a href="#oflags.trunc" name="oflags.trunc"></a>**`WASI_O_TRUNC`**
+- <a href="#oflags.trunc" name="oflags.trunc"></a>**`__WASI_O_TRUNC`**
 
     Truncate file to size 0.
 
-### <a href="#processentry" name="processentry"></a>`wasi_processentry_t` (function type)
+### <a href="#processentry" name="processentry"></a>`__wasi_processentry_t` (function type)
 
 Entry point for a process (`_start`).
 
@@ -2251,11 +2251,11 @@ Parameters:
 
 - <a href="#processentry.auxv" name="processentry.auxv"></a><code>const [wasi\_auxv\_t](#auxv) *<strong>auxv</strong></code>
 
-    The auxiliary vector. See [`wasi_auxv_t`](#auxv).
+    The auxiliary vector. See [`__wasi_auxv_t`](#auxv).
 
-### <a href="#recv_in" name="recv_in"></a>`wasi_recv_in_t` (`struct`)
+### <a href="#recv_in" name="recv_in"></a>`__wasi_recv_in_t` (`struct`)
 
-Arguments of [`wasi_sock_recv()`](#sock_recv).
+Arguments of [`__wasi_sock_recv()`](#sock_recv).
 
 Members:
 
@@ -2273,19 +2273,19 @@ Members:
 
     Message flags.
 
-### <a href="#recv_out" name="recv_out"></a>`wasi_recv_out_t` (`struct`)
+### <a href="#recv_out" name="recv_out"></a>`__wasi_recv_out_t` (`struct`)
 
-Results of [`wasi_sock_recv()`](#sock_recv).
+Results of [`__wasi_sock_recv()`](#sock_recv).
 
 Members:
 
 - <a href="#recv_out.ro_datalen" name="recv_out.ro_datalen"></a><code>size\_t <strong>ro\_datalen</strong></code>
 
-    Number of bytes stored in [`wasi_recv_in_t::ri_data`](#recv_in.ri_data).
+    Number of bytes stored in [`__wasi_recv_in_t::ri_data`](#recv_in.ri_data).
 
 - <a href="#recv_out.ro_fdslen" name="recv_out.ro_fdslen"></a><code>size\_t <strong>ro\_fdslen</strong></code>
 
-    Number of file descriptors stored in [`wasi_recv_in_t::ri_fds`](#recv_in.ri_fds).
+    Number of file descriptors stored in [`__wasi_recv_in_t::ri_fds`](#recv_in.ri_fds).
 
 - <a href="#recv_out.ro_unused" name="recv_out.ro_unused"></a><code>char <strong>ro\_unused</strong>[40]</code>
 
@@ -2295,248 +2295,248 @@ Members:
 
     Message flags.
 
-### <a href="#riflags" name="riflags"></a>`wasi_riflags_t` (`uint16_t` bitfield)
+### <a href="#riflags" name="riflags"></a>`__wasi_riflags_t` (`uint16_t` bitfield)
 
-Flags provided to [`wasi_sock_recv()`](#sock_recv).
+Flags provided to [`__wasi_sock_recv()`](#sock_recv).
 
-Used by [`wasi_recv_in_t`](#recv_in).
+Used by [`__wasi_recv_in_t`](#recv_in).
 
 Possible values:
 
-- <a href="#riflags.peek" name="riflags.peek"></a>**`WASI_SOCK_RECV_PEEK`**
+- <a href="#riflags.peek" name="riflags.peek"></a>**`__WASI_SOCK_RECV_PEEK`**
 
     Returns the message without removing it from the
     socket's receive queue.
 
-- <a href="#riflags.waitall" name="riflags.waitall"></a>**`WASI_SOCK_RECV_WAITALL`**
+- <a href="#riflags.waitall" name="riflags.waitall"></a>**`__WASI_SOCK_RECV_WAITALL`**
 
     On byte-stream sockets, block until the full amount
     of data can be returned.
 
-### <a href="#rights" name="rights"></a>`wasi_rights_t` (`uint64_t` bitfield)
+### <a href="#rights" name="rights"></a>`__wasi_rights_t` (`uint64_t` bitfield)
 
 File descriptor rights, determining which actions may be
 performed.
 
-Used by [`wasi_fdstat_t`](#fdstat).
+Used by [`__wasi_fdstat_t`](#fdstat).
 
 Possible values:
 
-- <a href="#rights.fd_datasync" name="rights.fd_datasync"></a>**`WASI_RIGHT_FD_DATASYNC`**
+- <a href="#rights.fd_datasync" name="rights.fd_datasync"></a>**`__WASI_RIGHT_FD_DATASYNC`**
 
-    The right to invoke [`wasi_fd_datasync()`](#fd_datasync).
+    The right to invoke [`__wasi_fd_datasync()`](#fd_datasync).
 
-    If [`WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
-    invoke [`wasi_file_open()`](#file_open) with [`WASI_FDFLAG_DSYNC`](#fdflags.dsync).
+    If [`__WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
+    invoke [`__wasi_file_open()`](#file_open) with [`__WASI_FDFLAG_DSYNC`](#fdflags.dsync).
 
-- <a href="#rights.fd_read" name="rights.fd_read"></a>**`WASI_RIGHT_FD_READ`**
+- <a href="#rights.fd_read" name="rights.fd_read"></a>**`__WASI_RIGHT_FD_READ`**
 
-    The right to invoke [`wasi_fd_read()`](#fd_read) and [`wasi_sock_recv()`](#sock_recv).
+    The right to invoke [`__wasi_fd_read()`](#fd_read) and [`__wasi_sock_recv()`](#sock_recv).
 
-    If [`WASI_RIGHT_MEM_MAP`](#rights.mem_map) is set, includes the right to
-    invoke [`wasi_mem_map()`](#mem_map) with memory protection option
-    [`WASI_PROT_READ`](#mprot.read).
+    If [`__WASI_RIGHT_MEM_MAP`](#rights.mem_map) is set, includes the right to
+    invoke [`__wasi_mem_map()`](#mem_map) with memory protection option
+    [`__WASI_PROT_READ`](#mprot.read).
 
-    If [`WASI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to invoke
-    [`wasi_fd_pread()`](#fd_pread).
+    If [`__WASI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to invoke
+    [`__wasi_fd_pread()`](#fd_pread).
 
-- <a href="#rights.fd_seek" name="rights.fd_seek"></a>**`WASI_RIGHT_FD_SEEK`**
+- <a href="#rights.fd_seek" name="rights.fd_seek"></a>**`__WASI_RIGHT_FD_SEEK`**
 
-    The right to invoke [`wasi_fd_seek()`](#fd_seek). This flag implies
-    [`WASI_RIGHT_FD_TELL`](#rights.fd_tell).
+    The right to invoke [`__wasi_fd_seek()`](#fd_seek). This flag implies
+    [`__WASI_RIGHT_FD_TELL`](#rights.fd_tell).
 
-- <a href="#rights.fd_stat_put_flags" name="rights.fd_stat_put_flags"></a>**`WASI_RIGHT_FD_STAT_PUT_FLAGS`**
+- <a href="#rights.fd_stat_put_flags" name="rights.fd_stat_put_flags"></a>**`__WASI_RIGHT_FD_STAT_PUT_FLAGS`**
 
-    The right to invoke [`wasi_fd_stat_put()`](#fd_stat_put) with
-    [`WASI_FDSTAT_FLAGS`](#fdsflags.flags).
+    The right to invoke [`__wasi_fd_stat_put()`](#fd_stat_put) with
+    [`__WASI_FDSTAT_FLAGS`](#fdsflags.flags).
 
-- <a href="#rights.fd_sync" name="rights.fd_sync"></a>**`WASI_RIGHT_FD_SYNC`**
+- <a href="#rights.fd_sync" name="rights.fd_sync"></a>**`__WASI_RIGHT_FD_SYNC`**
 
-    The right to invoke [`wasi_fd_sync()`](#fd_sync).
+    The right to invoke [`__wasi_fd_sync()`](#fd_sync).
 
-    If [`WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
-    invoke [`wasi_file_open()`](#file_open) with [`WASI_FDFLAG_RSYNC`](#fdflags.rsync) and
-    [`WASI_FDFLAG_DSYNC`](#fdflags.dsync).
+    If [`__WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
+    invoke [`__wasi_file_open()`](#file_open) with [`__WASI_FDFLAG_RSYNC`](#fdflags.rsync) and
+    [`__WASI_FDFLAG_DSYNC`](#fdflags.dsync).
 
-- <a href="#rights.fd_tell" name="rights.fd_tell"></a>**`WASI_RIGHT_FD_TELL`**
+- <a href="#rights.fd_tell" name="rights.fd_tell"></a>**`__WASI_RIGHT_FD_TELL`**
 
-    The right to invoke [`wasi_fd_seek()`](#fd_seek) in such a way that the
-    file offset remains unaltered (i.e., [`WASI_WHENCE_CUR`](#whence.cur) with
+    The right to invoke [`__wasi_fd_seek()`](#fd_seek) in such a way that the
+    file offset remains unaltered (i.e., [`__WASI_WHENCE_CUR`](#whence.cur) with
     offset zero).
 
-- <a href="#rights.fd_write" name="rights.fd_write"></a>**`WASI_RIGHT_FD_WRITE`**
+- <a href="#rights.fd_write" name="rights.fd_write"></a>**`__WASI_RIGHT_FD_WRITE`**
 
-    The right to invoke [`wasi_fd_write()`](#fd_write) and [`wasi_sock_send()`](#sock_send).
+    The right to invoke [`__wasi_fd_write()`](#fd_write) and [`__wasi_sock_send()`](#sock_send).
 
-    If [`WASI_RIGHT_MEM_MAP`](#rights.mem_map) is set, includes the right to
-    invoke [`wasi_mem_map()`](#mem_map) with memory protection option
-    [`WASI_PROT_WRITE`](#mprot.write).
+    If [`__WASI_RIGHT_MEM_MAP`](#rights.mem_map) is set, includes the right to
+    invoke [`__wasi_mem_map()`](#mem_map) with memory protection option
+    [`__WASI_PROT_WRITE`](#mprot.write).
 
-    If [`WASI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to
-    invoke [`wasi_fd_pwrite()`](#fd_pwrite).
+    If [`__WASI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to
+    invoke [`__wasi_fd_pwrite()`](#fd_pwrite).
 
-- <a href="#rights.file_advise" name="rights.file_advise"></a>**`WASI_RIGHT_FILE_ADVISE`**
+- <a href="#rights.file_advise" name="rights.file_advise"></a>**`__WASI_RIGHT_FILE_ADVISE`**
 
-    The right to invoke [`wasi_file_advise()`](#file_advise).
+    The right to invoke [`__wasi_file_advise()`](#file_advise).
 
-- <a href="#rights.file_allocate" name="rights.file_allocate"></a>**`WASI_RIGHT_FILE_ALLOCATE`**
+- <a href="#rights.file_allocate" name="rights.file_allocate"></a>**`__WASI_RIGHT_FILE_ALLOCATE`**
 
-    The right to invoke [`wasi_file_allocate()`](#file_allocate).
+    The right to invoke [`__wasi_file_allocate()`](#file_allocate).
 
-- <a href="#rights.file_create_directory" name="rights.file_create_directory"></a>**`WASI_RIGHT_FILE_CREATE_DIRECTORY`**
+- <a href="#rights.file_create_directory" name="rights.file_create_directory"></a>**`__WASI_RIGHT_FILE_CREATE_DIRECTORY`**
 
-    The right to invoke [`wasi_file_create()`](#file_create) with
-    [`WASI_FILETYPE_DIRECTORY`](#filetype.directory).
+    The right to invoke [`__wasi_file_create()`](#file_create) with
+    [`__WASI_FILETYPE_DIRECTORY`](#filetype.directory).
 
-- <a href="#rights.file_create_file" name="rights.file_create_file"></a>**`WASI_RIGHT_FILE_CREATE_FILE`**
+- <a href="#rights.file_create_file" name="rights.file_create_file"></a>**`__WASI_RIGHT_FILE_CREATE_FILE`**
 
-    If [`WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, the right to invoke
-    [`wasi_file_open()`](#file_open) with [`WASI_O_CREAT`](#oflags.creat).
+    If [`__WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, the right to invoke
+    [`__wasi_file_open()`](#file_open) with [`__WASI_O_CREAT`](#oflags.creat).
 
-- <a href="#rights.file_link_source" name="rights.file_link_source"></a>**`WASI_RIGHT_FILE_LINK_SOURCE`**
+- <a href="#rights.file_link_source" name="rights.file_link_source"></a>**`__WASI_RIGHT_FILE_LINK_SOURCE`**
 
-    The right to invoke [`wasi_file_link()`](#file_link) with the file
+    The right to invoke [`__wasi_file_link()`](#file_link) with the file
     descriptor as the source directory.
 
-- <a href="#rights.file_link_target" name="rights.file_link_target"></a>**`WASI_RIGHT_FILE_LINK_TARGET`**
+- <a href="#rights.file_link_target" name="rights.file_link_target"></a>**`__WASI_RIGHT_FILE_LINK_TARGET`**
 
-    The right to invoke [`wasi_file_link()`](#file_link) with the file
+    The right to invoke [`__wasi_file_link()`](#file_link) with the file
     descriptor as the target directory.
 
-- <a href="#rights.file_open" name="rights.file_open"></a>**`WASI_RIGHT_FILE_OPEN`**
+- <a href="#rights.file_open" name="rights.file_open"></a>**`__WASI_RIGHT_FILE_OPEN`**
 
-    The right to invoke [`wasi_file_open()`](#file_open).
+    The right to invoke [`__wasi_file_open()`](#file_open).
 
-- <a href="#rights.file_readdir" name="rights.file_readdir"></a>**`WASI_RIGHT_FILE_READDIR`**
+- <a href="#rights.file_readdir" name="rights.file_readdir"></a>**`__WASI_RIGHT_FILE_READDIR`**
 
-    The right to invoke [`wasi_file_readdir()`](#file_readdir).
+    The right to invoke [`__wasi_file_readdir()`](#file_readdir).
 
-- <a href="#rights.file_readlink" name="rights.file_readlink"></a>**`WASI_RIGHT_FILE_READLINK`**
+- <a href="#rights.file_readlink" name="rights.file_readlink"></a>**`__WASI_RIGHT_FILE_READLINK`**
 
-    The right to invoke [`wasi_file_readlink()`](#file_readlink).
+    The right to invoke [`__wasi_file_readlink()`](#file_readlink).
 
-- <a href="#rights.file_rename_source" name="rights.file_rename_source"></a>**`WASI_RIGHT_FILE_RENAME_SOURCE`**
+- <a href="#rights.file_rename_source" name="rights.file_rename_source"></a>**`__WASI_RIGHT_FILE_RENAME_SOURCE`**
 
-    The right to invoke [`wasi_file_rename()`](#file_rename) with the file
+    The right to invoke [`__wasi_file_rename()`](#file_rename) with the file
     descriptor as the source directory.
 
-- <a href="#rights.file_rename_target" name="rights.file_rename_target"></a>**`WASI_RIGHT_FILE_RENAME_TARGET`**
+- <a href="#rights.file_rename_target" name="rights.file_rename_target"></a>**`__WASI_RIGHT_FILE_RENAME_TARGET`**
 
-    The right to invoke [`wasi_file_rename()`](#file_rename) with the file
+    The right to invoke [`__wasi_file_rename()`](#file_rename) with the file
     descriptor as the target directory.
 
-- <a href="#rights.file_stat_fget" name="rights.file_stat_fget"></a>**`WASI_RIGHT_FILE_STAT_FGET`**
+- <a href="#rights.file_stat_fget" name="rights.file_stat_fget"></a>**`__WASI_RIGHT_FILE_STAT_FGET`**
 
-    The right to invoke [`wasi_file_stat_fget()`](#file_stat_fget).
+    The right to invoke [`__wasi_file_stat_fget()`](#file_stat_fget).
 
-- <a href="#rights.file_stat_fput_size" name="rights.file_stat_fput_size"></a>**`WASI_RIGHT_FILE_STAT_FPUT_SIZE`**
+- <a href="#rights.file_stat_fput_size" name="rights.file_stat_fput_size"></a>**`__WASI_RIGHT_FILE_STAT_FPUT_SIZE`**
 
-    The right to invoke [`wasi_file_stat_fput()`](#file_stat_fput) with
-    [`WASI_FILESTAT_SIZE`](#fsflags.size).
+    The right to invoke [`__wasi_file_stat_fput()`](#file_stat_fput) with
+    [`__WASI_FILESTAT_SIZE`](#fsflags.size).
 
-    If [`WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
-    invoke [`wasi_file_open()`](#file_open) with [`WASI_O_TRUNC`](#oflags.trunc).
+    If [`__WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
+    invoke [`__wasi_file_open()`](#file_open) with [`__WASI_O_TRUNC`](#oflags.trunc).
 
-- <a href="#rights.file_stat_fput_times" name="rights.file_stat_fput_times"></a>**`WASI_RIGHT_FILE_STAT_FPUT_TIMES`**
+- <a href="#rights.file_stat_fput_times" name="rights.file_stat_fput_times"></a>**`__WASI_RIGHT_FILE_STAT_FPUT_TIMES`**
 
-    The right to invoke [`wasi_file_stat_fput()`](#file_stat_fput) with
-    [`WASI_FILESTAT_ATIM`](#fsflags.atim), [`WASI_FILESTAT_ATIM_NOW`](#fsflags.atim_now), [`WASI_FILESTAT_MTIM`](#fsflags.mtim),
-    and [`WASI_FILESTAT_MTIM_NOW`](#fsflags.mtim_now).
+    The right to invoke [`__wasi_file_stat_fput()`](#file_stat_fput) with
+    [`__WASI_FILESTAT_ATIM`](#fsflags.atim), [`__WASI_FILESTAT_ATIM_NOW`](#fsflags.atim_now), [`__WASI_FILESTAT_MTIM`](#fsflags.mtim),
+    and [`__WASI_FILESTAT_MTIM_NOW`](#fsflags.mtim_now).
 
-- <a href="#rights.file_stat_get" name="rights.file_stat_get"></a>**`WASI_RIGHT_FILE_STAT_GET`**
+- <a href="#rights.file_stat_get" name="rights.file_stat_get"></a>**`__WASI_RIGHT_FILE_STAT_GET`**
 
-    The right to invoke [`wasi_file_stat_get()`](#file_stat_get).
+    The right to invoke [`__wasi_file_stat_get()`](#file_stat_get).
 
-- <a href="#rights.file_stat_put_times" name="rights.file_stat_put_times"></a>**`WASI_RIGHT_FILE_STAT_PUT_TIMES`**
+- <a href="#rights.file_stat_put_times" name="rights.file_stat_put_times"></a>**`__WASI_RIGHT_FILE_STAT_PUT_TIMES`**
 
-    The right to invoke [`wasi_file_stat_put()`](#file_stat_put) with
-    [`WASI_FILESTAT_ATIM`](#fsflags.atim), [`WASI_FILESTAT_ATIM_NOW`](#fsflags.atim_now), [`WASI_FILESTAT_MTIM`](#fsflags.mtim),
-    and [`WASI_FILESTAT_MTIM_NOW`](#fsflags.mtim_now).
+    The right to invoke [`__wasi_file_stat_put()`](#file_stat_put) with
+    [`__WASI_FILESTAT_ATIM`](#fsflags.atim), [`__WASI_FILESTAT_ATIM_NOW`](#fsflags.atim_now), [`__WASI_FILESTAT_MTIM`](#fsflags.mtim),
+    and [`__WASI_FILESTAT_MTIM_NOW`](#fsflags.mtim_now).
 
-- <a href="#rights.file_symlink" name="rights.file_symlink"></a>**`WASI_RIGHT_FILE_SYMLINK`**
+- <a href="#rights.file_symlink" name="rights.file_symlink"></a>**`__WASI_RIGHT_FILE_SYMLINK`**
 
-    The right to invoke [`wasi_file_symlink()`](#file_symlink).
+    The right to invoke [`__wasi_file_symlink()`](#file_symlink).
 
-- <a href="#rights.file_unlink" name="rights.file_unlink"></a>**`WASI_RIGHT_FILE_UNLINK`**
+- <a href="#rights.file_unlink" name="rights.file_unlink"></a>**`__WASI_RIGHT_FILE_UNLINK`**
 
-    The right to invoke [`wasi_file_unlink()`](#file_unlink).
+    The right to invoke [`__wasi_file_unlink()`](#file_unlink).
 
-- <a href="#rights.mem_map" name="rights.mem_map"></a>**`WASI_RIGHT_MEM_MAP`**
+- <a href="#rights.mem_map" name="rights.mem_map"></a>**`__WASI_RIGHT_MEM_MAP`**
 
-    The right to invoke [`wasi_mem_map()`](#mem_map) with [`wasi_mprot_t`](#mprot) set to
+    The right to invoke [`__wasi_mem_map()`](#mem_map) with [`__wasi_mprot_t`](#mprot) set to
     zero.
 
-- <a href="#rights.poll_fd_readwrite" name="rights.poll_fd_readwrite"></a>**`WASI_RIGHT_POLL_FD_READWRITE`**
+- <a href="#rights.poll_fd_readwrite" name="rights.poll_fd_readwrite"></a>**`__WASI_RIGHT_POLL_FD_READWRITE`**
 
-    If [`WASI_RIGHT_FD_READ`](#rights.fd_read) is set, includes the right to
-    invoke [`wasi_poll()`](#poll) to subscribe to [`WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read).
+    If [`__WASI_RIGHT_FD_READ`](#rights.fd_read) is set, includes the right to
+    invoke [`__wasi_poll()`](#poll) to subscribe to [`__WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read).
 
-    If [`WASI_RIGHT_FD_WRITE`](#rights.fd_write) is set, includes the right to
-    invoke [`wasi_poll()`](#poll) to subscribe to [`WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
+    If [`__WASI_RIGHT_FD_WRITE`](#rights.fd_write) is set, includes the right to
+    invoke [`__wasi_poll()`](#poll) to subscribe to [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
 
-- <a href="#rights.poll_proc_terminate" name="rights.poll_proc_terminate"></a>**`WASI_RIGHT_POLL_PROC_TERMINATE`**
+- <a href="#rights.poll_proc_terminate" name="rights.poll_proc_terminate"></a>**`__WASI_RIGHT_POLL_PROC_TERMINATE`**
 
-    The right to invoke [`wasi_poll()`](#poll) to subscribe to
-    [`WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate).
+    The right to invoke [`__wasi_poll()`](#poll) to subscribe to
+    [`__WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate).
 
-- <a href="#rights.sock_shutdown" name="rights.sock_shutdown"></a>**`WASI_RIGHT_SOCK_SHUTDOWN`**
+- <a href="#rights.sock_shutdown" name="rights.sock_shutdown"></a>**`__WASI_RIGHT_SOCK_SHUTDOWN`**
 
-    The right to invoke [`wasi_sock_shutdown()`](#sock_shutdown).
+    The right to invoke [`__wasi_sock_shutdown()`](#sock_shutdown).
 
-### <a href="#roflags" name="roflags"></a>`wasi_roflags_t` (`uint16_t` bitfield)
+### <a href="#roflags" name="roflags"></a>`__wasi_roflags_t` (`uint16_t` bitfield)
 
-Flags returned by [`wasi_sock_recv()`](#sock_recv).
+Flags returned by [`__wasi_sock_recv()`](#sock_recv).
 
-Used by [`wasi_recv_out_t`](#recv_out).
+Used by [`__wasi_recv_out_t`](#recv_out).
 
 Possible values:
 
-- <a href="#roflags.fds_truncated" name="roflags.fds_truncated"></a>**`WASI_SOCK_RECV_FDS_TRUNCATED`**
+- <a href="#roflags.fds_truncated" name="roflags.fds_truncated"></a>**`__WASI_SOCK_RECV_FDS_TRUNCATED`**
 
-    Returned by [`wasi_sock_recv()`](#sock_recv): List of file descriptors
+    Returned by [`__wasi_sock_recv()`](#sock_recv): List of file descriptors
     has been truncated.
 
-- <a href="#roflags.data_truncated" name="roflags.data_truncated"></a>**`WASI_SOCK_RECV_DATA_TRUNCATED`**
+- <a href="#roflags.data_truncated" name="roflags.data_truncated"></a>**`__WASI_SOCK_RECV_DATA_TRUNCATED`**
 
-    Returned by [`wasi_sock_recv()`](#sock_recv): Message data has been
+    Returned by [`__wasi_sock_recv()`](#sock_recv): Message data has been
     truncated.
 
-### <a href="#scope" name="scope"></a>`wasi_scope_t` (`uint8_t`)
+### <a href="#scope" name="scope"></a>`__wasi_scope_t` (`uint8_t`)
 
 Indicates whether an object is stored in private or shared
 memory.
 
-Used by [`wasi_subscription_t`](#subscription), [`wasi_condvar_signal()`](#condvar_signal), [`wasi_lock_unlock()`](#lock_unlock), and [`wasi_thread_exit()`](#thread_exit).
+Used by [`__wasi_subscription_t`](#subscription), [`__wasi_condvar_signal()`](#condvar_signal), [`__wasi_lock_unlock()`](#lock_unlock), and [`__wasi_thread_exit()`](#thread_exit).
 
 Possible values:
 
-- <a href="#scope.private" name="scope.private"></a>**`WASI_SCOPE_PRIVATE`**
+- <a href="#scope.private" name="scope.private"></a>**`__WASI_SCOPE_PRIVATE`**
 
     The object is stored in private memory.
 
-- <a href="#scope.shared" name="scope.shared"></a>**`WASI_SCOPE_SHARED`**
+- <a href="#scope.shared" name="scope.shared"></a>**`__WASI_SCOPE_SHARED`**
 
     The object is stored in shared memory.
 
-### <a href="#sdflags" name="sdflags"></a>`wasi_sdflags_t` (`uint8_t` bitfield)
+### <a href="#sdflags" name="sdflags"></a>`__wasi_sdflags_t` (`uint8_t` bitfield)
 
 Which channels on a socket need to be shut down.
 
-Used by [`wasi_sock_shutdown()`](#sock_shutdown).
+Used by [`__wasi_sock_shutdown()`](#sock_shutdown).
 
 Possible values:
 
-- <a href="#sdflags.rd" name="sdflags.rd"></a>**`WASI_SHUT_RD`**
+- <a href="#sdflags.rd" name="sdflags.rd"></a>**`__WASI_SHUT_RD`**
 
     Disables further receive operations.
 
-- <a href="#sdflags.wr" name="sdflags.wr"></a>**`WASI_SHUT_WR`**
+- <a href="#sdflags.wr" name="sdflags.wr"></a>**`__WASI_SHUT_WR`**
 
     Disables further send operations.
 
-### <a href="#send_in" name="send_in"></a>`wasi_send_in_t` (`struct`)
+### <a href="#send_in" name="send_in"></a>`__wasi_send_in_t` (`struct`)
 
-Arguments of [`wasi_sock_send()`](#sock_send).
+Arguments of [`__wasi_sock_send()`](#sock_send).
 
 Members:
 
@@ -2554,9 +2554,9 @@ Members:
 
     Message flags.
 
-### <a href="#send_out" name="send_out"></a>`wasi_send_out_t` (`struct`)
+### <a href="#send_out" name="send_out"></a>`__wasi_send_out_t` (`struct`)
 
-Results of [`wasi_sock_send()`](#sock_send).
+Results of [`__wasi_sock_send()`](#sock_send).
 
 Members:
 
@@ -2564,215 +2564,215 @@ Members:
 
     Number of bytes transmitted.
 
-### <a href="#siflags" name="siflags"></a>`wasi_siflags_t` (`uint16_t` bitfield)
+### <a href="#siflags" name="siflags"></a>`__wasi_siflags_t` (`uint16_t` bitfield)
 
-Flags provided to [`wasi_sock_send()`](#sock_send). As there are currently no flags
+Flags provided to [`__wasi_sock_send()`](#sock_send). As there are currently no flags
 defined, it must be set to zero.
 
-Used by [`wasi_send_in_t`](#send_in).
+Used by [`__wasi_send_in_t`](#send_in).
 
-### <a href="#signal" name="signal"></a>`wasi_signal_t` (`uint8_t`)
+### <a href="#signal" name="signal"></a>`__wasi_signal_t` (`uint8_t`)
 
 Signal condition.
 
-Used by [`wasi_event_t`](#event) and [`wasi_proc_raise()`](#proc_raise).
+Used by [`__wasi_event_t`](#event) and [`__wasi_proc_raise()`](#proc_raise).
 
 Possible values:
 
-- <a href="#signal.abrt" name="signal.abrt"></a>**`WASI_SIGABRT`**
+- <a href="#signal.abrt" name="signal.abrt"></a>**`__WASI_SIGABRT`**
 
     Process abort signal.
 
     Action: Terminates the process.
 
-- <a href="#signal.alrm" name="signal.alrm"></a>**`WASI_SIGALRM`**
+- <a href="#signal.alrm" name="signal.alrm"></a>**`__WASI_SIGALRM`**
 
     Alarm clock.
 
     Action: Terminates the process.
 
-- <a href="#signal.bus" name="signal.bus"></a>**`WASI_SIGBUS`**
+- <a href="#signal.bus" name="signal.bus"></a>**`__WASI_SIGBUS`**
 
     Access to an undefined portion of a memory object.
 
     Action: Terminates the process.
 
-- <a href="#signal.chld" name="signal.chld"></a>**`WASI_SIGCHLD`**
+- <a href="#signal.chld" name="signal.chld"></a>**`__WASI_SIGCHLD`**
 
     Child process terminated, stopped, or continued.
 
     Action: Ignored.
 
-- <a href="#signal.cont" name="signal.cont"></a>**`WASI_SIGCONT`**
+- <a href="#signal.cont" name="signal.cont"></a>**`__WASI_SIGCONT`**
 
     Continue executing, if stopped.
 
     Action: Continues executing, if stopped.
 
-- <a href="#signal.fpe" name="signal.fpe"></a>**`WASI_SIGFPE`**
+- <a href="#signal.fpe" name="signal.fpe"></a>**`__WASI_SIGFPE`**
 
     Erroneous arithmetic operation.
 
     Action: Terminates the process.
 
-- <a href="#signal.hup" name="signal.hup"></a>**`WASI_SIGHUP`**
+- <a href="#signal.hup" name="signal.hup"></a>**`__WASI_SIGHUP`**
 
     Hangup.
 
     Action: Terminates the process.
 
-- <a href="#signal.ill" name="signal.ill"></a>**`WASI_SIGILL`**
+- <a href="#signal.ill" name="signal.ill"></a>**`__WASI_SIGILL`**
 
     Illegal instruction.
 
     Action: Terminates the process.
 
-- <a href="#signal.int" name="signal.int"></a>**`WASI_SIGINT`**
+- <a href="#signal.int" name="signal.int"></a>**`__WASI_SIGINT`**
 
     Terminate interrupt signal.
 
     Action: Terminates the process.
 
-- <a href="#signal.kill" name="signal.kill"></a>**`WASI_SIGKILL`**
+- <a href="#signal.kill" name="signal.kill"></a>**`__WASI_SIGKILL`**
 
     Kill.
 
     Action: Terminates the process.
 
-- <a href="#signal.pipe" name="signal.pipe"></a>**`WASI_SIGPIPE`**
+- <a href="#signal.pipe" name="signal.pipe"></a>**`__WASI_SIGPIPE`**
 
     Write on a pipe with no one to read it.
 
     Action: Ignored.
 
-- <a href="#signal.quit" name="signal.quit"></a>**`WASI_SIGQUIT`**
+- <a href="#signal.quit" name="signal.quit"></a>**`__WASI_SIGQUIT`**
 
     Terminal quit signal.
 
     Action: Terminates the process.
 
-- <a href="#signal.segv" name="signal.segv"></a>**`WASI_SIGSEGV`**
+- <a href="#signal.segv" name="signal.segv"></a>**`__WASI_SIGSEGV`**
 
     Invalid memory reference.
 
     Action: Terminates the process.
 
-- <a href="#signal.stop" name="signal.stop"></a>**`WASI_SIGSTOP`**
+- <a href="#signal.stop" name="signal.stop"></a>**`__WASI_SIGSTOP`**
 
     Stop executing.
 
     Action: Stops executing.
 
-- <a href="#signal.sys" name="signal.sys"></a>**`WASI_SIGSYS`**
+- <a href="#signal.sys" name="signal.sys"></a>**`__WASI_SIGSYS`**
 
     Bad system call.
 
     Action: Terminates the process.
 
-- <a href="#signal.term" name="signal.term"></a>**`WASI_SIGTERM`**
+- <a href="#signal.term" name="signal.term"></a>**`__WASI_SIGTERM`**
 
     Termination signal.
 
     Action: Terminates the process.
 
-- <a href="#signal.trap" name="signal.trap"></a>**`WASI_SIGTRAP`**
+- <a href="#signal.trap" name="signal.trap"></a>**`__WASI_SIGTRAP`**
 
     Trace/breakpoint trap.
 
     Action: Terminates the process.
 
-- <a href="#signal.tstp" name="signal.tstp"></a>**`WASI_SIGTSTP`**
+- <a href="#signal.tstp" name="signal.tstp"></a>**`__WASI_SIGTSTP`**
 
     Terminal stop signal.
 
     Action: Stops executing.
 
-- <a href="#signal.ttin" name="signal.ttin"></a>**`WASI_SIGTTIN`**
+- <a href="#signal.ttin" name="signal.ttin"></a>**`__WASI_SIGTTIN`**
 
     Background process attempting read.
 
     Action: Stops executing.
 
-- <a href="#signal.ttou" name="signal.ttou"></a>**`WASI_SIGTTOU`**
+- <a href="#signal.ttou" name="signal.ttou"></a>**`__WASI_SIGTTOU`**
 
     Background process attempting write.
 
     Action: Stops executing.
 
-- <a href="#signal.urg" name="signal.urg"></a>**`WASI_SIGURG`**
+- <a href="#signal.urg" name="signal.urg"></a>**`__WASI_SIGURG`**
 
     High bandwidth data is available at a socket.
 
     Action: Ignored.
 
-- <a href="#signal.usr1" name="signal.usr1"></a>**`WASI_SIGUSR1`**
+- <a href="#signal.usr1" name="signal.usr1"></a>**`__WASI_SIGUSR1`**
 
     User-defined signal 1.
 
     Action: Terminates the process.
 
-- <a href="#signal.usr2" name="signal.usr2"></a>**`WASI_SIGUSR2`**
+- <a href="#signal.usr2" name="signal.usr2"></a>**`__WASI_SIGUSR2`**
 
     User-defined signal 2.
 
     Action: Terminates the process.
 
-- <a href="#signal.vtalrm" name="signal.vtalrm"></a>**`WASI_SIGVTALRM`**
+- <a href="#signal.vtalrm" name="signal.vtalrm"></a>**`__WASI_SIGVTALRM`**
 
     Virtual timer expired.
 
     Action: Terminates the process.
 
-- <a href="#signal.xcpu" name="signal.xcpu"></a>**`WASI_SIGXCPU`**
+- <a href="#signal.xcpu" name="signal.xcpu"></a>**`__WASI_SIGXCPU`**
 
     CPU time limit exceeded.
 
     Action: Terminates the process.
 
-- <a href="#signal.xfsz" name="signal.xfsz"></a>**`WASI_SIGXFSZ`**
+- <a href="#signal.xfsz" name="signal.xfsz"></a>**`__WASI_SIGXFSZ`**
 
     File size limit exceeded.
 
     Action: Terminates the process.
 
-### <a href="#subclockflags" name="subclockflags"></a>`wasi_subclockflags_t` (`uint16_t` bitfield)
+### <a href="#subclockflags" name="subclockflags"></a>`__wasi_subclockflags_t` (`uint16_t` bitfield)
 
 Flags determining how the timestamp provided in
-[`wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) should be interpreted.
+[`__wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) should be interpreted.
 
-Used by [`wasi_subscription_t`](#subscription).
+Used by [`__wasi_subscription_t`](#subscription).
 
 Possible values:
 
-- <a href="#subclockflags.abstime" name="subclockflags.abstime"></a>**`WASI_SUBSCRIPTION_CLOCK_ABSTIME`**
+- <a href="#subclockflags.abstime" name="subclockflags.abstime"></a>**`__WASI_SUBSCRIPTION_CLOCK_ABSTIME`**
 
     If set, treat the timestamp provided in
-    [`wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) as an absolute timestamp
-    of clock [`wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id).
+    [`__wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) as an absolute timestamp
+    of clock [`__wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id).
 
     If clear, treat the timestamp provided in
-    [`wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) relative to the current
-    time value of clock [`wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id).
+    [`__wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) relative to the current
+    time value of clock [`__wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id).
 
-### <a href="#subrwflags" name="subrwflags"></a>`wasi_subrwflags_t` (`uint16_t` bitfield)
+### <a href="#subrwflags" name="subrwflags"></a>`__wasi_subrwflags_t` (`uint16_t` bitfield)
 
 Flags influencing the method of polling for read or writing on
 a file descriptor.
 
-Used by [`wasi_subscription_t`](#subscription).
+Used by [`__wasi_subscription_t`](#subscription).
 
 Possible values:
 
-- <a href="#subrwflags.poll" name="subrwflags.poll"></a>**`WASI_SUBSCRIPTION_FD_READWRITE_POLL`**
+- <a href="#subrwflags.poll" name="subrwflags.poll"></a>**`__WASI_SUBSCRIPTION_FD_READWRITE_POLL`**
 
     Deprecated. Must be set by callers and ignored by
     implementations.
 
-### <a href="#subscription" name="subscription"></a>`wasi_subscription_t` (`struct`)
+### <a href="#subscription" name="subscription"></a>`__wasi_subscription_t` (`struct`)
 
 Subscription to an event.
 
-Used by [`wasi_poll()`](#poll).
+Used by [`__wasi_poll()`](#poll).
 
 Members:
 
@@ -2780,7 +2780,7 @@ Members:
 
     User-provided value that is attached to the
     subscription in the kernel and returned through
-    [`wasi_event_t::userdata`](#event.userdata).
+    [`__wasi_event_t::userdata`](#event.userdata).
 
 - <a href="#subscription.unused" name="subscription.unused"></a><code>uint16\_t <strong>unused</strong></code>
 
@@ -2790,13 +2790,13 @@ Members:
 
     The type of the event to which to subscribe.
 
-    Currently, [`WASI_EVENTTYPE_CONDVAR`](#eventtype.condvar),
-    [`WASI_EVENTTYPE_LOCK_RDLOCK`](#eventtype.lock_rdlock), and [`WASI_EVENTTYPE_LOCK_WRLOCK`](#eventtype.lock_wrlock)
+    Currently, [`__WASI_EVENTTYPE_CONDVAR`](#eventtype.condvar),
+    [`__WASI_EVENTTYPE_LOCK_RDLOCK`](#eventtype.lock_rdlock), and [`__WASI_EVENTTYPE_LOCK_WRLOCK`](#eventtype.lock_wrlock)
     must be provided as the first subscription and may
     only be followed by up to one other subscription,
-    having type [`WASI_EVENTTYPE_CLOCK`](#eventtype.clock).
+    having type [`__WASI_EVENTTYPE_CLOCK`](#eventtype.clock).
 
-- When `type` is [`WASI_EVENTTYPE_CLOCK`](#eventtype.clock):
+- When `type` is [`__WASI_EVENTTYPE_CLOCK`](#eventtype.clock):
 
     - <a href="#subscription.clock" name="subscription.clock"></a>**`clock`**
 
@@ -2827,7 +2827,7 @@ Members:
             timeout is absolute or
             relative.
 
-- When `type` is [`WASI_EVENTTYPE_CONDVAR`](#eventtype.condvar):
+- When `type` is [`__WASI_EVENTTYPE_CONDVAR`](#eventtype.condvar):
 
     - <a href="#subscription.condvar" name="subscription.condvar"></a>**`condvar`**
 
@@ -2856,7 +2856,7 @@ Members:
             Whether the lock is stored in
             private or shared memory.
 
-- When `type` is [`WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
+- When `type` is [`__WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
 
     - <a href="#subscription.fd_readwrite" name="subscription.fd_readwrite"></a>**`fd_readwrite`**
 
@@ -2871,7 +2871,7 @@ Members:
             Under which conditions to
             trigger.
 
-- When `type` is [`WASI_EVENTTYPE_LOCK_RDLOCK`](#eventtype.lock_rdlock) or [`WASI_EVENTTYPE_LOCK_WRLOCK`](#eventtype.lock_wrlock):
+- When `type` is [`__WASI_EVENTTYPE_LOCK_RDLOCK`](#eventtype.lock_rdlock) or [`__WASI_EVENTTYPE_LOCK_WRLOCK`](#eventtype.lock_wrlock):
 
     - <a href="#subscription.lock" name="subscription.lock"></a>**`lock`**
 
@@ -2885,7 +2885,7 @@ Members:
             Whether the lock is stored in
             private or shared memory.
 
-- When `type` is [`WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate):
+- When `type` is [`__WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate):
 
     - <a href="#subscription.proc_terminate" name="subscription.proc_terminate"></a>**`proc_terminate`**
 
@@ -2895,12 +2895,12 @@ Members:
             which to wait for process
             termination.
 
-### <a href="#tcb" name="tcb"></a>`wasi_tcb_t` (`struct`)
+### <a href="#tcb" name="tcb"></a>`__wasi_tcb_t` (`struct`)
 
 The Thread Control Block (TCB).
 
 After a thread begins execution (at program startup or when
-created through [`wasi_thread_create()`](#thread_create)), the CPU's registers
+created through [`__wasi_thread_create()`](#thread_create)), the CPU's registers
 controlling Thread-Local Storage (TLS) will already be
 initialized. They will point to an area only containing the
 TCB.
@@ -2924,11 +2924,11 @@ Members:
     Pointer that may be freely assigned by the system. Its
     value cannot be interpreted by the application.
 
-### <a href="#threadattr" name="threadattr"></a>`wasi_threadattr_t` (`struct`)
+### <a href="#threadattr" name="threadattr"></a>`__wasi_threadattr_t` (`struct`)
 
 Attributes for thread creation.
 
-Used by [`wasi_thread_create()`](#thread_create).
+Used by [`__wasi_thread_create()`](#thread_create).
 
 Members:
 
@@ -2944,11 +2944,11 @@ Members:
 
     Argument to be forwarded to the entry point function.
 
-### <a href="#threadentry" name="threadentry"></a>`wasi_threadentry_t` (function type)
+### <a href="#threadentry" name="threadentry"></a>`__wasi_threadentry_t` (function type)
 
 Entry point for additionally created threads.
 
-Used by [`wasi_threadattr_t`](#threadattr).
+Used by [`__wasi_threadattr_t`](#threadattr).
 
 Parameters:
 
@@ -2959,9 +2959,9 @@ Parameters:
 - <a href="#threadentry.aux" name="threadentry.aux"></a><code>void *<strong>aux</strong></code>
 
     Copy of the value stored in
-    [`wasi_threadattr_t::argument`](#threadattr.argument).
+    [`__wasi_threadattr_t::argument`](#threadattr.argument).
 
-### <a href="#tid" name="tid"></a>`wasi_tid_t` (`uint32_t`)
+### <a href="#tid" name="tid"></a>`__wasi_tid_t` (`uint32_t`)
 
 Unique system-local identifier of a thread. This identifier is
 only valid during the lifetime of the thread.
@@ -2970,57 +2970,57 @@ Threads must be aware of their thread identifier, as it is
 written it into locks when acquiring them for writing. It is
 not advised to use these identifiers for any other purpose.
 
-As the thread identifier is also stored in [`wasi_lock_t`](#lock) when
-[`WASI_LOCK_WRLOCKED`](#lock.wrlocked) is set, the top two bits of the thread
+As the thread identifier is also stored in [`__wasi_lock_t`](#lock) when
+[`__WASI_LOCK_WRLOCKED`](#lock.wrlocked) is set, the top two bits of the thread
 must always be set to zero.
 
-Used by [`wasi_threadentry_t`](#threadentry) and [`wasi_thread_create()`](#thread_create).
+Used by [`__wasi_threadentry_t`](#threadentry) and [`__wasi_thread_create()`](#thread_create).
 
-### <a href="#timestamp" name="timestamp"></a>`wasi_timestamp_t` (`uint64_t`)
+### <a href="#timestamp" name="timestamp"></a>`__wasi_timestamp_t` (`uint64_t`)
 
 Timestamp in nanoseconds.
 
-Used by [`wasi_filestat_t`](#filestat), [`wasi_subscription_t`](#subscription), [`wasi_clock_res_get()`](#clock_res_get), and [`wasi_clock_time_get()`](#clock_time_get).
+Used by [`__wasi_filestat_t`](#filestat), [`__wasi_subscription_t`](#subscription), [`__wasi_clock_res_get()`](#clock_res_get), and [`__wasi_clock_time_get()`](#clock_time_get).
 
-### <a href="#ulflags" name="ulflags"></a>`wasi_ulflags_t` (`uint8_t` bitfield)
+### <a href="#ulflags" name="ulflags"></a>`__wasi_ulflags_t` (`uint8_t` bitfield)
 
 Specifies whether files are unlinked or directories are
 removed.
 
-Used by [`wasi_file_unlink()`](#file_unlink).
+Used by [`__wasi_file_unlink()`](#file_unlink).
 
 Possible values:
 
-- <a href="#ulflags.removedir" name="ulflags.removedir"></a>**`WASI_UNLINK_REMOVEDIR`**
+- <a href="#ulflags.removedir" name="ulflags.removedir"></a>**`__WASI_UNLINK_REMOVEDIR`**
 
     If set, removes a directory. Otherwise, unlinks any
     non-directory file.
 
-### <a href="#userdata" name="userdata"></a>`wasi_userdata_t` (`uint64_t`)
+### <a href="#userdata" name="userdata"></a>`__wasi_userdata_t` (`uint64_t`)
 
 User-provided value that can be attached to objects that is
 retained when extracted from the kernel.
 
-Used by [`wasi_event_t`](#event) and [`wasi_subscription_t`](#subscription).
+Used by [`__wasi_event_t`](#event) and [`__wasi_subscription_t`](#subscription).
 
-### <a href="#whence" name="whence"></a>`wasi_whence_t` (`uint8_t`)
+### <a href="#whence" name="whence"></a>`__wasi_whence_t` (`uint8_t`)
 
 Relative to which position the offset of the file descriptor
 should be set.
 
-Used by [`wasi_fd_seek()`](#fd_seek).
+Used by [`__wasi_fd_seek()`](#fd_seek).
 
 Possible values:
 
-- <a href="#whence.cur" name="whence.cur"></a>**`WASI_WHENCE_CUR`**
+- <a href="#whence.cur" name="whence.cur"></a>**`__WASI_WHENCE_CUR`**
 
     Seek relative to current position.
 
-- <a href="#whence.end" name="whence.end"></a>**`WASI_WHENCE_END`**
+- <a href="#whence.end" name="whence.end"></a>**`__WASI_WHENCE_END`**
 
     Seek relative to end-of-file.
 
-- <a href="#whence.set" name="whence.set"></a>**`WASI_WHENCE_SET`**
+- <a href="#whence.set" name="whence.set"></a>**`__WASI_WHENCE_SET`**
 
     Seek relative to start-of-file.
 
