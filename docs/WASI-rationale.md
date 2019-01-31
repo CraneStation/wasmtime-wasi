@@ -48,62 +48,61 @@ There's a huge range of use cases for async I/O, from applications
 running in browsers that need to return to the event loop regularly
 to let it service the UI, to servers with many thousands of clients.
 
-Neither of the problems mentioned here has a ready solution in POSIX, or
-CloudABI. POSIX's `select`, `poll` and `aio` interfaces all have
-limitations, and modern operating systems have grown a wide variety of
-interfaces to use in their place, with no apparent sign of any of them
-converging toward POSIX-like ubiquity. There are libraries which provide
-portable abstractions, such as libuv, and these may eventually provide
-insights into a path forward, however we'd still need to figure out a
-line between host interfaces and application libraries, as this is
+Unfortunately, POSIX doesn't provide us with a ready-made solution, as
+it does in many other areas. POSIX's `select`, `poll` and `aio` interfaces
+all have limitations, and modern operating systems have grown a wide
+variety of interfaces to use in their place, with no apparent sign of any
+of them converging toward POSIX-like ubiquity. There are libraries which
+provide portable abstractions, such as libuv, and these may eventually
+provide insights into a path forward, however we'd still need to figure
+out a line between host interfaces and application libraries, as this is
 uncharted territory.
 
-The "SI" in "WASI" is the same "SI" as in "POSIX". We didn't add "X"
+The "SI" in "WASI" is the same "SI" as in "POSIX". We didn't add an "X"
 at the end because that's for "UNIX", and WASI is sufficiently different
-from UNIX that "WASIX" didn't feel sufficiently accurate. What's a UNIX
-without `fork`, for example? But it is a "System Interface" very much in
-the spirit of POSIX.
+from UNIX that "WASIX" didn't feel accurate -- there's no `fork`, after
+all. But it is a "System Interface" that has much in common with POSIX.
 
-And, we know that future WebAssembly API iterations may look radically
-different anyway. Particularly, when support for reference-types becomes
-available, we're going to want to massively redesign a lot of things
-no matter what. And those UNIX-style filesystem APIs may want to become
-a library on top of a more general-purpose foundation. And maybe people
-want zero-copy I/O. Or everything-is-a-file. Or everything-is-a-URL.
-Or any number of other OS abstractions. These abstractions all interact,
-creating an enormous and complex design space.
-
-Leveraging the highly ubiquitous synchronous parts of POSIX has strong
+Leveraging the highly ubiquitous synchronous parts of POSIX has some
 parallels to how the WebAssembly MVP leveraged the great degree of
-commonaly commonality between general-purpose CPUs. Everyone has
-8-bit bytes, little-endian, and two's complement integers, and this
-commonality is a large part of why WebAssembly works. Similarly,
-most general-purpose computing environments support some flavor of
-blocking I/O roughly sufficient to implement WASI calls, particularly
-when it doesn't require fork and friends. And like 128-bit SIMD, it's
-not quite as universal as little-endian etc., but it's pretty good, and
-much much simpler than more theoretically portable alternatives.
+commonality between general-purpose CPUs. All popular general-purpose
+systems have 8-bit bytes, little-endian byte ordering, and two's
+complement integers, and this commonality is a large part of why
+WebAssembly works. In a somewhat similar way, most general-purpose
+computing environments support some flavor of blocking I/O roughly
+sufficient to implement WASI calls, particularly when it doesn't
+require fork and friends.
 
 We're planning to launch a WebAssembly CG subgroup to maintain WASI
 going forward and produce official documents. Once that's in place, this
-subgroup can serve as the forum where WASI's successor can be proposed,
-evaluated, and standardized. Quite possibly it will go by a new name,
-as the "SI" relationship to POSIX may well be weaker.
+subgroup can also serve as the forum where a successor to WASI can be
+proposed, evaluated, and standardized. Such a successor may wish to go
+by a new name, as the "SI" connection to POSIX may well be weaker.
+
+When support for reference-types becomes available, we'll likely want to
+change many interfaces to take advantage of them. And UNIX-style
+filesystem APIs may want to become a library on top of a more
+general-purpose foundation. Maybe people want zero-copy I/O,
+everything-is-a-file, everything-is-a-URL, or any number of other OS
+abstractions. These abstractions tend to interact, creating an enormous
+and complex design space, so a future API will need to be designed
+carefully.
+
+And, with WASI's API being defined in terms of wasm exports, if we come
+up with something better in the future, it's likely that we'll be able to
+reimplement WASI as a library on top of that new thing, and avoid baking
+in WASI for the long term.
 
 Synchronous open/close/read/write have been around for over 40 years.
-Even if we consider them legacy, it's an impressive legacy. There's a core
-of functionality that's so simple and useful, it survived
-[intense large-scale fragmentation](https://en.wikipedia.org/wiki/History_of_Unix#/media/File:Unix_history-simple.svg)
-and the [UNIX wars](https://en.wikipedia.org/wiki/Unix_wars) mostly
-intact.
+Berkely sockets have been around for over 30 years. Even if we consider
+these legacy, it's an impressive legacy. There's a core of functionality
+that's so simple and useful, it survived
+[wide-spread fragmentation](http://www.unix-diagram.org/) mostly intact.
 
-And, with this API being defined in terms of wasm exports, if we invent
-something better in the future, we can reimplement WASI in terms of that
-new thing, and avoid baking in WASI for the long term.
-
-So if you want to run WASI programs in browsers, your options could be
+If you want to run WASI programs in browsers, your options could be
 roughly the same as what you have in Emscripten's POSIX-like APIs today:
 
- - Run the program on a worker, optionally with proxying to the main thread.
+ - Run the program on a worker, using the sync APIs only available in
+   workers, including SharedArrayBuffer to handle the general case
  - Run the program on the main thread but limit all I/O to interacting with
-   in-memory data structures.
+   in-memory data structures, such as in-memory filesystems.
