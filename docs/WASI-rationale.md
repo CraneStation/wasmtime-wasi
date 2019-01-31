@@ -64,29 +64,28 @@ from UNIX that "WASIX" didn't feel accurate -- there's no `fork`, after
 all. But it is a "System Interface" that has much in common with POSIX.
 
 Leveraging the highly ubiquitous synchronous parts of POSIX has some
-parallels to how the WebAssembly MVP leveraged the great degree of
-commonality between general-purpose CPUs. All popular general-purpose
-systems have 8-bit bytes, little-endian byte ordering, and two's
-complement integers, and this commonality is a large part of why
-WebAssembly works. In a somewhat similar way, most general-purpose
-computing environments support some flavor of blocking I/O roughly
-sufficient to implement WASI calls, particularly when it doesn't
-require fork and friends.
+parallels to how the WebAssembly MVP leveraged the commonality between
+general-purpose CPUs. All popular general-purpose systems have 8-bit
+bytes, little-endian byte ordering, and two's complement integers, and
+this commonality is a large part of why WebAssembly works. In a somewhat
+similar way, most general-purpose computing environments support some
+flavor of blocking I/O roughly sufficient to implement WASI calls,
+particularly when it doesn't require fork and friends.
+
+In the future, when support for reference-types becomes available, we'll
+likely want to change many interfaces to take advantage of them. And
+UNIX-style filesystem APIs may want to become a library on top of a more
+general-purpose foundation. Maybe we'll want zero-copy I/O,
+everything-is-a-file, everything-is-a-URL, or any number of other OS
+features. These kinds of things tend to interact, creating an enormous
+and complex design space, so a future API will need to be designed
+carefully.
 
 We're planning to launch a WebAssembly CG subgroup to maintain WASI
-going forward and produce official documents. Once that's in place, this
+going forward, and officially document it. Once that's in place, this
 subgroup can also serve as the forum where a successor to WASI can be
 proposed, evaluated, and standardized. Such a successor may wish to go
 by a new name, as the "SI" connection to POSIX may well be weaker.
-
-When support for reference-types becomes available, we'll likely want to
-change many interfaces to take advantage of them. And UNIX-style
-filesystem APIs may want to become a library on top of a more
-general-purpose foundation. Maybe people want zero-copy I/O,
-everything-is-a-file, everything-is-a-URL, or any number of other OS
-abstractions. These abstractions tend to interact, creating an enormous
-and complex design space, so a future API will need to be designed
-carefully.
 
 And, with WASI's API being defined in terms of wasm exports, if we come
 up with something better in the future, it's likely that we'll be able to
@@ -94,7 +93,7 @@ reimplement WASI as a library on top of that new thing, and avoid baking
 in WASI for the long term.
 
 Synchronous open/close/read/write have been around for over 40 years.
-Berkely sockets have been around for over 30 years. Even if we consider
+Berkeley sockets have been around for over 30 years. Even if we consider
 these legacy, it's an impressive legacy. There's a core of functionality
 that's so simple and useful, it survived
 [wide-spread fragmentation](http://www.unix-diagram.org/) mostly intact.
