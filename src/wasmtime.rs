@@ -134,20 +134,25 @@ fn main() {
     let isa = isa_builder.finish(settings::Flags::new(flag_builder));
     let mut context = Context::with_isa(isa);
 
-    // Make spectest and wasi available by default.
+    // Make spectest available by default.
     context.name_instance(
         "spectest".to_owned(),
         instantiate_spectest().expect("instantiating spectest"),
     );
+
+    // Make wasi available by default.
+    let global_exports = context.get_global_exports();
     context.name_instance(
         "wasi".to_owned(),
-        instantiate_wasi("", Rc::clone(&global_exports)).expect("instantiating wasi"),
+        instantiate_wasi("", global_exports).expect("instantiating wasi"),
     );
+
     // FIXME: Also recognize "env", for compatibility with clang/llvm 8.0. And use
     // "__wasi_" prefixes for compaitility with prototype reference-sysroot.
+    let global_exports = context.get_global_exports();
     context.name_instance(
         "env".to_owned(),
-        instantiate_wasi("__wasi_", Rc::clone(&global_exports)).expect("instantiating wasi"),
+        instantiate_wasi("__wasi_", global_exports).expect("instantiating wasi"),
     );
 
     // Enable/disable producing of debug info.
