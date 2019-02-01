@@ -179,4 +179,12 @@ impl Context {
                 values: vec![value],
             })
     }
+
+    /// Return a handle to the global_exports mapping, needed by some modules
+    /// for instantiation.
+    pub fn get_global_exports(
+        &mut self,
+    ) -> Rc<RefCell<HashMap<String, Option<wasmtime_runtime::Export>>>> {
+        Rc::clone(&mut self.global_exports)
+    }
 }
