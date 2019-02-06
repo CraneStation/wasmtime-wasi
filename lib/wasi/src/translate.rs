@@ -133,8 +133,8 @@ pub fn decode_whence(whence: wasm32::__wasi_whence_t) -> host::__wasi_whence_t {
     whence
 }
 
-pub fn decode_clockid(_clockid: wasm32::__wasi_clockid_t) -> host::__wasi_clockid_t {
-    unimplemented!("decode_clockid");
+pub fn decode_clockid(clockid: wasm32::__wasi_clockid_t) -> host::__wasi_clockid_t {
+    clockid
 }
 
 pub fn decode_timestamp(timestamp: wasm32::__wasi_timestamp_t) -> host::__wasi_timestamp_t {
