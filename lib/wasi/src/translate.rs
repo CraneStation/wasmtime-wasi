@@ -11,10 +11,10 @@ use wasmtime_runtime::{Export, VMContext};
 /// This is unsafe due to trusting the contents of vmctx. The pointer result
 /// is bounds and alignment checked.
 unsafe fn decode_ptr(
+    vmctx: &mut VMContext,
     ptr: wasm32::uintptr_t,
     len: usize,
     align: usize,
-    vmctx: &mut VMContext,
 ) -> Result<*mut u8, host::__wasi_errno_t> {
     match vmctx.lookup_global_export("memory") {
         Some(Export::Memory {
@@ -58,45 +58,45 @@ unsafe fn decode_ptr(
 }
 
 unsafe fn decode_ptr_to<T>(
-    ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
+    ptr: wasm32::uintptr_t,
 ) -> Result<*mut T, host::__wasi_errno_t> {
-    decode_ptr(ptr, size_of::<T>(), align_of::<T>(), vmctx).map(|ptr| ptr as *mut T)
+    decode_ptr(vmctx, ptr, size_of::<T>(), align_of::<T>()).map(|ptr| ptr as *mut T)
 }
 
 unsafe fn decode_pointee<T>(
-    ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
+    ptr: wasm32::uintptr_t,
 ) -> Result<T, host::__wasi_errno_t> {
-    let ptr = decode_ptr_to::<T>(ptr, vmctx)?;
+    let ptr = decode_ptr_to::<T>(vmctx, ptr)?;
 
     // Size and alignment are checked by `decode_ptr_to`.
     Ok(ptr.read())
 }
 
 pub unsafe fn encode_pointee<T>(
+    vmctx: &mut VMContext,
     ptr: wasm32::uintptr_t,
     t: T,
-    vmctx: &mut VMContext,
 ) -> Result<(), host::__wasi_errno_t> {
-    let ptr = decode_ptr_to::<T>(ptr, vmctx)?;
+    let ptr = decode_ptr_to::<T>(vmctx, ptr)?;
 
     // Size and alignment are checked by `decode_ptr_to`.
     Ok(ptr.write(t))
 }
 
 pub unsafe fn decode_slice_of<T>(
+    vmctx: &mut VMContext,
     ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
-    vmctx: &mut VMContext,
 ) -> Result<(*mut T, usize), host::__wasi_errno_t> {
     let len = cast::usize(len);
 
     let ptr = decode_ptr(
+        vmctx,
         ptr,
         size_of::<T>().checked_mul(len).unwrap(),
         align_of::<T>(),
-        vmctx,
     )? as *mut T;
 
     Ok((ptr, len))
@@ -111,10 +111,10 @@ pub unsafe fn decode_filesize(filesize: wasm32::__wasi_filesize_t) -> host::__wa
 }
 
 pub unsafe fn decode_lookup(
-    lookup_ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
+    lookup_ptr: wasm32::uintptr_t,
 ) -> Result<host::__wasi_lookup_t, host::__wasi_errno_t> {
-    let lookup = decode_pointee::<wasm32::__wasi_lookup_t>(lookup_ptr, vmctx)?;
+    let lookup = decode_pointee::<wasm32::__wasi_lookup_t>(vmctx, lookup_ptr)?;
     Ok(host::__wasi_lookup_t {
         fd: decode_fd(lookup.fd),
         flags: decode_lookupflags(lookup.flags),
@@ -217,186 +217,186 @@ pub fn encode_rights(rights: host::__wasi_rights_t) -> wasm32::__wasi_rights_t {
 }
 
 pub fn decode_fdstat(
-    _fdstat_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
+    _fdstat_ptr: wasm32::uintptr_t,
 ) -> host::__wasi_fdstat_t {
     unimplemented!("decode_oflags");
 }
 
 pub unsafe fn decode_char_slice(
+    vmctx: &mut VMContext,
     ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
-    vmctx: &mut VMContext,
 ) -> Result<(*mut host::char, usize), host::__wasi_errno_t> {
     println!("decode_char_slice len={}", len);
-    decode_slice_of::<host::char>(ptr, len, vmctx)
+    decode_slice_of::<host::char>(vmctx, ptr, len)
 }
 
 pub unsafe fn decode_ciovec(
-    ciovec: &wasm32::__wasi_ciovec_t,
     vmctx: &mut VMContext,
+    ciovec: &wasm32::__wasi_ciovec_t,
 ) -> Result<host::__wasi_ciovec_t, host::__wasi_errno_t> {
     let len = cast::usize(ciovec.buf_len);
     Ok(host::__wasi_ciovec_t {
-        buf: decode_ptr(ciovec.buf, len, 1, vmctx)? as *const host::void,
+        buf: decode_ptr(vmctx, ciovec.buf, len, 1)? as *const host::void,
         buf_len: len,
     })
 }
 
 pub unsafe fn decode_iovec(
-    iovec: &wasm32::__wasi_iovec_t,
     vmctx: &mut VMContext,
+    iovec: &wasm32::__wasi_iovec_t,
 ) -> Result<host::__wasi_iovec_t, host::__wasi_errno_t> {
     let len = cast::usize(iovec.buf_len);
     Ok(host::__wasi_iovec_t {
-        buf: decode_ptr(iovec.buf, len, 1, vmctx)? as *mut host::void,
+        buf: decode_ptr(vmctx, iovec.buf, len, 1)? as *mut host::void,
         buf_len: len,
     })
 }
 
 pub unsafe fn decode_ciovec_slice(
+    vmctx: &mut VMContext,
     ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
-    vmctx: &mut VMContext,
 ) -> Result<Vec<host::__wasi_ciovec_t>, host::__wasi_errno_t> {
-    let slice = decode_slice_of::<wasm32::__wasi_ciovec_t>(ptr, len, vmctx)?;
+    let slice = decode_slice_of::<wasm32::__wasi_ciovec_t>(vmctx, ptr, len)?;
     let slice = slice::from_raw_parts(slice.0, slice.1);
-    slice.iter().map(|iov| decode_ciovec(iov, vmctx)).collect()
+    slice.iter().map(|iov| decode_ciovec(vmctx, iov)).collect()
 }
 
 pub unsafe fn decode_iovec_slice(
+    vmctx: &mut VMContext,
     ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
-    vmctx: &mut VMContext,
 ) -> Result<Vec<host::__wasi_iovec_t>, host::__wasi_errno_t> {
-    let slice = decode_slice_of::<wasm32::__wasi_iovec_t>(ptr, len, vmctx)?;
+    let slice = decode_slice_of::<wasm32::__wasi_iovec_t>(vmctx, ptr, len)?;
     let slice = slice::from_raw_parts(slice.0, slice.1);
-    slice.iter().map(|iov| decode_iovec(iov, vmctx)).collect()
+    slice.iter().map(|iov| decode_iovec(vmctx, iov)).collect()
 }
 
 pub unsafe fn decode_subscription(
-    _subscription: wasm32::__wasi_subscription_t,
     _vmctx: &mut VMContext,
+    _subscription: wasm32::__wasi_subscription_t,
 ) -> host::__wasi_subscription_t {
     unimplemented!("decode_subscription");
 }
 
 pub unsafe fn decode_subscription_slice(
+    vmctx: &mut VMContext,
     ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
-    vmctx: &mut VMContext,
 ) -> Result<Vec<host::__wasi_subscription_t>, host::__wasi_errno_t> {
-    let slice = decode_slice_of::<wasm32::__wasi_subscription_t>(ptr, len, vmctx)?;
+    let slice = decode_slice_of::<wasm32::__wasi_subscription_t>(vmctx, ptr, len)?;
     let slice = slice::from_raw_parts(slice.0, slice.1);
     Ok(slice
         .iter()
-        .map(|subscription| decode_subscription(*subscription, vmctx))
+        .map(|subscription| decode_subscription(vmctx, *subscription))
         .collect())
 }
 
 pub unsafe fn decode_event(
-    _event: wasm32::__wasi_event_t,
     _vmctx: &mut VMContext,
+    _event: wasm32::__wasi_event_t,
 ) -> host::__wasi_event_t {
     unimplemented!("decode_event");
 }
 
 pub unsafe fn decode_event_slice(
+    vmctx: &mut VMContext,
     ptr: wasm32::uintptr_t,
     len: wasm32::size_t,
-    vmctx: &mut VMContext,
 ) -> Result<Vec<host::__wasi_event_t>, host::__wasi_errno_t> {
-    let slice = decode_slice_of::<wasm32::__wasi_event_t>(ptr, len, vmctx)?;
+    let slice = decode_slice_of::<wasm32::__wasi_event_t>(vmctx, ptr, len)?;
     let slice = slice::from_raw_parts(slice.0, slice.1);
     Ok(slice
         .iter()
-        .map(|event| decode_event(*event, vmctx))
+        .map(|event| decode_event(vmctx, *event))
         .collect())
 }
 
 pub unsafe fn encode_event_slice(
+    _vmctx: &mut VMContext,
     _ptr: wasm32::uintptr_t,
     _host: Vec<host::__wasi_event_t>,
-    _vmctx: &mut VMContext,
 ) -> Result<(), host::__wasi_errno_t> {
     unimplemented!("encode_event_slice");
 }
 
 pub unsafe fn decode_fd_byref(
-    _fd_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
+    _fd_ptr: wasm32::uintptr_t,
 ) -> Result<host::__wasi_fd_t, host::__wasi_errno_t> {
     unimplemented!("decode_fd_byref");
 }
 
 pub unsafe fn encode_fd_byref(
+    _vmctx: &mut VMContext,
     _fd_ptr: wasm32::uintptr_t,
     _fd: host::__wasi_fd_t,
-    _vmctx: &mut VMContext,
 ) -> Result<(), host::__wasi_errno_t> {
     unimplemented!("encode_fd_byref");
 }
 
 pub unsafe fn decode_timestamp_byref(
-    timestamp_ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
+    timestamp_ptr: wasm32::uintptr_t,
 ) -> Result<host::__wasi_timestamp_t, host::__wasi_errno_t> {
-    decode_pointee::<wasm32::__wasi_timestamp_t>(timestamp_ptr, vmctx)
+    decode_pointee::<wasm32::__wasi_timestamp_t>(vmctx, timestamp_ptr)
         .map(host::__wasi_timestamp_t::cast)
 }
 
 pub unsafe fn encode_timestamp_byref(
+    vmctx: &mut VMContext,
     timestamp_ptr: wasm32::uintptr_t,
     host_timestamp: host::__wasi_timestamp_t,
-    vmctx: &mut VMContext,
 ) -> Result<(), host::__wasi_errno_t> {
     encode_pointee::<wasm32::__wasi_timestamp_t>(
+        vmctx,
         timestamp_ptr,
         wasm32::__wasi_timestamp_t::cast(host_timestamp),
-        vmctx,
     )
 }
 
 pub unsafe fn decode_filesize_byref(
-    filesize_ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
+    filesize_ptr: wasm32::uintptr_t,
 ) -> Result<host::__wasi_filesize_t, host::__wasi_errno_t> {
-    decode_pointee::<wasm32::__wasi_filesize_t>(filesize_ptr, vmctx)
+    decode_pointee::<wasm32::__wasi_filesize_t>(vmctx, filesize_ptr)
         .map(host::__wasi_filesize_t::cast)
 }
 
 pub unsafe fn encode_filesize_byref(
+    vmctx: &mut VMContext,
     filesize_ptr: wasm32::uintptr_t,
     host_filesize: host::__wasi_filesize_t,
-    vmctx: &mut VMContext,
 ) -> Result<(), host::__wasi_errno_t> {
     encode_pointee::<wasm32::__wasi_filesize_t>(
+        vmctx,
         filesize_ptr,
         wasm32::__wasi_filesize_t::cast(host_filesize),
-        vmctx,
     )
 }
 
 pub unsafe fn decode_usize_byref(
-    usize_ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
+    usize_ptr: wasm32::uintptr_t,
 ) -> Result<usize, host::__wasi_errno_t> {
-    decode_pointee::<wasm32::size_t>(usize_ptr, vmctx).map(decode_usize)
+    decode_pointee::<wasm32::size_t>(vmctx, usize_ptr).map(decode_usize)
 }
 
 pub unsafe fn encode_usize_byref(
+    vmctx: &mut VMContext,
     usize_ptr: wasm32::uintptr_t,
     host_usize: usize,
-    vmctx: &mut VMContext,
 ) -> Result<(), host::__wasi_errno_t> {
-    encode_pointee::<wasm32::size_t>(usize_ptr, wasm32::size_t::cast(host_usize).unwrap(), vmctx)
+    encode_pointee::<wasm32::size_t>(vmctx, usize_ptr, wasm32::size_t::cast(host_usize).unwrap())
 }
 
 pub unsafe fn decode_fdstat_byref(
-    fdstat_ptr: wasm32::uintptr_t,
     vmctx: &mut VMContext,
+    fdstat_ptr: wasm32::uintptr_t,
 ) -> Result<host::__wasi_fdstat_t, host::__wasi_errno_t> {
-    let wasm32_fdstat = decode_pointee::<wasm32::__wasi_fdstat_t>(fdstat_ptr, vmctx)?;
+    let wasm32_fdstat = decode_pointee::<wasm32::__wasi_fdstat_t>(vmctx, fdstat_ptr)?;
 
     Ok(host::__wasi_fdstat_t {
         fs_filetype: decode_filetype(wasm32_fdstat.fs_filetype),
@@ -407,9 +407,9 @@ pub unsafe fn decode_fdstat_byref(
 }
 
 pub unsafe fn encode_fdstat_byref(
+    vmctx: &mut VMContext,
     fdstat_ptr: wasm32::uintptr_t,
     host_fdstat: host::__wasi_fdstat_t,
-    vmctx: &mut VMContext,
 ) -> Result<(), host::__wasi_errno_t> {
     let wasm32_fdstat = wasm32::__wasi_fdstat_t {
         fs_filetype: encode_filetype(host_fdstat.fs_filetype),
@@ -419,64 +419,64 @@ pub unsafe fn encode_fdstat_byref(
         fs_rights_inheriting: encode_rights(host_fdstat.fs_rights_inheriting),
     };
 
-    encode_pointee::<wasm32::__wasi_fdstat_t>(fdstat_ptr, wasm32_fdstat, vmctx)
+    encode_pointee::<wasm32::__wasi_fdstat_t>(vmctx, fdstat_ptr, wasm32_fdstat)
 }
 
 pub unsafe fn decode_filestat_byref(
-    _filestat_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
+    _filestat_ptr: wasm32::uintptr_t,
 ) -> Result<host::__wasi_filestat_t, host::__wasi_errno_t> {
     unimplemented!("decode_filestat_byref");
 }
 
 pub unsafe fn encode_filestat_byref(
+    _vmctx: &mut VMContext,
     _filestat_ptr: wasm32::uintptr_t,
     _host_filestat: host::__wasi_filestat_t,
-    _vmctx: &mut VMContext,
 ) -> Result<(), host::__wasi_errno_t> {
     unimplemented!("encode_filestat_byref");
 }
 
 pub unsafe fn decode_recv_out_byref(
-    _recv_out_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
+    _recv_out_ptr: wasm32::uintptr_t,
 ) -> Result<host::__wasi_recv_out_t, host::__wasi_errno_t> {
     unimplemented!("decode_recv_out_byref");
 }
 
 pub unsafe fn encode_recv_out_byref(
+    _vmctx: &mut VMContext,
     _recv_out_ptr: wasm32::uintptr_t,
     _host_recv_out: host::__wasi_recv_out_t,
-    _vmctx: &mut VMContext,
 ) -> Result<(), host::__wasi_errno_t> {
     unimplemented!("encode_recv_out_byref");
 }
 
 pub unsafe fn decode_send_out_byref(
-    _send_out_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
+    _send_out_ptr: wasm32::uintptr_t,
 ) -> Result<host::__wasi_send_out_t, host::__wasi_errno_t> {
     unimplemented!("decode_send_out_byref");
 }
 
 pub unsafe fn encode_send_out_byref(
+    _vmctx: &mut VMContext,
     _send_out_ptr: wasm32::uintptr_t,
     _host_send_out: host::__wasi_send_out_t,
-    _vmctx: &mut VMContext,
 ) -> Result<(), host::__wasi_errno_t> {
     unimplemented!("encode_send_out_byref");
 }
 
 pub unsafe fn decode_send_in_byref(
-    _send_in_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
+    _send_in_ptr: wasm32::uintptr_t,
 ) -> Result<host::__wasi_send_in_t, host::__wasi_errno_t> {
     unimplemented!("decode_send_in_byref");
 }
 
 pub unsafe fn decode_recv_in_byref(
-    _recv_in_ptr: wasm32::uintptr_t,
     _vmctx: &mut VMContext,
+    _recv_in_ptr: wasm32::uintptr_t,
 ) -> Result<host::__wasi_recv_in_t, host::__wasi_errno_t> {
     unimplemented!("decode_recv_in_byref");
 }
