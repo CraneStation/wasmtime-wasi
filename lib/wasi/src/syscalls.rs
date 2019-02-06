@@ -32,7 +32,7 @@ pub unsafe extern "C" fn clock_res_get(
 
     let vmctx = &mut *vmctx;
     let clock_id = decode_clockid(clock_id);
-    let mut host_resolution = match decode_timestamp_byref(resolution, vmctx) {
+    let mut host_resolution = match decode_timestamp_byref(vmctx, resolution) {
         Ok(host_resolution) => host_resolution,
         Err(e) => return return_encoded_errno(e),
     };
@@ -40,7 +40,7 @@ pub unsafe extern "C" fn clock_res_get(
     let e = host::wasmtime_ssp_clock_res_get(clock_id, &mut host_resolution);
 
     trace!("     | *resolution={:?}", host_resolution);
-    encode_timestamp_byref(resolution, host_resolution, vmctx).unwrap();
+    encode_timestamp_byref(vmctx, resolution, host_resolution).unwrap();
 
     return_encoded_errno(e)
 }
@@ -61,7 +61,7 @@ pub unsafe extern "C" fn clock_time_get(
     let vmctx = &mut *vmctx;
     let clock_id = decode_clockid(clock_id);
     let precision = decode_timestamp(precision);
-    let mut host_time = match decode_timestamp_byref(time, vmctx) {
+    let mut host_time = match decode_timestamp_byref(vmctx, time) {
         Ok(host_time) => host_time,
         Err(e) => return return_encoded_errno(e),
     };
@@ -69,7 +69,7 @@ pub unsafe extern "C" fn clock_time_get(
     let e = host::wasmtime_ssp_clock_time_get(clock_id, precision, &mut host_time);
 
     trace!("     | *time={:?}", host_time);
-    encode_timestamp_byref(time, host_time, vmctx).unwrap();
+    encode_timestamp_byref(vmctx, time, host_time).unwrap();
 
     return_encoded_errno(e)
 }
@@ -108,7 +108,7 @@ pub unsafe extern "C" fn fd_create1(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let type_ = decode_filetype(type_);
-    let mut host_fd = match decode_fd_byref(fd, vmctx) {
+    let mut host_fd = match decode_fd_byref(vmctx, fd) {
         Ok(host_fd) => host_fd,
         Err(e) => return return_encoded_errno(e),
     };
@@ -116,7 +116,7 @@ pub unsafe extern "C" fn fd_create1(
     let e = host::wasmtime_ssp_fd_create1(curfds, type_, &mut host_fd);
 
     trace!("     | *fd={:?}", host_fd);
-    encode_fd_byref(fd, host_fd, vmctx).unwrap();
+    encode_fd_byref(vmctx, fd, host_fd).unwrap();
 
     return_encoded_errno(e)
 }
@@ -137,11 +137,11 @@ pub unsafe extern "C" fn fd_create2(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let type_ = decode_filetype(type_);
-    let mut host_fd0 = match decode_fd_byref(fd0, vmctx) {
+    let mut host_fd0 = match decode_fd_byref(vmctx, fd0) {
         Ok(host_fd0) => host_fd0,
         Err(e) => return return_encoded_errno(e),
     };
-    let mut host_fd1 = match decode_fd_byref(fd1, vmctx) {
+    let mut host_fd1 = match decode_fd_byref(vmctx, fd1) {
         Ok(host_fd1) => host_fd1,
         Err(e) => return return_encoded_errno(e),
     };
@@ -149,10 +149,10 @@ pub unsafe extern "C" fn fd_create2(
     let e = host::wasmtime_ssp_fd_create2(curfds, type_, &mut host_fd0, &mut host_fd1);
 
     trace!("     | *fd0={:?}", host_fd0);
-    encode_fd_byref(fd0, host_fd0, vmctx).unwrap();
+    encode_fd_byref(vmctx, fd0, host_fd0).unwrap();
 
     trace!("     | *fd1={:?}", host_fd1);
-    encode_fd_byref(fd1, host_fd1, vmctx).unwrap();
+    encode_fd_byref(vmctx, fd1, host_fd1).unwrap();
 
     return_encoded_errno(e)
 }
@@ -182,7 +182,7 @@ pub unsafe extern "C" fn fd_dup(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let from = decode_fd(from);
-    let mut host_fd = match decode_fd_byref(fd, vmctx) {
+    let mut host_fd = match decode_fd_byref(vmctx, fd) {
         Ok(host_fd) => host_fd,
         Err(e) => return return_encoded_errno(e),
     };
@@ -190,7 +190,7 @@ pub unsafe extern "C" fn fd_dup(
     let e = host::wasmtime_ssp_fd_dup(curfds, from, &mut host_fd);
 
     trace!("     | *fd={:?}", host_fd);
-    encode_fd_byref(fd, host_fd, vmctx).unwrap();
+    encode_fd_byref(vmctx, fd, host_fd).unwrap();
 
     return_encoded_errno(e)
 }
@@ -215,12 +215,12 @@ pub unsafe extern "C" fn fd_pread(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let iovs = match decode_iovec_slice(iovs, iovs_len, vmctx) {
+    let iovs = match decode_iovec_slice(vmctx, iovs, iovs_len) {
         Ok(iovs) => iovs,
         Err(e) => return return_encoded_errno(e),
     };
     let offset = decode_filesize(offset);
-    let mut host_nread = match decode_usize_byref(nread, vmctx) {
+    let mut host_nread = match decode_usize_byref(vmctx, nread) {
         Ok(host_nread) => host_nread,
         Err(e) => return return_encoded_errno(e),
     };
@@ -235,7 +235,7 @@ pub unsafe extern "C" fn fd_pread(
     );
 
     trace!("     | *nread={:?}", host_nread);
-    encode_usize_byref(nread, host_nread, vmctx).unwrap();
+    encode_usize_byref(vmctx, nread, host_nread).unwrap();
 
     return_encoded_errno(e)
 }
@@ -260,12 +260,12 @@ pub unsafe extern "C" fn fd_pwrite(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let iovs = match decode_ciovec_slice(iovs, iovs_len, vmctx) {
+    let iovs = match decode_ciovec_slice(vmctx, iovs, iovs_len) {
         Ok(iovs) => iovs,
         Err(e) => return return_encoded_errno(e),
     };
     let offset = decode_filesize(offset);
-    let mut host_nwritten = match decode_usize_byref(nwritten, vmctx) {
+    let mut host_nwritten = match decode_usize_byref(vmctx, nwritten) {
         Ok(host_nwritten) => host_nwritten,
         Err(e) => return return_encoded_errno(e),
     };
@@ -280,7 +280,7 @@ pub unsafe extern "C" fn fd_pwrite(
     );
 
     trace!("     | *nwritten={:?}", host_nwritten);
-    encode_usize_byref(nwritten, host_nwritten, vmctx).unwrap();
+    encode_usize_byref(vmctx, nwritten, host_nwritten).unwrap();
 
     return_encoded_errno(e)
 }
@@ -303,11 +303,11 @@ pub unsafe extern "C" fn fd_read(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let iovs = match decode_iovec_slice(iovs, iovs_len, vmctx) {
+    let iovs = match decode_iovec_slice(vmctx, iovs, iovs_len) {
         Ok(iovs) => iovs,
         Err(e) => return return_encoded_errno(e),
     };
-    let mut host_nread = match decode_usize_byref(nread, vmctx) {
+    let mut host_nread = match decode_usize_byref(vmctx, nread) {
         Ok(host_nread) => host_nread,
         Err(e) => return return_encoded_errno(e),
     };
@@ -315,7 +315,7 @@ pub unsafe extern "C" fn fd_read(
     let e = host::wasmtime_ssp_fd_read(curfds, fd, iovs.as_ptr(), iovs.len(), &mut host_nread);
 
     trace!("     | *nread={:?}", host_nread);
-    encode_usize_byref(nread, host_nread, vmctx).unwrap();
+    encode_usize_byref(vmctx, nread, host_nread).unwrap();
 
     return_encoded_errno(e)
 }
@@ -357,7 +357,7 @@ pub unsafe extern "C" fn fd_seek(
     let fd = decode_fd(fd);
     let offset = decode_filedelta(offset);
     let whence = decode_whence(whence);
-    let mut host_newoffset = match decode_filesize_byref(newoffset, vmctx) {
+    let mut host_newoffset = match decode_filesize_byref(vmctx, newoffset) {
         Ok(host_newoffset) => host_newoffset,
         Err(e) => return return_encoded_errno(e),
     };
@@ -365,7 +365,7 @@ pub unsafe extern "C" fn fd_seek(
     let e = host::wasmtime_ssp_fd_seek(curfds, fd, offset, whence, &mut host_newoffset);
 
     trace!("     | *newoffset={:?}", host_newoffset);
-    encode_filesize_byref(newoffset, host_newoffset, vmctx).unwrap();
+    encode_filesize_byref(vmctx, newoffset, host_newoffset).unwrap();
 
     return_encoded_errno(e)
 }
@@ -380,7 +380,7 @@ pub unsafe extern "C" fn fd_stat_get(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let mut host_buf = match decode_fdstat_byref(buf, vmctx) {
+    let mut host_buf = match decode_fdstat_byref(vmctx, buf) {
         Ok(host_buf) => host_buf,
         Err(e) => return return_encoded_errno(e),
     };
@@ -388,7 +388,7 @@ pub unsafe extern "C" fn fd_stat_get(
     let e = host::wasmtime_ssp_fd_stat_get(curfds, fd, &mut host_buf);
 
     trace!("     | *buf={:?}", host_buf);
-    encode_fdstat_byref(buf, host_buf, vmctx).unwrap();
+    encode_fdstat_byref(vmctx, buf, host_buf).unwrap();
 
     return_encoded_errno(e)
 }
@@ -409,7 +409,7 @@ pub unsafe extern "C" fn fd_stat_put(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let host_buf = match decode_fdstat_byref(buf, vmctx) {
+    let host_buf = match decode_fdstat_byref(vmctx, buf) {
         Ok(host_buf) => host_buf,
         Err(e) => return return_encoded_errno(e),
     };
@@ -453,11 +453,11 @@ pub unsafe extern "C" fn fd_write(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let iovs = match decode_ciovec_slice(iovs, iovs_len, vmctx) {
+    let iovs = match decode_ciovec_slice(vmctx, iovs, iovs_len) {
         Ok(iovs) => iovs,
         Err(e) => return return_encoded_errno(e),
     };
-    let mut host_nwritten = match decode_usize_byref(nwritten, vmctx) {
+    let mut host_nwritten = match decode_usize_byref(vmctx, nwritten) {
         Ok(host_nwritten) => host_nwritten,
         Err(e) => return return_encoded_errno(e),
     };
@@ -465,7 +465,7 @@ pub unsafe extern "C" fn fd_write(
     let e = host::wasmtime_ssp_fd_write(curfds, fd, iovs.as_ptr(), iovs.len(), &mut host_nwritten);
 
     trace!("     | *nwritten={:?}", host_nwritten);
-    encode_usize_byref(nwritten, host_nwritten, vmctx).unwrap();
+    encode_usize_byref(vmctx, nwritten, host_nwritten).unwrap();
 
     return_encoded_errno(e)
 }
@@ -534,7 +534,7 @@ pub unsafe extern "C" fn file_create(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let (path, path_len) = match decode_char_slice(path, path_len, vmctx) {
+    let (path, path_len) = match decode_char_slice(vmctx, path, path_len) {
         Ok((path, path_len)) => (path, path_len),
         Err(e) => return return_encoded_errno(e),
     };
@@ -566,16 +566,16 @@ pub unsafe extern "C" fn file_link(
 
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
-    let fd0 = match decode_lookup(fd0, vmctx) {
+    let fd0 = match decode_lookup(vmctx, fd0) {
         Ok(fd) => fd,
         Err(e) => return return_encoded_errno(e),
     };
-    let (path0, path_len0) = match decode_char_slice(path0, path_len0, vmctx) {
+    let (path0, path_len0) = match decode_char_slice(vmctx, path0, path_len0) {
         Ok((path0, path_len0)) => (path0, path_len0),
         Err(e) => return return_encoded_errno(e),
     };
     let fd1 = decode_fd(fd1);
-    let (path1, path_len1) = match decode_char_slice(path1, path_len1, vmctx) {
+    let (path1, path_len1) = match decode_char_slice(vmctx, path1, path_len1) {
         Ok((path1, path_len1)) => (path1, path_len1),
         Err(e) => return return_encoded_errno(e),
     };
@@ -608,17 +608,17 @@ pub unsafe extern "C" fn file_open(
 
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
-    let dirfd = match decode_lookup(dirfd, vmctx) {
+    let dirfd = match decode_lookup(vmctx, dirfd) {
         Ok(dirfd) => dirfd,
         Err(e) => return return_encoded_errno(e),
     };
-    let (path, path_len) = match decode_char_slice(path, path_len, vmctx) {
+    let (path, path_len) = match decode_char_slice(vmctx, path, path_len) {
         Ok((path, path_len)) => (path, path_len),
         Err(e) => return return_encoded_errno(e),
     };
     let oflags = decode_oflags(oflags);
-    let fds = decode_fdstat(fds, vmctx);
-    let mut host_fd = match decode_fd_byref(fd, vmctx) {
+    let fds = decode_fdstat(vmctx, fds);
+    let mut host_fd = match decode_fd_byref(vmctx, fd) {
         Ok(host_fd) => host_fd,
         Err(e) => return return_encoded_errno(e),
     };
@@ -626,7 +626,7 @@ pub unsafe extern "C" fn file_open(
     let e = host::wasmtime_ssp_file_open(curfds, dirfd, path, path_len, oflags, &fds, &mut host_fd);
 
     trace!("     | *fd={:?}", host_fd);
-    encode_fd_byref(fd, host_fd, vmctx).unwrap();
+    encode_fd_byref(vmctx, fd, host_fd).unwrap();
 
     return_encoded_errno(e)
 }
@@ -651,12 +651,12 @@ pub unsafe extern "C" fn file_readdir(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let (buf, buf_len) = match decode_char_slice(buf, buf_len, vmctx) {
+    let (buf, buf_len) = match decode_char_slice(vmctx, buf, buf_len) {
         Ok((buf, buf_len)) => (buf, buf_len),
         Err(e) => return return_encoded_errno(e),
     };
     let cookie = decode_dircookie(cookie);
-    let mut host_buf_used = match decode_usize_byref(buf_used, vmctx) {
+    let mut host_buf_used = match decode_usize_byref(vmctx, buf_used) {
         Ok(host_buf_used) => host_buf_used,
         Err(e) => return return_encoded_errno(e),
     };
@@ -671,7 +671,7 @@ pub unsafe extern "C" fn file_readdir(
     );
 
     trace!("     | *buf_used={:?}", host_buf_used);
-    encode_usize_byref(buf_used, host_buf_used, vmctx).unwrap();
+    encode_usize_byref(vmctx, buf_used, host_buf_used).unwrap();
 
     return_encoded_errno(e)
 }
@@ -698,15 +698,15 @@ pub unsafe extern "C" fn file_readlink(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let (path, path_len) = match decode_char_slice(path, path_len, vmctx) {
+    let (path, path_len) = match decode_char_slice(vmctx, path, path_len) {
         Ok((path, path_len)) => (path, path_len),
         Err(e) => return return_encoded_errno(e),
     };
-    let (buf, buf_len) = match decode_char_slice(buf, buf_len, vmctx) {
+    let (buf, buf_len) = match decode_char_slice(vmctx, buf, buf_len) {
         Ok((buf, buf_len)) => (buf, buf_len),
         Err(e) => return return_encoded_errno(e),
     };
-    let mut host_buf_used = match decode_usize_byref(buf_used, vmctx) {
+    let mut host_buf_used = match decode_usize_byref(vmctx, buf_used) {
         Ok(host_buf_used) => host_buf_used,
         Err(e) => return return_encoded_errno(e),
     };
@@ -722,7 +722,7 @@ pub unsafe extern "C" fn file_readlink(
     );
 
     trace!("     | *buf_used={:?}", host_buf_used);
-    encode_usize_byref(buf_used, host_buf_used, vmctx).unwrap();
+    encode_usize_byref(vmctx, buf_used, host_buf_used).unwrap();
 
     return_encoded_errno(e)
 }
@@ -749,12 +749,12 @@ pub unsafe extern "C" fn file_rename(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd0 = decode_fd(fd0);
-    let (path0, path_len0) = match decode_char_slice(path0, path_len0, vmctx) {
+    let (path0, path_len0) = match decode_char_slice(vmctx, path0, path_len0) {
         Ok((path0, path_len0)) => (path0, path_len0),
         Err(e) => return return_encoded_errno(e),
     };
     let fd1 = decode_fd(fd1);
-    let (path1, path_len1) = match decode_char_slice(path1, path_len1, vmctx) {
+    let (path1, path_len1) = match decode_char_slice(vmctx, path1, path_len1) {
         Ok((path1, path_len1)) => (path1, path_len1),
         Err(e) => return return_encoded_errno(e),
     };
@@ -774,7 +774,7 @@ pub unsafe extern "C" fn file_stat_fget(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let mut host_buf = match decode_filestat_byref(buf, vmctx) {
+    let mut host_buf = match decode_filestat_byref(vmctx, buf) {
         Ok(host_buf) => host_buf,
         Err(e) => return return_encoded_errno(e),
     };
@@ -782,7 +782,7 @@ pub unsafe extern "C" fn file_stat_fget(
     let e = host::wasmtime_ssp_file_stat_fget(curfds, fd, &mut host_buf);
 
     trace!("     | *buf={:?}", host_buf);
-    encode_filestat_byref(buf, host_buf, vmctx).unwrap();
+    encode_filestat_byref(vmctx, buf, host_buf).unwrap();
 
     return_encoded_errno(e)
 }
@@ -803,7 +803,7 @@ pub unsafe extern "C" fn file_stat_fput(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let host_buf = match decode_filestat_byref(buf, vmctx) {
+    let host_buf = match decode_filestat_byref(vmctx, buf) {
         Ok(host_buf) => host_buf,
         Err(e) => return return_encoded_errno(e),
     };
@@ -831,15 +831,15 @@ pub unsafe extern "C" fn file_stat_get(
 
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
-    let fd = match decode_lookup(fd, vmctx) {
+    let fd = match decode_lookup(vmctx, fd) {
         Ok(fd) => fd,
         Err(e) => return return_encoded_errno(e),
     };
-    let (path, path_len) = match decode_char_slice(path, path_len, vmctx) {
+    let (path, path_len) = match decode_char_slice(vmctx, path, path_len) {
         Ok((path, path_len)) => (path, path_len),
         Err(e) => return return_encoded_errno(e),
     };
-    let mut host_buf = match decode_filestat_byref(buf, vmctx) {
+    let mut host_buf = match decode_filestat_byref(vmctx, buf) {
         Ok(host_buf) => host_buf,
         Err(e) => return return_encoded_errno(e),
     };
@@ -847,7 +847,7 @@ pub unsafe extern "C" fn file_stat_get(
     let e = host::wasmtime_ssp_file_stat_get(curfds, fd, path, path_len, &mut host_buf);
 
     trace!("     | *buf={:?}", host_buf);
-    encode_filestat_byref(buf, host_buf, vmctx).unwrap();
+    encode_filestat_byref(vmctx, buf, host_buf).unwrap();
 
     return_encoded_errno(e)
 }
@@ -871,15 +871,15 @@ pub unsafe extern "C" fn file_stat_put(
 
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
-    let fd = match decode_lookup(fd, vmctx) {
+    let fd = match decode_lookup(vmctx, fd) {
         Ok(fd) => fd,
         Err(e) => return return_encoded_errno(e),
     };
-    let (path, path_len) = match decode_char_slice(path, path_len, vmctx) {
+    let (path, path_len) = match decode_char_slice(vmctx, path, path_len) {
         Ok((path, path_len)) => (path, path_len),
         Err(e) => return return_encoded_errno(e),
     };
-    let host_buf = match decode_filestat_byref(buf, vmctx) {
+    let host_buf = match decode_filestat_byref(vmctx, buf) {
         Ok(host_buf) => host_buf,
         Err(e) => return return_encoded_errno(e),
     };
@@ -909,12 +909,12 @@ pub unsafe extern "C" fn file_symlink(
 
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
-    let (path0, path_len0) = match decode_char_slice(path0, path_len0, vmctx) {
+    let (path0, path_len0) = match decode_char_slice(vmctx, path0, path_len0) {
         Ok((path0, path_len0)) => (path0, path_len0),
         Err(e) => return return_encoded_errno(e),
     };
     let fd = decode_fd(fd);
-    let (path1, path_len1) = match decode_char_slice(path1, path_len1, vmctx) {
+    let (path1, path_len1) = match decode_char_slice(vmctx, path1, path_len1) {
         Ok((path1, path_len1)) => (path1, path_len1),
         Err(e) => return return_encoded_errno(e),
     };
@@ -942,7 +942,7 @@ pub unsafe extern "C" fn file_unlink(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let fd = decode_fd(fd);
-    let (path, path_len) = match decode_char_slice(path, path_len, vmctx) {
+    let (path, path_len) = match decode_char_slice(vmctx, path, path_len) {
         Ok((path, path_len)) => (path, path_len),
         Err(e) => return return_encoded_errno(e),
     };
@@ -1043,15 +1043,15 @@ pub unsafe extern "C" fn poll(
 
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
-    let in_ = match decode_subscription_slice(in_, nsubscriptions, vmctx) {
+    let in_ = match decode_subscription_slice(vmctx, in_, nsubscriptions) {
         Ok(in_) => in_,
         Err(e) => return return_encoded_errno(e),
     };
-    let mut host_out = match decode_event_slice(out, nsubscriptions, vmctx) {
+    let mut host_out = match decode_event_slice(vmctx, out, nsubscriptions) {
         Ok(out) => out,
         Err(e) => return return_encoded_errno(e),
     };
-    let mut host_nevents = match decode_usize_byref(nevents, vmctx) {
+    let mut host_nevents = match decode_usize_byref(vmctx, nevents) {
         Ok(host_nevents) => host_nevents,
         Err(e) => return return_encoded_errno(e),
     };
@@ -1067,7 +1067,7 @@ pub unsafe extern "C" fn poll(
     );
 
     trace!("     | *nevents={:?}", host_nevents);
-    encode_usize_byref(nevents, host_nevents, vmctx).unwrap();
+    encode_usize_byref(vmctx, nevents, host_nevents).unwrap();
 
     if log_enabled!(log::Level::Trace) {
         for (index, _event) in host_out.iter().enumerate() {
@@ -1075,7 +1075,7 @@ pub unsafe extern "C" fn poll(
             trace!("     | *out[{}]=...", index);
         }
     }
-    encode_event_slice(out, host_out, vmctx).unwrap();
+    encode_event_slice(vmctx, out, host_out).unwrap();
 
     return_encoded_errno(e)
 }
@@ -1106,7 +1106,7 @@ pub unsafe extern "C" fn random_get(
     trace!("random_get(buf={:#x?}, buf_len={:?})", buf, buf_len);
 
     let vmctx = &mut *vmctx;
-    let (buf, buf_len) = match decode_char_slice(buf, buf_len, vmctx) {
+    let (buf, buf_len) = match decode_char_slice(vmctx, buf, buf_len) {
         Ok((buf, buf_len)) => (buf, buf_len),
         Err(e) => return return_encoded_errno(e),
     };
@@ -1132,11 +1132,11 @@ pub unsafe extern "C" fn sock_recv(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let sock = decode_fd(sock);
-    let in_ = match decode_recv_in_byref(in_, vmctx) {
+    let in_ = match decode_recv_in_byref(vmctx, in_) {
         Ok(in_) => in_,
         Err(e) => return return_encoded_errno(e),
     };
-    let mut host_out = match decode_recv_out_byref(out, vmctx) {
+    let mut host_out = match decode_recv_out_byref(vmctx, out) {
         Ok(host_out) => host_out,
         Err(e) => return return_encoded_errno(e),
     };
@@ -1145,7 +1145,7 @@ pub unsafe extern "C" fn sock_recv(
 
     // TODO: Format the output for tracing.
     trace!("     | *out=...");
-    encode_recv_out_byref(out, host_out, vmctx).unwrap();
+    encode_recv_out_byref(vmctx, out, host_out).unwrap();
 
     return_encoded_errno(e)
 }
@@ -1166,11 +1166,11 @@ pub unsafe extern "C" fn sock_send(
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
     let sock = decode_fd(sock);
-    let in_ = match decode_send_in_byref(in_, vmctx) {
+    let in_ = match decode_send_in_byref(vmctx, in_) {
         Ok(in_) => in_,
         Err(e) => return return_encoded_errno(e),
     };
-    let mut host_out = match decode_send_out_byref(out, vmctx) {
+    let mut host_out = match decode_send_out_byref(vmctx, out) {
         Ok(host_out) => host_out,
         Err(e) => return return_encoded_errno(e),
     };
@@ -1178,7 +1178,7 @@ pub unsafe extern "C" fn sock_send(
     let e = host::wasmtime_ssp_sock_send(curfds, sock, &in_, &mut host_out);
 
     trace!("     | *out={:?}", host_out);
-    encode_send_out_byref(out, host_out, vmctx).unwrap();
+    encode_send_out_byref(vmctx, out, host_out).unwrap();
 
     return_encoded_errno(e)
 }
