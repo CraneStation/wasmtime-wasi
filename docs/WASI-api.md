@@ -92,14 +92,14 @@ Obtains the resolution of a clock.
 
 Inputs:
 
-- <a href="#clock_res_get.clock_id" name="clock_res_get.clock_id"></a><code>[wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
+- <a href="#clock_res_get.clock_id" name="clock_res_get.clock_id"></a><code>[\_\_wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
 
     The clock for which the resolution needs to be
     returned.
 
 Outputs:
 
-- <a href="#clock_res_get.resolution" name="clock_res_get.resolution"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>resolution</strong></code>
+- <a href="#clock_res_get.resolution" name="clock_res_get.resolution"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>resolution</strong></code>
 
     The resolution of the clock.
 
@@ -109,12 +109,12 @@ Obtains the time value of a clock.
 
 Inputs:
 
-- <a href="#clock_time_get.clock_id" name="clock_time_get.clock_id"></a><code>[wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
+- <a href="#clock_time_get.clock_id" name="clock_time_get.clock_id"></a><code>[\_\_wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
 
     The clock for which the time needs to be
     returned.
 
-- <a href="#clock_time_get.precision" name="clock_time_get.precision"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
+- <a href="#clock_time_get.precision" name="clock_time_get.precision"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
 
     The maximum lag (exclusive) that the returned
     time value may have, compared to its actual
@@ -122,7 +122,7 @@ Inputs:
 
 Outputs:
 
-- <a href="#clock_time_get.time" name="clock_time_get.time"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>time</strong></code>
+- <a href="#clock_time_get.time" name="clock_time_get.time"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>time</strong></code>
 
     The time value of the clock.
 
@@ -138,17 +138,17 @@ system call.
 
 Inputs:
 
-- <a href="#condvar_signal.condvar" name="condvar_signal.condvar"></a><code>\_Atomic([wasi\_condvar\_t](#condvar)) *<strong>condvar</strong></code>
+- <a href="#condvar_signal.condvar" name="condvar_signal.condvar"></a><code>\_Atomic([\_\_wasi\_condvar\_t](#condvar)) *<strong>condvar</strong></code>
 
     The userspace condition variable that has
     waiting threads.
 
-- <a href="#condvar_signal.scope" name="condvar_signal.scope"></a><code>[wasi\_scope\_t](#scope) <strong>scope</strong></code>
+- <a href="#condvar_signal.scope" name="condvar_signal.scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>scope</strong></code>
 
     Whether the condition variable is stored in
     private or shared memory.
 
-- <a href="#condvar_signal.nwaiters" name="condvar_signal.nwaiters"></a><code>[wasi\_nthreads\_t](#nthreads) <strong>nwaiters</strong></code>
+- <a href="#condvar_signal.nwaiters" name="condvar_signal.nwaiters"></a><code>[\_\_wasi\_nthreads\_t](#nthreads) <strong>nwaiters</strong></code>
 
     The number of threads that need to be woken
     up. If it exceeds the number of waiting
@@ -160,7 +160,7 @@ Closes a file descriptor.
 
 Inputs:
 
-- <a href="#fd_close.fd" name="fd_close.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_close.fd" name="fd_close.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor that needs to be closed.
 
@@ -170,7 +170,7 @@ Creates a file descriptor.
 
 Inputs:
 
-- <a href="#fd_create1.type" name="fd_create1.type"></a><code>[wasi\_filetype\_t](#filetype) <strong>type</strong></code>
+- <a href="#fd_create1.type" name="fd_create1.type"></a><code>[\_\_wasi\_filetype\_t](#filetype) <strong>type</strong></code>
 
     Possible values:
 
@@ -181,7 +181,7 @@ Inputs:
 
 Outputs:
 
-- <a href="#fd_create1.fd" name="fd_create1.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_create1.fd" name="fd_create1.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor that has been created.
 
@@ -191,7 +191,7 @@ Creates a pair of file descriptors.
 
 Inputs:
 
-- <a href="#fd_create2.type" name="fd_create2.type"></a><code>[wasi\_filetype\_t](#filetype) <strong>type</strong></code>
+- <a href="#fd_create2.type" name="fd_create2.type"></a><code>[\_\_wasi\_filetype\_t](#filetype) <strong>type</strong></code>
 
     Possible values:
 
@@ -206,11 +206,11 @@ Inputs:
 
 Outputs:
 
-- <a href="#fd_create2.fd1" name="fd_create2.fd1"></a><code>[wasi\_fd\_t](#fd) <strong>fd1</strong></code>
+- <a href="#fd_create2.fd1" name="fd_create2.fd1"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd1</strong></code>
 
     The first file descriptor of the pair.
 
-- <a href="#fd_create2.fd2" name="fd_create2.fd2"></a><code>[wasi\_fd\_t](#fd) <strong>fd2</strong></code>
+- <a href="#fd_create2.fd2" name="fd_create2.fd2"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd2</strong></code>
 
     The second file descriptor of the pair.
 
@@ -220,7 +220,7 @@ Synchronizes the data of a file to disk.
 
 Inputs:
 
-- <a href="#fd_datasync.fd" name="fd_datasync.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_datasync.fd" name="fd_datasync.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor of the file whose data
     needs to be synchronized to disk.
@@ -231,14 +231,14 @@ Duplicates a file descriptor.
 
 Inputs:
 
-- <a href="#fd_dup.from" name="fd_dup.from"></a><code>[wasi\_fd\_t](#fd) <strong>from</strong></code>
+- <a href="#fd_dup.from" name="fd_dup.from"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>from</strong></code>
 
     The file descriptor that needs to be
     duplicated.
 
 Outputs:
 
-- <a href="#fd_dup.fd" name="fd_dup.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_dup.fd" name="fd_dup.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The new file descriptor.
 
@@ -249,17 +249,17 @@ file descriptor's offset.
 
 Inputs:
 
-- <a href="#fd_pread.fd" name="fd_pread.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_pread.fd" name="fd_pread.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor from which data should be
     read.
 
-- <a href="#fd_pread.iovs" name="fd_pread.iovs"></a><code>const [wasi\_iovec\_t](#iovec) *<strong>iovs</strong></code> and <a href="#fd_pread.iovs_len" name="fd_pread.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_pread.iovs" name="fd_pread.iovs"></a><code>const [\_\_wasi\_iovec\_t](#iovec) *<strong>iovs</strong></code> and <a href="#fd_pread.iovs_len" name="fd_pread.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be stored.
 
-- <a href="#fd_pread.offset" name="fd_pread.offset"></a><code>[wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
+- <a href="#fd_pread.offset" name="fd_pread.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
     The offset within the file at which reading
     should start.
@@ -277,17 +277,17 @@ file descriptor's offset.
 
 Inputs:
 
-- <a href="#fd_pwrite.fd" name="fd_pwrite.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_pwrite.fd" name="fd_pwrite.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor to which data should be
     written.
 
-- <a href="#fd_pwrite.iovs" name="fd_pwrite.iovs"></a><code>const [wasi\_ciovec\_t](#ciovec) *<strong>iovs</strong></code> and <a href="#fd_pwrite.iovs_len" name="fd_pwrite.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_pwrite.iovs" name="fd_pwrite.iovs"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) *<strong>iovs</strong></code> and <a href="#fd_pwrite.iovs_len" name="fd_pwrite.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be retrieved.
 
-- <a href="#fd_pwrite.offset" name="fd_pwrite.offset"></a><code>[wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
+- <a href="#fd_pwrite.offset" name="fd_pwrite.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
     The offset within the file at which writing
     should start.
@@ -304,12 +304,12 @@ Reads from a file descriptor.
 
 Inputs:
 
-- <a href="#fd_read.fd" name="fd_read.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_read.fd" name="fd_read.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor from which data should be
     read.
 
-- <a href="#fd_read.iovs" name="fd_read.iovs"></a><code>const [wasi\_iovec\_t](#iovec) *<strong>iovs</strong></code> and <a href="#fd_read.iovs_len" name="fd_read.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_read.iovs" name="fd_read.iovs"></a><code>const [\_\_wasi\_iovec\_t](#iovec) *<strong>iovs</strong></code> and <a href="#fd_read.iovs_len" name="fd_read.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be stored.
@@ -337,11 +337,11 @@ removed entirely.
 
 Inputs:
 
-- <a href="#fd_replace.from" name="fd_replace.from"></a><code>[wasi\_fd\_t](#fd) <strong>from</strong></code>
+- <a href="#fd_replace.from" name="fd_replace.from"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>from</strong></code>
 
     The file descriptor that needs to be copied.
 
-- <a href="#fd_replace.to" name="fd_replace.to"></a><code>[wasi\_fd\_t](#fd) <strong>to</strong></code>
+- <a href="#fd_replace.to" name="fd_replace.to"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>to</strong></code>
 
     The file descriptor that needs to be
     overwritten.
@@ -352,23 +352,23 @@ Moves the offset of the file descriptor.
 
 Inputs:
 
-- <a href="#fd_seek.fd" name="fd_seek.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_seek.fd" name="fd_seek.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose offset has to be
     moved.
 
-- <a href="#fd_seek.offset" name="fd_seek.offset"></a><code>[wasi\_filedelta\_t](#filedelta) <strong>offset</strong></code>
+- <a href="#fd_seek.offset" name="fd_seek.offset"></a><code>[\_\_wasi\_filedelta\_t](#filedelta) <strong>offset</strong></code>
 
     The number of bytes to move.
 
-- <a href="#fd_seek.whence" name="fd_seek.whence"></a><code>[wasi\_whence\_t](#whence) <strong>whence</strong></code>
+- <a href="#fd_seek.whence" name="fd_seek.whence"></a><code>[\_\_wasi\_whence\_t](#whence) <strong>whence</strong></code>
 
     Relative to which position the move should
     take place.
 
 Outputs:
 
-- <a href="#fd_seek.newoffset" name="fd_seek.newoffset"></a><code>[wasi\_filesize\_t](#filesize) <strong>newoffset</strong></code>
+- <a href="#fd_seek.newoffset" name="fd_seek.newoffset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>newoffset</strong></code>
 
     The new offset of the file descriptor,
     relative to the start of the file.
@@ -379,12 +379,12 @@ Gets attributes of a file descriptor.
 
 Inputs:
 
-- <a href="#fd_stat_get.fd" name="fd_stat_get.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_stat_get.fd" name="fd_stat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be obtained.
 
-- <a href="#fd_stat_get.buf" name="fd_stat_get.buf"></a><code>[wasi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
+- <a href="#fd_stat_get.buf" name="fd_stat_get.buf"></a><code>[\_\_wasi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
 
     The buffer where the file descriptor's
     attributes are stored.
@@ -395,17 +395,17 @@ Adjusts attributes of a file descriptor.
 
 Inputs:
 
-- <a href="#fd_stat_put.fd" name="fd_stat_put.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_stat_put.fd" name="fd_stat_put.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be adjusted.
 
-- <a href="#fd_stat_put.buf" name="fd_stat_put.buf"></a><code>const [wasi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
+- <a href="#fd_stat_put.buf" name="fd_stat_put.buf"></a><code>const [\_\_wasi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
 
     The desired values of the file descriptor
     attributes that are adjusted.
 
-- <a href="#fd_stat_put.flags" name="fd_stat_put.flags"></a><code>[wasi\_fdsflags\_t](#fdsflags) <strong>flags</strong></code>
+- <a href="#fd_stat_put.flags" name="fd_stat_put.flags"></a><code>[\_\_wasi\_fdsflags\_t](#fdsflags) <strong>flags</strong></code>
 
     A bitmask indicating which attributes have to
     be adjusted.
@@ -416,7 +416,7 @@ Synchronizes the data and metadata of a file to disk.
 
 Inputs:
 
-- <a href="#fd_sync.fd" name="fd_sync.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_sync.fd" name="fd_sync.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor of the file whose data
     and metadata needs to be synchronized to disk.
@@ -427,12 +427,12 @@ Writes to a file descriptor.
 
 Inputs:
 
-- <a href="#fd_write.fd" name="fd_write.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_write.fd" name="fd_write.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor to which data should be
     written.
 
-- <a href="#fd_write.iovs" name="fd_write.iovs"></a><code>const [wasi\_ciovec\_t](#ciovec) *<strong>iovs</strong></code> and <a href="#fd_write.iovs_len" name="fd_write.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_write.iovs" name="fd_write.iovs"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) *<strong>iovs</strong></code> and <a href="#fd_write.iovs_len" name="fd_write.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be retrieved.
@@ -449,22 +449,22 @@ Provides file advisory information on a file descriptor.
 
 Inputs:
 
-- <a href="#file_advise.fd" name="file_advise.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_advise.fd" name="file_advise.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor for which to provide file
     advisory information.
 
-- <a href="#file_advise.offset" name="file_advise.offset"></a><code>[wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
+- <a href="#file_advise.offset" name="file_advise.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
     The offset within the file to which the
     advisory applies.
 
-- <a href="#file_advise.len" name="file_advise.len"></a><code>[wasi\_filesize\_t](#filesize) <strong>len</strong></code>
+- <a href="#file_advise.len" name="file_advise.len"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>len</strong></code>
 
     The length of the region to which the advisory
     applies.
 
-- <a href="#file_advise.advice" name="file_advise.advice"></a><code>[wasi\_advice\_t](#advice) <strong>advice</strong></code>
+- <a href="#file_advise.advice" name="file_advise.advice"></a><code>[\_\_wasi\_advice\_t](#advice) <strong>advice</strong></code>
 
     The advice.
 
@@ -474,17 +474,17 @@ Forces the allocation of space in a file.
 
 Inputs:
 
-- <a href="#file_allocate.fd" name="file_allocate.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_allocate.fd" name="file_allocate.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file in which the space should be
     allocated.
 
-- <a href="#file_allocate.offset" name="file_allocate.offset"></a><code>[wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
+- <a href="#file_allocate.offset" name="file_allocate.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
     The offset at which the allocation should
     start.
 
-- <a href="#file_allocate.len" name="file_allocate.len"></a><code>[wasi\_filesize\_t](#filesize) <strong>len</strong></code>
+- <a href="#file_allocate.len" name="file_allocate.len"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>len</strong></code>
 
     The length of the area that is allocated.
 
@@ -494,7 +494,7 @@ Creates a file of a specified type.
 
 Inputs:
 
-- <a href="#file_create.fd" name="file_create.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_create.fd" name="file_create.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the file to be created starts.
@@ -503,7 +503,7 @@ Inputs:
 
     The path at which the file should be created.
 
-- <a href="#file_create.type" name="file_create.type"></a><code>[wasi\_filetype\_t](#filetype) <strong>type</strong></code>
+- <a href="#file_create.type" name="file_create.type"></a><code>[\_\_wasi\_filetype\_t](#filetype) <strong>type</strong></code>
 
     Possible values:
 
@@ -517,7 +517,7 @@ Creates a hard link.
 
 Inputs:
 
-- <a href="#file_link.fd1" name="file_link.fd1"></a><code>[wasi\_lookup\_t](#lookup) <strong>fd1</strong></code>
+- <a href="#file_link.fd1" name="file_link.fd1"></a><code>[\_\_wasi\_lookup\_t](#lookup) <strong>fd1</strong></code>
 
     The working directory at which the resolution
     of the source path starts.
@@ -527,7 +527,7 @@ Inputs:
     The source path of the file that should be
     hard linked.
 
-- <a href="#file_link.fd2" name="file_link.fd2"></a><code>[wasi\_fd\_t](#fd) <strong>fd2</strong></code>
+- <a href="#file_link.fd2" name="file_link.fd2"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd2</strong></code>
 
     The working directory at which the resolution
     of the destination path starts.
@@ -543,7 +543,7 @@ Opens a file.
 
 Inputs:
 
-- <a href="#file_open.dirfd" name="file_open.dirfd"></a><code>[wasi\_lookup\_t](#lookup) <strong>dirfd</strong></code>
+- <a href="#file_open.dirfd" name="file_open.dirfd"></a><code>[\_\_wasi\_lookup\_t](#lookup) <strong>dirfd</strong></code>
 
     The working directory at which the resolution
     of the file to be opened starts.
@@ -552,11 +552,11 @@ Inputs:
 
     The path of the file that should be opened.
 
-- <a href="#file_open.oflags" name="file_open.oflags"></a><code>[wasi\_oflags\_t](#oflags) <strong>oflags</strong></code>
+- <a href="#file_open.oflags" name="file_open.oflags"></a><code>[\_\_wasi\_oflags\_t](#oflags) <strong>oflags</strong></code>
 
     The method at which the file should be opened.
 
-- <a href="#file_open.fds" name="file_open.fds"></a><code>const [wasi\_fdstat\_t](#fdstat) *<strong>fds</strong></code>
+- <a href="#file_open.fds" name="file_open.fds"></a><code>const [\_\_wasi\_fdstat\_t](#fdstat) *<strong>fds</strong></code>
 
     [`__wasi_fdstat_t::fs_rights_base`](#fdstat.fs_rights_base) and
     [`__wasi_fdstat_t::fs_rights_inheriting`](#fdstat.fs_rights_inheriting) specify the
@@ -573,7 +573,7 @@ Inputs:
 
 Outputs:
 
-- <a href="#file_open.fd" name="file_open.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_open.fd" name="file_open.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor of the file that has been
     opened.
@@ -595,7 +595,7 @@ directory entry.
 
 Inputs:
 
-- <a href="#file_readdir.fd" name="file_readdir.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_readdir.fd" name="file_readdir.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The directory from which to read the directory
     entries.
@@ -604,7 +604,7 @@ Inputs:
 
     The buffer where directory entries are stored.
 
-- <a href="#file_readdir.cookie" name="file_readdir.cookie"></a><code>[wasi\_dircookie\_t](#dircookie) <strong>cookie</strong></code>
+- <a href="#file_readdir.cookie" name="file_readdir.cookie"></a><code>[\_\_wasi\_dircookie\_t](#dircookie) <strong>cookie</strong></code>
 
     The location within the directory to start
     reading.
@@ -623,7 +623,7 @@ Reads the contents of a symbolic link.
 
 Inputs:
 
-- <a href="#file_readlink.fd" name="file_readlink.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_readlink.fd" name="file_readlink.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path of the symbolic starts.
@@ -650,7 +650,7 @@ Renames a file.
 
 Inputs:
 
-- <a href="#file_rename.fd1" name="file_rename.fd1"></a><code>[wasi\_fd\_t](#fd) <strong>fd1</strong></code>
+- <a href="#file_rename.fd1" name="file_rename.fd1"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd1</strong></code>
 
     The working directory at which the resolution
     of the source path starts.
@@ -660,7 +660,7 @@ Inputs:
     The source path of the file that should be
     renamed.
 
-- <a href="#file_rename.fd2" name="file_rename.fd2"></a><code>[wasi\_fd\_t](#fd) <strong>fd2</strong></code>
+- <a href="#file_rename.fd2" name="file_rename.fd2"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd2</strong></code>
 
     The working directory at which the resolution
     of the destination path starts.
@@ -676,12 +676,12 @@ Gets attributes of a file by file descriptor.
 
 Inputs:
 
-- <a href="#file_stat_fget.fd" name="file_stat_fget.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_stat_fget.fd" name="file_stat_fget.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be obtained.
 
-- <a href="#file_stat_fget.buf" name="file_stat_fget.buf"></a><code>[wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_stat_fget.buf" name="file_stat_fget.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
 
     The buffer where the file's attributes are
     stored.
@@ -692,17 +692,17 @@ Adjusts attributes of a file by file descriptor.
 
 Inputs:
 
-- <a href="#file_stat_fput.fd" name="file_stat_fput.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_stat_fput.fd" name="file_stat_fput.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be adjusted.
 
-- <a href="#file_stat_fput.buf" name="file_stat_fput.buf"></a><code>const [wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_stat_fput.buf" name="file_stat_fput.buf"></a><code>const [\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
 
     The desired values of the file attributes that
     are adjusted.
 
-- <a href="#file_stat_fput.flags" name="file_stat_fput.flags"></a><code>[wasi\_fsflags\_t](#fsflags) <strong>flags</strong></code>
+- <a href="#file_stat_fput.flags" name="file_stat_fput.flags"></a><code>[\_\_wasi\_fsflags\_t](#fsflags) <strong>flags</strong></code>
 
     A bitmask indicating which attributes have to
     be adjusted.
@@ -713,7 +713,7 @@ Gets attributes of a file by path.
 
 Inputs:
 
-- <a href="#file_stat_get.fd" name="file_stat_get.fd"></a><code>[wasi\_lookup\_t](#lookup) <strong>fd</strong></code>
+- <a href="#file_stat_get.fd" name="file_stat_get.fd"></a><code>[\_\_wasi\_lookup\_t](#lookup) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path whose attributes have to be
@@ -724,7 +724,7 @@ Inputs:
     The path of the file whose attributes have to
     be obtained.
 
-- <a href="#file_stat_get.buf" name="file_stat_get.buf"></a><code>[wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_stat_get.buf" name="file_stat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
 
     The buffer where the file's attributes are
     stored.
@@ -735,7 +735,7 @@ Adjusts attributes of a file by path.
 
 Inputs:
 
-- <a href="#file_stat_put.fd" name="file_stat_put.fd"></a><code>[wasi\_lookup\_t](#lookup) <strong>fd</strong></code>
+- <a href="#file_stat_put.fd" name="file_stat_put.fd"></a><code>[\_\_wasi\_lookup\_t](#lookup) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path whose attributes have to be
@@ -746,12 +746,12 @@ Inputs:
     The path of the file whose attributes have to
     be adjusted.
 
-- <a href="#file_stat_put.buf" name="file_stat_put.buf"></a><code>const [wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_stat_put.buf" name="file_stat_put.buf"></a><code>const [\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
 
     The desired values of the file attributes that
     are adjusted.
 
-- <a href="#file_stat_put.flags" name="file_stat_put.flags"></a><code>[wasi\_fsflags\_t](#fsflags) <strong>flags</strong></code>
+- <a href="#file_stat_put.flags" name="file_stat_put.flags"></a><code>[\_\_wasi\_fsflags\_t](#fsflags) <strong>flags</strong></code>
 
     A bitmask indicating which attributes have to
     be adjusted.
@@ -766,7 +766,7 @@ Inputs:
 
     The contents of the symbolic link.
 
-- <a href="#file_symlink.fd" name="file_symlink.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_symlink.fd" name="file_symlink.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the destination path starts.
@@ -782,7 +782,7 @@ Unlinks a file, or removes a directory.
 
 Inputs:
 
-- <a href="#file_unlink.fd" name="file_unlink.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_unlink.fd" name="file_unlink.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path starts.
@@ -791,7 +791,7 @@ Inputs:
 
     The path that needs to be unlinked or removed.
 
-- <a href="#file_unlink.flags" name="file_unlink.flags"></a><code>[wasi\_ulflags\_t](#ulflags) <strong>flags</strong></code>
+- <a href="#file_unlink.flags" name="file_unlink.flags"></a><code>[\_\_wasi\_ulflags\_t](#ulflags) <strong>flags</strong></code>
 
     Possible values:
 
@@ -817,12 +817,12 @@ be upgraded to a write lock.
 
 Inputs:
 
-- <a href="#lock_unlock.lock" name="lock_unlock.lock"></a><code>\_Atomic([wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
+- <a href="#lock_unlock.lock" name="lock_unlock.lock"></a><code>\_Atomic([\_\_wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
 
     The userspace lock that is locked for writing
     by the calling thread.
 
-- <a href="#lock_unlock.scope" name="lock_unlock.scope"></a><code>[wasi\_scope\_t](#scope) <strong>scope</strong></code>
+- <a href="#lock_unlock.scope" name="lock_unlock.scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>scope</strong></code>
 
     Whether the lock is stored in private or
     shared memory.
@@ -838,7 +838,7 @@ Inputs:
     The pages for which to provide memory advisory
     information.
 
-- <a href="#mem_advise.advice" name="mem_advise.advice"></a><code>[wasi\_advice\_t](#advice) <strong>advice</strong></code>
+- <a href="#mem_advise.advice" name="mem_advise.advice"></a><code>[\_\_wasi\_advice\_t](#advice) <strong>advice</strong></code>
 
     The advice.
 
@@ -861,23 +861,23 @@ Inputs:
     The length of the memory mapping to be
     created.
 
-- <a href="#mem_map.prot" name="mem_map.prot"></a><code>[wasi\_mprot\_t](#mprot) <strong>prot</strong></code>
+- <a href="#mem_map.prot" name="mem_map.prot"></a><code>[\_\_wasi\_mprot\_t](#mprot) <strong>prot</strong></code>
 
     Initial memory protection options for the
     memory mapping.
 
-- <a href="#mem_map.flags" name="mem_map.flags"></a><code>[wasi\_mflags\_t](#mflags) <strong>flags</strong></code>
+- <a href="#mem_map.flags" name="mem_map.flags"></a><code>[\_\_wasi\_mflags\_t](#mflags) <strong>flags</strong></code>
 
     Memory mapping flags.
 
-- <a href="#mem_map.fd" name="mem_map.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#mem_map.fd" name="mem_map.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     If [`__WASI_MAP_ANON`](#mflags.anon) is set, this argument must be
     [`__WASI_MAP_ANON_FD`](#fd.map_anon_fd). Otherwise, this argument
     specifies the file whose contents need to be
     mapped.
 
-- <a href="#mem_map.off" name="mem_map.off"></a><code>[wasi\_filesize\_t](#filesize) <strong>off</strong></code>
+- <a href="#mem_map.off" name="mem_map.off"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>off</strong></code>
 
     If [`__WASI_MAP_ANON`](#mflags.anon) is set, this argument must be
     zero. Otherwise, this argument specifies the
@@ -900,7 +900,7 @@ Inputs:
 
     The pages that need their protection changed.
 
-- <a href="#mem_protect.prot" name="mem_protect.prot"></a><code>[wasi\_mprot\_t](#mprot) <strong>prot</strong></code>
+- <a href="#mem_protect.prot" name="mem_protect.prot"></a><code>[\_\_wasi\_mprot\_t](#mprot) <strong>prot</strong></code>
 
     New protection options.
 
@@ -914,7 +914,7 @@ Inputs:
 
     The pages that need to be synchronized.
 
-- <a href="#mem_sync.flags" name="mem_sync.flags"></a><code>[wasi\_msflags\_t](#msflags) <strong>flags</strong></code>
+- <a href="#mem_sync.flags" name="mem_sync.flags"></a><code>[\_\_wasi\_msflags\_t](#msflags) <strong>flags</strong></code>
 
     The method of synchronization.
 
@@ -934,11 +934,11 @@ Concurrently polls for the occurrence of a set of events.
 
 Inputs:
 
-- <a href="#poll.in" name="poll.in"></a><code>const [wasi\_subscription\_t](#subscription) *<strong>in</strong></code>
+- <a href="#poll.in" name="poll.in"></a><code>const [\_\_wasi\_subscription\_t](#subscription) *<strong>in</strong></code>
 
     The events to which to subscribe.
 
-- <a href="#poll.out" name="poll.out"></a><code>[wasi\_event\_t](#event) *<strong>out</strong></code>
+- <a href="#poll.out" name="poll.out"></a><code>[\_\_wasi\_event\_t](#event) *<strong>out</strong></code>
 
     The events that have occurred.
 
@@ -958,7 +958,7 @@ Terminates the process normally.
 
 Inputs:
 
-- <a href="#proc_exit.rval" name="proc_exit.rval"></a><code>[wasi\_exitcode\_t](#exitcode) <strong>rval</strong></code>
+- <a href="#proc_exit.rval" name="proc_exit.rval"></a><code>[\_\_wasi\_exitcode\_t](#exitcode) <strong>rval</strong></code>
 
     The exit code returned by the process. The
     exit code can be obtained by other processes
@@ -972,7 +972,7 @@ Sends a signal to the process of the calling thread.
 
 Inputs:
 
-- <a href="#proc_raise.sig" name="proc_raise.sig"></a><code>[wasi\_signal\_t](#signal) <strong>sig</strong></code>
+- <a href="#proc_raise.sig" name="proc_raise.sig"></a><code>[\_\_wasi\_signal\_t](#signal) <strong>sig</strong></code>
 
     The signal condition that should be triggered.
     If the signal causes the process to terminate,
@@ -1001,16 +1001,16 @@ Receives a message on a socket.
 
 Inputs:
 
-- <a href="#sock_recv.sock" name="sock_recv.sock"></a><code>[wasi\_fd\_t](#fd) <strong>sock</strong></code>
+- <a href="#sock_recv.sock" name="sock_recv.sock"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>sock</strong></code>
 
     The socket on which a message should be
     received.
 
-- <a href="#sock_recv.in" name="sock_recv.in"></a><code>const [wasi\_recv\_in\_t](#recv_in) *<strong>in</strong></code>
+- <a href="#sock_recv.in" name="sock_recv.in"></a><code>const [\_\_wasi\_recv\_in\_t](#recv_in) *<strong>in</strong></code>
 
     Input parameters.
 
-- <a href="#sock_recv.out" name="sock_recv.out"></a><code>[wasi\_recv\_out\_t](#recv_out) *<strong>out</strong></code>
+- <a href="#sock_recv.out" name="sock_recv.out"></a><code>[\_\_wasi\_recv\_out\_t](#recv_out) *<strong>out</strong></code>
 
     Output parameters.
 
@@ -1020,15 +1020,15 @@ Sends a message on a socket.
 
 Inputs:
 
-- <a href="#sock_send.sock" name="sock_send.sock"></a><code>[wasi\_fd\_t](#fd) <strong>sock</strong></code>
+- <a href="#sock_send.sock" name="sock_send.sock"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>sock</strong></code>
 
     The socket on which a message should be sent.
 
-- <a href="#sock_send.in" name="sock_send.in"></a><code>const [wasi\_send\_in\_t](#send_in) *<strong>in</strong></code>
+- <a href="#sock_send.in" name="sock_send.in"></a><code>const [\_\_wasi\_send\_in\_t](#send_in) *<strong>in</strong></code>
 
     Input parameters.
 
-- <a href="#sock_send.out" name="sock_send.out"></a><code>[wasi\_send\_out\_t](#send_out) *<strong>out</strong></code>
+- <a href="#sock_send.out" name="sock_send.out"></a><code>[\_\_wasi\_send\_out\_t](#send_out) *<strong>out</strong></code>
 
     Output parameters.
 
@@ -1038,11 +1038,11 @@ Shuts down socket send and receive channels.
 
 Inputs:
 
-- <a href="#sock_shutdown.sock" name="sock_shutdown.sock"></a><code>[wasi\_fd\_t](#fd) <strong>sock</strong></code>
+- <a href="#sock_shutdown.sock" name="sock_shutdown.sock"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>sock</strong></code>
 
     The socket that needs its channels shut down.
 
-- <a href="#sock_shutdown.how" name="sock_shutdown.how"></a><code>[wasi\_sdflags\_t](#sdflags) <strong>how</strong></code>
+- <a href="#sock_shutdown.how" name="sock_shutdown.how"></a><code>[\_\_wasi\_sdflags\_t](#sdflags) <strong>how</strong></code>
 
     Which channels on the socket need to be shut
     down.
@@ -1053,13 +1053,13 @@ Creates a new thread within the current process.
 
 Inputs:
 
-- <a href="#thread_create.attr" name="thread_create.attr"></a><code>[wasi\_threadattr\_t](#threadattr) *<strong>attr</strong></code>
+- <a href="#thread_create.attr" name="thread_create.attr"></a><code>[\_\_wasi\_threadattr\_t](#threadattr) *<strong>attr</strong></code>
 
     The desired attributes of the new thread.
 
 Outputs:
 
-- <a href="#thread_create.tid" name="thread_create.tid"></a><code>[wasi\_tid\_t](#tid) <strong>tid</strong></code>
+- <a href="#thread_create.tid" name="thread_create.tid"></a><code>[\_\_wasi\_tid\_t](#tid) <strong>tid</strong></code>
 
     The thread ID of the new thread.
 
@@ -1073,12 +1073,12 @@ joining.
 
 Inputs:
 
-- <a href="#thread_exit.lock" name="thread_exit.lock"></a><code>\_Atomic([wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
+- <a href="#thread_exit.lock" name="thread_exit.lock"></a><code>\_Atomic([\_\_wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
 
     Userspace lock that is locked for writing by
     the calling thread.
 
-- <a href="#thread_exit.scope" name="thread_exit.scope"></a><code>[wasi\_scope\_t](#scope) <strong>scope</strong></code>
+- <a href="#thread_exit.scope" name="thread_exit.scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>scope</strong></code>
 
     Whether the lock is stored in private or
     shared memory.
@@ -1241,7 +1241,7 @@ Used by [`__wasi_processentry_t`](#processentry).
 
 Members:
 
-- <a href="#auxv.a_type" name="auxv.a_type"></a><code>[wasi\_auxtype\_t](#auxtype) <strong>a\_type</strong></code>
+- <a href="#auxv.a_type" name="auxv.a_type"></a><code>[\_\_wasi\_auxtype\_t](#auxtype) <strong>a\_type</strong></code>
 
     The type of the auxiliary vector entry.
 
@@ -1342,12 +1342,12 @@ A directory entry.
 
 Members:
 
-- <a href="#dirent.d_next" name="dirent.d_next"></a><code>[wasi\_dircookie\_t](#dircookie) <strong>d\_next</strong></code>
+- <a href="#dirent.d_next" name="dirent.d_next"></a><code>[\_\_wasi\_dircookie\_t](#dircookie) <strong>d\_next</strong></code>
 
     The offset of the next directory entry stored in this
     directory.
 
-- <a href="#dirent.d_ino" name="dirent.d_ino"></a><code>[wasi\_inode\_t](#inode) <strong>d\_ino</strong></code>
+- <a href="#dirent.d_ino" name="dirent.d_ino"></a><code>[\_\_wasi\_inode\_t](#inode) <strong>d\_ino</strong></code>
 
     The serial number of the file referred to by this
     directory entry.
@@ -1356,7 +1356,7 @@ Members:
 
     The length of the name of the directory entry.
 
-- <a href="#dirent.d_type" name="dirent.d_type"></a><code>[wasi\_filetype\_t](#filetype) <strong>d\_type</strong></code>
+- <a href="#dirent.d_type" name="dirent.d_type"></a><code>[\_\_wasi\_filetype\_t](#filetype) <strong>d\_type</strong></code>
 
     The type of the file referred to by this directory
     entry.
@@ -1689,17 +1689,17 @@ Used by [`__wasi_poll()`](#poll).
 
 Members:
 
-- <a href="#event.userdata" name="event.userdata"></a><code>[wasi\_userdata\_t](#userdata) <strong>userdata</strong></code>
+- <a href="#event.userdata" name="event.userdata"></a><code>[\_\_wasi\_userdata\_t](#userdata) <strong>userdata</strong></code>
 
     User-provided value that got attached to
     [`__wasi_subscription_t::userdata`](#subscription.userdata).
 
-- <a href="#event.error" name="event.error"></a><code>[wasi\_errno\_t](#errno) <strong>error</strong></code>
+- <a href="#event.error" name="event.error"></a><code>[\_\_wasi\_errno\_t](#errno) <strong>error</strong></code>
 
     If non-zero, an error that occurred while processing
     the subscription request.
 
-- <a href="#event.type" name="event.type"></a><code>[wasi\_eventtype\_t](#eventtype) <strong>type</strong></code>
+- <a href="#event.type" name="event.type"></a><code>[\_\_wasi\_eventtype\_t](#eventtype) <strong>type</strong></code>
 
     The type of the event that occurred.
 
@@ -1707,7 +1707,7 @@ Members:
 
     - <a href="#event.fd_readwrite" name="event.fd_readwrite"></a>**`fd_readwrite`**
 
-        - <a href="#event.fd_readwrite.nbytes" name="event.fd_readwrite.nbytes"></a><code>[wasi\_filesize\_t](#filesize) <strong>nbytes</strong></code>
+        - <a href="#event.fd_readwrite.nbytes" name="event.fd_readwrite.nbytes"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>nbytes</strong></code>
 
             The number of bytes available
             for reading or writing.
@@ -1716,7 +1716,7 @@ Members:
 
             Obsolete.
 
-        - <a href="#event.fd_readwrite.flags" name="event.fd_readwrite.flags"></a><code>[wasi\_eventrwflags\_t](#eventrwflags) <strong>flags</strong></code>
+        - <a href="#event.fd_readwrite.flags" name="event.fd_readwrite.flags"></a><code>[\_\_wasi\_eventrwflags\_t](#eventrwflags) <strong>flags</strong></code>
 
             The state of the file
             descriptor.
@@ -1729,7 +1729,7 @@ Members:
 
             Obsolete.
 
-        - <a href="#event.proc_terminate.signal" name="event.proc_terminate.signal"></a><code>[wasi\_signal\_t](#signal) <strong>signal</strong></code>
+        - <a href="#event.proc_terminate.signal" name="event.proc_terminate.signal"></a><code>[\_\_wasi\_signal\_t](#signal) <strong>signal</strong></code>
 
             If zero, the process has
             exited.
@@ -1737,7 +1737,7 @@ Members:
             condition causing it to
             terminated.
 
-        - <a href="#event.proc_terminate.exitcode" name="event.proc_terminate.exitcode"></a><code>[wasi\_exitcode\_t](#exitcode) <strong>exitcode</strong></code>
+        - <a href="#event.proc_terminate.exitcode" name="event.proc_terminate.exitcode"></a><code>[\_\_wasi\_exitcode\_t](#exitcode) <strong>exitcode</strong></code>
 
             If exited, the exit code of
             the process.
@@ -1884,19 +1884,19 @@ Used by [`__wasi_fd_stat_get()`](#fd_stat_get), [`__wasi_fd_stat_put()`](#fd_sta
 
 Members:
 
-- <a href="#fdstat.fs_filetype" name="fdstat.fs_filetype"></a><code>[wasi\_filetype\_t](#filetype) <strong>fs\_filetype</strong></code>
+- <a href="#fdstat.fs_filetype" name="fdstat.fs_filetype"></a><code>[\_\_wasi\_filetype\_t](#filetype) <strong>fs\_filetype</strong></code>
 
     File type.
 
-- <a href="#fdstat.fs_flags" name="fdstat.fs_flags"></a><code>[wasi\_fdflags\_t](#fdflags) <strong>fs\_flags</strong></code>
+- <a href="#fdstat.fs_flags" name="fdstat.fs_flags"></a><code>[\_\_wasi\_fdflags\_t](#fdflags) <strong>fs\_flags</strong></code>
 
     File descriptor flags.
 
-- <a href="#fdstat.fs_rights_base" name="fdstat.fs_rights_base"></a><code>[wasi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code>
+- <a href="#fdstat.fs_rights_base" name="fdstat.fs_rights_base"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code>
 
     Rights that apply to this file descriptor.
 
-- <a href="#fdstat.fs_rights_inheriting" name="fdstat.fs_rights_inheriting"></a><code>[wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
+- <a href="#fdstat.fs_rights_inheriting" name="fdstat.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
 
     Maximum set of rights that can be installed on new
     file descriptors that are created through this file
@@ -1922,37 +1922,37 @@ Used by [`__wasi_file_stat_fget()`](#file_stat_fget), [`__wasi_file_stat_fput()`
 
 Members:
 
-- <a href="#filestat.st_dev" name="filestat.st_dev"></a><code>[wasi\_device\_t](#device) <strong>st\_dev</strong></code>
+- <a href="#filestat.st_dev" name="filestat.st_dev"></a><code>[\_\_wasi\_device\_t](#device) <strong>st\_dev</strong></code>
 
     Device ID of device containing the file.
 
-- <a href="#filestat.st_ino" name="filestat.st_ino"></a><code>[wasi\_inode\_t](#inode) <strong>st\_ino</strong></code>
+- <a href="#filestat.st_ino" name="filestat.st_ino"></a><code>[\_\_wasi\_inode\_t](#inode) <strong>st\_ino</strong></code>
 
     File serial number.
 
-- <a href="#filestat.st_filetype" name="filestat.st_filetype"></a><code>[wasi\_filetype\_t](#filetype) <strong>st\_filetype</strong></code>
+- <a href="#filestat.st_filetype" name="filestat.st_filetype"></a><code>[\_\_wasi\_filetype\_t](#filetype) <strong>st\_filetype</strong></code>
 
     File type.
 
-- <a href="#filestat.st_nlink" name="filestat.st_nlink"></a><code>[wasi\_linkcount\_t](#linkcount) <strong>st\_nlink</strong></code>
+- <a href="#filestat.st_nlink" name="filestat.st_nlink"></a><code>[\_\_wasi\_linkcount\_t](#linkcount) <strong>st\_nlink</strong></code>
 
     Number of hard links to the file.
 
-- <a href="#filestat.st_size" name="filestat.st_size"></a><code>[wasi\_filesize\_t](#filesize) <strong>st\_size</strong></code>
+- <a href="#filestat.st_size" name="filestat.st_size"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>st\_size</strong></code>
 
     For regular files, the file size in bytes. For
     symbolic links, the length in bytes of the pathname
     contained in the symbolic link.
 
-- <a href="#filestat.st_atim" name="filestat.st_atim"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
+- <a href="#filestat.st_atim" name="filestat.st_atim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
 
     Last data access timestamp.
 
-- <a href="#filestat.st_mtim" name="filestat.st_mtim"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>st\_mtim</strong></code>
+- <a href="#filestat.st_mtim" name="filestat.st_mtim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_mtim</strong></code>
 
     Last data modification timestamp.
 
-- <a href="#filestat.st_ctim" name="filestat.st_ctim"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>st\_ctim</strong></code>
+- <a href="#filestat.st_ctim" name="filestat.st_ctim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_ctim</strong></code>
 
     Last file status change timestamp.
 
@@ -2120,12 +2120,12 @@ Used by [`__wasi_file_link()`](#file_link), [`__wasi_file_open()`](#file_open), 
 
 Members:
 
-- <a href="#lookup.fd" name="lookup.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#lookup.fd" name="lookup.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution of the
     path starts.
 
-- <a href="#lookup.flags" name="lookup.flags"></a><code>[wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
+- <a href="#lookup.flags" name="lookup.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
 
     Flags determining the method of how the path is
     resolved.
@@ -2249,7 +2249,7 @@ Entry point for a process (`_start`).
 
 Parameters:
 
-- <a href="#processentry.auxv" name="processentry.auxv"></a><code>const [wasi\_auxv\_t](#auxv) *<strong>auxv</strong></code>
+- <a href="#processentry.auxv" name="processentry.auxv"></a><code>const [\_\_wasi\_auxv\_t](#auxv) *<strong>auxv</strong></code>
 
     The auxiliary vector. See [`__wasi_auxv_t`](#auxv).
 
@@ -2259,17 +2259,17 @@ Arguments of [`__wasi_sock_recv()`](#sock_recv).
 
 Members:
 
-- <a href="#recv_in.ri_data" name="recv_in.ri_data"></a><code>const [wasi\_iovec\_t](#iovec) *<strong>ri\_data</strong></code> and <a href="#recv_in.ri_data_len" name="recv_in.ri_data_len"></a><code>size\_t <strong>ri\_data\_len</strong></code>
+- <a href="#recv_in.ri_data" name="recv_in.ri_data"></a><code>const [\_\_wasi\_iovec\_t](#iovec) *<strong>ri\_data</strong></code> and <a href="#recv_in.ri_data_len" name="recv_in.ri_data_len"></a><code>size\_t <strong>ri\_data\_len</strong></code>
 
     List of scatter/gather vectors where message data
     should be stored.
 
-- <a href="#recv_in.ri_fds" name="recv_in.ri_fds"></a><code>[wasi\_fd\_t](#fd) *<strong>ri\_fds</strong></code> and <a href="#recv_in.ri_fds_len" name="recv_in.ri_fds_len"></a><code>size\_t <strong>ri\_fds\_len</strong></code>
+- <a href="#recv_in.ri_fds" name="recv_in.ri_fds"></a><code>[\_\_wasi\_fd\_t](#fd) *<strong>ri\_fds</strong></code> and <a href="#recv_in.ri_fds_len" name="recv_in.ri_fds_len"></a><code>size\_t <strong>ri\_fds\_len</strong></code>
 
     Buffer where numbers of incoming file descriptors
     should be stored.
 
-- <a href="#recv_in.ri_flags" name="recv_in.ri_flags"></a><code>[wasi\_riflags\_t](#riflags) <strong>ri\_flags</strong></code>
+- <a href="#recv_in.ri_flags" name="recv_in.ri_flags"></a><code>[\_\_wasi\_riflags\_t](#riflags) <strong>ri\_flags</strong></code>
 
     Message flags.
 
@@ -2291,7 +2291,7 @@ Members:
 
     Fields that were used by previous implementations.
 
-- <a href="#recv_out.ro_flags" name="recv_out.ro_flags"></a><code>[wasi\_roflags\_t](#roflags) <strong>ro\_flags</strong></code>
+- <a href="#recv_out.ro_flags" name="recv_out.ro_flags"></a><code>[\_\_wasi\_roflags\_t](#roflags) <strong>ro\_flags</strong></code>
 
     Message flags.
 
@@ -2540,17 +2540,17 @@ Arguments of [`__wasi_sock_send()`](#sock_send).
 
 Members:
 
-- <a href="#send_in.si_data" name="send_in.si_data"></a><code>const [wasi\_ciovec\_t](#ciovec) *<strong>si\_data</strong></code> and <a href="#send_in.si_data_len" name="send_in.si_data_len"></a><code>size\_t <strong>si\_data\_len</strong></code>
+- <a href="#send_in.si_data" name="send_in.si_data"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) *<strong>si\_data</strong></code> and <a href="#send_in.si_data_len" name="send_in.si_data_len"></a><code>size\_t <strong>si\_data\_len</strong></code>
 
     List of scatter/gather vectors where message data
     should be retrieved.
 
-- <a href="#send_in.si_fds" name="send_in.si_fds"></a><code>const [wasi\_fd\_t](#fd) *<strong>si\_fds</strong></code> and <a href="#send_in.si_fds_len" name="send_in.si_fds_len"></a><code>size\_t <strong>si\_fds\_len</strong></code>
+- <a href="#send_in.si_fds" name="send_in.si_fds"></a><code>const [\_\_wasi\_fd\_t](#fd) *<strong>si\_fds</strong></code> and <a href="#send_in.si_fds_len" name="send_in.si_fds_len"></a><code>size\_t <strong>si\_fds\_len</strong></code>
 
     File descriptors that need to be attached to the
     message.
 
-- <a href="#send_in.si_flags" name="send_in.si_flags"></a><code>[wasi\_siflags\_t](#siflags) <strong>si\_flags</strong></code>
+- <a href="#send_in.si_flags" name="send_in.si_flags"></a><code>[\_\_wasi\_siflags\_t](#siflags) <strong>si\_flags</strong></code>
 
     Message flags.
 
@@ -2776,7 +2776,7 @@ Used by [`__wasi_poll()`](#poll).
 
 Members:
 
-- <a href="#subscription.userdata" name="subscription.userdata"></a><code>[wasi\_userdata\_t](#userdata) <strong>userdata</strong></code>
+- <a href="#subscription.userdata" name="subscription.userdata"></a><code>[__wasi\_userdata\_t](#userdata) <strong>userdata</strong></code>
 
     User-provided value that is attached to the
     subscription in the kernel and returned through
@@ -2786,7 +2786,7 @@ Members:
 
     Used by previous implementations. Ignored.
 
-- <a href="#subscription.type" name="subscription.type"></a><code>[wasi\_eventtype\_t](#eventtype) <strong>type</strong></code>
+- <a href="#subscription.type" name="subscription.type"></a><code>[__wasi\_eventtype\_t](#eventtype) <strong>type</strong></code>
 
     The type of the event to which to subscribe.
 
@@ -2800,28 +2800,28 @@ Members:
 
     - <a href="#subscription.clock" name="subscription.clock"></a>**`clock`**
 
-        - <a href="#subscription.clock.identifier" name="subscription.clock.identifier"></a><code>[wasi\_userdata\_t](#userdata) <strong>identifier</strong></code>
+        - <a href="#subscription.clock.identifier" name="subscription.clock.identifier"></a><code>[__wasi\_userdata\_t](#userdata) <strong>identifier</strong></code>
 
             The user-defined unique
             identifier of the clock.
 
-        - <a href="#subscription.clock.clock_id" name="subscription.clock.clock_id"></a><code>[wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
+        - <a href="#subscription.clock.clock_id" name="subscription.clock.clock_id"></a><code>[\_\_wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
 
             The clock against which the
             timestamp should be compared.
 
-        - <a href="#subscription.clock.timeout" name="subscription.clock.timeout"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>timeout</strong></code>
+        - <a href="#subscription.clock.timeout" name="subscription.clock.timeout"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>timeout</strong></code>
 
             The absolute or relative
             timestamp.
 
-        - <a href="#subscription.clock.precision" name="subscription.clock.precision"></a><code>[wasi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
+        - <a href="#subscription.clock.precision" name="subscription.clock.precision"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
 
             The amount of time that the
             kernel may wait additionally
             to coalesce with other events.
 
-        - <a href="#subscription.clock.flags" name="subscription.clock.flags"></a><code>[wasi\_subclockflags\_t](#subclockflags) <strong>flags</strong></code>
+        - <a href="#subscription.clock.flags" name="subscription.clock.flags"></a><code>[\_\_wasi\_subclockflags\_t](#subclockflags) <strong>flags</strong></code>
 
             Flags specifying whether the
             timeout is absolute or
@@ -2831,12 +2831,12 @@ Members:
 
     - <a href="#subscription.condvar" name="subscription.condvar"></a>**`condvar`**
 
-        - <a href="#subscription.condvar.condvar" name="subscription.condvar.condvar"></a><code>\_Atomic([wasi\_condvar\_t](#condvar)) *<strong>condvar</strong></code>
+        - <a href="#subscription.condvar.condvar" name="subscription.condvar.condvar"></a><code>\_Atomic([\_\_wasi\_condvar\_t](#condvar)) *<strong>condvar</strong></code>
 
             The condition variable on
             which to wait to be woken up.
 
-        - <a href="#subscription.condvar.lock" name="subscription.condvar.lock"></a><code>\_Atomic([wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
+        - <a href="#subscription.condvar.lock" name="subscription.condvar.lock"></a><code>\_Atomic([\_\_wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
 
             The lock that will be
             released while waiting.
@@ -2845,13 +2845,13 @@ Members:
             for writing when the condition
             variable triggers.
 
-        - <a href="#subscription.condvar.condvar_scope" name="subscription.condvar.condvar_scope"></a><code>[wasi\_scope\_t](#scope) <strong>condvar\_scope</strong></code>
+        - <a href="#subscription.condvar.condvar_scope" name="subscription.condvar.condvar_scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>condvar\_scope</strong></code>
 
             Whether the condition variable
             is stored in private or shared
             memory.
 
-        - <a href="#subscription.condvar.lock_scope" name="subscription.condvar.lock_scope"></a><code>[wasi\_scope\_t](#scope) <strong>lock\_scope</strong></code>
+        - <a href="#subscription.condvar.lock_scope" name="subscription.condvar.lock_scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>lock\_scope</strong></code>
 
             Whether the lock is stored in
             private or shared memory.
@@ -2860,13 +2860,13 @@ Members:
 
     - <a href="#subscription.fd_readwrite" name="subscription.fd_readwrite"></a>**`fd_readwrite`**
 
-        - <a href="#subscription.fd_readwrite.fd" name="subscription.fd_readwrite.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+        - <a href="#subscription.fd_readwrite.fd" name="subscription.fd_readwrite.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
             The file descriptor on which
             to wait for it to become ready
             for reading or writing.
 
-        - <a href="#subscription.fd_readwrite.flags" name="subscription.fd_readwrite.flags"></a><code>[wasi\_subrwflags\_t](#subrwflags) <strong>flags</strong></code>
+        - <a href="#subscription.fd_readwrite.flags" name="subscription.fd_readwrite.flags"></a><code>[\_\_wasi\_subrwflags\_t](#subrwflags) <strong>flags</strong></code>
 
             Under which conditions to
             trigger.
@@ -2875,12 +2875,12 @@ Members:
 
     - <a href="#subscription.lock" name="subscription.lock"></a>**`lock`**
 
-        - <a href="#subscription.lock.lock" name="subscription.lock.lock"></a><code>\_Atomic([wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
+        - <a href="#subscription.lock.lock" name="subscription.lock.lock"></a><code>\_Atomic([\_\_wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
 
             The lock that will be acquired
             for reading or writing.
 
-        - <a href="#subscription.lock.lock_scope" name="subscription.lock.lock_scope"></a><code>[wasi\_scope\_t](#scope) <strong>lock\_scope</strong></code>
+        - <a href="#subscription.lock.lock_scope" name="subscription.lock.lock_scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>lock\_scope</strong></code>
 
             Whether the lock is stored in
             private or shared memory.
@@ -2889,7 +2889,7 @@ Members:
 
     - <a href="#subscription.proc_terminate" name="subscription.proc_terminate"></a>**`proc_terminate`**
 
-        - <a href="#subscription.proc_terminate.fd" name="subscription.proc_terminate.fd"></a><code>[wasi\_fd\_t](#fd) <strong>fd</strong></code>
+        - <a href="#subscription.proc_terminate.fd" name="subscription.proc_terminate.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
             The process descriptor on
             which to wait for process
@@ -2932,7 +2932,7 @@ Used by [`__wasi_thread_create()`](#thread_create).
 
 Members:
 
-- <a href="#threadattr.entry_point" name="threadattr.entry_point"></a><code>[wasi\_threadentry\_t](#threadentry) *<strong>entry\_point</strong></code>
+- <a href="#threadattr.entry_point" name="threadattr.entry_point"></a><code>[\_\_wasi\_threadentry\_t](#threadentry) *<strong>entry\_point</strong></code>
 
     Initial program counter value.
 
@@ -2952,7 +2952,7 @@ Used by [`__wasi_threadattr_t`](#threadattr).
 
 Parameters:
 
-- <a href="#threadentry.tid" name="threadentry.tid"></a><code>[wasi\_tid\_t](#tid) <strong>tid</strong></code>
+- <a href="#threadentry.tid" name="threadentry.tid"></a><code>[\_\_wasi\_tid\_t](#tid) <strong>tid</strong></code>
 
     Thread ID of the current thread.
 
