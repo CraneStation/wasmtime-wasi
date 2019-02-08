@@ -89,29 +89,6 @@ pub unsafe extern "C" fn fd_close(
     return_encoded_errno(e)
 }
 
-pub unsafe extern "C" fn fd_create1(
-    vmctx: *mut VMContext,
-    type_: wasm32::__wasi_filetype_t,
-    fd: wasm32::uintptr_t,
-) -> wasm32::__wasi_errno_t {
-    trace!("fd_create1(type={:?}, fd={:#x?})", type_, fd);
-
-    let vmctx = &mut *vmctx;
-    let curfds = get_curfds(vmctx);
-    let type_ = decode_filetype(type_);
-    let mut host_fd = match decode_fd_byref(vmctx, fd) {
-        Ok(host_fd) => host_fd,
-        Err(e) => return return_encoded_errno(e),
-    };
-
-    let e = host::wasmtime_ssp_fd_create1(curfds, type_, &mut host_fd);
-
-    trace!("     | *fd={:?}", host_fd);
-    encode_fd_byref(vmctx, fd, host_fd).unwrap();
-
-    return_encoded_errno(e)
-}
-
 pub unsafe extern "C" fn fd_create2(
     vmctx: *mut VMContext,
     type_: wasm32::__wasi_filetype_t,

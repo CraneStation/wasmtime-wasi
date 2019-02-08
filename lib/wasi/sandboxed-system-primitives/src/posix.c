@@ -596,39 +596,6 @@ __wasi_errno_t wasmtime_ssp_fd_close(struct fd_table *curfds, __wasi_fd_t fd) {
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_fd_create1(struct fd_table *curfds, __wasi_filetype_t type,
-                                       __wasi_fd_t *fd) {
-  switch (type) {
-    case __WASI_FILETYPE_SHARED_MEMORY: {
-#ifdef SHM_ANON
-      int nfd = shm_open(SHM_ANON, O_RDWR, 0666);
-      if (nfd < 0)
-        return convert_errno(errno);
-#else
-      int nfd;
-      for (;;) {
-        unsigned int i;
-        random_buf(&i, sizeof(i));
-        char buf[64];
-        snprintf(buf, sizeof(buf), "/anon%u", i);
-        nfd = shm_open(buf, O_RDWR | O_EXCL | O_CREAT, 0700);
-        if (nfd < 0) {
-          if (errno == EEXIST)
-            continue;
-          return convert_errno(errno);
-        }
-        shm_unlink(buf);
-        break;
-      }
-#endif
-      return fd_table_insert_fd(curfds, nfd, type, RIGHTS_SHARED_MEMORY_BASE,
-                                RIGHTS_SHARED_MEMORY_INHERITING, fd);
-    }
-    default:
-      return __WASI_EINVAL;
-  }
-}
-
 static __wasi_errno_t fd_create_socketpair(struct fd_table *curfds, __wasi_filetype_t type,
                                              int socktype, __wasi_fd_t *fd1,
                                              __wasi_fd_t *fd2) {
