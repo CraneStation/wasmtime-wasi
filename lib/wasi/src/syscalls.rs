@@ -74,15 +74,6 @@ pub unsafe extern "C" fn clock_time_get(
     return_encoded_errno(e)
 }
 
-pub unsafe extern "C" fn condvar_signal(
-    _vmctx: *mut VMContext,
-    _condvar: wasm32::uintptr_t,
-    _scope: wasm32::__wasi_scope_t,
-    _nwaiters: wasm32::__wasi_nthreads_t,
-) -> wasm32::__wasi_errno_t {
-    unimplemented!("__wasi_condvar_signal");
-}
-
 pub unsafe extern "C" fn fd_close(
     vmctx: *mut VMContext,
     fd: wasm32::__wasi_fd_t,
@@ -953,14 +944,6 @@ pub unsafe extern "C" fn file_unlink(
     return_encoded_errno(e)
 }
 
-pub unsafe extern "C" fn lock_unlock(
-    _vmctx: *mut VMContext,
-    _lock: wasm32::uintptr_t,
-    _scope: wasm32::__wasi_scope_t,
-) -> wasm32::__wasi_errno_t {
-    unimplemented!("__wasi_lock_unlock");
-}
-
 pub unsafe extern "C" fn mem_advise(
     _vmctx: *mut VMContext,
     _mapping: wasm32::uintptr_t,
@@ -1116,6 +1099,12 @@ pub unsafe extern "C" fn random_get(
     return_encoded_errno(e)
 }
 
+pub unsafe extern "C" fn sched_yield(_vmctx: *mut VMContext) -> wasm32::__wasi_errno_t {
+    let e = host::wasmtime_ssp_sched_yield();
+
+    return_encoded_errno(e)
+}
+
 pub unsafe extern "C" fn sock_recv(
     vmctx: *mut VMContext,
     sock: wasm32::__wasi_fd_t,
@@ -1198,24 +1187,4 @@ pub unsafe extern "C" fn sock_shutdown(
     let e = host::wasmtime_ssp_sock_shutdown(curfds, sock, how);
 
     return_encoded_errno(e)
-}
-
-pub unsafe extern "C" fn thread_create(
-    _vmctx: *mut VMContext,
-    _attr: wasm32::uintptr_t,
-    _tid: wasm32::uintptr_t,
-) -> wasm32::__wasi_errno_t {
-    unimplemented!("__wasi_thread_create");
-}
-
-pub unsafe extern "C" fn thread_exit(
-    _vmctx: *mut VMContext,
-    _lock: wasm32::uintptr_t,
-    _scope: wasm32::__wasi_scope_t,
-) -> ! {
-    unimplemented!("__wasi_thread_exit");
-}
-
-pub unsafe extern "C" fn thread_yield(_vmctx: *mut VMContext) -> wasm32::__wasi_errno_t {
-    unimplemented!("__wasi_thread_yield");
 }

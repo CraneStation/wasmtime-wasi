@@ -53,7 +53,6 @@ pub const __WASI_CLOCK_REALTIME: __wasi_clockid_t = 0;
 pub const __WASI_CLOCK_MONOTONIC: __wasi_clockid_t = 1;
 pub const __WASI_CLOCK_PROCESS_CPUTIME_ID: __wasi_clockid_t = 2;
 pub const __WASI_CLOCK_THREAD_CPUTIME_ID: __wasi_clockid_t = 3;
-pub const __WASI_CONDVAR_HAS_NO_WAITERS: __wasi_condvar_t = 0;
 pub const __WASI_DIRCOOKIE_START: __wasi_dircookie_t = 0;
 pub const __WASI_ESUCCESS: __wasi_errno_t = 0;
 pub const __WASI_E2BIG: __wasi_errno_t = 1;
@@ -134,12 +133,8 @@ pub const __WASI_EXDEV: __wasi_errno_t = 75;
 pub const __WASI_ENOTCAPABLE: __wasi_errno_t = 76;
 pub const __WASI_EVENT_FD_READWRITE_HANGUP: __wasi_eventrwflags_t = 1;
 pub const __WASI_EVENTTYPE_CLOCK: __wasi_eventtype_t = 0;
-pub const __WASI_EVENTTYPE_CONDVAR: __wasi_eventtype_t = 1;
-pub const __WASI_EVENTTYPE_FD_READ: __wasi_eventtype_t = 2;
-pub const __WASI_EVENTTYPE_FD_WRITE: __wasi_eventtype_t = 3;
-pub const __WASI_EVENTTYPE_LOCK_RDLOCK: __wasi_eventtype_t = 4;
-pub const __WASI_EVENTTYPE_LOCK_WRLOCK: __wasi_eventtype_t = 5;
-pub const __WASI_EVENTTYPE_PROC_TERMINATE: __wasi_eventtype_t = 6;
+pub const __WASI_EVENTTYPE_FD_READ: __wasi_eventtype_t = 1;
+pub const __WASI_EVENTTYPE_FD_WRITE: __wasi_eventtype_t = 2;
 pub const __WASI_MAP_ANON_FD: __wasi_fd_t = 4294967295;
 pub const __WASI_FDFLAG_APPEND: __wasi_fdflags_t = 1;
 pub const __WASI_FDFLAG_DSYNC: __wasi_fdflags_t = 2;
@@ -163,10 +158,6 @@ pub const __WASI_FILESTAT_ATIM_NOW: __wasi_fsflags_t = 2;
 pub const __WASI_FILESTAT_MTIM: __wasi_fsflags_t = 4;
 pub const __WASI_FILESTAT_MTIM_NOW: __wasi_fsflags_t = 8;
 pub const __WASI_FILESTAT_SIZE: __wasi_fsflags_t = 16;
-pub const __WASI_LOCK_UNLOCKED: __wasi_lock_t = 0;
-pub const __WASI_LOCK_WRLOCKED: __wasi_lock_t = 1073741824;
-pub const __WASI_LOCK_KERNEL_MANAGED: __wasi_lock_t = 2147483648;
-pub const __WASI_LOCK_BOGUS: __wasi_lock_t = 2147483648;
 pub const __WASI_LOOKUP_SYMLINK_FOLLOW: __wasi_lookupflags_t = 1;
 pub const __WASI_MAP_ANON: __wasi_mflags_t = 1;
 pub const __WASI_MAP_FIXED: __wasi_mflags_t = 2;
@@ -195,30 +186,25 @@ pub const __WASI_RIGHT_FILE_ADVISE: __wasi_rights_t = 128;
 pub const __WASI_RIGHT_FILE_ALLOCATE: __wasi_rights_t = 256;
 pub const __WASI_RIGHT_FILE_CREATE_DIRECTORY: __wasi_rights_t = 512;
 pub const __WASI_RIGHT_FILE_CREATE_FILE: __wasi_rights_t = 1024;
-pub const __WASI_RIGHT_FILE_LINK_SOURCE: __wasi_rights_t = 4096;
-pub const __WASI_RIGHT_FILE_LINK_TARGET: __wasi_rights_t = 8192;
-pub const __WASI_RIGHT_FILE_OPEN: __wasi_rights_t = 16384;
-pub const __WASI_RIGHT_FILE_READDIR: __wasi_rights_t = 32768;
-pub const __WASI_RIGHT_FILE_READLINK: __wasi_rights_t = 65536;
-pub const __WASI_RIGHT_FILE_RENAME_SOURCE: __wasi_rights_t = 131072;
-pub const __WASI_RIGHT_FILE_RENAME_TARGET: __wasi_rights_t = 262144;
-pub const __WASI_RIGHT_FILE_STAT_FGET: __wasi_rights_t = 524288;
-pub const __WASI_RIGHT_FILE_STAT_FPUT_SIZE: __wasi_rights_t = 1048576;
-pub const __WASI_RIGHT_FILE_STAT_FPUT_TIMES: __wasi_rights_t = 2097152;
-pub const __WASI_RIGHT_FILE_STAT_GET: __wasi_rights_t = 4194304;
-pub const __WASI_RIGHT_FILE_STAT_PUT_TIMES: __wasi_rights_t = 8388608;
-pub const __WASI_RIGHT_FILE_SYMLINK: __wasi_rights_t = 16777216;
-pub const __WASI_RIGHT_FILE_UNLINK: __wasi_rights_t = 33554432;
-pub const __WASI_RIGHT_MEM_MAP: __wasi_rights_t = 67108864;
-pub const __WASI_RIGHT_MEM_MAP_EXEC: __wasi_rights_t = 134217728;
-pub const __WASI_RIGHT_POLL_FD_READWRITE: __wasi_rights_t = 268435456;
-pub const __WASI_RIGHT_POLL_PROC_TERMINATE: __wasi_rights_t = 1073741824;
-pub const __WASI_RIGHT_PROC_EXEC: __wasi_rights_t = 4294967296;
-pub const __WASI_RIGHT_SOCK_SHUTDOWN: __wasi_rights_t = 549755813888;
+pub const __WASI_RIGHT_FILE_LINK_SOURCE: __wasi_rights_t = 2048;
+pub const __WASI_RIGHT_FILE_LINK_TARGET: __wasi_rights_t = 4096;
+pub const __WASI_RIGHT_FILE_OPEN: __wasi_rights_t = 8192;
+pub const __WASI_RIGHT_FILE_READDIR: __wasi_rights_t = 16384;
+pub const __WASI_RIGHT_FILE_READLINK: __wasi_rights_t = 32768;
+pub const __WASI_RIGHT_FILE_RENAME_SOURCE: __wasi_rights_t = 65536;
+pub const __WASI_RIGHT_FILE_RENAME_TARGET: __wasi_rights_t = 131072;
+pub const __WASI_RIGHT_FILE_STAT_FGET: __wasi_rights_t = 262144;
+pub const __WASI_RIGHT_FILE_STAT_FPUT_SIZE: __wasi_rights_t = 524288;
+pub const __WASI_RIGHT_FILE_STAT_FPUT_TIMES: __wasi_rights_t = 1048576;
+pub const __WASI_RIGHT_FILE_STAT_GET: __wasi_rights_t = 2097152;
+pub const __WASI_RIGHT_FILE_STAT_PUT_TIMES: __wasi_rights_t = 4194304;
+pub const __WASI_RIGHT_FILE_SYMLINK: __wasi_rights_t = 8388608;
+pub const __WASI_RIGHT_FILE_UNLINK: __wasi_rights_t = 16777216;
+pub const __WASI_RIGHT_MEM_MAP: __wasi_rights_t = 33554432;
+pub const __WASI_RIGHT_POLL_FD_READWRITE: __wasi_rights_t = 67108864;
+pub const __WASI_RIGHT_SOCK_SHUTDOWN: __wasi_rights_t = 134217728;
 pub const __WASI_SOCK_RECV_FDS_TRUNCATED: __wasi_roflags_t = 1;
 pub const __WASI_SOCK_RECV_DATA_TRUNCATED: __wasi_roflags_t = 2;
-pub const __WASI_SCOPE_PRIVATE: __wasi_scope_t = 0;
-pub const __WASI_SCOPE_SHARED: __wasi_scope_t = 1;
 pub const __WASI_SHUT_RD: __wasi_sdflags_t = 1;
 pub const __WASI_SHUT_WR: __wasi_sdflags_t = 2;
 pub const __WASI_SIGHUP: __wasi_signal_t = 1;
@@ -367,7 +353,6 @@ pub type uintmax_t = __uintmax_t;
 pub type __wasi_advice_t = u8;
 pub type __wasi_auxtype_t = u32;
 pub type __wasi_clockid_t = u32;
-pub type __wasi_condvar_t = u32;
 pub type __wasi_device_t = u64;
 pub type __wasi_dircookie_t = u64;
 pub type __wasi_errno_t = u16;
@@ -383,23 +368,19 @@ pub type __wasi_filetype_t = u8;
 pub type __wasi_fsflags_t = u16;
 pub type __wasi_inode_t = u64;
 pub type __wasi_linkcount_t = u32;
-pub type __wasi_lock_t = u32;
 pub type __wasi_lookupflags_t = u32;
 pub type __wasi_mflags_t = u8;
 pub type __wasi_mprot_t = u8;
 pub type __wasi_msflags_t = u8;
-pub type __wasi_nthreads_t = u32;
 pub type __wasi_oflags_t = u16;
 pub type __wasi_riflags_t = u16;
 pub type __wasi_rights_t = u64;
 pub type __wasi_roflags_t = u16;
-pub type __wasi_scope_t = u8;
 pub type __wasi_sdflags_t = u8;
 pub type __wasi_siflags_t = u16;
 pub type __wasi_signal_t = u8;
 pub type __wasi_subclockflags_t = u16;
 pub type __wasi_subrwflags_t = u16;
-pub type __wasi_tid_t = u32;
 pub type __wasi_timestamp_t = u64;
 pub type __wasi_ulflags_t = u8;
 pub type __wasi_userdata_t = u64;
@@ -475,7 +456,6 @@ pub struct __wasi_event_t {
 #[derive(Copy, Clone)]
 pub union __wasi_event_t__bindgen_ty_1 {
     pub fd_readwrite: __wasi_event_t__bindgen_ty_1__bindgen_ty_1,
-    pub proc_terminate: __wasi_event_t__bindgen_ty_1__bindgen_ty_2,
     _bindgen_union_align: [u64; 2usize],
 }
 #[repr(C)]
@@ -594,19 +574,6 @@ fn bindgen_test_layout_wasi_event_t__bindgen_ty_1() {
             stringify!(__wasi_event_t__bindgen_ty_1),
             "::",
             stringify!(fd_readwrite)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_event_t__bindgen_ty_1>())).proc_terminate as *const _
-                as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_event_t__bindgen_ty_1),
-            "::",
-            stringify!(proc_terminate)
         )
     );
 }
@@ -1158,10 +1125,7 @@ pub struct __wasi_subscription_t {
 #[derive(Copy, Clone)]
 pub union __wasi_subscription_t__bindgen_ty_1 {
     pub clock: __wasi_subscription_t__bindgen_ty_1__bindgen_ty_1,
-    pub condvar: __wasi_subscription_t__bindgen_ty_1__bindgen_ty_2,
     pub fd_readwrite: __wasi_subscription_t__bindgen_ty_1__bindgen_ty_3,
-    pub lock: __wasi_subscription_t__bindgen_ty_1__bindgen_ty_4,
-    pub proc_terminate: __wasi_subscription_t__bindgen_ty_1__bindgen_ty_5,
     _bindgen_union_align: [u64; 5usize],
 }
 #[repr(C)]
@@ -1254,86 +1218,6 @@ fn bindgen_test_layout_wasi_subscription_t__bindgen_ty_1__bindgen_ty_1() {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct __wasi_subscription_t__bindgen_ty_1__bindgen_ty_2 {
-    pub condvar: uintptr_t, // *mut __wasi_condvar_t
-    pub lock: uintptr_t,    // *mut __wasi_lock_t
-    pub condvar_scope: __wasi_scope_t,
-    pub lock_scope: __wasi_scope_t,
-}
-#[allow(non_snake_case)]
-#[test]
-fn bindgen_test_layout_wasi_subscription_t__bindgen_ty_1__bindgen_ty_2() {
-    assert_eq!(
-        ::std::mem::size_of::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2>(),
-        12usize,
-        concat!(
-            "Size of: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2>())).condvar
-                as *const _ as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2),
-            "::",
-            stringify!(condvar)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2>())).lock
-                as *const _ as usize
-        },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2),
-            "::",
-            stringify!(lock)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2>()))
-                .condvar_scope as *const _ as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2),
-            "::",
-            stringify!(condvar_scope)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2>())).lock_scope
-                as *const _ as usize
-        },
-        9usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_2),
-            "::",
-            stringify!(lock_scope)
-        )
-    );
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
 pub struct __wasi_subscription_t__bindgen_ty_1__bindgen_ty_3 {
     pub fd: __wasi_fd_t,
     pub flags: __wasi_subrwflags_t,
@@ -1381,58 +1265,6 @@ fn bindgen_test_layout_wasi_subscription_t__bindgen_ty_1__bindgen_ty_3() {
             stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_3),
             "::",
             stringify!(flags)
-        )
-    );
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct __wasi_subscription_t__bindgen_ty_1__bindgen_ty_4 {
-    pub lock: uintptr_t, // *mut __wasi_lock_t
-    pub lock_scope: __wasi_scope_t,
-}
-#[allow(non_snake_case)]
-#[test]
-fn bindgen_test_layout_wasi_subscription_t__bindgen_ty_1__bindgen_ty_4() {
-    assert_eq!(
-        ::std::mem::size_of::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_4>(),
-        8usize,
-        concat!(
-            "Size of: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_4)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_4>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_4)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_4>())).lock
-                as *const _ as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_4),
-            "::",
-            stringify!(lock)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_4>())).lock_scope
-                as *const _ as usize
-        },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_4),
-            "::",
-            stringify!(lock_scope)
         )
     );
 }
@@ -1497,19 +1329,6 @@ fn bindgen_test_layout_wasi_subscription_t__bindgen_ty_1() {
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<__wasi_subscription_t__bindgen_ty_1>())).condvar as *const _
-                as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1),
-            "::",
-            stringify!(condvar)
-        )
-    );
-    assert_eq!(
-        unsafe {
             &(*(::std::ptr::null::<__wasi_subscription_t__bindgen_ty_1>())).fd_readwrite as *const _
                 as usize
         },
@@ -1519,32 +1338,6 @@ fn bindgen_test_layout_wasi_subscription_t__bindgen_ty_1() {
             stringify!(__wasi_subscription_t__bindgen_ty_1),
             "::",
             stringify!(fd_readwrite)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_subscription_t__bindgen_ty_1>())).lock as *const _
-                as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1),
-            "::",
-            stringify!(lock)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_subscription_t__bindgen_ty_1>())).proc_terminate
-                as *const _ as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1),
-            "::",
-            stringify!(proc_terminate)
         )
     );
 }
@@ -1574,115 +1367,6 @@ fn bindgen_test_layout_wasi_subscription_t() {
             stringify!(__wasi_subscription_t),
             "::",
             stringify!(type_)
-        )
-    );
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct __wasi_tcb_t {
-    pub parent: uintptr_t, // *mut ::std::os::raw::c_void
-}
-#[test]
-fn bindgen_test_layout_wasi_tcb_t() {
-    assert_eq!(
-        ::std::mem::size_of::<__wasi_tcb_t>(),
-        4usize,
-        concat!("Size of: ", stringify!(__wasi_tcb_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<__wasi_tcb_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(__wasi_tcb_t))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__wasi_tcb_t>())).parent as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_tcb_t),
-            "::",
-            stringify!(parent)
-        )
-    );
-}
-pub type __wasi_threadentry_t = uintptr_t;
-//pub type __wasi_threadentry_t = ::std::option::Option<
-//    unsafe extern "C" fn(
-//        tid: __wasi_tid_t,
-//        aux: uintptr_t, // *mut ::std::os::raw::c_void
-//    ),
-//>;
-#[test]
-fn bindgen_test_layout_wasi_threadentry_t() {
-    assert_eq!(
-        ::std::mem::size_of::<__wasi_threadentry_t>(),
-        4usize,
-        concat!("Size of: ", stringify!(__wasi_threadentry_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<__wasi_threadentry_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(__wasi_threadentry_t))
-    );
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct __wasi_threadattr_t {
-    pub entry_point: __wasi_threadentry_t,
-    pub stack: uintptr_t, // *mut ::std::os::raw::c_void
-    pub stack_len: size_t,
-    pub argument: uintptr_t, // *mut ::std::os::raw::c_void
-}
-#[test]
-fn bindgen_test_layout_wasi_threadattr_t() {
-    assert_eq!(
-        ::std::mem::size_of::<__wasi_threadattr_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(__wasi_threadattr_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<__wasi_threadattr_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(__wasi_threadattr_t))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__wasi_threadattr_t>())).entry_point as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_threadattr_t),
-            "::",
-            stringify!(entry_point)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__wasi_threadattr_t>())).stack as *const _ as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_threadattr_t),
-            "::",
-            stringify!(stack)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__wasi_threadattr_t>())).stack_len as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_threadattr_t),
-            "::",
-            stringify!(stack_len)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__wasi_threadattr_t>())).argument as *const _ as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_threadattr_t),
-            "::",
-            stringify!(argument)
         )
     );
 }

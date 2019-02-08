@@ -26,7 +26,6 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <poll.h>
-#include <pthread.h>
 #include <sched.h>
 #include <signal.h>
 #include <stdbool.h>
@@ -39,7 +38,6 @@
 
 #include <wasmtime_ssp.h>
 
-#include "futex.h"
 #include "locking.h"
 #include "numeric_limits.h"
 #include "posix.h"
@@ -47,10 +45,6 @@
 #include "refcount.h"
 #include "rights.h"
 #include "str.h"
-#include "tidpool.h"
-#ifdef WASMTIME_THREADS
-#include "tls.h"
-#endif
 
 // struct iovec must have the same layout as __wasi_iovec_t.
 static_assert(offsetof(struct iovec, iov_base) ==
@@ -232,13 +226,6 @@ __wasi_errno_t wasmtime_ssp_clock_time_get(__wasi_clockid_t clock_id,
     return convert_errno(errno);
   *time = convert_timespec(&ts);
   return 0;
-}
-
-__wasi_errno_t wasmtime_ssp_condvar_signal(_Atomic(__wasi_condvar_t) *
-                                               condvar,
-                                           __wasi_scope_t scope,
-                                           __wasi_nthreads_t nwaiters) {
-  return futex_op_condvar_signal(condvar, scope, nwaiters);
 }
 
 struct fd_object {
@@ -1966,11 +1953,6 @@ __wasi_errno_t wasmtime_ssp_file_unlink(struct fd_table *curfds, __wasi_fd_t fd,
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_lock_unlock(__wasi_tid_t curtid, _Atomic(__wasi_lock_t) *lock,
-                                        __wasi_scope_t scope) {
-  return futex_op_lock_unlock(curtid, lock, scope);
-}
-
 __wasi_errno_t wasmtime_ssp_mem_advise(void *addr, size_t len,
                                        __wasi_advice_t advice) {
   int nadvice;
@@ -2105,12 +2087,6 @@ __wasi_errno_t wasmtime_ssp_mem_unmap(void *addr, size_t len) {
 __wasi_errno_t wasmtime_ssp_poll(struct fd_table *curfds, const __wasi_subscription_t *in,
                                  __wasi_event_t *out, size_t nsubscriptions,
                                  size_t *nevents) NO_LOCK_ANALYSIS {
-#ifdef WASMTIME_THREADS
-  // Capture poll() calls that deal with futexes.
-  if (futex_op_poll(curtid, in, out, nsubscriptions, nevents))
-    return 0;
-#endif
-
   // Sleeping.
   if (nsubscriptions == 1 && in[0].type == __WASI_EVENTTYPE_CLOCK) {
     out[0] = (__wasi_event_t){
@@ -2331,18 +2307,8 @@ __wasi_errno_t wasmtime_ssp_poll(struct fd_table *curfds, const __wasi_subscript
   return error;
 }
 
-__wasi_errno_t wasmtime_ssp_proc_exec(__wasi_fd_t fd, const void *data,
-                                      size_t datalen, const __wasi_fd_t *fds,
-                                      size_t fdslen) {
-  return __WASI_ENOSYS;
-}
-
 void wasmtime_ssp_proc_exit(__wasi_exitcode_t rval) {
   _Exit(rval);
-}
-
-__wasi_errno_t wasmtime_ssp_proc_fork(__wasi_fd_t *fd, __wasi_tid_t *tid) {
-  return __WASI_ENOSYS;
 }
 
 __wasi_errno_t wasmtime_ssp_proc_raise(__wasi_signal_t sig) {
@@ -2564,90 +2530,7 @@ __wasi_errno_t wasmtime_ssp_sock_shutdown(struct fd_table *curfds, __wasi_fd_t s
   return 0;
 }
 
-struct thread_params {
-  __wasi_threadentry_t *entry_point;
-  __wasi_tid_t tid;
-  void *argument;
-  struct fd_table *fd_table;
-};
-
-static void *thread_entry(void *thunk) {
-  struct thread_params params = *(struct thread_params *)thunk;
-  free(thunk);
-
-#ifdef WASMTIME_THREADS
-  struct tls tls;
-  tls_init(&tls);
-#endif
-
-  // Pass on execution to the thread's entry point. It should never
-  // return, but call thread_exit() instead.
-  params.entry_point(params.tid, params.fd_table, params.argument);
-  abort();
-}
-
-__wasi_errno_t wasmtime_ssp_thread_create(struct fd_table *curfds, __wasi_threadattr_t *attr,
-                                          __wasi_tid_t *tid) {
-#ifdef WASMTIME_THREADS
-  // Create parameters that need to be passed on to the thread.
-  // thread_entry() is responsible for freeing it again.
-  struct thread_params *params = malloc(sizeof(*params));
-  if (params == NULL)
-    return __WASI_ENOMEM;
-  params->entry_point = attr->entry_point;
-  params->tid = *tid = tidpool_allocate();
-  params->argument = attr->argument;
-  params->fd_table = curfds;
-
-  pthread_attr_t nattr;
-  int ret = pthread_attr_init(&nattr);
-  if (ret != 0) {
-    free(params);
-    return convert_errno(ret);
-  }
-
-  // Make the thread detached, because we're not going to join on it.
-  ret = pthread_attr_setdetachstate(&nattr, PTHREAD_CREATE_DETACHED);
-  if (ret != 0) {
-    free(params);
-    pthread_attr_destroy(&nattr);
-    return convert_errno(ret);
-  }
-
-  // Allocate a stack with the same size, but do not use the buffer
-  // provided by the application. The stack of the executable is also
-  // used by the emulator. The wakeup performed by thread_exit() may
-  // cause another thread in the application to free the stack while
-  // we're still shutting down.
-  pthread_attr_setstacksize(&nattr, attr->stack_len);
-
-  // Spawn a new thread.
-  pthread_t thread;
-  ret = pthread_create(&thread, &nattr, thread_entry, params);
-  pthread_attr_destroy(&nattr);
-  if (ret != 0) {
-    free(params);
-    return convert_errno(ret);
-  }
-  return 0;
-#else
-  // TODO: When re-enabling, remember to also re-enable the futex code in sys_poll.
-  fprintf(stderr, "Thread support is disabled.\n");
-  abort();
-  return __WASI_ENOSYS;
-#endif
-}
-
-void wasmtime_ssp_thread_exit(__wasi_tid_t curtid, _Atomic(__wasi_lock_t) *lock,
-                            __wasi_scope_t scope) {
-  // Drop the lock, so threads waiting to join this thread get woken up.
-  futex_op_lock_unlock(curtid, lock, scope);
-
-  // Terminate the execution of this thread.
-  pthread_exit(NULL);
-}
-
-__wasi_errno_t wasmtime_ssp_thread_yield(void) {
+__wasi_errno_t wasmtime_ssp_sched_yield(void) {
   if (sched_yield() < 0)
     return convert_errno(errno);
   return 0;

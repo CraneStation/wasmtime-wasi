@@ -12,10 +12,10 @@
 #ifndef RIGHTS_H
 #define RIGHTS_H
 
-#define RIGHTS_ALL                                                             \
+#define RIGHTS_ALL                                                         \
   (__WASI_RIGHT_FD_DATASYNC | __WASI_RIGHT_FD_READ |                       \
    __WASI_RIGHT_FD_SEEK | __WASI_RIGHT_FD_STAT_PUT_FLAGS |                 \
-   __WASI_RIGHT_FD_SYNC | __WASI_RIGHT_FD_TELL | __WASI_RIGHT_FD_WRITE | \
+   __WASI_RIGHT_FD_SYNC | __WASI_RIGHT_FD_TELL | __WASI_RIGHT_FD_WRITE |   \
    __WASI_RIGHT_FILE_ADVISE | __WASI_RIGHT_FILE_ALLOCATE |                 \
    __WASI_RIGHT_FILE_CREATE_DIRECTORY | __WASI_RIGHT_FILE_CREATE_FILE |    \
    __WASI_RIGHT_FILE_LINK_SOURCE | __WASI_RIGHT_FILE_LINK_TARGET |         \
@@ -25,8 +25,7 @@
    __WASI_RIGHT_FILE_STAT_FPUT_SIZE | __WASI_RIGHT_FILE_STAT_FPUT_TIMES |  \
    __WASI_RIGHT_FILE_STAT_GET | __WASI_RIGHT_FILE_STAT_PUT_TIMES |         \
    __WASI_RIGHT_FILE_SYMLINK | __WASI_RIGHT_FILE_UNLINK |                  \
-   __WASI_RIGHT_MEM_MAP |                                                \
-   __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_POLL_PROC_TERMINATE |     \
+   __WASI_RIGHT_MEM_MAP | __WASI_RIGHT_POLL_FD_READWRITE |                 \
    __WASI_RIGHT_SOCK_SHUTDOWN)
 
 // Block and character device interaction is outside the scope of

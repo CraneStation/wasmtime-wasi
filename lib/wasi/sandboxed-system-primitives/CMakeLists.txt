@@ -3,6 +3,6 @@ project(SandboxedSystemPrimitives C)
 
 include_directories(include)
 
-add_library(SandboxedSystemPrimitives STATIC src/futex.c src/posix.c src/random.c src/str.c src/tidpool.c)
+add_library(SandboxedSystemPrimitives STATIC src/posix.c src/random.c src/str.c)
 
 install(TARGETS SandboxedSystemPrimitives DESTINATION .)
