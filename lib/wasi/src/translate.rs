@@ -153,16 +153,6 @@ pub fn decode_oflags(_oflags: wasm32::__wasi_oflags_t) -> host::__wasi_oflags_t 
     unimplemented!("decode_oflags");
 }
 
-#[allow(dead_code)]
-pub fn decode_mflags(mflags: wasm32::__wasi_mflags_t) -> host::__wasi_mflags_t {
-    mflags
-}
-
-#[allow(dead_code)]
-pub fn decode_mprot(mprot: wasm32::__wasi_mprot_t) -> host::__wasi_mprot_t {
-    mprot
-}
-
 pub fn decode_advice(advice: wasm32::__wasi_advice_t) -> host::__wasi_advice_t {
     advice
 }

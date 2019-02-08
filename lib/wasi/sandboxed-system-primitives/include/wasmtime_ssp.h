@@ -172,22 +172,6 @@ typedef uint32_t __wasi_linkcount_t;
 typedef uint32_t __wasi_lookupflags_t;
 #define __WASI_LOOKUP_SYMLINK_FOLLOW (0x00000001)
 
-typedef uint8_t __wasi_mflags_t;
-#define __WASI_MAP_ANON    (0x01)
-#define __WASI_MAP_FIXED   (0x02)
-#define __WASI_MAP_PRIVATE (0x04)
-#define __WASI_MAP_SHARED  (0x08)
-
-typedef uint8_t __wasi_mprot_t;
-#define __WASI_PROT_READ  (0x01)
-#define __WASI_PROT_WRITE (0x02)
-#define __WASI_PROT_EXEC  (0x04)
-
-typedef uint8_t __wasi_msflags_t;
-#define __WASI_MS_ASYNC      (0x01)
-#define __WASI_MS_INVALIDATE (0x02)
-#define __WASI_MS_SYNC       (0x04)
-
 typedef uint32_t __wasi_nthreads_t;
 
 typedef uint16_t __wasi_oflags_t;
@@ -226,9 +210,8 @@ typedef uint64_t __wasi_rights_t;
 #define __WASI_RIGHT_FILE_STAT_PUT_TIMES   (0x0000000000400000)
 #define __WASI_RIGHT_FILE_SYMLINK          (0x0000000000800000)
 #define __WASI_RIGHT_FILE_UNLINK           (0x0000000001000000)
-#define __WASI_RIGHT_MEM_MAP               (0x0000000002000000)
-#define __WASI_RIGHT_POLL_FD_READWRITE     (0x0000000004000000)
-#define __WASI_RIGHT_SOCK_SHUTDOWN         (0x0000000008000000)
+#define __WASI_RIGHT_POLL_FD_READWRITE     (0x0000000002000000)
+#define __WASI_RIGHT_SOCK_SHUTDOWN         (0x0000000004000000)
 
 typedef uint16_t __wasi_roflags_t;
 #define __WASI_SOCK_RECV_FDS_TRUNCATED  (0x0001)
@@ -781,40 +764,6 @@ __wasi_errno_t wasmtime_ssp_file_unlink(
     const char *path,
     size_t path_len,
     __wasi_ulflags_t flags
-) __attribute__((__warn_unused_result__));
-
-__wasi_errno_t wasmtime_ssp_mem_advise(
-    void *mapping,
-    size_t mapping_len,
-    __wasi_advice_t advice
-) __attribute__((__warn_unused_result__));
-
-__wasi_errno_t wasmtime_ssp_mem_map(
-    struct fd_table *curfds,
-    void *addr,
-    size_t len,
-    __wasi_mprot_t prot,
-    __wasi_mflags_t flags,
-    __wasi_fd_t fd,
-    __wasi_filesize_t off,
-    void **mem
-) __attribute__((__warn_unused_result__));
-
-__wasi_errno_t wasmtime_ssp_mem_protect(
-    void *mapping,
-    size_t mapping_len,
-    __wasi_mprot_t prot
-) __attribute__((__warn_unused_result__));
-
-__wasi_errno_t wasmtime_ssp_mem_sync(
-    void *mapping,
-    size_t mapping_len,
-    __wasi_msflags_t flags
-) __attribute__((__warn_unused_result__));
-
-__wasi_errno_t wasmtime_ssp_mem_unmap(
-    void *mapping,
-    size_t mapping_len
 ) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_poll(

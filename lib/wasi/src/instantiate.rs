@@ -78,11 +78,6 @@ pub fn instantiate_wasi(
     signature!(file_stat_put(I32, I32, I32, I32, I32) -> (I32));
     signature!(file_symlink(I32, I32, I32, I32, I32) -> (I32));
     signature!(file_unlink(I32, I32, I32, I32) -> (I32));
-    signature!(mem_advise(I32, I32, I32) -> (I32));
-    signature!(mem_map(I32, I32, I32, I32, I32, I64, I32) -> (I32));
-    signature!(mem_protect(I32, I32, I32) -> (I32));
-    signature!(mem_sync(I32, I32, I32) -> (I32));
-    signature!(mem_unmap(I32, I32) -> (I32));
     signature!(poll(I32, I32, I32, I32) -> (I32));
     signature!(proc_exit(I32) -> ());
     signature!(proc_raise(I32) -> (I32));
