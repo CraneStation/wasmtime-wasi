@@ -51,7 +51,6 @@ pub fn instantiate_wasi(
     // TODO: It'd be even cooler if we could infer the signatures automatically.
     signature!(clock_res_get(I32, I32) -> (I32));
     signature!(clock_time_get(I32, I64, I32) -> (I32));
-    signature!(condvar_signal(I32, I32, I32) -> (I32));
     signature!(fd_close(I32) -> (I32));
     signature!(fd_create1(I32, I32) -> (I32));
     signature!(fd_create2(I32, I32, I32) -> (I32));
@@ -80,7 +79,6 @@ pub fn instantiate_wasi(
     signature!(file_stat_put(I32, I32, I32, I32, I32) -> (I32));
     signature!(file_symlink(I32, I32, I32, I32, I32) -> (I32));
     signature!(file_unlink(I32, I32, I32, I32) -> (I32));
-    signature!(lock_unlock(I32, I32) -> (I32));
     signature!(mem_advise(I32, I32, I32) -> (I32));
     signature!(mem_map(I32, I32, I32, I32, I32, I64, I32) -> (I32));
     signature!(mem_protect(I32, I32, I32) -> (I32));
@@ -90,12 +88,10 @@ pub fn instantiate_wasi(
     signature!(proc_exit(I32) -> ());
     signature!(proc_raise(I32) -> (I32));
     signature!(random_get(I32, I32) -> (I32));
+    signature!(sched_yield() -> (I32));
     signature!(sock_recv(I32, I32, I32) -> (I32));
     signature!(sock_send(I32, I32, I32) -> (I32));
     signature!(sock_shutdown(I32, I32) -> (I32));
-    signature!(thread_create(I32, I32) -> (I32));
-    signature!(thread_exit(I32, I32) -> ());
-    signature!(thread_yield() -> (I32));
 
     let imports = Imports::none();
     let data_initializers = Vec::new();
