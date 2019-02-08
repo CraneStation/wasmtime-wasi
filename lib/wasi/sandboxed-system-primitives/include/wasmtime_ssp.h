@@ -562,13 +562,6 @@ __wasi_errno_t wasmtime_ssp_fd_close(
     __wasi_fd_t fd
 ) __attribute__((__warn_unused_result__));
 
-__wasi_errno_t wasmtime_ssp_fd_create2(
-    struct fd_table *curfds,
-    __wasi_filetype_t type,
-    __wasi_fd_t *fd1,
-    __wasi_fd_t *fd2
-) __attribute__((__warn_unused_result__));
-
 __wasi_errno_t wasmtime_ssp_fd_datasync(
     struct fd_table *curfds,
     __wasi_fd_t fd

@@ -41,7 +41,6 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_clock_res_get()`](#clock_res_get)
 - [`__wasi_clock_time_get()`](#clock_time_get)
 - [`__wasi_fd_close()`](#fd_close)
-- [`__wasi_fd_create2()`](#fd_create2)
 - [`__wasi_fd_datasync()`](#fd_datasync)
 - [`__wasi_fd_dup()`](#fd_dup)
 - [`__wasi_fd_pread()`](#fd_pread)
@@ -125,35 +124,6 @@ Inputs:
 - <a href="#fd_close.fd" name="fd_close.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor that needs to be closed.
-
-### <a href="#fd_create2" name="fd_create2"></a>`__wasi_fd_create2()`
-
-Creates a pair of file descriptors.
-
-Inputs:
-
-- <a href="#fd_create2.type" name="fd_create2.type"></a><code>[\_\_wasi\_filetype\_t](#filetype) <strong>type</strong></code>
-
-    Possible values:
-
-    - [`__WASI_FILETYPE_SOCKET_DGRAM`](#filetype.socket_dgram)
-
-        Creates a UNIX datagram socket pair.
-
-    - [`__WASI_FILETYPE_SOCKET_STREAM`](#filetype.socket_stream)
-
-        Creates a UNIX byte-stream socket
-        pair.
-
-Outputs:
-
-- <a href="#fd_create2.fd1" name="fd_create2.fd1"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd1</strong></code>
-
-    The first file descriptor of the pair.
-
-- <a href="#fd_create2.fd2" name="fd_create2.fd2"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd2</strong></code>
-
-    The second file descriptor of the pair.
 
 ### <a href="#fd_datasync" name="fd_datasync"></a>`__wasi_fd_datasync()`
 
@@ -1535,7 +1505,7 @@ Members:
 
 The type of a file descriptor or file.
 
-Used by [`__wasi_dirent_t`](#dirent), [`__wasi_fdstat_t`](#fdstat), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_create2()`](#fd_create2), and [`__wasi_file_create()`](#file_create).
+Used by [`__wasi_dirent_t`](#dirent), [`__wasi_fdstat_t`](#fdstat), [`__wasi_filestat_t`](#filestat), and [`__wasi_file_create()`](#file_create).
 
 Possible values:
 

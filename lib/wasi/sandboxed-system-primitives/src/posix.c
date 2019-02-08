@@ -601,18 +601,6 @@ static __wasi_errno_t fd_create_socketpair(struct fd_table *curfds, __wasi_filet
                                 fd1, fd2);
 }
 
-__wasi_errno_t wasmtime_ssp_fd_create2(struct fd_table *curfds, __wasi_filetype_t type,
-                                       __wasi_fd_t *fd1, __wasi_fd_t *fd2) {
-  switch (type) {
-    case __WASI_FILETYPE_SOCKET_DGRAM:
-      return fd_create_socketpair(curfds, type, SOCK_DGRAM, fd1, fd2);
-    case __WASI_FILETYPE_SOCKET_STREAM:
-      return fd_create_socketpair(curfds, type, SOCK_STREAM, fd1, fd2);
-    default:
-      return __WASI_EINVAL;
-  }
-}
-
 // Look up a file descriptor object in a locked file descriptor table
 // and increases its reference count.
 static __wasi_errno_t fd_object_get_locked(
