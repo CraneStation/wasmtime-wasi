@@ -3,8 +3,8 @@
  * See https://github.com/CraneStation/wasmtime/blob/master/LICENSE for license information.
  *
  * This file declares an interface similar to WASI, but augmented to expose
- * some implementation details such as the curfds and curtid arguments that
- * we pass around to avoid storing them in TLS.
+ * some implementation details such as the curfds arguments that we pass
+ * around to avoid storing them in TLS.
  */
 
 #ifndef WASMTIME_SSP_H
@@ -35,9 +35,6 @@ typedef uint32_t __wasi_clockid_t;
 #define __WASI_CLOCK_MONOTONIC          (1)
 #define __WASI_CLOCK_PROCESS_CPUTIME_ID (2)
 #define __WASI_CLOCK_THREAD_CPUTIME_ID  (3)
-
-typedef uint32_t __wasi_condvar_t;
-#define __WASI_CONDVAR_HAS_NO_WAITERS (0)
 
 typedef uint64_t __wasi_device_t;
 
@@ -128,12 +125,8 @@ typedef uint16_t __wasi_eventrwflags_t;
 
 typedef uint8_t __wasi_eventtype_t;
 #define __WASI_EVENTTYPE_CLOCK          (0)
-#define __WASI_EVENTTYPE_CONDVAR        (1)
-#define __WASI_EVENTTYPE_FD_READ        (2)
-#define __WASI_EVENTTYPE_FD_WRITE       (3)
-#define __WASI_EVENTTYPE_LOCK_RDLOCK    (4)
-#define __WASI_EVENTTYPE_LOCK_WRLOCK    (5)
-#define __WASI_EVENTTYPE_PROC_TERMINATE (6)
+#define __WASI_EVENTTYPE_FD_READ        (1)
+#define __WASI_EVENTTYPE_FD_WRITE       (2)
 
 typedef uint32_t __wasi_exitcode_t;
 
@@ -177,12 +170,6 @@ typedef uint16_t __wasi_fsflags_t;
 typedef uint64_t __wasi_inode_t;
 
 typedef uint32_t __wasi_linkcount_t;
-
-typedef uint32_t __wasi_lock_t;
-#define __WASI_LOCK_UNLOCKED       (0x00000001)
-#define __WASI_LOCK_WRLOCKED       (0x00000002)
-#define __WASI_LOCK_KERNEL_MANAGED (0x00000004)
-#define __WASI_LOCK_BOGUS          (0x00000004)
 
 typedef uint32_t __wasi_lookupflags_t;
 #define __WASI_LOOKUP_SYMLINK_FOLLOW (0x00000001)
@@ -243,16 +230,11 @@ typedef uint64_t __wasi_rights_t;
 #define __WASI_RIGHT_FILE_UNLINK           (0x0000000001000000)
 #define __WASI_RIGHT_MEM_MAP               (0x0000000002000000)
 #define __WASI_RIGHT_POLL_FD_READWRITE     (0x0000000004000000)
-#define __WASI_RIGHT_POLL_PROC_TERMINATE   (0x0000000008000000)
-#define __WASI_RIGHT_SOCK_SHUTDOWN         (0x0000000010000000)
+#define __WASI_RIGHT_SOCK_SHUTDOWN         (0x0000000008000000)
 
 typedef uint16_t __wasi_roflags_t;
 #define __WASI_SOCK_RECV_FDS_TRUNCATED  (0x0001)
 #define __WASI_SOCK_RECV_DATA_TRUNCATED (0x0002)
-
-typedef uint8_t __wasi_scope_t;
-#define __WASI_SCOPE_PRIVATE (0)
-#define __WASI_SCOPE_SHARED  (1)
 
 typedef uint8_t __wasi_sdflags_t;
 #define __WASI_SHUT_RD (0x01)
@@ -299,8 +281,6 @@ typedef uint16_t __wasi_subclockflags_t;
 typedef uint16_t __wasi_subrwflags_t;
 #define __WASI_SUBSCRIPTION_FD_READWRITE_POLL (0x0001)
 
-typedef uint32_t __wasi_tid_t;
-
 typedef uint64_t __wasi_timestamp_t;
 
 typedef uint8_t __wasi_ulflags_t;
@@ -337,10 +317,6 @@ typedef struct __wasi_event_t {
             __wasi_filesize_t nbytes;
             __wasi_eventrwflags_t flags;
         } fd_readwrite;
-        struct {
-            __wasi_signal_t signal;
-            __wasi_exitcode_t exitcode;
-        } proc_terminate;
     };
 } __wasi_event_t;
 _Static_assert(offsetof(__wasi_event_t, userdata) == 0, "non-wasi data layout");
@@ -350,12 +326,6 @@ _Static_assert(
     offsetof(__wasi_event_t, fd_readwrite.nbytes) == 16, "non-wasi data layout");
 _Static_assert(
     offsetof(__wasi_event_t, fd_readwrite.flags) == 24, "non-wasi data layout");
-_Static_assert(
-    offsetof(__wasi_event_t, proc_terminate.signal) == 16,
-    "non-wasi data layout");
-_Static_assert(
-    offsetof(__wasi_event_t, proc_terminate.exitcode) == 20,
-    "non-wasi data layout");
 _Static_assert(sizeof(__wasi_event_t) == 32, "non-wasi data layout");
 _Static_assert(_Alignof(__wasi_event_t) == 8, "non-wasi data layout");
 
@@ -565,22 +535,9 @@ typedef struct __wasi_subscription_t {
             __wasi_subclockflags_t flags;
         } clock;
         struct {
-            _Atomic(__wasi_condvar_t) *condvar;
-            _Atomic(__wasi_lock_t) *lock;
-            __wasi_scope_t condvar_scope;
-            __wasi_scope_t lock_scope;
-        } condvar;
-        struct {
             __wasi_fd_t fd;
             __wasi_subrwflags_t flags;
         } fd_readwrite;
-        struct {
-            _Atomic(__wasi_lock_t) *lock;
-            __wasi_scope_t lock_scope;
-        } lock;
-        struct {
-            __wasi_fd_t fd;
-        } proc_terminate;
     };
 } __wasi_subscription_t;
 _Static_assert(
@@ -601,94 +558,13 @@ _Static_assert(
 _Static_assert(
     offsetof(__wasi_subscription_t, clock.flags) == 48, "non-wasi data layout");
 _Static_assert(
-    offsetof(__wasi_subscription_t, condvar.condvar) == 16,
-    "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_subscription_t, condvar.lock) == 20,
-    "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_subscription_t, condvar.lock) == 24,
-    "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_subscription_t, condvar.condvar_scope) == 24,
-    "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_subscription_t, condvar.condvar_scope) == 32,
-    "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_subscription_t, condvar.lock_scope) == 25,
-    "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_subscription_t, condvar.lock_scope) == 33,
-    "non-wasi data layout");
-_Static_assert(
     offsetof(__wasi_subscription_t, fd_readwrite.fd) == 16,
     "non-wasi data layout");
 _Static_assert(
     offsetof(__wasi_subscription_t, fd_readwrite.flags) == 20,
     "non-wasi data layout");
-_Static_assert(
-    offsetof(__wasi_subscription_t, lock.lock) == 16, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_subscription_t, lock.lock_scope) == 20,
-    "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_subscription_t, lock.lock_scope) == 24,
-    "non-wasi data layout");
-_Static_assert(
-    offsetof(__wasi_subscription_t, proc_terminate.fd) == 16,
-    "non-wasi data layout");
 _Static_assert(sizeof(__wasi_subscription_t) == 56, "non-wasi data layout");
 _Static_assert(_Alignof(__wasi_subscription_t) == 8, "non-wasi data layout");
-
-typedef struct __wasi_tcb_t {
-    void *parent;
-} __wasi_tcb_t;
-_Static_assert(
-    offsetof(__wasi_tcb_t, parent) == 0, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    sizeof(__wasi_tcb_t) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    sizeof(__wasi_tcb_t) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    _Alignof(__wasi_tcb_t) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    _Alignof(__wasi_tcb_t) == 8, "non-wasi data layout");
-
-typedef void __wasi_threadentry_t(
-    __wasi_tid_t tid,
-    struct fd_table *fds,
-    void *aux
-);
-
-typedef struct __wasi_threadattr_t {
-    __wasi_threadentry_t *entry_point;
-    void *stack;
-    size_t stack_len;
-    void *argument;
-} __wasi_threadattr_t;
-_Static_assert(
-    offsetof(__wasi_threadattr_t, entry_point) == 0, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_threadattr_t, stack) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_threadattr_t, stack) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_threadattr_t, stack_len) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_threadattr_t, stack_len) == 16, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_threadattr_t, argument) == 12, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_threadattr_t, argument) == 24, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    sizeof(__wasi_threadattr_t) == 16, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    sizeof(__wasi_threadattr_t) == 32, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    _Alignof(__wasi_threadattr_t) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    _Alignof(__wasi_threadattr_t) == 8, "non-wasi data layout");
 
 __wasi_errno_t wasmtime_ssp_clock_res_get(
     __wasi_clockid_t clock_id,
@@ -699,12 +575,6 @@ __wasi_errno_t wasmtime_ssp_clock_time_get(
     __wasi_clockid_t clock_id,
     __wasi_timestamp_t precision,
     __wasi_timestamp_t *time
-) __attribute__((__warn_unused_result__));
-
-__wasi_errno_t wasmtime_ssp_condvar_signal(
-    _Atomic(__wasi_condvar_t) *condvar,
-    __wasi_scope_t scope,
-    __wasi_nthreads_t nwaiters
 ) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_fd_close(
@@ -921,12 +791,6 @@ __wasi_errno_t wasmtime_ssp_file_unlink(
     __wasi_ulflags_t flags
 ) __attribute__((__warn_unused_result__));
 
-__wasi_errno_t wasmtime_ssp_lock_unlock(
-    __wasi_tid_t curtid,
-    _Atomic(__wasi_lock_t) *lock,
-    __wasi_scope_t scope
-) __attribute__((__warn_unused_result__));
-
 __wasi_errno_t wasmtime_ssp_mem_advise(
     void *mapping,
     size_t mapping_len,
@@ -1002,19 +866,7 @@ __wasi_errno_t wasmtime_ssp_sock_shutdown(
     __wasi_sdflags_t how
 ) __attribute__((__warn_unused_result__));
 
-__wasi_errno_t wasmtime_ssp_thread_create(
-    struct fd_table *curfds,
-    __wasi_threadattr_t *attr,
-    __wasi_tid_t *tid
-) __attribute__((__warn_unused_result__));
-
-_Noreturn void wasmtime_ssp_thread_exit(
-    __wasi_tid_t curtid,
-    _Atomic(__wasi_lock_t) *lock,
-    __wasi_scope_t scope
-);
-
-__wasi_errno_t wasmtime_ssp_thread_yield(void)
+__wasi_errno_t wasmtime_ssp_sched_yield(void)
     __attribute__((__warn_unused_result__));
 
 #endif

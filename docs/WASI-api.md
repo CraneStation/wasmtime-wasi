@@ -40,7 +40,6 @@ Source: https://github.com/NuxiNL/cloudabi
 
 - [`__wasi_clock_res_get()`](#clock_res_get)
 - [`__wasi_clock_time_get()`](#clock_time_get)
-- [`__wasi_condvar_signal()`](#condvar_signal)
 - [`__wasi_fd_close()`](#fd_close)
 - [`__wasi_fd_create1()`](#fd_create1)
 - [`__wasi_fd_create2()`](#fd_create2)
@@ -69,7 +68,6 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_file_stat_put()`](#file_stat_put)
 - [`__wasi_file_symlink()`](#file_symlink)
 - [`__wasi_file_unlink()`](#file_unlink)
-- [`__wasi_lock_unlock()`](#lock_unlock)
 - [`__wasi_mem_advise()`](#mem_advise)
 - [`__wasi_mem_map()`](#mem_map)
 - [`__wasi_mem_protect()`](#mem_protect)
@@ -79,12 +77,10 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_proc_exit()`](#proc_exit)
 - [`__wasi_proc_raise()`](#proc_raise)
 - [`__wasi_random_get()`](#random_get)
+- [`__wasi_sched_yield()`](#sched_yield)
 - [`__wasi_sock_recv()`](#sock_recv)
 - [`__wasi_sock_send()`](#sock_send)
 - [`__wasi_sock_shutdown()`](#sock_shutdown)
-- [`__wasi_thread_create()`](#thread_create)
-- [`__wasi_thread_exit()`](#thread_exit)
-- [`__wasi_thread_yield()`](#thread_yield)
 
 ### <a href="#clock_res_get" name="clock_res_get"></a>`__wasi_clock_res_get()`
 
@@ -125,34 +121,6 @@ Outputs:
 - <a href="#clock_time_get.time" name="clock_time_get.time"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>time</strong></code>
 
     The time value of the clock.
-
-### <a href="#condvar_signal" name="condvar_signal"></a>`__wasi_condvar_signal()`
-
-Wakes up threads waiting on a userspace condition variable.
-
-If an invocation of this system call causes all waiting
-threads to be woken up, the value of the condition variable
-is set to [`__WASI_CONDVAR_HAS_NO_WAITERS`](#condvar.has_no_waiters). As long as the condition
-variable is set to this value, it is not needed to invoke this
-system call.
-
-Inputs:
-
-- <a href="#condvar_signal.condvar" name="condvar_signal.condvar"></a><code>\_Atomic([\_\_wasi\_condvar\_t](#condvar)) *<strong>condvar</strong></code>
-
-    The userspace condition variable that has
-    waiting threads.
-
-- <a href="#condvar_signal.scope" name="condvar_signal.scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>scope</strong></code>
-
-    Whether the condition variable is stored in
-    private or shared memory.
-
-- <a href="#condvar_signal.nwaiters" name="condvar_signal.nwaiters"></a><code>[\_\_wasi\_nthreads\_t](#nthreads) <strong>nwaiters</strong></code>
-
-    The number of threads that need to be woken
-    up. If it exceeds the number of waiting
-    threads, all threads are woken up.
 
 ### <a href="#fd_close" name="fd_close"></a>`__wasi_fd_close()`
 
@@ -800,33 +768,6 @@ Inputs:
         If set, attempt to remove a directory.
         Otherwise, unlink a file.
 
-### <a href="#lock_unlock" name="lock_unlock"></a>`__wasi_lock_unlock()`
-
-Unlocks a write-locked userspace lock.
-
-If a userspace lock is unlocked while having its
-[`__WASI_LOCK_KERNEL_MANAGED`](#lock.kernel_managed) flag set, the lock cannot be unlocked in
-userspace directly. This system call needs to be performed
-instead, so that any waiting threads can be woken up.
-
-To prevent spurious invocations of this system call, the lock
-must be locked for writing. This prevents other threads from
-acquiring additional read locks while the system call is in
-progress. If the lock is acquired for reading, it must first
-be upgraded to a write lock.
-
-Inputs:
-
-- <a href="#lock_unlock.lock" name="lock_unlock.lock"></a><code>\_Atomic([\_\_wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
-
-    The userspace lock that is locked for writing
-    by the calling thread.
-
-- <a href="#lock_unlock.scope" name="lock_unlock.scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>scope</strong></code>
-
-    Whether the lock is stored in private or
-    shared memory.
-
 ### <a href="#mem_advise" name="mem_advise"></a>`__wasi_mem_advise()`
 
 Provides memory advisory information on a region of memory.
@@ -960,9 +901,7 @@ Inputs:
 
 - <a href="#proc_exit.rval" name="proc_exit.rval"></a><code>[\_\_wasi\_exitcode\_t](#exitcode) <strong>rval</strong></code>
 
-    The exit code returned by the process. The
-    exit code can be obtained by other processes
-    through [`__wasi_event_t::proc_terminate.exitcode`](#event.proc_terminate.exitcode).
+    The exit code returned by the process.
 
 Does not return.
 
@@ -975,10 +914,6 @@ Inputs:
 - <a href="#proc_raise.sig" name="proc_raise.sig"></a><code>[\_\_wasi\_signal\_t](#signal) <strong>sig</strong></code>
 
     The signal condition that should be triggered.
-    If the signal causes the process to terminate,
-    its condition can be obtained by other
-    processes through
-    [`__wasi_event_t::proc_terminate.signal`](#event.proc_terminate.signal).
 
 ### <a href="#random_get" name="random_get"></a>`__wasi_random_get()`
 
@@ -1047,45 +982,7 @@ Inputs:
     Which channels on the socket need to be shut
     down.
 
-### <a href="#thread_create" name="thread_create"></a>`__wasi_thread_create()`
-
-Creates a new thread within the current process.
-
-Inputs:
-
-- <a href="#thread_create.attr" name="thread_create.attr"></a><code>[\_\_wasi\_threadattr\_t](#threadattr) *<strong>attr</strong></code>
-
-    The desired attributes of the new thread.
-
-Outputs:
-
-- <a href="#thread_create.tid" name="thread_create.tid"></a><code>[\_\_wasi\_tid\_t](#tid) <strong>tid</strong></code>
-
-    The thread ID of the new thread.
-
-### <a href="#thread_exit" name="thread_exit"></a>`__wasi_thread_exit()`
-
-Terminates the calling thread.
-
-This system call can also unlock a single userspace lock
-after termination, which can be used to implement thread
-joining.
-
-Inputs:
-
-- <a href="#thread_exit.lock" name="thread_exit.lock"></a><code>\_Atomic([\_\_wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
-
-    Userspace lock that is locked for writing by
-    the calling thread.
-
-- <a href="#thread_exit.scope" name="thread_exit.scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>scope</strong></code>
-
-    Whether the lock is stored in private or
-    shared memory.
-
-Does not return.
-
-### <a href="#thread_yield" name="thread_yield"></a>`__wasi_thread_yield()`
+### <a href="#sched_yield" name="sched_yield"></a>`__wasi_sched_yield()`
 
 Temporarily yields execution of the calling thread.
 
@@ -1171,21 +1068,6 @@ Possible values:
 - <a href="#clockid.thread_cputime_id" name="clockid.thread_cputime_id"></a>**`__WASI_CLOCK_THREAD_CPUTIME_ID`**
 
     The CPU-time clock associated with the current thread.
-
-### <a href="#condvar" name="condvar"></a>`__wasi_condvar_t` (`uint32_t`)
-
-A userspace condition variable.
-
-Used by [`__wasi_subscription_t`](#subscription) and [`__wasi_condvar_signal()`](#condvar_signal).
-
-Special values:
-
-- <a href="#condvar.has_no_waiters" name="condvar.has_no_waiters"></a>**`__WASI_CONDVAR_HAS_NO_WAITERS`**
-
-    The condition variable is in its initial state. There
-    are no threads waiting to be woken up. If the
-    condition variable has any other value, the kernel
-    must be called to wake up any sleeping threads.
 
 ### <a href="#device" name="device"></a>`__wasi_device_t` (`uint64_t`)
 
@@ -1589,23 +1471,6 @@ Members:
             The state of the file
             descriptor.
 
-- When `type` is [`__WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate):
-
-    - <a href="#event.proc_terminate" name="event.proc_terminate"></a>**`proc_terminate`**
-
-        - <a href="#event.proc_terminate.signal" name="event.proc_terminate.signal"></a><code>[\_\_wasi\_signal\_t](#signal) <strong>signal</strong></code>
-
-            If zero, the process has
-            exited.
-            Otherwise, the signal
-            condition causing it to
-            terminated.
-
-        - <a href="#event.proc_terminate.exitcode" name="event.proc_terminate.exitcode"></a><code>[\_\_wasi\_exitcode\_t](#exitcode) <strong>exitcode</strong></code>
-
-            If exited, the exit code of
-            the process.
-
 ### <a href="#eventrwflags" name="eventrwflags"></a>`__wasi_eventrwflags_t` (`uint16_t` bitfield)
 
 The state of the file descriptor subscribed to with
@@ -1632,12 +1497,6 @@ Possible values:
     The time value of clock [`__wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id)
     has reached timestamp [`__wasi_subscription_t::clock.timeout`](#subscription.clock.timeout).
 
-- <a href="#eventtype.condvar" name="eventtype.condvar"></a>**`__WASI_EVENTTYPE_CONDVAR`**
-
-    Condition variable [`__wasi_subscription_t::condvar.condvar`](#subscription.condvar.condvar) has
-    been woken up and [`__wasi_subscription_t::condvar.lock`](#subscription.condvar.lock) has been
-    acquired for writing.
-
 - <a href="#eventtype.fd_read" name="eventtype.fd_read"></a>**`__WASI_EVENTTYPE_FD_READ`**
 
     File descriptor [`__wasi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
@@ -1649,21 +1508,6 @@ Possible values:
     File descriptor [`__wasi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
     capacity available for writing. This event always
     triggers for regular files.
-
-- <a href="#eventtype.lock_rdlock" name="eventtype.lock_rdlock"></a>**`__WASI_EVENTTYPE_LOCK_RDLOCK`**
-
-    Lock [`__wasi_subscription_t::lock.lock`](#subscription.lock.lock) has been acquired for
-    reading.
-
-- <a href="#eventtype.lock_wrlock" name="eventtype.lock_wrlock"></a>**`__WASI_EVENTTYPE_LOCK_WRLOCK`**
-
-    Lock [`__wasi_subscription_t::lock.lock`](#subscription.lock.lock) has been acquired for
-    writing.
-
-- <a href="#eventtype.proc_terminate" name="eventtype.proc_terminate"></a>**`__WASI_EVENTTYPE_PROC_TERMINATE`**
-
-    The process associated with process descriptor
-    [`__wasi_subscription_t::proc_terminate.fd`](#subscription.proc_terminate.fd) has terminated.
 
 ### <a href="#exitcode" name="exitcode"></a>`__wasi_exitcode_t` (`uint32_t`)
 
@@ -1932,50 +1776,6 @@ Number of hard links to an inode.
 
 Used by [`__wasi_filestat_t`](#filestat).
 
-### <a href="#lock" name="lock"></a>`__wasi_lock_t` (`uint32_t`)
-
-A userspace read-recursive readers-writer lock, similar to a
-Linux futex or a FreeBSD umtx.
-
-Used by [`__wasi_subscription_t`](#subscription), [`__wasi_lock_unlock()`](#lock_unlock), and [`__wasi_thread_exit()`](#thread_exit).
-
-Special values:
-
-- <a href="#lock.unlocked" name="lock.unlocked"></a>**`__WASI_LOCK_UNLOCKED`**
-
-    Value indicating that the lock is in its initial
-    unlocked state.
-
-- <a href="#lock.wrlocked" name="lock.wrlocked"></a>**`__WASI_LOCK_WRLOCKED`**
-
-    Bitmask indicating that the lock is write-locked. If
-    set, the lower 30 bits of the lock contain the
-    identifier of the thread that owns the write lock.
-    Otherwise, the lower 30 bits of the lock contain the
-    number of acquired read locks.
-
-- <a href="#lock.kernel_managed" name="lock.kernel_managed"></a>**`__WASI_LOCK_KERNEL_MANAGED`**
-
-    Bitmask indicating that the lock is either read locked
-    or write locked, and that one or more threads have
-    their execution suspended, waiting to acquire the
-    lock. The last owner of the lock must call the
-    kernel to unlock.
-
-    When the lock is acquired for reading and this bit is
-    set, it means that one or more threads are attempting
-    to acquire this lock for writing. In that case, other
-    threads should only acquire additional read locks if
-    suspending execution would cause a deadlock. It is
-    preferred to suspend execution, as this prevents
-    starvation of writers.
-
-- <a href="#lock.bogus" name="lock.bogus"></a>**`__WASI_LOCK_BOGUS`**
-
-    Value indicating that the lock is in an incorrect
-    state. A lock cannot be in its initial unlocked state,
-    while also managed by the kernel.
-
 ### <a href="#lookup" name="lookup"></a>`__wasi_lookup_t` (`struct`)
 
 Path lookup properties.
@@ -2077,13 +1877,6 @@ Possible values:
 - <a href="#msflags.sync" name="msflags.sync"></a>**`__WASI_MS_SYNC`**
 
     Perform synchronous writes.
-
-### <a href="#nthreads" name="nthreads"></a>`__wasi_nthreads_t` (`uint32_t`)
-
-Specifies the number of threads sleeping on a condition
-variable that should be woken up.
-
-Used by [`__wasi_condvar_signal()`](#condvar_signal).
 
 ### <a href="#oflags" name="oflags"></a>`__wasi_oflags_t` (`uint16_t` bitfield)
 
@@ -2324,11 +2117,6 @@ Possible values:
     If [`__WASI_RIGHT_FD_WRITE`](#rights.fd_write) is set, includes the right to
     invoke [`__wasi_poll()`](#poll) to subscribe to [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
 
-- <a href="#rights.poll_proc_terminate" name="rights.poll_proc_terminate"></a>**`__WASI_RIGHT_POLL_PROC_TERMINATE`**
-
-    The right to invoke [`__wasi_poll()`](#poll) to subscribe to
-    [`__WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate).
-
 - <a href="#rights.sock_shutdown" name="rights.sock_shutdown"></a>**`__WASI_RIGHT_SOCK_SHUTDOWN`**
 
     The right to invoke [`__wasi_sock_shutdown()`](#sock_shutdown).
@@ -2350,23 +2138,6 @@ Possible values:
 
     Returned by [`__wasi_sock_recv()`](#sock_recv): Message data has been
     truncated.
-
-### <a href="#scope" name="scope"></a>`__wasi_scope_t` (`uint8_t`)
-
-Indicates whether an object is stored in private or shared
-memory.
-
-Used by [`__wasi_subscription_t`](#subscription), [`__wasi_condvar_signal()`](#condvar_signal), [`__wasi_lock_unlock()`](#lock_unlock), and [`__wasi_thread_exit()`](#thread_exit).
-
-Possible values:
-
-- <a href="#scope.private" name="scope.private"></a>**`__WASI_SCOPE_PRIVATE`**
-
-    The object is stored in private memory.
-
-- <a href="#scope.shared" name="scope.shared"></a>**`__WASI_SCOPE_SHARED`**
-
-    The object is stored in shared memory.
 
 ### <a href="#sdflags" name="sdflags"></a>`__wasi_sdflags_t` (`uint8_t` bitfield)
 
@@ -2636,12 +2407,6 @@ Members:
 
     The type of the event to which to subscribe.
 
-    Currently, [`__WASI_EVENTTYPE_CONDVAR`](#eventtype.condvar),
-    [`__WASI_EVENTTYPE_LOCK_RDLOCK`](#eventtype.lock_rdlock), and [`__WASI_EVENTTYPE_LOCK_WRLOCK`](#eventtype.lock_wrlock)
-    must be provided as the first subscription and may
-    only be followed by up to one other subscription,
-    having type [`__WASI_EVENTTYPE_CLOCK`](#eventtype.clock).
-
 - When `type` is [`__WASI_EVENTTYPE_CLOCK`](#eventtype.clock):
 
     - <a href="#subscription.clock" name="subscription.clock"></a>**`clock`**
@@ -2673,35 +2438,6 @@ Members:
             timeout is absolute or
             relative.
 
-- When `type` is [`__WASI_EVENTTYPE_CONDVAR`](#eventtype.condvar):
-
-    - <a href="#subscription.condvar" name="subscription.condvar"></a>**`condvar`**
-
-        - <a href="#subscription.condvar.condvar" name="subscription.condvar.condvar"></a><code>\_Atomic([\_\_wasi\_condvar\_t](#condvar)) *<strong>condvar</strong></code>
-
-            The condition variable on
-            which to wait to be woken up.
-
-        - <a href="#subscription.condvar.lock" name="subscription.condvar.lock"></a><code>\_Atomic([\_\_wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
-
-            The lock that will be
-            released while waiting.
-
-            The lock will be reacquired
-            for writing when the condition
-            variable triggers.
-
-        - <a href="#subscription.condvar.condvar_scope" name="subscription.condvar.condvar_scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>condvar\_scope</strong></code>
-
-            Whether the condition variable
-            is stored in private or shared
-            memory.
-
-        - <a href="#subscription.condvar.lock_scope" name="subscription.condvar.lock_scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>lock\_scope</strong></code>
-
-            Whether the lock is stored in
-            private or shared memory.
-
 - When `type` is [`__WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
 
     - <a href="#subscription.fd_readwrite" name="subscription.fd_readwrite"></a>**`fd_readwrite`**
@@ -2716,111 +2452,6 @@ Members:
 
             Under which conditions to
             trigger.
-
-- When `type` is [`__WASI_EVENTTYPE_LOCK_RDLOCK`](#eventtype.lock_rdlock) or [`__WASI_EVENTTYPE_LOCK_WRLOCK`](#eventtype.lock_wrlock):
-
-    - <a href="#subscription.lock" name="subscription.lock"></a>**`lock`**
-
-        - <a href="#subscription.lock.lock" name="subscription.lock.lock"></a><code>\_Atomic([\_\_wasi\_lock\_t](#lock)) *<strong>lock</strong></code>
-
-            The lock that will be acquired
-            for reading or writing.
-
-        - <a href="#subscription.lock.lock_scope" name="subscription.lock.lock_scope"></a><code>[\_\_wasi\_scope\_t](#scope) <strong>lock\_scope</strong></code>
-
-            Whether the lock is stored in
-            private or shared memory.
-
-- When `type` is [`__WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate):
-
-    - <a href="#subscription.proc_terminate" name="subscription.proc_terminate"></a>**`proc_terminate`**
-
-        - <a href="#subscription.proc_terminate.fd" name="subscription.proc_terminate.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
-
-            The process descriptor on
-            which to wait for process
-            termination.
-
-### <a href="#tcb" name="tcb"></a>`__wasi_tcb_t` (`struct`)
-
-The Thread Control Block (TCB).
-
-After a thread begins execution (at program startup or when
-created through [`__wasi_thread_create()`](#thread_create)), the CPU's registers
-controlling Thread-Local Storage (TLS) will already be
-initialized. They will point to an area only containing the
-TCB.
-
-If the thread needs space for storing thread-specific
-variables, the thread may allocate a larger area and adjust
-the CPU's registers to point to that area instead. However, it
-does need to make sure that the TCB is copied over to the new
-TLS area.
-
-The purpose of the TCB is that it allows light-weight
-emulators to store information related to individual threads.
-For example, it may be used to store a copy of the CPU
-registers prior emulation, so that TLS for the host system
-can be restored if needed.
-
-Members:
-
-- <a href="#tcb.parent" name="tcb.parent"></a><code>void *<strong>parent</strong></code>
-
-    Pointer that may be freely assigned by the system. Its
-    value cannot be interpreted by the application.
-
-### <a href="#threadattr" name="threadattr"></a>`__wasi_threadattr_t` (`struct`)
-
-Attributes for thread creation.
-
-Used by [`__wasi_thread_create()`](#thread_create).
-
-Members:
-
-- <a href="#threadattr.entry_point" name="threadattr.entry_point"></a><code>[\_\_wasi\_threadentry\_t](#threadentry) *<strong>entry\_point</strong></code>
-
-    Initial program counter value.
-
-- <a href="#threadattr.stack" name="threadattr.stack"></a><code>void *<strong>stack</strong></code> and <a href="#threadattr.stack_len" name="threadattr.stack_len"></a><code>size\_t <strong>stack\_len</strong></code>
-
-    Region allocated to serve as stack space.
-
-- <a href="#threadattr.argument" name="threadattr.argument"></a><code>void *<strong>argument</strong></code>
-
-    Argument to be forwarded to the entry point function.
-
-### <a href="#threadentry" name="threadentry"></a>`__wasi_threadentry_t` (function type)
-
-Entry point for additionally created threads.
-
-Used by [`__wasi_threadattr_t`](#threadattr).
-
-Parameters:
-
-- <a href="#threadentry.tid" name="threadentry.tid"></a><code>[\_\_wasi\_tid\_t](#tid) <strong>tid</strong></code>
-
-    Thread ID of the current thread.
-
-- <a href="#threadentry.aux" name="threadentry.aux"></a><code>void *<strong>aux</strong></code>
-
-    Copy of the value stored in
-    [`__wasi_threadattr_t::argument`](#threadattr.argument).
-
-### <a href="#tid" name="tid"></a>`__wasi_tid_t` (`uint32_t`)
-
-Unique system-local identifier of a thread. This identifier is
-only valid during the lifetime of the thread.
-
-Threads must be aware of their thread identifier, as it is
-written it into locks when acquiring them for writing. It is
-not advised to use these identifiers for any other purpose.
-
-As the thread identifier is also stored in [`__wasi_lock_t`](#lock) when
-[`__WASI_LOCK_WRLOCKED`](#lock.wrlocked) is set, the top two bits of the thread
-must always be set to zero.
-
-Used by [`__wasi_threadentry_t`](#threadentry) and [`__wasi_thread_create()`](#thread_create).
 
 ### <a href="#timestamp" name="timestamp"></a>`__wasi_timestamp_t` (`uint64_t`)
 
