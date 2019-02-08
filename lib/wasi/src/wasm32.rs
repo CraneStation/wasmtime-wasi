@@ -847,80 +847,6 @@ fn bindgen_test_layout_wasi_lookup_t() {
     );
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
-pub struct __wasi_auxv_t {
-    pub a_type: __wasi_auxtype_t,
-    pub __bindgen_anon_1: __wasi_auxv_t__bindgen_ty_1,
-}
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub union __wasi_auxv_t__bindgen_ty_1 {
-    pub a_val: size_t,
-    pub a_ptr: uintptr_t, // *mut ::std::os::raw::c_void
-    _bindgen_union_align: u32,
-}
-#[allow(non_snake_case)]
-#[test]
-fn bindgen_test_layout_wasi_auxv_t__bindgen_ty_1() {
-    assert_eq!(
-        ::std::mem::size_of::<__wasi_auxv_t__bindgen_ty_1>(),
-        4usize,
-        concat!("Size of: ", stringify!(__wasi_auxv_t__bindgen_ty_1))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<__wasi_auxv_t__bindgen_ty_1>(),
-        4usize,
-        concat!("Alignment of ", stringify!(__wasi_auxv_t__bindgen_ty_1))
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_auxv_t__bindgen_ty_1>())).a_val as *const _ as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_auxv_t__bindgen_ty_1),
-            "::",
-            stringify!(a_val)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_auxv_t__bindgen_ty_1>())).a_ptr as *const _ as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_auxv_t__bindgen_ty_1),
-            "::",
-            stringify!(a_ptr)
-        )
-    );
-}
-#[test]
-fn bindgen_test_layout_wasi_auxv_t() {
-    assert_eq!(
-        ::std::mem::size_of::<__wasi_auxv_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(__wasi_auxv_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<__wasi_auxv_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(__wasi_auxv_t))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__wasi_auxv_t>())).a_type as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_auxv_t),
-            "::",
-            stringify!(a_type)
-        )
-    );
-}
-#[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct __wasi_ciovec_t {
     pub buf: uintptr_t, // *const ::std::os::raw::c_void
@@ -998,13 +924,6 @@ fn bindgen_test_layout_wasi_iovec_t() {
         )
     );
 }
-// TODO: Figure out if we need this.
-//pub type __wasi_processentry_t =
-//    ::std::option::Option<
-//        unsafe extern "C" fn(
-//            auxv: uintptr_t, // *const __wasi_auxv_t
-//        )
-//    >;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct __wasi_recv_in_t {
