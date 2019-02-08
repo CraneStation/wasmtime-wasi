@@ -1391,10 +1391,12 @@ Used by [`__wasi_event_t`](#event) and [`__wasi_proc_exit()`](#proc_exit).
 
 A file descriptor number.
 
-Unlike on POSIX-compliant systems, none of the file descriptor
-numbers are reserved for a purpose (e.g., stdin, stdout,
-stderr). Operating systems are not required to allocate new
-file descriptors in ascending order.
+As on POSIX-compliant systems, three file descriptor numbers are
+provided to instances on startup -- 0, 1, and 2, (a.k.a. `STDIN_FILENO`,
+`STDOUT_FILENO`, and `STDERR_FILENO`).
+
+Other than these, WASI implementations are not required to allocate
+new file descriptors in ascending order.
 
 Special values:
 
