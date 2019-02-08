@@ -67,11 +67,6 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_file_stat_put()`](#file_stat_put)
 - [`__wasi_file_symlink()`](#file_symlink)
 - [`__wasi_file_unlink()`](#file_unlink)
-- [`__wasi_mem_advise()`](#mem_advise)
-- [`__wasi_mem_map()`](#mem_map)
-- [`__wasi_mem_protect()`](#mem_protect)
-- [`__wasi_mem_sync()`](#mem_sync)
-- [`__wasi_mem_unmap()`](#mem_unmap)
 - [`__wasi_poll()`](#poll)
 - [`__wasi_proc_exit()`](#proc_exit)
 - [`__wasi_proc_raise()`](#proc_raise)
@@ -745,107 +740,6 @@ Inputs:
 
         If set, attempt to remove a directory.
         Otherwise, unlink a file.
-
-### <a href="#mem_advise" name="mem_advise"></a>`__wasi_mem_advise()`
-
-Provides memory advisory information on a region of memory.
-
-Inputs:
-
-- <a href="#mem_advise.mapping" name="mem_advise.mapping"></a><code>void *<strong>mapping</strong></code> and <a href="#mem_advise.mapping_len" name="mem_advise.mapping_len"></a><code>size\_t <strong>mapping\_len</strong></code>
-
-    The pages for which to provide memory advisory
-    information.
-
-- <a href="#mem_advise.advice" name="mem_advise.advice"></a><code>[\_\_wasi\_advice\_t](#advice) <strong>advice</strong></code>
-
-    The advice.
-
-### <a href="#mem_map" name="mem_map"></a>`__wasi_mem_map()`
-
-Creates a memory mapping, making the contents of a file
-accessible through memory.
-
-Inputs:
-
-- <a href="#mem_map.addr" name="mem_map.addr"></a><code>void *<strong>addr</strong></code>
-
-    If [`__WASI_MAP_FIXED`](#mflags.fixed) is set, specifies to which
-    address the file region is mapped. Otherwise,
-    the mapping is performed at an unused
-    location.
-
-- <a href="#mem_map.len" name="mem_map.len"></a><code>size\_t <strong>len</strong></code>
-
-    The length of the memory mapping to be
-    created.
-
-- <a href="#mem_map.prot" name="mem_map.prot"></a><code>[\_\_wasi\_mprot\_t](#mprot) <strong>prot</strong></code>
-
-    Initial memory protection options for the
-    memory mapping.
-
-- <a href="#mem_map.flags" name="mem_map.flags"></a><code>[\_\_wasi\_mflags\_t](#mflags) <strong>flags</strong></code>
-
-    Memory mapping flags.
-
-- <a href="#mem_map.fd" name="mem_map.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
-
-    If [`__WASI_MAP_ANON`](#mflags.anon) is set, this argument must be
-    [`__WASI_MAP_ANON_FD`](#fd.map_anon_fd). Otherwise, this argument
-    specifies the file whose contents need to be
-    mapped.
-
-- <a href="#mem_map.off" name="mem_map.off"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>off</strong></code>
-
-    If [`__WASI_MAP_ANON`](#mflags.anon) is set, this argument must be
-    zero. Otherwise, this argument specifies the
-    offset within the file at which the mapping
-    starts.
-
-Outputs:
-
-- <a href="#mem_map.mem" name="mem_map.mem"></a><code>void *<strong>mem</strong></code>
-
-    The starting address of the memory mapping.
-
-### <a href="#mem_protect" name="mem_protect"></a>`__wasi_mem_protect()`
-
-Change the protection of a memory mapping.
-
-Inputs:
-
-- <a href="#mem_protect.mapping" name="mem_protect.mapping"></a><code>void *<strong>mapping</strong></code> and <a href="#mem_protect.mapping_len" name="mem_protect.mapping_len"></a><code>size\_t <strong>mapping\_len</strong></code>
-
-    The pages that need their protection changed.
-
-- <a href="#mem_protect.prot" name="mem_protect.prot"></a><code>[\_\_wasi\_mprot\_t](#mprot) <strong>prot</strong></code>
-
-    New protection options.
-
-### <a href="#mem_sync" name="mem_sync"></a>`__wasi_mem_sync()`
-
-Synchronize a region of memory with its physical storage.
-
-Inputs:
-
-- <a href="#mem_sync.mapping" name="mem_sync.mapping"></a><code>void *<strong>mapping</strong></code> and <a href="#mem_sync.mapping_len" name="mem_sync.mapping_len"></a><code>size\_t <strong>mapping\_len</strong></code>
-
-    The pages that need to be synchronized.
-
-- <a href="#mem_sync.flags" name="mem_sync.flags"></a><code>[\_\_wasi\_msflags\_t](#msflags) <strong>flags</strong></code>
-
-    The method of synchronization.
-
-### <a href="#mem_unmap" name="mem_unmap"></a>`__wasi_mem_unmap()`
-
-Unmaps a region of memory.
-
-Inputs:
-
-- <a href="#mem_unmap.mapping" name="mem_unmap.mapping"></a><code>void *<strong>mapping</strong></code> and <a href="#mem_unmap.mapping_len" name="mem_unmap.mapping_len"></a><code>size\_t <strong>mapping\_len</strong></code>
-
-    The pages that needs to be unmapped.
 
 ### <a href="#poll" name="poll"></a>`__wasi_poll()`
 
@@ -1777,77 +1671,6 @@ Possible values:
     As long as the resolved path corresponds to a symbolic
     link, it is expanded.
 
-### <a href="#mflags" name="mflags"></a>`__wasi_mflags_t` (`uint8_t` bitfield)
-
-Memory mapping flags.
-
-Used by [`__wasi_mem_map()`](#mem_map).
-
-Possible values:
-
-- <a href="#mflags.anon" name="mflags.anon"></a>**`__WASI_MAP_ANON`**
-
-    Instead of mapping the contents of the file provided,
-    create a mapping to anonymous memory. The file
-    descriptor argument must be set to [`__WASI_MAP_ANON_FD`](#fd.map_anon_fd),
-    and the offset must be set to zero.
-
-- <a href="#mflags.fixed" name="mflags.fixed"></a>**`__WASI_MAP_FIXED`**
-
-    Require that the mapping is performed at the base
-    address provided.
-
-- <a href="#mflags.private" name="mflags.private"></a>**`__WASI_MAP_PRIVATE`**
-
-    Changes are private.
-
-- <a href="#mflags.shared" name="mflags.shared"></a>**`__WASI_MAP_SHARED`**
-
-    Changes are shared.
-
-### <a href="#mprot" name="mprot"></a>`__wasi_mprot_t` (`uint8_t` bitfield)
-
-Memory page protection options.
-
-This implementation enforces the `W^X` property: Pages cannot be
-mapped for execution while also mapped for writing.
-
-Used by [`__wasi_mem_map()`](#mem_map) and [`__wasi_mem_protect()`](#mem_protect).
-
-Possible values:
-
-- <a href="#mprot.exec" name="mprot.exec"></a>**`__WASI_PROT_EXEC`**
-
-    Page can be executed.
-
-- <a href="#mprot.write" name="mprot.write"></a>**`__WASI_PROT_WRITE`**
-
-    Page can be written.
-
-- <a href="#mprot.read" name="mprot.read"></a>**`__WASI_PROT_READ`**
-
-    Page can be read.
-
-### <a href="#msflags" name="msflags"></a>`__wasi_msflags_t` (`uint8_t` bitfield)
-
-Methods of synchronizing memory with physical storage.
-
-Used by [`__wasi_mem_sync()`](#mem_sync).
-
-Possible values:
-
-- <a href="#msflags.async" name="msflags.async"></a>**`__WASI_MS_ASYNC`**
-
-    Perform asynchronous writes.
-
-- <a href="#msflags.invalidate" name="msflags.invalidate"></a>**`__WASI_MS_INVALIDATE`**
-
-    Invalidate cached data.
-
-- <a href="#msflags.sync" name="msflags.sync"></a>**`__WASI_MS_SYNC`**
-
-    Perform synchronous writes.
-
 ### <a href="#oflags" name="oflags"></a>`__wasi_oflags_t` (`uint16_t` bitfield)
 
 Open flags used by [`__wasi_file_open()`](#file_open).
@@ -1946,10 +1769,6 @@ Possible values:
 
     The right to invoke [`__wasi_fd_read()`](#fd_read) and [`__wasi_sock_recv()`](#sock_recv).
 
-    If [`__WASI_RIGHT_MEM_MAP`](#rights.mem_map) is set, includes the right to
-    invoke [`__wasi_mem_map()`](#mem_map) with memory protection option
-    [`__WASI_PROT_READ`](#mprot.read).
-
     If [`__WASI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to invoke
     [`__wasi_fd_pread()`](#fd_pread).
 
@@ -1980,10 +1799,6 @@ Possible values:
 - <a href="#rights.fd_write" name="rights.fd_write"></a>**`__WASI_RIGHT_FD_WRITE`**
 
     The right to invoke [`__wasi_fd_write()`](#fd_write) and [`__wasi_sock_send()`](#sock_send).
-
-    If [`__WASI_RIGHT_MEM_MAP`](#rights.mem_map) is set, includes the right to
-    invoke [`__wasi_mem_map()`](#mem_map) with memory protection option
-    [`__WASI_PROT_WRITE`](#mprot.write).
 
     If [`__WASI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to
     invoke [`__wasi_fd_pwrite()`](#fd_pwrite).
@@ -2073,11 +1888,6 @@ Possible values:
 - <a href="#rights.file_unlink" name="rights.file_unlink"></a>**`__WASI_RIGHT_FILE_UNLINK`**
 
     The right to invoke [`__wasi_file_unlink()`](#file_unlink).
-
-- <a href="#rights.mem_map" name="rights.mem_map"></a>**`__WASI_RIGHT_MEM_MAP`**
-
-    The right to invoke [`__wasi_mem_map()`](#mem_map) with [`__wasi_mprot_t`](#mprot) set to
-    zero.
 
 - <a href="#rights.poll_fd_readwrite" name="rights.poll_fd_readwrite"></a>**`__WASI_RIGHT_POLL_FD_READWRITE`**
 

@@ -25,8 +25,7 @@
    __WASI_RIGHT_FILE_STAT_FPUT_SIZE | __WASI_RIGHT_FILE_STAT_FPUT_TIMES |  \
    __WASI_RIGHT_FILE_STAT_GET | __WASI_RIGHT_FILE_STAT_PUT_TIMES |         \
    __WASI_RIGHT_FILE_SYMLINK | __WASI_RIGHT_FILE_UNLINK |                  \
-   __WASI_RIGHT_MEM_MAP | __WASI_RIGHT_POLL_FD_READWRITE |                 \
-   __WASI_RIGHT_SOCK_SHUTDOWN)
+   __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_SOCK_SHUTDOWN)
 
 // Block and character device interaction is outside the scope of
 // CloudABI. Simply allow everything.
@@ -52,22 +51,19 @@
   (RIGHTS_DIRECTORY_BASE | RIGHTS_REGULAR_FILE_BASE)
 
 // Operations that apply to regular files.
-#define RIGHTS_REGULAR_FILE_BASE                                               \
+#define RIGHTS_REGULAR_FILE_BASE                                           \
   (__WASI_RIGHT_FD_DATASYNC | __WASI_RIGHT_FD_READ |                       \
    __WASI_RIGHT_FD_SEEK | __WASI_RIGHT_FD_STAT_PUT_FLAGS |                 \
-   __WASI_RIGHT_FD_SYNC | __WASI_RIGHT_FD_TELL | __WASI_RIGHT_FD_WRITE | \
+   __WASI_RIGHT_FD_SYNC | __WASI_RIGHT_FD_TELL | __WASI_RIGHT_FD_WRITE |   \
    __WASI_RIGHT_FILE_ADVISE | __WASI_RIGHT_FILE_ALLOCATE |                 \
    __WASI_RIGHT_FILE_STAT_FGET | __WASI_RIGHT_FILE_STAT_FPUT_SIZE |        \
-   __WASI_RIGHT_FILE_STAT_FPUT_TIMES | __WASI_RIGHT_MEM_MAP |              \
-   __WASI_RIGHT_POLL_FD_READWRITE                                        \
-   )
+   __WASI_RIGHT_FILE_STAT_FPUT_TIMES | __WASI_RIGHT_POLL_FD_READWRITE)
 #define RIGHTS_REGULAR_FILE_INHERITING 0
 
 // Operations that apply to shared memory objects.
-#define RIGHTS_SHARED_MEMORY_BASE                                       \
+#define RIGHTS_SHARED_MEMORY_BASE                                   \
   (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FD_WRITE |                   \
-   __WASI_RIGHT_FILE_STAT_FGET | __WASI_RIGHT_FILE_STAT_FPUT_SIZE | \
-   __WASI_RIGHT_MEM_MAP)
+   __WASI_RIGHT_FILE_STAT_FGET | __WASI_RIGHT_FILE_STAT_FPUT_SIZE)
 #define RIGHTS_SHARED_MEMORY_INHERITING 0
 
 // Operations that apply to sockets and socket pairs.
