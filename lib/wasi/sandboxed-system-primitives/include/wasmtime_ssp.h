@@ -153,12 +153,10 @@ typedef uint8_t __wasi_filetype_t;
 #define __WASI_FILETYPE_BLOCK_DEVICE     (1)
 #define __WASI_FILETYPE_CHARACTER_DEVICE (2)
 #define __WASI_FILETYPE_DIRECTORY        (3)
-#define __WASI_FILETYPE_PROCESS          (4)
-#define __WASI_FILETYPE_REGULAR_FILE     (5)
-#define __WASI_FILETYPE_SHARED_MEMORY    (6)
-#define __WASI_FILETYPE_SOCKET_DGRAM     (7)
-#define __WASI_FILETYPE_SOCKET_STREAM    (8)
-#define __WASI_FILETYPE_SYMBOLIC_LINK    (9)
+#define __WASI_FILETYPE_REGULAR_FILE     (4)
+#define __WASI_FILETYPE_SOCKET_DGRAM     (5)
+#define __WASI_FILETYPE_SOCKET_STREAM    (6)
+#define __WASI_FILETYPE_SYMBOLIC_LINK    (7)
 
 typedef uint16_t __wasi_fsflags_t;
 #define __WASI_FILESTAT_ATIM     (0x0001)
@@ -580,12 +578,6 @@ __wasi_errno_t wasmtime_ssp_clock_time_get(
 __wasi_errno_t wasmtime_ssp_fd_close(
     struct fd_table *curfds,
     __wasi_fd_t fd
-) __attribute__((__warn_unused_result__));
-
-__wasi_errno_t wasmtime_ssp_fd_create1(
-    struct fd_table *curfds,
-    __wasi_filetype_t type,
-    __wasi_fd_t *fd
 ) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_fd_create2(
