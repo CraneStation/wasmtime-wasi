@@ -105,3 +105,43 @@ roughly the same as what you have in Emscripten's POSIX-like APIs today:
    workers, including SharedArrayBuffer to handle the general case
  - Run the program on the main thread but limit all I/O to interacting with
    in-memory data structures, such as in-memory filesystems.
+
+## Why no mmap and friends?
+
+True mmap support is something that could be added in the future,
+though it is expected to require integration with the core language.
+See "Finer-grained control over memory" in WebAssembly's
+[Future Features] document for an overview.
+
+Ignoring the many non-standard mmap extensions out there,
+the core mmap behavior is not portable in several respects, even
+across POSIX-style systems. See
+[LevelDB's decision to stop using mmap], for one example in
+practice, and search for the word "unspecified" in the
+[POSIX mmap spec] for some others.
+
+And, some features of mmap can lead to userspace triggering
+signals. Accessing memory beyond the end of the file, including in
+the case where someone else changes the size of the file, leads to a
+`SIGBUS` on POSIX-style systems. Protection modes other than
+`PROT_READ|PROT_WRITE` can produce `SIGSEGV`. While some VMs are
+prepared to catch such signals transparently, this is a burdensome
+requirement for others.
+
+Another issue is that while WASI is a synchronous I/O API today,
+this design may change in the future. `mmap` can create situations
+where doing a load can entail blocking I/O, which can make it
+harder to characterize all the places where blocking I/O may occur.
+
+And lastly, WebAssembly linear memory doesn't support the semantics
+of mapping and unmapping pages. Most WebAssembly VMs would not
+easily be able to support freeing the memory of a page in the middle
+of a linear memory region, for example.
+
+To make things easier for people porting programs that just use
+mmap to read and write files in a simple way, WASI libc includes a
+minimal userspace emulation of `mmap` and `munmap`.
+
+[POSIX mmap spec]: http://pubs.opengroup.org/onlinepubs/7908799/xsh/mmap.html
+[LevelDB's decision to stop using mmap]: https://groups.google.com/forum/#!topic/leveldb/C5Hh__JfdrQ
+[Future Features]: https://webassembly.org/docs/future-features/.
