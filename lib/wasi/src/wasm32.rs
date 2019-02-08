@@ -482,9 +482,8 @@ pub union __wasi_event_t__bindgen_ty_1 {
 #[derive(Debug, Copy, Clone)]
 pub struct __wasi_event_t__bindgen_ty_1__bindgen_ty_1 {
     pub nbytes: __wasi_filesize_t,
-    pub unused: [i8; 4usize],
     pub flags: __wasi_eventrwflags_t,
-    pub __bindgen_padding_0: u16,
+    pub __bindgen_padding_0: [u16; 3usize],
 }
 #[allow(non_snake_case)]
 #[test]
@@ -512,23 +511,10 @@ fn bindgen_test_layout_wasi_event_t__bindgen_ty_1__bindgen_ty_1() {
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<__wasi_event_t__bindgen_ty_1__bindgen_ty_1>())).unused
-                as *const _ as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_event_t__bindgen_ty_1__bindgen_ty_1),
-            "::",
-            stringify!(unused)
-        )
-    );
-    assert_eq!(
-        unsafe {
             &(*(::std::ptr::null::<__wasi_event_t__bindgen_ty_1__bindgen_ty_1>())).flags as *const _
                 as usize
         },
-        12usize,
+        8usize,
         concat!(
             "Offset of field: ",
             stringify!(__wasi_event_t__bindgen_ty_1__bindgen_ty_1),
@@ -540,7 +526,6 @@ fn bindgen_test_layout_wasi_event_t__bindgen_ty_1__bindgen_ty_1() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct __wasi_event_t__bindgen_ty_1__bindgen_ty_2 {
-    pub unused: [i8; 4usize],
     pub signal: __wasi_signal_t,
     pub exitcode: __wasi_exitcode_t,
 }
@@ -549,7 +534,7 @@ pub struct __wasi_event_t__bindgen_ty_1__bindgen_ty_2 {
 fn bindgen_test_layout_wasi_event_t__bindgen_ty_1__bindgen_ty_2() {
     assert_eq!(
         ::std::mem::size_of::<__wasi_event_t__bindgen_ty_1__bindgen_ty_2>(),
-        12usize,
+        8usize,
         concat!(
             "Size of: ",
             stringify!(__wasi_event_t__bindgen_ty_1__bindgen_ty_2)
@@ -565,23 +550,10 @@ fn bindgen_test_layout_wasi_event_t__bindgen_ty_1__bindgen_ty_2() {
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<__wasi_event_t__bindgen_ty_1__bindgen_ty_2>())).unused
-                as *const _ as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_event_t__bindgen_ty_1__bindgen_ty_2),
-            "::",
-            stringify!(unused)
-        )
-    );
-    assert_eq!(
-        unsafe {
             &(*(::std::ptr::null::<__wasi_event_t__bindgen_ty_1__bindgen_ty_2>())).signal
                 as *const _ as usize
         },
-        4usize,
+        0usize,
         concat!(
             "Offset of field: ",
             stringify!(__wasi_event_t__bindgen_ty_1__bindgen_ty_2),
@@ -594,7 +566,7 @@ fn bindgen_test_layout_wasi_event_t__bindgen_ty_1__bindgen_ty_2() {
             &(*(::std::ptr::null::<__wasi_event_t__bindgen_ty_1__bindgen_ty_2>())).exitcode
                 as *const _ as usize
         },
-        8usize,
+        4usize,
         concat!(
             "Offset of field: ",
             stringify!(__wasi_event_t__bindgen_ty_1__bindgen_ty_2),
@@ -1110,14 +1082,13 @@ fn bindgen_test_layout_wasi_recv_in_t() {
 pub struct __wasi_recv_out_t {
     pub ro_datalen: size_t,
     pub ro_fdslen: size_t,
-    pub ro_unused: [i8; 40usize],
     pub ro_flags: __wasi_roflags_t,
 }
 #[test]
 fn bindgen_test_layout_wasi_recv_out_t() {
     assert_eq!(
         ::std::mem::size_of::<__wasi_recv_out_t>(),
-        52usize,
+        12usize,
         concat!("Size of: ", stringify!(__wasi_recv_out_t))
     );
     assert_eq!(
@@ -1146,18 +1117,8 @@ fn bindgen_test_layout_wasi_recv_out_t() {
         )
     );
     assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__wasi_recv_out_t>())).ro_unused as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_recv_out_t),
-            "::",
-            stringify!(ro_unused)
-        )
-    );
-    assert_eq!(
         unsafe { &(*(::std::ptr::null::<__wasi_recv_out_t>())).ro_flags as *const _ as usize },
-        48usize,
+        8usize,
         concat!(
             "Offset of field: ",
             stringify!(__wasi_recv_out_t),
@@ -1270,7 +1231,6 @@ fn bindgen_test_layout_wasi_send_out_t() {
 #[derive(Copy, Clone)]
 pub struct __wasi_subscription_t {
     pub userdata: __wasi_userdata_t,
-    pub unused: u16,
     pub type_: __wasi_eventtype_t,
     pub __bindgen_padding_0: u32,
     pub __bindgen_anon_1: __wasi_subscription_t__bindgen_ty_1,
@@ -1688,18 +1648,8 @@ fn bindgen_test_layout_wasi_subscription_t() {
         )
     );
     assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__wasi_subscription_t>())).unused as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_subscription_t),
-            "::",
-            stringify!(unused)
-        )
-    );
-    assert_eq!(
         unsafe { &(*(::std::ptr::null::<__wasi_subscription_t>())).type_ as *const _ as usize },
-        10usize,
+        8usize,
         concat!(
             "Offset of field: ",
             stringify!(__wasi_subscription_t),

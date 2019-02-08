@@ -1712,10 +1712,6 @@ Members:
             The number of bytes available
             for reading or writing.
 
-        - <a href="#event.fd_readwrite.unused" name="event.fd_readwrite.unused"></a><code>char <strong>unused</strong>[4]</code>
-
-            Obsolete.
-
         - <a href="#event.fd_readwrite.flags" name="event.fd_readwrite.flags"></a><code>[\_\_wasi\_eventrwflags\_t](#eventrwflags) <strong>flags</strong></code>
 
             The state of the file
@@ -1724,10 +1720,6 @@ Members:
 - When `type` is [`__WASI_EVENTTYPE_PROC_TERMINATE`](#eventtype.proc_terminate):
 
     - <a href="#event.proc_terminate" name="event.proc_terminate"></a>**`proc_terminate`**
-
-        - <a href="#event.proc_terminate.unused" name="event.proc_terminate.unused"></a><code>char <strong>unused</strong>[4]</code>
-
-            Obsolete.
 
         - <a href="#event.proc_terminate.signal" name="event.proc_terminate.signal"></a><code>[\_\_wasi\_signal\_t](#signal) <strong>signal</strong></code>
 
@@ -2287,10 +2279,6 @@ Members:
 
     Number of file descriptors stored in [`__wasi_recv_in_t::ri_fds`](#recv_in.ri_fds).
 
-- <a href="#recv_out.ro_unused" name="recv_out.ro_unused"></a><code>char <strong>ro\_unused</strong>[40]</code>
-
-    Fields that were used by previous implementations.
-
 - <a href="#recv_out.ro_flags" name="recv_out.ro_flags"></a><code>[\_\_wasi\_roflags\_t](#roflags) <strong>ro\_flags</strong></code>
 
     Message flags.
@@ -2781,10 +2769,6 @@ Members:
     User-provided value that is attached to the
     subscription in the kernel and returned through
     [`__wasi_event_t::userdata`](#event.userdata).
-
-- <a href="#subscription.unused" name="subscription.unused"></a><code>uint16\_t <strong>unused</strong></code>
-
-    Used by previous implementations. Ignored.
 
 - <a href="#subscription.type" name="subscription.type"></a><code>[__wasi\_eventtype\_t](#eventtype) <strong>type</strong></code>
 
