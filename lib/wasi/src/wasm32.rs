@@ -135,7 +135,6 @@ pub const __WASI_EVENT_FD_READWRITE_HANGUP: __wasi_eventrwflags_t = 1;
 pub const __WASI_EVENTTYPE_CLOCK: __wasi_eventtype_t = 0;
 pub const __WASI_EVENTTYPE_FD_READ: __wasi_eventtype_t = 1;
 pub const __WASI_EVENTTYPE_FD_WRITE: __wasi_eventtype_t = 2;
-pub const __WASI_MAP_ANON_FD: __wasi_fd_t = 4294967295;
 pub const __WASI_FDFLAG_APPEND: __wasi_fdflags_t = 1;
 pub const __WASI_FDFLAG_DSYNC: __wasi_fdflags_t = 2;
 pub const __WASI_FDFLAG_NONBLOCK: __wasi_fdflags_t = 4;

@@ -1398,13 +1398,6 @@ provided to instances on startup -- 0, 1, and 2, (a.k.a. `STDIN_FILENO`,
 Other than these, WASI implementations are not required to allocate
 new file descriptors in ascending order.
 
-Special values:
-
-- <a href="#fd.map_anon_fd" name="fd.map_anon_fd"></a>**`__WASI_MAP_ANON_FD`**
-
-    Passed to [`__wasi_mem_map()`](#mem_map) when creating a mapping to
-    anonymous memory.
-
 ### <a href="#fdflags" name="fdflags"></a>`__wasi_fdflags_t` (`uint16_t` bitfield)
 
 File descriptor flags.
@@ -1494,7 +1487,7 @@ Used by [`__wasi_fd_seek()`](#fd_seek).
 
 Non-negative file size or length of a region within a file.
 
-Used by [`__wasi_event_t`](#event), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_pread()`](#fd_pread), [`__wasi_fd_pwrite()`](#fd_pwrite), [`__wasi_fd_seek()`](#fd_seek), [`__wasi_file_advise()`](#file_advise), [`__wasi_file_allocate()`](#file_allocate), and [`__wasi_mem_map()`](#mem_map).
+Used by [`__wasi_event_t`](#event), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_pread()`](#fd_pread), [`__wasi_fd_pwrite()`](#fd_pwrite), [`__wasi_fd_seek()`](#fd_seek), [`__wasi_file_advise()`](#file_advise), and [`__wasi_file_allocate()`](#file_allocate).
 
 ### <a href="#filestat" name="filestat"></a>`__wasi_filestat_t` (`struct`)
 
