@@ -41,7 +41,6 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_clock_res_get()`](#clock_res_get)
 - [`__wasi_clock_time_get()`](#clock_time_get)
 - [`__wasi_fd_close()`](#fd_close)
-- [`__wasi_fd_create1()`](#fd_create1)
 - [`__wasi_fd_create2()`](#fd_create2)
 - [`__wasi_fd_datasync()`](#fd_datasync)
 - [`__wasi_fd_dup()`](#fd_dup)
@@ -131,27 +130,6 @@ Inputs:
 - <a href="#fd_close.fd" name="fd_close.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor that needs to be closed.
-
-### <a href="#fd_create1" name="fd_create1"></a>`__wasi_fd_create1()`
-
-Creates a file descriptor.
-
-Inputs:
-
-- <a href="#fd_create1.type" name="fd_create1.type"></a><code>[\_\_wasi\_filetype\_t](#filetype) <strong>type</strong></code>
-
-    Possible values:
-
-    - [`__WASI_FILETYPE_SHARED_MEMORY`](#filetype.shared_memory)
-
-        Creates an anonymous shared memory
-        object.
-
-Outputs:
-
-- <a href="#fd_create1.fd" name="fd_create1.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
-
-    The file descriptor that has been created.
 
 ### <a href="#fd_create2" name="fd_create2"></a>`__wasi_fd_create2()`
 
@@ -1668,7 +1646,7 @@ Members:
 
 The type of a file descriptor or file.
 
-Used by [`__wasi_dirent_t`](#dirent), [`__wasi_fdstat_t`](#fdstat), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_create1()`](#fd_create1), [`__wasi_fd_create2()`](#fd_create2), and [`__wasi_file_create()`](#file_create).
+Used by [`__wasi_dirent_t`](#dirent), [`__wasi_fdstat_t`](#fdstat), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_create2()`](#fd_create2), and [`__wasi_file_create()`](#file_create).
 
 Possible values:
 
@@ -1692,18 +1670,10 @@ Possible values:
     The file descriptor or file refers to a directory
     inode.
 
-- <a href="#filetype.process" name="filetype.process"></a>**`__WASI_FILETYPE_PROCESS`**
-
-    The file descriptor refers to a process handle.
-
 - <a href="#filetype.regular_file" name="filetype.regular_file"></a>**`__WASI_FILETYPE_REGULAR_FILE`**
 
     The file descriptor or file refers to a regular file
     inode.
-
-- <a href="#filetype.shared_memory" name="filetype.shared_memory"></a>**`__WASI_FILETYPE_SHARED_MEMORY`**
-
-    The file descriptor refers to a shared memory object.
 
 - <a href="#filetype.socket_dgram" name="filetype.socket_dgram"></a>**`__WASI_FILETYPE_SOCKET_DGRAM`**
 
