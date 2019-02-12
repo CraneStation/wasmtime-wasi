@@ -12,7 +12,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#ifndef __linux__
+#if defined(__FreeBSD__) || defined(__APPLE__)
 #define CONFIG_HAS_ARC4RANDOM_BUF 1
 #else
 #define CONFIG_HAS_ARC4RANDOM_BUF 0
@@ -30,7 +30,7 @@
 #define CONFIG_HAS_CAP_ENTER 0
 #endif
 
-#if !defined(__APPLE__) && !defined(__FreeBSD__)
+#if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__EMSCRIPTEN__)
 #define CONFIG_HAS_CLOCK_NANOSLEEP 1
 #else
 #define CONFIG_HAS_CLOCK_NANOSLEEP 0

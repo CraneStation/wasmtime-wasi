@@ -78,6 +78,10 @@ static_assert(sizeof(((struct iovec *)0)->iov_len) ==
 static_assert(sizeof(struct iovec) == sizeof(__wasi_ciovec_t),
               "Size mismatch");
 
+#if defined(WASMTIME_SSP_STATIC_CURFDS)
+static __thread struct fd_table *curfds;
+#endif
+
 // Converts a POSIX error code to a CloudABI error code.
 static __wasi_errno_t convert_errno(int error) {
   static const __wasi_errno_t errors[] = {
@@ -265,6 +269,9 @@ void fd_table_init(
   ft->entries = NULL;
   ft->size = 0;
   ft->used = 0;
+#if defined(WASMTIME_SSP_STATIC_CURFDS)
+  curfds = ft;
+#endif
 }
 
 // Looks up a file descriptor table entry by number and required rights.
@@ -613,7 +620,9 @@ static __wasi_errno_t fd_table_insert_fdpair(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_close(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd
 ) {
   // Validate the file descriptor.
@@ -635,7 +644,9 @@ __wasi_errno_t wasmtime_ssp_fd_close(
 }
 
 static __wasi_errno_t fd_create_socketpair(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_filetype_t type,
     int socktype,
     __wasi_fd_t *fd1,
@@ -691,7 +702,9 @@ static __wasi_errno_t fd_object_get(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_datasync(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd
 ) {
   struct fd_object *fo;
@@ -712,7 +725,9 @@ __wasi_errno_t wasmtime_ssp_fd_datasync(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_dup(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t from,
     __wasi_fd_t *fd
 ) {
@@ -740,7 +755,9 @@ __wasi_errno_t wasmtime_ssp_fd_dup(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_pread(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     const __wasi_iovec_t *iov,
     size_t iovcnt,
@@ -810,7 +827,9 @@ __wasi_errno_t wasmtime_ssp_fd_pread(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_pwrite(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     const __wasi_ciovec_t *iov,
     size_t iovcnt,
@@ -861,7 +880,9 @@ __wasi_errno_t wasmtime_ssp_fd_pwrite(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_read(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     const __wasi_iovec_t *iov,
     size_t iovcnt,
@@ -881,7 +902,9 @@ __wasi_errno_t wasmtime_ssp_fd_read(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_replace(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t from,
     __wasi_fd_t to
 ) {
@@ -911,7 +934,9 @@ __wasi_errno_t wasmtime_ssp_fd_replace(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_seek(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     __wasi_filedelta_t offset,
     __wasi_whence_t whence,
@@ -951,7 +976,9 @@ __wasi_errno_t wasmtime_ssp_fd_seek(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_stat_get(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     __wasi_fdstat_t *buf
 ) {
@@ -1001,7 +1028,9 @@ __wasi_errno_t wasmtime_ssp_fd_stat_get(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_stat_put(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     const __wasi_fdstat_t *buf,
     __wasi_fdsflags_t flags
@@ -1066,7 +1095,9 @@ __wasi_errno_t wasmtime_ssp_fd_stat_put(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_sync(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd
 ) {
   struct fd_object *fo;
@@ -1082,7 +1113,9 @@ __wasi_errno_t wasmtime_ssp_fd_sync(
 }
 
 __wasi_errno_t wasmtime_ssp_fd_write(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     const __wasi_ciovec_t *iov,
     size_t iovcnt,
@@ -1102,7 +1135,9 @@ __wasi_errno_t wasmtime_ssp_fd_write(
 }
 
 __wasi_errno_t wasmtime_ssp_file_advise(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     __wasi_filesize_t offset,
     __wasi_filesize_t len,
@@ -1170,7 +1205,9 @@ __wasi_errno_t wasmtime_ssp_file_advise(
 }
 
 __wasi_errno_t wasmtime_ssp_file_allocate(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     __wasi_filesize_t offset,
     __wasi_filesize_t len
@@ -1490,7 +1527,9 @@ static void path_put(
 }
 
 __wasi_errno_t wasmtime_ssp_file_create(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     const char *path,
     size_t pathlen,
@@ -1517,7 +1556,9 @@ __wasi_errno_t wasmtime_ssp_file_create(
 }
 
 __wasi_errno_t wasmtime_ssp_file_link(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_lookup_t fd1,
     const char *path1,
     size_t path1len,
@@ -1558,7 +1599,9 @@ __wasi_errno_t wasmtime_ssp_file_link(
 }
 
 __wasi_errno_t wasmtime_ssp_file_open(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_lookup_t dirfd,
     const char *path,
     size_t pathlen,
@@ -1684,7 +1727,9 @@ static void file_readdir_put(
 }
 
 __wasi_errno_t wasmtime_ssp_file_readdir(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     void *buf,
     size_t nbyte,
@@ -1779,7 +1824,9 @@ __wasi_errno_t wasmtime_ssp_file_readdir(
 }
 
 __wasi_errno_t wasmtime_ssp_file_readlink(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     const char *path,
     size_t pathlen,
@@ -1806,7 +1853,9 @@ __wasi_errno_t wasmtime_ssp_file_readlink(
 }
 
 __wasi_errno_t wasmtime_ssp_file_rename(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t oldfd,
     const char *old,
     size_t oldlen,
@@ -1855,7 +1904,9 @@ static void convert_stat(
 }
 
 __wasi_errno_t wasmtime_ssp_file_stat_fget(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     __wasi_filestat_t *buf
 ) {
@@ -1918,7 +1969,9 @@ static void convert_utimens_arguments(
 }
 
 __wasi_errno_t wasmtime_ssp_file_stat_fput(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     const __wasi_filestat_t *buf,
     __wasi_fsflags_t flags
@@ -1965,7 +2018,9 @@ __wasi_errno_t wasmtime_ssp_file_stat_fput(
 }
 
 __wasi_errno_t wasmtime_ssp_file_stat_get(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_lookup_t fd,
     const char *path,
     size_t pathlen,
@@ -2004,7 +2059,9 @@ __wasi_errno_t wasmtime_ssp_file_stat_get(
 }
 
 __wasi_errno_t wasmtime_ssp_file_stat_put(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_lookup_t fd,
     const char *path,
     size_t pathlen,
@@ -2032,7 +2089,9 @@ __wasi_errno_t wasmtime_ssp_file_stat_put(
 }
 
 __wasi_errno_t wasmtime_ssp_file_symlink(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     const char *path1,
     size_t path1len,
     __wasi_fd_t fd,
@@ -2060,7 +2119,9 @@ __wasi_errno_t wasmtime_ssp_file_symlink(
 }
 
 __wasi_errno_t wasmtime_ssp_file_unlink(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t fd,
     const char *path,
     size_t pathlen,
@@ -2084,7 +2145,9 @@ __wasi_errno_t wasmtime_ssp_file_unlink(
 }
 
 __wasi_errno_t wasmtime_ssp_poll(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     const __wasi_subscription_t *in,
     __wasi_event_t *out,
     size_t nsubscriptions,
@@ -2357,7 +2420,9 @@ __wasi_errno_t wasmtime_ssp_random_get(
 }
 
 __wasi_errno_t wasmtime_ssp_sock_recv(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t sock,
     const __wasi_recv_in_t *in,
     __wasi_recv_out_t *out
@@ -2436,7 +2501,9 @@ __wasi_errno_t wasmtime_ssp_sock_recv(
 }
 
 __wasi_errno_t wasmtime_ssp_sock_send(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t sock,
     const __wasi_send_in_t *in,
     __wasi_send_out_t *out
@@ -2517,7 +2584,9 @@ out:
 }
 
 __wasi_errno_t wasmtime_ssp_sock_shutdown(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
+#endif
     __wasi_fd_t sock,
     __wasi_sdflags_t how
 ) {
