@@ -63,8 +63,8 @@ pub fn instantiate_wasi(
     signature!(fd_stat_put(I32, I32, I32) -> (I32));
     signature!(fd_sync(I32) -> (I32));
     signature!(fd_write(I32, I32, I32, I32) -> (I32));
-    signature!(file_advise(I32, I64, I32, I32) -> (I32));
-    signature!(file_allocate(I32, I64, I32) -> (I32));
+    signature!(file_advise(I32, I64, I64, I32) -> (I32));
+    signature!(file_allocate(I32, I64, I64) -> (I32));
     signature!(file_create(I32, I32, I32, I32) -> (I32));
     signature!(file_link(I32, I32, I32, I32, I32, I32) -> (I32));
     signature!(file_open(I32, I32, I32, I32, I32, I32) -> (I32));
