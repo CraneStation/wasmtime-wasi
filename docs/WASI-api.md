@@ -1301,14 +1301,14 @@ Members:
 
 - When `type` is [`__WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
 
-    - <a href="#event.fd_readwrite" name="event.fd_readwrite"></a>**`fd_readwrite`**
+    - <a href="#event.u.fd_readwrite" name="event.u.fd_readwrite"></a>**`u.fd_readwrite`**
 
-        - <a href="#event.fd_readwrite.nbytes" name="event.fd_readwrite.nbytes"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>nbytes</strong></code>
+        - <a href="#event.u.fd_readwrite.nbytes" name="event.u.fd_readwrite.nbytes"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>nbytes</strong></code>
 
             The number of bytes available
             for reading or writing.
 
-        - <a href="#event.fd_readwrite.flags" name="event.fd_readwrite.flags"></a><code>[\_\_wasi\_eventrwflags\_t](#eventrwflags) <strong>flags</strong></code>
+        - <a href="#event.u.fd_readwrite.flags" name="event.u.fd_readwrite.flags"></a><code>[\_\_wasi\_eventrwflags\_t](#eventrwflags) <strong>flags</strong></code>
 
             The state of the file
             descriptor.
@@ -1334,20 +1334,20 @@ Used by [`__wasi_event_t`](#event) and [`__wasi_subscription_t`](#subscription).
 
 Possible values:
 
-- <a href="#eventtype.clock" name="eventtype.clock"></a>**`__WASI_EVENTTYPE_CLOCK`**
+- <a href="#eventtype.u.clock" name="eventtype.u.clock"></a>**`__WASI_EVENTTYPE_CLOCK`**
 
-    The time value of clock [`__wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id)
-    has reached timestamp [`__wasi_subscription_t::clock.timeout`](#subscription.clock.timeout).
+    The time value of clock [`__wasi_subscription_t::u.clock.clock_id`](#subscription.u.clock.clock_id)
+    has reached timestamp [`__wasi_subscription_t::u.clock.timeout`](#subscription.u.clock.timeout).
 
 - <a href="#eventtype.fd_read" name="eventtype.fd_read"></a>**`__WASI_EVENTTYPE_FD_READ`**
 
-    File descriptor [`__wasi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
+    File descriptor [`__wasi_subscription_t::u.fd_readwrite.fd`](#subscription.u.fd_readwrite.fd) has
     data available for reading. This event always triggers
     for regular files.
 
 - <a href="#eventtype.fd_write" name="eventtype.fd_write"></a>**`__WASI_EVENTTYPE_FD_WRITE`**
 
-    File descriptor [`__wasi_subscription_t::fd_readwrite.fd`](#subscription.fd_readwrite.fd) has
+    File descriptor [`__wasi_subscription_t::u.fd_readwrite.fd`](#subscription.u.fd_readwrite.fd) has
     capacity available for writing. This event always
     triggers for regular files.
 
@@ -2104,7 +2104,7 @@ Possible values:
 ### <a href="#subclockflags" name="subclockflags"></a>`__wasi_subclockflags_t` (`uint16_t` bitfield)
 
 Flags determining how the timestamp provided in
-[`__wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) should be interpreted.
+[`__wasi_subscription_t::clock.timeout`](#subscription.u.clock.timeout) should be interpreted.
 
 Used by [`__wasi_subscription_t`](#subscription).
 
@@ -2113,12 +2113,12 @@ Possible values:
 - <a href="#subclockflags.abstime" name="subclockflags.abstime"></a>**`__WASI_SUBSCRIPTION_CLOCK_ABSTIME`**
 
     If set, treat the timestamp provided in
-    [`__wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) as an absolute timestamp
-    of clock [`__wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id).
+    [`__wasi_subscription_t::clock.timeout`](#subscription.u.clock.timeout) as an absolute timestamp
+    of clock [`__wasi_subscription_t::u.clock.clock_id`](#subscription.u.clock.clock_id).
 
     If clear, treat the timestamp provided in
-    [`__wasi_subscription_t::clock.timeout`](#subscription.clock.timeout) relative to the current
-    time value of clock [`__wasi_subscription_t::clock.clock_id`](#subscription.clock.clock_id).
+    [`__wasi_subscription_t::clock.timeout`](#subscription.u.clock.timeout) relative to the current
+    time value of clock [`__wasi_subscription_t::u.clock.clock_id`](#subscription.u.clock.clock_id).
 
 ### <a href="#subrwflags" name="subrwflags"></a>`__wasi_subrwflags_t` (`uint16_t` bitfield)
 
@@ -2152,32 +2152,32 @@ Members:
 
     The type of the event to which to subscribe.
 
-- When `type` is [`__WASI_EVENTTYPE_CLOCK`](#eventtype.clock):
+- When `type` is [`__WASI_EVENTTYPE_CLOCK`](#eventtype.u.clock):
 
-    - <a href="#subscription.clock" name="subscription.clock"></a>**`clock`**
+    - <a href="#subscription.u.clock" name="subscription.u.clock"></a>**`clock`**
 
-        - <a href="#subscription.clock.identifier" name="subscription.clock.identifier"></a><code>[__wasi\_userdata\_t](#userdata) <strong>identifier</strong></code>
+        - <a href="#subscription.u.clock.identifier" name="subscription.u.clock.identifier"></a><code>[__wasi\_userdata\_t](#userdata) <strong>identifier</strong></code>
 
             The user-defined unique
             identifier of the clock.
 
-        - <a href="#subscription.clock.clock_id" name="subscription.clock.clock_id"></a><code>[\_\_wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
+        - <a href="#subscription.u.clock.clock_id" name="subscription.u.clock.clock_id"></a><code>[\_\_wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
 
             The clock against which the
             timestamp should be compared.
 
-        - <a href="#subscription.clock.timeout" name="subscription.clock.timeout"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>timeout</strong></code>
+        - <a href="#subscription.u.clock.timeout" name="subscription.u.clock.timeout"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>timeout</strong></code>
 
             The absolute or relative
             timestamp.
 
-        - <a href="#subscription.clock.precision" name="subscription.clock.precision"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
+        - <a href="#subscription.u.clock.precision" name="subscription.u.clock.precision"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
 
             The amount of time that the
             kernel may wait additionally
             to coalesce with other events.
 
-        - <a href="#subscription.clock.flags" name="subscription.clock.flags"></a><code>[\_\_wasi\_subclockflags\_t](#subclockflags) <strong>flags</strong></code>
+        - <a href="#subscription.u.clock.flags" name="subscription.u.clock.flags"></a><code>[\_\_wasi\_subclockflags\_t](#subclockflags) <strong>flags</strong></code>
 
             Flags specifying whether the
             timeout is absolute or
@@ -2185,15 +2185,15 @@ Members:
 
 - When `type` is [`__WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
 
-    - <a href="#subscription.fd_readwrite" name="subscription.fd_readwrite"></a>**`fd_readwrite`**
+    - <a href="#subscription.u.fd_readwrite" name="subscription.u.fd_readwrite"></a>**`u.fd_readwrite`**
 
-        - <a href="#subscription.fd_readwrite.fd" name="subscription.fd_readwrite.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+        - <a href="#subscription.u.fd_readwrite.fd" name="subscription.u.fd_readwrite.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
             The file descriptor on which
             to wait for it to become ready
             for reading or writing.
 
-        - <a href="#subscription.fd_readwrite.flags" name="subscription.fd_readwrite.flags"></a><code>[\_\_wasi\_subrwflags\_t](#subrwflags) <strong>flags</strong></code>
+        - <a href="#subscription.u.fd_readwrite.flags" name="subscription.u.fd_readwrite.flags"></a><code>[\_\_wasi\_subrwflags\_t](#subrwflags) <strong>flags</strong></code>
 
             Under which conditions to
             trigger.
