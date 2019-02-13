@@ -2161,12 +2161,12 @@ __wasi_errno_t wasmtime_ssp_poll(
     };
 #if CONFIG_HAS_CLOCK_NANOSLEEP
     clockid_t clock_id;
-    if (convert_clockid(in[0].clock.clock_id, &clock_id)) {
+    if (convert_clockid(in[0].u.clock.clock_id, &clock_id)) {
       struct timespec ts;
-      convert_timestamp(in[0].clock.timeout, &ts);
+      convert_timestamp(in[0].u.clock.timeout, &ts);
       int ret = clock_nanosleep(
           clock_id,
-          (in[0].clock.flags & __WASI_SUBSCRIPTION_CLOCK_ABSTIME) != 0
+          (in[0].u.clock.flags & __WASI_SUBSCRIPTION_CLOCK_ABSTIME) != 0
               ? TIMER_ABSTIME
               : 0,
           &ts, NULL);
@@ -2176,9 +2176,9 @@ __wasi_errno_t wasmtime_ssp_poll(
       out[0].error = __WASI_ENOTSUP;
     }
 #else
-    switch (in[0].clock.clock_id) {
+    switch (in[0].u.clock.clock_id) {
       case __WASI_CLOCK_MONOTONIC:
-        if ((in[0].clock.flags & __WASI_SUBSCRIPTION_CLOCK_ABSTIME) != 0) {
+        if ((in[0].u.clock.flags & __WASI_SUBSCRIPTION_CLOCK_ABSTIME) != 0) {
           // TODO(ed): Implement.
           fputs("Unimplemented absolute sleep on monotonic clock\n", stderr);
           out[0].error = __WASI_ENOSYS;
@@ -2186,12 +2186,12 @@ __wasi_errno_t wasmtime_ssp_poll(
           // Perform relative sleeps on the monotonic clock also using
           // nanosleep(). This is incorrect, but good enough for now.
           struct timespec ts;
-          convert_timestamp(in[0].clock.timeout, &ts);
+          convert_timestamp(in[0].u.clock.timeout, &ts);
           nanosleep(&ts, NULL);
         }
         break;
       case __WASI_CLOCK_REALTIME:
-        if ((in[0].clock.flags & __WASI_SUBSCRIPTION_CLOCK_ABSTIME) != 0) {
+        if ((in[0].u.clock.flags & __WASI_SUBSCRIPTION_CLOCK_ABSTIME) != 0) {
           // Sleeping to an absolute point in time can only be done
           // by waiting on a condition variable.
           struct mutex mutex;
@@ -2199,14 +2199,14 @@ __wasi_errno_t wasmtime_ssp_poll(
           struct cond cond;
           cond_init_realtime(&cond);
           mutex_lock(&mutex);
-          cond_timedwait(&cond, &mutex, in[0].clock.timeout, true);
+          cond_timedwait(&cond, &mutex, in[0].u.clock.timeout, true);
           mutex_unlock(&mutex);
           mutex_destroy(&mutex);
           cond_destroy(&cond);
         } else {
           // Relative sleeps can be done using nanosleep().
           struct timespec ts;
-          convert_timestamp(in[0].clock.timeout, &ts);
+          convert_timestamp(in[0].u.clock.timeout, &ts);
           nanosleep(&ts, NULL);
         }
         break;
@@ -2246,7 +2246,7 @@ __wasi_errno_t wasmtime_ssp_poll(
       case __WASI_EVENTTYPE_FD_READ:
       case __WASI_EVENTTYPE_FD_WRITE: {
         __wasi_errno_t error =
-            fd_object_get_locked(&fos[i], ft, s->fd_readwrite.fd,
+            fd_object_get_locked(&fos[i], ft, s->u.fd_readwrite.fd,
                                  __WASI_RIGHT_POLL_FD_READWRITE, 0);
         if (error == 0) {
           // Proper file descriptor on which we can poll().
@@ -2269,7 +2269,7 @@ __wasi_errno_t wasmtime_ssp_poll(
       }
       case __WASI_EVENTTYPE_CLOCK:
         if (clock_subscription == NULL &&
-            (s->clock.flags & __WASI_SUBSCRIPTION_CLOCK_ABSTIME) == 0) {
+            (s->u.clock.flags & __WASI_SUBSCRIPTION_CLOCK_ABSTIME) == 0) {
           // Relative timeout.
           fos[i] = NULL;
           pfds[i] = (struct pollfd){.fd = -1};
@@ -2297,7 +2297,7 @@ __wasi_errno_t wasmtime_ssp_poll(
   if (*nevents != 0) {
     timeout = 0;
   } else if (clock_subscription != NULL) {
-    __wasi_timestamp_t ts = clock_subscription->clock.timeout / 1000000;
+    __wasi_timestamp_t ts = clock_subscription->u.clock.timeout / 1000000;
     timeout = ts > INT_MAX ? -1 : ts;
   } else {
     timeout = -1;
@@ -2331,8 +2331,8 @@ __wasi_errno_t wasmtime_ssp_poll(
           out[(*nevents)++] = (__wasi_event_t){
               .userdata = in[i].userdata,
 #ifdef __APPLE__
-              .fd_readwrite.nbytes = nbytes,
-              .fd_readwrite.flags = __WASI_EVENT_FD_READWRITE_HANGUP,
+              .u.fd_readwrite.nbytes = nbytes,
+              .u.fd_readwrite.flags = __WASI_EVENT_FD_READWRITE_HANGUP,
 #else
               .error = __WASI_EBADF,
 #endif
@@ -2350,15 +2350,15 @@ __wasi_errno_t wasmtime_ssp_poll(
           out[(*nevents)++] = (__wasi_event_t){
               .userdata = in[i].userdata,
               .type = in[i].type,
-              .fd_readwrite.nbytes = nbytes,
-              .fd_readwrite.flags = __WASI_EVENT_FD_READWRITE_HANGUP,
+              .u.fd_readwrite.nbytes = nbytes,
+              .u.fd_readwrite.flags = __WASI_EVENT_FD_READWRITE_HANGUP,
           };
         } else if ((pfds[i].revents & (POLLRDNORM | POLLWRNORM)) != 0) {
           // Read or write possible.
           out[(*nevents)++] = (__wasi_event_t){
               .userdata = in[i].userdata,
               .type = in[i].type,
-              .fd_readwrite.nbytes = nbytes,
+              .u.fd_readwrite.nbytes = nbytes,
           };
         }
       }
