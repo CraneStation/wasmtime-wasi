@@ -2104,7 +2104,7 @@ Possible values:
 ### <a href="#subclockflags" name="subclockflags"></a>`__wasi_subclockflags_t` (`uint16_t` bitfield)
 
 Flags determining how the timestamp provided in
-[`__wasi_subscription_t::clock.timeout`](#subscription.u.clock.timeout) should be interpreted.
+[`__wasi_subscription_t::u.clock.timeout`](#subscription.u.clock.timeout) should be interpreted.
 
 Used by [`__wasi_subscription_t`](#subscription).
 
@@ -2113,11 +2113,11 @@ Possible values:
 - <a href="#subclockflags.abstime" name="subclockflags.abstime"></a>**`__WASI_SUBSCRIPTION_CLOCK_ABSTIME`**
 
     If set, treat the timestamp provided in
-    [`__wasi_subscription_t::clock.timeout`](#subscription.u.clock.timeout) as an absolute timestamp
+    [`__wasi_subscription_t::u.clock.timeout`](#subscription.u.clock.timeout) as an absolute timestamp
     of clock [`__wasi_subscription_t::u.clock.clock_id`](#subscription.u.clock.clock_id).
 
     If clear, treat the timestamp provided in
-    [`__wasi_subscription_t::clock.timeout`](#subscription.u.clock.timeout) relative to the current
+    [`__wasi_subscription_t::u.clock.timeout`](#subscription.u.clock.timeout) relative to the current
     time value of clock [`__wasi_subscription_t::u.clock.clock_id`](#subscription.u.clock.clock_id).
 
 ### <a href="#subrwflags" name="subrwflags"></a>`__wasi_subrwflags_t` (`uint16_t` bitfield)
