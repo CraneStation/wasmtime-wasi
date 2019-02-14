@@ -707,12 +707,12 @@ __wasi_errno_t wasmtime_ssp_file_link(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
-    __wasi_lookup_t fd1,
-    const char *path1,
-    size_t path1_len,
-    __wasi_fd_t fd2,
-    const char *path2,
-    size_t path2_len
+    __wasi_lookup_t old_fd,
+    const char *old_path,
+    size_t old_path_len,
+    __wasi_fd_t new_fd,
+    const char *new_path,
+    size_t new_path_len
 ) WASMTIME_SSP_SYSCALL_NAME(file_link) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_file_open(
@@ -754,12 +754,12 @@ __wasi_errno_t wasmtime_ssp_file_rename(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
-    __wasi_fd_t fd1,
-    const char *path1,
-    size_t path1_len,
-    __wasi_fd_t fd2,
-    const char *path2,
-    size_t path2_len
+    __wasi_fd_t old_fd,
+    const char *old_path,
+    size_t old_path_len,
+    __wasi_fd_t new_fd,
+    const char *new_path,
+    size_t new_path_len
 ) WASMTIME_SSP_SYSCALL_NAME(file_rename) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_file_stat_fget(
@@ -804,11 +804,11 @@ __wasi_errno_t wasmtime_ssp_file_symlink(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
-    const char *path1,
-    size_t path1_len,
+    const char *old_path,
+    size_t old_path_len,
     __wasi_fd_t fd,
-    const char *path2,
-    size_t path2_len
+    const char *new_path,
+    size_t new_path_len
 ) WASMTIME_SSP_SYSCALL_NAME(file_symlink) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_file_unlink(

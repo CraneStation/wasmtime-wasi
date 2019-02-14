@@ -428,22 +428,22 @@ Creates a hard link.
 
 Inputs:
 
-- <a href="#file_link.fd1" name="file_link.fd1"></a><code>[\_\_wasi\_lookup\_t](#lookup) <strong>fd1</strong></code>
+- <a href="#file_link.old_fd" name="file_link.old_fd"></a><code>[\_\_wasi\_lookup\_t](#lookup) <strong>old\_fd</strong></code>
 
     The working directory at which the resolution
     of the source path starts.
 
-- <a href="#file_link.path1" name="file_link.path1"></a><code>const char *<strong>path1</strong></code> and <a href="#file_link.path1_len" name="file_link.path1_len"></a><code>size\_t <strong>path1\_len</strong></code>
+- <a href="#file_link.old_path" name="file_link.old_path"></a><code>const char *<strong>old\_path</strong></code> and <a href="#file_link.old_path_len" name="file_link.old_path_len"></a><code>size\_t <strong>old\_path\_len</strong></code>
 
     The source path of the file that should be
     hard linked.
 
-- <a href="#file_link.fd2" name="file_link.fd2"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd2</strong></code>
+- <a href="#file_link.new_fd" name="file_link.new_fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>new\_fd</strong></code>
 
     The working directory at which the resolution
     of the destination path starts.
 
-- <a href="#file_link.path2" name="file_link.path2"></a><code>const char *<strong>path2</strong></code> and <a href="#file_link.path2_len" name="file_link.path2_len"></a><code>size\_t <strong>path2\_len</strong></code>
+- <a href="#file_link.new_path" name="file_link.new_path"></a><code>const char *<strong>new\_path</strong></code> and <a href="#file_link.new_path_len" name="file_link.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
 
     The destination path at which the hard link
     should be created.
@@ -561,22 +561,22 @@ Renames a file.
 
 Inputs:
 
-- <a href="#file_rename.fd1" name="file_rename.fd1"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd1</strong></code>
+- <a href="#file_rename.old_fd" name="file_rename.old_fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>old\_fd</strong></code>
 
     The working directory at which the resolution
     of the source path starts.
 
-- <a href="#file_rename.path1" name="file_rename.path1"></a><code>const char *<strong>path1</strong></code> and <a href="#file_rename.path1_len" name="file_rename.path1_len"></a><code>size\_t <strong>path1\_len</strong></code>
+- <a href="#file_rename.old_path" name="file_rename.old_path"></a><code>const char *<strong>old\_path</strong></code> and <a href="#file_rename.old_path_len" name="file_rename.old_path_len"></a><code>size\_t <strong>old\_path\_len</strong></code>
 
     The source path of the file that should be
     renamed.
 
-- <a href="#file_rename.fd2" name="file_rename.fd2"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd2</strong></code>
+- <a href="#file_rename.new_fd" name="file_rename.new_fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>new\_fd</strong></code>
 
     The working directory at which the resolution
     of the destination path starts.
 
-- <a href="#file_rename.path2" name="file_rename.path2"></a><code>const char *<strong>path2</strong></code> and <a href="#file_rename.path2_len" name="file_rename.path2_len"></a><code>size\_t <strong>path2\_len</strong></code>
+- <a href="#file_rename.new_path" name="file_rename.new_path"></a><code>const char *<strong>new\_path</strong></code> and <a href="#file_rename.new_path_len" name="file_rename.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
 
     The destination path to which the file should
     be renamed.
@@ -673,7 +673,7 @@ Creates a symbolic link.
 
 Inputs:
 
-- <a href="#file_symlink.path1" name="file_symlink.path1"></a><code>const char *<strong>path1</strong></code> and <a href="#file_symlink.path1_len" name="file_symlink.path1_len"></a><code>size\_t <strong>path1\_len</strong></code>
+- <a href="#file_symlink.old_path" name="file_symlink.old_path"></a><code>const char *<strong>old_path</strong></code> and <a href="#file_symlink.old_path_len" name="file_symlink.old_path_len"></a><code>size\_t <strong>old_path\_len</strong></code>
 
     The contents of the symbolic link.
 
@@ -682,7 +682,7 @@ Inputs:
     The working directory at which the resolution
     of the destination path starts.
 
-- <a href="#file_symlink.path2" name="file_symlink.path2"></a><code>const char *<strong>path2</strong></code> and <a href="#file_symlink.path2_len" name="file_symlink.path2_len"></a><code>size\_t <strong>path2\_len</strong></code>
+- <a href="#file_symlink.new_path" name="file_symlink.new_path"></a><code>const char *<strong>new\_path</strong></code> and <a href="#file_symlink.new_path_len" name="file_symlink.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
 
     The destination path at which the symbolic
     link should be created.
