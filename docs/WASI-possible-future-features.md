@@ -1,6 +1,6 @@
 # Possible Future Features
 
-This are features we're interetsed in, but don't have yet.
+This are features we're interested in, but don't have yet.
 
 ## File Locking
 
