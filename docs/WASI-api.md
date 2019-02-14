@@ -66,7 +66,7 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_file_stat_put()`](#file_stat_put)
 - [`__wasi_file_symlink()`](#file_symlink)
 - [`__wasi_file_unlink()`](#file_unlink)
-- [`__wasi_poll()`](#poll)
+- [`__wasi_poll_oneoff()`](#poll_oneoff)
 - [`__wasi_proc_exit()`](#proc_exit)
 - [`__wasi_proc_raise()`](#proc_raise)
 - [`__wasi_random_get()`](#random_get)
@@ -731,27 +731,27 @@ Inputs:
         If set, attempt to remove a directory.
         Otherwise, unlink a file.
 
-### <a href="#poll" name="poll"></a>`__wasi_poll()`
+### <a href="#poll_oneoff" name="poll_oneoff"></a>`__wasi_poll_oneoff()`
 
 Concurrently polls for the occurrence of a set of events.
 
 Inputs:
 
-- <a href="#poll.in" name="poll.in"></a><code>const [\_\_wasi\_subscription\_t](#subscription) *<strong>in</strong></code>
+- <a href="#poll_oneoff.in" name="poll_oneoff.in"></a><code>const [\_\_wasi\_subscription\_t](#subscription) *<strong>in</strong></code>
 
     The events to which to subscribe.
 
-- <a href="#poll.out" name="poll.out"></a><code>[\_\_wasi\_event\_t](#event) *<strong>out</strong></code>
+- <a href="#poll_oneoff.out" name="poll_oneoff.out"></a><code>[\_\_wasi\_event\_t](#event) *<strong>out</strong></code>
 
     The events that have occurred.
 
-- <a href="#poll.nsubscriptions" name="poll.nsubscriptions"></a><code>size\_t <strong>nsubscriptions</strong></code>
+- <a href="#poll_oneoff.nsubscriptions" name="poll_oneoff.nsubscriptions"></a><code>size\_t <strong>nsubscriptions</strong></code>
 
     Both the number of subscriptions and events.
 
 Outputs:
 
-- <a href="#poll.nevents" name="poll.nevents"></a><code>size\_t <strong>nevents</strong></code>
+- <a href="#poll_oneoff.nevents" name="poll_oneoff.nevents"></a><code>size\_t <strong>nevents</strong></code>
 
     The number of events stored.
 
@@ -1301,7 +1301,7 @@ Possible values:
 
 An event that occurred.
 
-Used by [`__wasi_poll()`](#poll).
+Used by [`__wasi_poll_oneoff()`](#poll_oneoff).
 
 Members:
 
@@ -1859,10 +1859,10 @@ Possible values:
 - <a href="#rights.poll_fd_readwrite" name="rights.poll_fd_readwrite"></a>**`__WASI_RIGHT_POLL_FD_READWRITE`**
 
     If [`__WASI_RIGHT_FD_READ`](#rights.fd_read) is set, includes the right to
-    invoke [`__wasi_poll()`](#poll) to subscribe to [`__WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read).
+    invoke [`__wasi_poll_oneoff()`](#poll_oneoff) to subscribe to [`__WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read).
 
     If [`__WASI_RIGHT_FD_WRITE`](#rights.fd_write) is set, includes the right to
-    invoke [`__wasi_poll()`](#poll) to subscribe to [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
+    invoke [`__wasi_poll_oneoff()`](#poll_oneoff) to subscribe to [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
 
 - <a href="#rights.sock_shutdown" name="rights.sock_shutdown"></a>**`__WASI_RIGHT_SOCK_SHUTDOWN`**
 
@@ -2122,25 +2122,11 @@ Possible values:
     [`__wasi_subscription_t::u.clock.timeout`](#subscription.u.clock.timeout) relative to the current
     time value of clock [`__wasi_subscription_t::u.clock.clock_id`](#subscription.u.clock.clock_id).
 
-### <a href="#subrwflags" name="subrwflags"></a>`__wasi_subrwflags_t` (`uint16_t` bitfield)
-
-Flags influencing the method of polling for read or writing on
-a file descriptor.
-
-Used by [`__wasi_subscription_t`](#subscription).
-
-Possible values:
-
-- <a href="#subrwflags.poll" name="subrwflags.poll"></a>**`__WASI_SUBSCRIPTION_FD_READWRITE_POLL`**
-
-    Deprecated. Must be set by callers and ignored by
-    implementations.
-
 ### <a href="#subscription" name="subscription"></a>`__wasi_subscription_t` (`struct`)
 
 Subscription to an event.
 
-Used by [`__wasi_poll()`](#poll).
+Used by [`__wasi_poll_oneoff()`](#poll_oneoff).
 
 Members:
 
@@ -2194,11 +2180,6 @@ Members:
             The file descriptor on which
             to wait for it to become ready
             for reading or writing.
-
-        - <a href="#subscription.u.fd_readwrite.flags" name="subscription.u.fd_readwrite.flags"></a><code>[\_\_wasi\_subrwflags\_t](#subrwflags) <strong>flags</strong></code>
-
-            Under which conditions to
-            trigger.
 
 ### <a href="#timestamp" name="timestamp"></a>`__wasi_timestamp_t` (`uint64_t`)
 
