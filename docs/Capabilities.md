@@ -2,14 +2,13 @@
 
 ## Unforgeable references.
 
-One of the key words we want to emphasize is that capabilities are
-*unforgeable*.
+One of the key words that describes capabilities is *unforgeable*.
 
 A pointer in C is forgeable, because untrusted code could cast an integer
 to a pointer, thus *forging* access to whatever that pointer value points
 to.
 
-MVP WebAssembly doesn't have unforgeable types, but what we can do instead
+MVP WebAssembly doesn't have unforgeable references, but what we can do instead
 is just use integer values which are indices into a table that's held outside
 the reach of untrusted code. The indices themselves are forgeable, but
 ultimately the table is the thing which holds the actual capabilities, and
@@ -22,7 +21,7 @@ will likely subsume the current integer-based APIs, at the WASI API layer.
 ## Filesystem rules.
 
 It happens that integer indices representing capabilities is same thing that
-POSIX does, except that it calls these indices *file descriptors*.
+POSIX does, except that POSIX calls these indices *file descriptors*.
 
 One difference though is that POSIX normally allows processes to request
 a file descriptor for any file in the entire filesystem hierarchy, which is
@@ -38,7 +37,7 @@ So you can launch untrusted code, and at runtime give it access to specific
 directories, without having to set permissions in the filesystem or in
 per-application or per-user configuration settings.
 
-## Berkely socket rules.
+## Berkeley socket rules.
 
 Sockets aren't naturally hierarchical though, so we'll need to decide what
 capabilities look like.
