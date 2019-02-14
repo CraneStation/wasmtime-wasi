@@ -110,17 +110,6 @@ pub unsafe fn decode_filesize(filesize: wasm32::__wasi_filesize_t) -> host::__wa
     filesize
 }
 
-pub unsafe fn decode_lookup(
-    vmctx: &mut VMContext,
-    lookup_ptr: wasm32::uintptr_t,
-) -> Result<host::__wasi_lookup_t, host::__wasi_errno_t> {
-    let lookup = decode_pointee::<wasm32::__wasi_lookup_t>(vmctx, lookup_ptr)?;
-    Ok(host::__wasi_lookup_t {
-        fd: decode_fd(lookup.fd),
-        flags: decode_lookupflags(lookup.flags),
-    })
-}
-
 pub fn decode_fd(fd: wasm32::__wasi_fd_t) -> host::__wasi_fd_t {
     fd
 }

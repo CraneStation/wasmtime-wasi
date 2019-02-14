@@ -1287,7 +1287,8 @@ struct path_access {
 static __wasi_errno_t path_get(
     struct fd_table *curfds,
     struct path_access *pa,
-    __wasi_lookup_t fd,
+    __wasi_fd_t fd,
+    __wasi_lookupflags_t flags,
     const char *upath,
     size_t upathlen,
     __wasi_rights_t rights_base,
@@ -1301,7 +1302,7 @@ static __wasi_errno_t path_get(
   // Fetch the directory file descriptor.
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd.fd, rights_base, rights_inheriting);
+      fd_object_get(curfds, &fo, fd, rights_base, rights_inheriting);
   if (error != 0) {
     free(path);
     return error;
@@ -1312,7 +1313,7 @@ static __wasi_errno_t path_get(
   // access to files stored underneath this directory.
   pa->fd = fd_number(fo);
   pa->path = pa->path_start = path;
-  pa->follow = (fd.flags & __WASI_LOOKUP_SYMLINK_FOLLOW) != 0;
+  pa->follow = (flags & __WASI_LOOKUP_SYMLINK_FOLLOW) != 0;
   pa->fd_object = fo;
   return 0;
 #else
@@ -1405,7 +1406,7 @@ static __wasi_errno_t path_get(
       // a slash or the symlink-follow flag is set, perform symlink
       // expansion.
       if (ends_with_slashes ||
-          (fd.flags & __WASI_LOOKUP_SYMLINK_FOLLOW) != 0) {
+          (flags & __WASI_LOOKUP_SYMLINK_FOLLOW) != 0) {
         symlink = readlinkat_dup(fds[curfd], file);
         if (symlink != NULL)
           goto push_symlink;
@@ -1512,8 +1513,8 @@ static __wasi_errno_t path_get_nofollow(
     __wasi_rights_t rights_inheriting,
     bool needs_final_component
 ) TRYLOCKS_EXCLUSIVE(0, pa->fd_object->refcount) {
-  __wasi_lookup_t lookup = {.fd = fd};
-  return path_get(curfds, pa, lookup, path, pathlen, rights_base, rights_inheriting,
+  __wasi_lookupflags_t flags = 0;
+  return path_get(curfds, pa, fd, flags, path, pathlen, rights_base, rights_inheriting,
                   needs_final_component);
 }
 
@@ -1559,7 +1560,8 @@ __wasi_errno_t wasmtime_ssp_file_link(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
-    __wasi_lookup_t old_fd,
+    __wasi_fd_t old_fd,
+    __wasi_lookupflags_t old_flags,
     const char *old_path,
     size_t old_path_len,
     __wasi_fd_t new_fd,
@@ -1567,7 +1569,7 @@ __wasi_errno_t wasmtime_ssp_file_link(
     size_t new_path_len
 ) {
   struct path_access old_pa;
-  __wasi_errno_t error = path_get(curfds, &old_pa, old_fd, old_path, old_path_len,
+  __wasi_errno_t error = path_get(curfds, &old_pa, old_fd, old_flags, old_path, old_path_len,
                                   __WASI_RIGHT_FILE_LINK_SOURCE, 0, false);
   if (error != 0)
     return error;
@@ -1602,7 +1604,8 @@ __wasi_errno_t wasmtime_ssp_file_open(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
-    __wasi_lookup_t dirfd,
+    __wasi_fd_t dirfd,
+    __wasi_lookupflags_t dirflags,
     const char *path,
     size_t pathlen,
     __wasi_oflags_t oflags,
@@ -1670,7 +1673,7 @@ __wasi_errno_t wasmtime_ssp_file_open(
 
   struct path_access pa;
   __wasi_errno_t error =
-      path_get(curfds, &pa, dirfd, path, pathlen, needed_base, needed_inheriting,
+      path_get(curfds, &pa, dirfd, dirflags, path, pathlen, needed_base, needed_inheriting,
                (oflags & __WASI_O_CREAT) != 0);
   if (error != 0)
     return error;
@@ -1948,20 +1951,20 @@ static void convert_timestamp(
 // futimens() and utimensat().
 static void convert_utimens_arguments(
     const __wasi_filestat_t *fs,
-    __wasi_fsflags_t flags,
+    __wasi_fsflags_t fsflags,
     struct timespec *ts
 ) {
-  if ((flags & __WASI_FILESTAT_ATIM_NOW) != 0) {
+  if ((fsflags & __WASI_FILESTAT_ATIM_NOW) != 0) {
     ts[0].tv_nsec = UTIME_NOW;
-  } else if ((flags & __WASI_FILESTAT_ATIM) != 0) {
+  } else if ((fsflags & __WASI_FILESTAT_ATIM) != 0) {
     convert_timestamp(fs->st_atim, &ts[0]);
   } else {
     ts[0].tv_nsec = UTIME_OMIT;
   }
 
-  if ((flags & __WASI_FILESTAT_MTIM_NOW) != 0) {
+  if ((fsflags & __WASI_FILESTAT_MTIM_NOW) != 0) {
     ts[1].tv_nsec = UTIME_NOW;
-  } else if ((flags & __WASI_FILESTAT_MTIM) != 0) {
+  } else if ((fsflags & __WASI_FILESTAT_MTIM) != 0) {
     convert_timestamp(fs->st_mtim, &ts[1]);
   } else {
     ts[1].tv_nsec = UTIME_OMIT;
@@ -1974,10 +1977,10 @@ __wasi_errno_t wasmtime_ssp_file_stat_fput(
 #endif
     __wasi_fd_t fd,
     const __wasi_filestat_t *buf,
-    __wasi_fsflags_t flags
+    __wasi_fsflags_t fsflags
 ) {
-  if ((flags & __WASI_FILESTAT_SIZE) != 0) {
-    if ((flags & ~__WASI_FILESTAT_SIZE) != 0)
+  if ((fsflags & __WASI_FILESTAT_SIZE) != 0) {
+    if ((fsflags & ~__WASI_FILESTAT_SIZE) != 0)
       return __WASI_EINVAL;
 
     struct fd_object *fo;
@@ -1994,8 +1997,8 @@ __wasi_errno_t wasmtime_ssp_file_stat_fput(
 #define FLAGS                                            \
   (__WASI_FILESTAT_ATIM | __WASI_FILESTAT_ATIM_NOW | \
    __WASI_FILESTAT_MTIM | __WASI_FILESTAT_MTIM_NOW)
-  } else if ((flags & FLAGS) != 0) {
-    if ((flags & ~FLAGS) != 0)
+  } else if ((fsflags & FLAGS) != 0) {
+    if ((fsflags & ~FLAGS) != 0)
       return __WASI_EINVAL;
 #undef FLAGS
 
@@ -2006,7 +2009,7 @@ __wasi_errno_t wasmtime_ssp_file_stat_fput(
       return error;
 
     struct timespec ts[2];
-    convert_utimens_arguments(buf, flags, ts);
+    convert_utimens_arguments(buf, fsflags, ts);
     int ret = futimens(fd_number(fo), ts);
 
     fd_object_release(fo);
@@ -2021,14 +2024,15 @@ __wasi_errno_t wasmtime_ssp_file_stat_get(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
-    __wasi_lookup_t fd,
+    __wasi_fd_t fd,
+    __wasi_lookupflags_t flags,
     const char *path,
     size_t pathlen,
     __wasi_filestat_t *buf
 ) {
   struct path_access pa;
   __wasi_errno_t error =
-      path_get(curfds, &pa, fd, path, pathlen, __WASI_RIGHT_FILE_STAT_GET, 0, false);
+      path_get(curfds, &pa, fd, flags, path, pathlen, __WASI_RIGHT_FILE_STAT_GET, 0, false);
   if (error != 0)
     return error;
 
@@ -2062,24 +2066,25 @@ __wasi_errno_t wasmtime_ssp_file_stat_put(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
-    __wasi_lookup_t fd,
+    __wasi_fd_t fd,
+    __wasi_lookupflags_t flags,
     const char *path,
     size_t pathlen,
     const __wasi_filestat_t *buf,
-    __wasi_fsflags_t flags
+    __wasi_fsflags_t fsflags
 ) {
-  if ((flags & ~(__WASI_FILESTAT_ATIM | __WASI_FILESTAT_ATIM_NOW |
-                 __WASI_FILESTAT_MTIM | __WASI_FILESTAT_MTIM_NOW)) != 0)
+  if ((fsflags & ~(__WASI_FILESTAT_ATIM | __WASI_FILESTAT_ATIM_NOW |
+                   __WASI_FILESTAT_MTIM | __WASI_FILESTAT_MTIM_NOW)) != 0)
     return __WASI_EINVAL;
 
   struct path_access pa;
   __wasi_errno_t error = path_get(curfds,
-      &pa, fd, path, pathlen, __WASI_RIGHT_FILE_STAT_PUT_TIMES, 0, false);
+      &pa, fd, flags, path, pathlen, __WASI_RIGHT_FILE_STAT_PUT_TIMES, 0, false);
   if (error != 0)
     return error;
 
   struct timespec ts[2];
-  convert_utimens_arguments(buf, flags, ts);
+  convert_utimens_arguments(buf, fsflags, ts);
   int ret = utimensat(pa.fd, pa.path, ts, pa.follow ? 0 : AT_SYMLINK_NOFOLLOW);
 
   path_put(&pa);
