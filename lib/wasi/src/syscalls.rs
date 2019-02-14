@@ -895,7 +895,7 @@ pub unsafe extern "C" fn file_unlink(
     return_encoded_errno(e)
 }
 
-pub unsafe extern "C" fn poll(
+pub unsafe extern "C" fn poll_oneoff(
     vmctx: *mut VMContext,
     in_: wasm32::uintptr_t,
     out: wasm32::uintptr_t,
@@ -903,7 +903,7 @@ pub unsafe extern "C" fn poll(
     nevents: wasm32::uintptr_t,
 ) -> wasm32::__wasi_errno_t {
     trace!(
-        "poll(in={:#x?}, out={:#x?}, nsubscriptions={}, nevents={:#x?})",
+        "poll_oneoff(in={:#x?}, out={:#x?}, nsubscriptions={}, nevents={:#x?})",
         in_,
         out,
         nsubscriptions,
@@ -927,7 +927,7 @@ pub unsafe extern "C" fn poll(
 
     assert!(in_.len() == host_out.len());
 
-    let e = host::wasmtime_ssp_poll(
+    let e = host::wasmtime_ssp_poll_oneoff(
         curfds,
         in_.as_ptr(),
         host_out.as_mut_ptr(),

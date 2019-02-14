@@ -77,7 +77,7 @@ pub fn instantiate_wasi(
     signature!(file_stat_put(I32, I32, I32, I32, I32) -> (I32));
     signature!(file_symlink(I32, I32, I32, I32, I32) -> (I32));
     signature!(file_unlink(I32, I32, I32, I32) -> (I32));
-    signature!(poll(I32, I32, I32, I32) -> (I32));
+    signature!(poll_oneoff(I32, I32, I32, I32) -> (I32));
     signature!(proc_exit(I32) -> ());
     signature!(proc_raise(I32) -> (I32));
     signature!(random_get(I32, I32) -> (I32));
