@@ -3,6 +3,10 @@
 Currently WASI follows POSIX semantics, when applicable. However, some details
 of POSIX aren't unambiguously ideal.
 
+## Argv/argc, environment variables
+
+These are planned but not implemented yet.
+
 ## Detecting EOF from a non-empty read
 
 POSIX's `read` returns 0 if and only if it reaches the end of a file or stream.

@@ -1,7 +1,8 @@
 # WASI: WebAssembly System Interface
 
-WebAssembly System Interface, or WASI, is a new API being built for
-non-Web WebAssembly.
+WebAssembly System Interface, or WASI, is a new API being designed
+by the [Wasmtime] project to propose as a standard engine-independent
+non-Web system-oriented API for WebAssembly.
 
 WebAssembly is designed to run well on the Web, however it's
 [not limited to the Web](https://github.com/WebAssembly/design/blob/master/NonWeb.md).
@@ -107,16 +108,15 @@ which is a directory containing compiled libraries and C/C++ header
 files providing standard library and related facilities laid out in
 a standard way to allow compilers to use it directly.
 
-When
-[LLVM 8.0](http://llvm.org/)
-is released, the WebAssembly backend will be stable, but LLVM
+With the [LLVM 8.0](http://llvm.org/)
+release, the WebAssembly backend is now officially stable, but LLVM
 itself doesn't provide a libc - a standard C library, which you
 need to build anything with clang. This is what the WASI-enabled
 sysroot provides, so the combination of clang in LLVM 8.0 and the
-new WASI-enabled sysroot will provide a usable C compilation
-environment that can produce wasm modules that can be run in
-Wasmtime with WASI support, and in the future other engines as
-well.
+new WASI-enabled sysroot provides usable Rust and C compilation
+environments that can produce wasm modules that can be run in
+[Wasmtime] with WASI support, in browsers with the WASI polyfill,
+and in the future other engines as well.
 
 ![WASI software architecture diagram](wasi-software-architecture.png "WASI software architecture diagram")
 
@@ -157,3 +157,5 @@ integration between .wasm modules importing WASI and the Web.
 ## Work in Progress
 
 WASI is currently experimental. Feedback is welcome!
+
+[Wasmtime]: https://github.com/CraneStation/wasmtime
