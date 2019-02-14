@@ -428,10 +428,15 @@ Creates a hard link.
 
 Inputs:
 
-- <a href="#file_link.old_fd" name="file_link.old_fd"></a><code>[\_\_wasi\_lookup\_t](#lookup) <strong>old\_fd</strong></code>
+- <a href="#file_link.old_fd" name="file_link.old_fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>old\_fd</strong></code>
 
     The working directory at which the resolution
     of the source path starts.
+
+- <a href="#file_link.old_flags" name="file_link.old_flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>old\_flags</strong></code>
+
+    Flags determining the method of how the path is
+    resolved.
 
 - <a href="#file_link.old_path" name="file_link.old_path"></a><code>const char *<strong>old\_path</strong></code> and <a href="#file_link.old_path_len" name="file_link.old_path_len"></a><code>size\_t <strong>old\_path\_len</strong></code>
 
@@ -454,10 +459,15 @@ Opens a file.
 
 Inputs:
 
-- <a href="#file_open.dirfd" name="file_open.dirfd"></a><code>[\_\_wasi\_lookup\_t](#lookup) <strong>dirfd</strong></code>
+- <a href="#file_open.dirfd" name="file_open.dirfd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>dirfd</strong></code>
 
     The working directory at which the resolution
     of the file to be opened starts.
+
+- <a href="#file_open.dirflags" name="file_open.dirflags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>dirflags</strong></code>
+
+    Flags determining the method of how the path is
+    resolved.
 
 - <a href="#file_open.path" name="file_open.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_open.path_len" name="file_open.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
@@ -613,7 +623,7 @@ Inputs:
     The desired values of the file attributes that
     are adjusted.
 
-- <a href="#file_stat_fput.flags" name="file_stat_fput.flags"></a><code>[\_\_wasi\_fsflags\_t](#fsflags) <strong>flags</strong></code>
+- <a href="#file_stat_fput.fsflags" name="file_stat_fput.fsflags"></a><code>[\_\_wasi\_fsflags\_t](#fsflags) <strong>fsflags</strong></code>
 
     A bitmask indicating which attributes have to
     be adjusted.
@@ -624,11 +634,16 @@ Gets attributes of a file by path.
 
 Inputs:
 
-- <a href="#file_stat_get.fd" name="file_stat_get.fd"></a><code>[\_\_wasi\_lookup\_t](#lookup) <strong>fd</strong></code>
+- <a href="#file_stat_get.fd" name="file_stat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path whose attributes have to be
     obtained starts.
+
+- <a href="#file_stat_get.flags" name="file_stat_get.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
+
+    Flags determining the method of how the path is
+    resolved.
 
 - <a href="#file_stat_get.path" name="file_stat_get.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_stat_get.path_len" name="file_stat_get.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
@@ -646,11 +661,16 @@ Adjusts attributes of a file by path.
 
 Inputs:
 
-- <a href="#file_stat_put.fd" name="file_stat_put.fd"></a><code>[\_\_wasi\_lookup\_t](#lookup) <strong>fd</strong></code>
+- <a href="#file_stat_put.fd" name="file_stat_put.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path whose attributes have to be
     adjusted starts.
+
+- <a href="#file_stat_put.flags" name="file_stat_put.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
+
+    Flags determining the method of how the path is
+    resolved.
 
 - <a href="#file_stat_put.path" name="file_stat_put.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_stat_put.path_len" name="file_stat_put.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
@@ -662,7 +682,7 @@ Inputs:
     The desired values of the file attributes that
     are adjusted.
 
-- <a href="#file_stat_put.flags" name="file_stat_put.flags"></a><code>[\_\_wasi\_fsflags\_t](#fsflags) <strong>flags</strong></code>
+- <a href="#file_stat_put.fsflags" name="file_stat_put.fsflags"></a><code>[\_\_wasi\_fsflags\_t](#fsflags) <strong>fsflags</strong></code>
 
     A bitmask indicating which attributes have to
     be adjusted.
@@ -1605,29 +1625,11 @@ Number of hard links to an inode.
 
 Used by [`__wasi_filestat_t`](#filestat).
 
-### <a href="#lookup" name="lookup"></a>`__wasi_lookup_t` (`struct`)
-
-Path lookup properties.
-
-Used by [`__wasi_file_link()`](#file_link), [`__wasi_file_open()`](#file_open), [`__wasi_file_stat_get()`](#file_stat_get), and [`__wasi_file_stat_put()`](#file_stat_put).
-
-Members:
-
-- <a href="#lookup.fd" name="lookup.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
-
-    The working directory at which the resolution of the
-    path starts.
-
-- <a href="#lookup.flags" name="lookup.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
-
-    Flags determining the method of how the path is
-    resolved.
-
 ### <a href="#lookupflags" name="lookupflags"></a>`__wasi_lookupflags_t` (`uint32_t` bitfield)
 
 Flags determining the method of how paths are resolved.
 
-Used by [`__wasi_lookup_t`](#lookup).
+Used by [`__wasi_file_link()`](#file_link), [`__wasi_file_open()`](#file_open), [`__wasi_file_stat_get()`](#file_stat_get), and [`__wasi_file_stat_put()`](#file_stat_put).
 
 Possible values:
 

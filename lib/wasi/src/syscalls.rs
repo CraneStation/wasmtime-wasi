@@ -479,7 +479,8 @@ pub unsafe extern "C" fn file_create(
 
 pub unsafe extern "C" fn file_link(
     vmctx: *mut VMContext,
-    fd0: wasm32::uintptr_t,
+    fd0: wasm32::__wasi_fd_t,
+    flags0: wasm32::__wasi_lookupflags_t,
     path0: wasm32::uintptr_t,
     path_len0: wasm32::size_t,
     fd1: wasm32::__wasi_fd_t,
@@ -487,8 +488,9 @@ pub unsafe extern "C" fn file_link(
     path_len1: wasm32::size_t,
 ) -> wasm32::__wasi_errno_t {
     trace!(
-        "file_link(fd0={:?}, path0={:#x?}, path_len0={}, fd1={:?}, path1={:#x?}, path_len1={})",
+        "file_link(fd0={:?}, flags0={:?}, path0={:#x?}, path_len0={}, fd1={:?}, path1={:#x?}, path_len1={})",
         fd0,
+        flags0,
         path0,
         path_len0,
         fd1,
@@ -498,10 +500,8 @@ pub unsafe extern "C" fn file_link(
 
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
-    let fd0 = match decode_lookup(vmctx, fd0) {
-        Ok(fd) => fd,
-        Err(e) => return return_encoded_errno(e),
-    };
+    let fd0 = decode_fd(fd0);
+    let flags0 = decode_lookupflags(flags0);
     let (path0, path_len0) = match decode_char_slice(vmctx, path0, path_len0) {
         Ok((path0, path_len0)) => (path0, path_len0),
         Err(e) => return return_encoded_errno(e),
@@ -512,7 +512,8 @@ pub unsafe extern "C" fn file_link(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_file_link(curfds, fd0, path0, path_len0, fd1, path1, path_len1);
+    let e =
+        host::wasmtime_ssp_file_link(curfds, fd0, flags0, path0, path_len0, fd1, path1, path_len1);
 
     return_encoded_errno(e)
 }
@@ -521,7 +522,8 @@ pub unsafe extern "C" fn file_link(
 // the `fd` by reference?
 pub unsafe extern "C" fn file_open(
     vmctx: *mut VMContext,
-    dirfd: wasm32::uintptr_t,
+    dirfd: wasm32::__wasi_fd_t,
+    dirflags: wasm32::__wasi_lookupflags_t,
     path: wasm32::uintptr_t,
     path_len: wasm32::size_t,
     oflags: wasm32::__wasi_oflags_t,
@@ -529,8 +531,9 @@ pub unsafe extern "C" fn file_open(
     fd: wasm32::uintptr_t,
 ) -> wasm32::__wasi_errno_t {
     trace!(
-        "file_open(dirfd={:?}, path={:#x?}, path_len={:?}, oflags={:#x?}, fds={:#x?}, fd={:#x?})",
+        "file_open(dirfd={:?}, dirflags={:?}, path={:#x?}, path_len={:?}, oflags={:#x?}, fds={:#x?}, fd={:#x?})",
         dirfd,
+        dirflags,
         path,
         path_len,
         oflags,
@@ -540,10 +543,8 @@ pub unsafe extern "C" fn file_open(
 
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
-    let dirfd = match decode_lookup(vmctx, dirfd) {
-        Ok(dirfd) => dirfd,
-        Err(e) => return return_encoded_errno(e),
-    };
+    let dirfd = decode_fd(dirfd);
+    let dirflags = decode_lookupflags(dirflags);
     let (path, path_len) = match decode_char_slice(vmctx, path, path_len) {
         Ok((path, path_len)) => (path, path_len),
         Err(e) => return return_encoded_errno(e),
@@ -555,7 +556,16 @@ pub unsafe extern "C" fn file_open(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_file_open(curfds, dirfd, path, path_len, oflags, &fds, &mut host_fd);
+    let e = host::wasmtime_ssp_file_open(
+        curfds,
+        dirfd,
+        dirflags,
+        path,
+        path_len,
+        oflags,
+        &fds,
+        &mut host_fd,
+    );
 
     trace!("     | *fd={:?}", host_fd);
     encode_fd_byref(vmctx, fd, host_fd).unwrap();
@@ -723,13 +733,13 @@ pub unsafe extern "C" fn file_stat_fput(
     vmctx: *mut VMContext,
     fd: wasm32::__wasi_fd_t,
     buf: wasm32::uintptr_t,
-    flags: wasm32::__wasi_fsflags_t,
+    fsflags: wasm32::__wasi_fsflags_t,
 ) -> wasm32::__wasi_errno_t {
     trace!(
-        "file_stat_fput(fd={:?}, buf={:#x?}, flags={:#x?})",
+        "file_stat_fput(fd={:?}, buf={:#x?}, fsflags={:#x?})",
         fd,
         buf,
-        flags
+        fsflags
     );
 
     let vmctx = &mut *vmctx;
@@ -739,23 +749,25 @@ pub unsafe extern "C" fn file_stat_fput(
         Ok(host_buf) => host_buf,
         Err(e) => return return_encoded_errno(e),
     };
-    let flags = decode_fsflags(flags);
+    let fsflags = decode_fsflags(fsflags);
 
-    let e = host::wasmtime_ssp_file_stat_fput(curfds, fd, &host_buf, flags);
+    let e = host::wasmtime_ssp_file_stat_fput(curfds, fd, &host_buf, fsflags);
 
     return_encoded_errno(e)
 }
 
 pub unsafe extern "C" fn file_stat_get(
     vmctx: *mut VMContext,
-    fd: wasm32::uintptr_t,
+    fd: wasm32::__wasi_fd_t,
+    flags: wasm32::__wasi_lookupflags_t,
     path: wasm32::uintptr_t,
     path_len: wasm32::size_t,
     buf: wasm32::uintptr_t,
 ) -> wasm32::__wasi_errno_t {
     trace!(
-        "file_stat_get(fd={:?}, path={:#x?}, path_len={}, buf={:#x?})",
+        "file_stat_get(fd={:?}, flags={:?}, path={:#x?}, path_len={}, buf={:#x?})",
         fd,
+        flags,
         path,
         path_len,
         buf
@@ -763,10 +775,8 @@ pub unsafe extern "C" fn file_stat_get(
 
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
-    let fd = match decode_lookup(vmctx, fd) {
-        Ok(fd) => fd,
-        Err(e) => return return_encoded_errno(e),
-    };
+    let fd = decode_fd(fd);
+    let flags = decode_lookupflags(flags);
     let (path, path_len) = match decode_char_slice(vmctx, path, path_len) {
         Ok((path, path_len)) => (path, path_len),
         Err(e) => return return_encoded_errno(e),
@@ -776,7 +786,7 @@ pub unsafe extern "C" fn file_stat_get(
         Err(e) => return return_encoded_errno(e),
     };
 
-    let e = host::wasmtime_ssp_file_stat_get(curfds, fd, path, path_len, &mut host_buf);
+    let e = host::wasmtime_ssp_file_stat_get(curfds, fd, flags, path, path_len, &mut host_buf);
 
     trace!("     | *buf={:?}", host_buf);
     encode_filestat_byref(vmctx, buf, host_buf).unwrap();
@@ -786,27 +796,27 @@ pub unsafe extern "C" fn file_stat_get(
 
 pub unsafe extern "C" fn file_stat_put(
     vmctx: *mut VMContext,
-    fd: wasm32::uintptr_t,
+    fd: wasm32::__wasi_fd_t,
+    flags: wasm32::__wasi_lookupflags_t,
     path: wasm32::uintptr_t,
     path_len: wasm32::size_t,
     buf: wasm32::uintptr_t,
-    flags: wasm32::__wasi_fsflags_t,
+    fsflags: wasm32::__wasi_fsflags_t,
 ) -> wasm32::__wasi_errno_t {
     trace!(
-        "file_stat_put(fd={:?}, path={:#x?}, path_leb={}, buf={:#x?}, flags={:#x?})",
+        "file_stat_put(fd={:?}, flags={:?}, path={:#x?}, path_len={}, buf={:#x?}, fsflags={:#x?})",
+        fd,
+        flags,
         path,
         path_len,
-        fd,
         buf,
-        flags
+        fsflags
     );
 
     let vmctx = &mut *vmctx;
     let curfds = get_curfds(vmctx);
-    let fd = match decode_lookup(vmctx, fd) {
-        Ok(fd) => fd,
-        Err(e) => return return_encoded_errno(e),
-    };
+    let fd = decode_fd(fd);
+    let flags = decode_lookupflags(flags);
     let (path, path_len) = match decode_char_slice(vmctx, path, path_len) {
         Ok((path, path_len)) => (path, path_len),
         Err(e) => return return_encoded_errno(e),
@@ -815,9 +825,9 @@ pub unsafe extern "C" fn file_stat_put(
         Ok(host_buf) => host_buf,
         Err(e) => return return_encoded_errno(e),
     };
-    let flags = decode_fsflags(flags);
+    let fsflags = decode_fsflags(fsflags);
 
-    let e = host::wasmtime_ssp_file_stat_put(curfds, fd, path, path_len, &host_buf, flags);
+    let e = host::wasmtime_ssp_file_stat_put(curfds, fd, flags, path, path_len, &host_buf, fsflags);
 
     return_encoded_errno(e)
 }

@@ -542,45 +542,6 @@ fn bindgen_test_layout_wasi_filestat_t() {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct __wasi_lookup_t {
-    pub fd: __wasi_fd_t,
-    pub flags: __wasi_lookupflags_t,
-}
-#[test]
-fn bindgen_test_layout_wasi_lookup_t() {
-    assert_eq!(
-        ::std::mem::size_of::<__wasi_lookup_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(__wasi_lookup_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<__wasi_lookup_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(__wasi_lookup_t))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__wasi_lookup_t>())).fd as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_lookup_t),
-            "::",
-            stringify!(fd)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__wasi_lookup_t>())).flags as *const _ as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_lookup_t),
-            "::",
-            stringify!(flags)
-        )
-    );
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
 pub struct __wasi_ciovec_t {
     pub buf: uintptr_t, // *const ::std::os::raw::c_void
     pub buf_len: size_t,
