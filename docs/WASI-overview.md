@@ -143,14 +143,11 @@ on top.
 
 ## Can WASI apps run on the Web?
 
-With the help of polyfills, it will be able to. Many WASI APIs do
-not directly map onto today's Web APIs, and assume the existence of
-a filesystem and Berkeley sockets. However, several projects are
-working on providing polyfills for this kinds of APIs. At the
-WebAssembly level, WASI is just a set of callable functions that
-can be imported by a .wasm module, and these imports can be
-implemented in a variety of ways, including by a JavaScript
-polyfill library running within browsers.
+Yes! We have a polyfill which implements WASI and runs in browsers.
+At the WebAssembly level, WASI is just a set of callable functions that
+can be imported by a .wasm module, and these imports can be implemented
+in a variety of ways, including by a JavaScript polyfill library running
+within browsers.
 
 And in the future, it's possible that
 [builtin modules](https://github.com/tc39/ecma262/issues/395)
