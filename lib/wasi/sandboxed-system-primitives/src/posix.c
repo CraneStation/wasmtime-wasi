@@ -1559,40 +1559,40 @@ __wasi_errno_t wasmtime_ssp_file_link(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
-    __wasi_lookup_t fd1,
-    const char *path1,
-    size_t path1len,
-    __wasi_fd_t fd2,
-    const char *path2,
-    size_t path2len
+    __wasi_lookup_t old_fd,
+    const char *old_path,
+    size_t old_path_len,
+    __wasi_fd_t new_fd,
+    const char *new_path,
+    size_t new_path_len
 ) {
-  struct path_access pa1;
-  __wasi_errno_t error = path_get(curfds, &pa1, fd1, path1, path1len,
-                                    __WASI_RIGHT_FILE_LINK_SOURCE, 0, false);
+  struct path_access old_pa;
+  __wasi_errno_t error = path_get(curfds, &old_pa, old_fd, old_path, old_path_len,
+                                  __WASI_RIGHT_FILE_LINK_SOURCE, 0, false);
   if (error != 0)
     return error;
 
-  struct path_access pa2;
-  error = path_get_nofollow(curfds, &pa2, fd2, path2, path2len,
+  struct path_access new_pa;
+  error = path_get_nofollow(curfds, &new_pa, new_fd, new_path, new_path_len,
                             __WASI_RIGHT_FILE_LINK_TARGET, 0, true);
   if (error != 0) {
-    path_put(&pa1);
+    path_put(&old_pa);
     return error;
   }
 
-  int ret = linkat(pa1.fd, pa1.path, pa2.fd, pa2.path,
-                   pa1.follow ? AT_SYMLINK_FOLLOW : 0);
-  if (ret < 0 && errno == ENOTSUP && !pa1.follow) {
+  int ret = linkat(old_pa.fd, old_pa.path, new_pa.fd, new_pa.path,
+                   old_pa.follow ? AT_SYMLINK_FOLLOW : 0);
+  if (ret < 0 && errno == ENOTSUP && !old_pa.follow) {
     // OS X doesn't allow creating hardlinks to symbolic links.
     // Duplicate the symbolic link instead.
-    char *target = readlinkat_dup(pa1.fd, pa1.path);
+    char *target = readlinkat_dup(old_pa.fd, old_pa.path);
     if (target != NULL) {
-      ret = symlinkat(target, pa2.fd, pa2.path);
+      ret = symlinkat(target, new_pa.fd, new_pa.path);
       free(target);
     }
   }
-  path_put(&pa1);
-  path_put(&pa2);
+  path_put(&old_pa);
+  path_put(&new_pa);
   if (ret < 0)
     return convert_errno(errno);
   return 0;
@@ -1856,30 +1856,30 @@ __wasi_errno_t wasmtime_ssp_file_rename(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
-    __wasi_fd_t oldfd,
-    const char *old,
-    size_t oldlen,
-    __wasi_fd_t newfd,
-    const char *new,
-    size_t newlen
+    __wasi_fd_t old_fd,
+    const char *old_path,
+    size_t old_path_len,
+    __wasi_fd_t new_fd,
+    const char *new_path,
+    size_t new_path_len
 ) {
-  struct path_access pa1;
-  __wasi_errno_t error = path_get_nofollow(curfds,
-      &pa1, oldfd, old, oldlen, __WASI_RIGHT_FILE_RENAME_SOURCE, 0, true);
+  struct path_access old_pa;
+  __wasi_errno_t error = path_get_nofollow(curfds, &old_pa, old_fd, old_path, old_path_len,
+                                           __WASI_RIGHT_FILE_RENAME_SOURCE, 0, true);
   if (error != 0)
     return error;
 
-  struct path_access pa2;
-  error = path_get_nofollow(curfds, &pa2, newfd, new, newlen,
+  struct path_access new_pa;
+  error = path_get_nofollow(curfds, &new_pa, new_fd, new_path, new_path_len,
                             __WASI_RIGHT_FILE_RENAME_TARGET, 0, true);
   if (error != 0) {
-    path_put(&pa1);
+    path_put(&old_pa);
     return error;
   }
 
-  int ret = renameat(pa1.fd, pa1.path, pa2.fd, pa2.path);
-  path_put(&pa1);
-  path_put(&pa2);
+  int ret = renameat(old_pa.fd, old_pa.path, new_pa.fd, new_pa.path);
+  path_put(&old_pa);
+  path_put(&new_pa);
   if (ret < 0) {
     // Linux returns EBUSY in cases where EINVAL would be more suited.
     return errno == EBUSY ? __WASI_EINVAL : convert_errno(errno);
@@ -2092,19 +2092,19 @@ __wasi_errno_t wasmtime_ssp_file_symlink(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
-    const char *path1,
-    size_t path1len,
+    const char *old_path,
+    size_t old_path_len,
     __wasi_fd_t fd,
-    const char *path2,
-    size_t path2len
+    const char *new_path,
+    size_t new_path_len
 ) {
-  char *target = str_nullterminate(path1, path1len);
+  char *target = str_nullterminate(old_path, old_path_len);
   if (target == NULL)
     return convert_errno(errno);
 
   struct path_access pa;
   __wasi_errno_t error = path_get_nofollow(curfds,
-      &pa, fd, path2, path2len, __WASI_RIGHT_FILE_SYMLINK, 0, true);
+      &pa, fd, new_path, new_path_len, __WASI_RIGHT_FILE_SYMLINK, 0, true);
   if (error != 0) {
     free(target);
     return error;
