@@ -2149,7 +2149,7 @@ __wasi_errno_t wasmtime_ssp_file_unlink(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_poll(
+__wasi_errno_t wasmtime_ssp_poll_oneoff(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif

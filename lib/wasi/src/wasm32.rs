@@ -146,7 +146,6 @@ pub type __wasi_sdflags_t = u8;
 pub type __wasi_siflags_t = u16;
 pub type __wasi_signal_t = u8;
 pub type __wasi_subclockflags_t = u16;
-pub type __wasi_subrwflags_t = u16;
 pub type __wasi_timestamp_t = u64;
 pub type __wasi_ulflags_t = u8;
 pub type __wasi_userdata_t = u64;
@@ -947,14 +946,13 @@ fn bindgen_test_layout_wasi_subscription_t__bindgen_ty_1__bindgen_ty_1() {
 #[derive(Debug, Copy, Clone)]
 pub struct __wasi_subscription_t__bindgen_ty_1__bindgen_ty_3 {
     pub fd: __wasi_fd_t,
-    pub flags: __wasi_subrwflags_t,
 }
 #[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_wasi_subscription_t__bindgen_ty_1__bindgen_ty_3() {
     assert_eq!(
         ::std::mem::size_of::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_3>(),
-        8usize,
+        4usize,
         concat!(
             "Size of: ",
             stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_3)
@@ -979,19 +977,6 @@ fn bindgen_test_layout_wasi_subscription_t__bindgen_ty_1__bindgen_ty_3() {
             stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_3),
             "::",
             stringify!(fd)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<__wasi_subscription_t__bindgen_ty_1__bindgen_ty_3>())).flags
-                as *const _ as usize
-        },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_subscription_t__bindgen_ty_1__bindgen_ty_3),
-            "::",
-            stringify!(flags)
         )
     );
 }
@@ -1411,7 +1396,6 @@ pub const __WASI_SIGPOLL: __wasi_signal_t = 28;
 pub const __WASI_SIGPWR: __wasi_signal_t = 29;
 pub const __WASI_SIGSYS: __wasi_signal_t = 30;
 pub const __WASI_SUBSCRIPTION_CLOCK_ABSTIME: __wasi_subclockflags_t = 1;
-pub const __WASI_SUBSCRIPTION_FD_READWRITE_POLL: __wasi_subrwflags_t = 1;
 pub const __WASI_UNLINK_REMOVEDIR: __wasi_ulflags_t = 1;
 pub const __WASI_WHENCE_CUR: __wasi_whence_t = 0;
 pub const __WASI_WHENCE_END: __wasi_whence_t = 1;

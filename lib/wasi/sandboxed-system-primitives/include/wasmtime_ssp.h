@@ -262,9 +262,6 @@ typedef uint8_t __wasi_signal_t;
 typedef uint16_t __wasi_subclockflags_t;
 #define __WASI_SUBSCRIPTION_CLOCK_ABSTIME (0x0001)
 
-typedef uint16_t __wasi_subrwflags_t;
-#define __WASI_SUBSCRIPTION_FD_READWRITE_POLL (0x0001)
-
 typedef uint64_t __wasi_timestamp_t;
 
 typedef uint8_t __wasi_ulflags_t;
@@ -511,7 +508,6 @@ typedef struct __wasi_subscription_t {
         } clock;
         struct __wasi_subscription_u_fd_readwrite_t {
             __wasi_fd_t fd;
-            __wasi_subrwflags_t flags;
         } fd_readwrite;
     } u;
 } __wasi_subscription_t;
@@ -534,9 +530,6 @@ _Static_assert(
     offsetof(__wasi_subscription_t, u.clock.flags) == 48, "non-wasi data layout");
 _Static_assert(
     offsetof(__wasi_subscription_t, u.fd_readwrite.fd) == 16,
-    "non-wasi data layout");
-_Static_assert(
-    offsetof(__wasi_subscription_t, u.fd_readwrite.flags) == 20,
     "non-wasi data layout");
 _Static_assert(sizeof(__wasi_subscription_t) == 56, "non-wasi data layout");
 _Static_assert(_Alignof(__wasi_subscription_t) == 8, "non-wasi data layout");
@@ -816,7 +809,7 @@ __wasi_errno_t wasmtime_ssp_file_unlink(
     __wasi_ulflags_t flags
 ) WASMTIME_SSP_SYSCALL_NAME(file_unlink) __attribute__((__warn_unused_result__));
 
-__wasi_errno_t wasmtime_ssp_poll(
+__wasi_errno_t wasmtime_ssp_poll_oneoff(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -824,7 +817,7 @@ __wasi_errno_t wasmtime_ssp_poll(
     __wasi_event_t *out,
     size_t nsubscriptions,
     size_t *nevents
-) WASMTIME_SSP_SYSCALL_NAME(poll) __attribute__((__warn_unused_result__));
+) WASMTIME_SSP_SYSCALL_NAME(poll_oneoff) __attribute__((__warn_unused_result__));
 
 _Noreturn void wasmtime_ssp_proc_exit(
     __wasi_exitcode_t rval
