@@ -448,19 +448,17 @@ pub unsafe extern "C" fn file_allocate(
     return_encoded_errno(e)
 }
 
-pub unsafe extern "C" fn file_create(
+pub unsafe extern "C" fn file_mkdir(
     vmctx: *mut VMContext,
     fd: wasm32::__wasi_fd_t,
     path: wasm32::uintptr_t,
     path_len: wasm32::size_t,
-    type_: wasm32::__wasi_filetype_t,
 ) -> wasm32::__wasi_errno_t {
     trace!(
-        "file_create(fd={:?}, path={:#x?}, path_len={}, type={:?})",
+        "file_mkdir(fd={:?}, path={:#x?}, path_len={})",
         fd,
         path,
         path_len,
-        type_
     );
 
     let vmctx = &mut *vmctx;
@@ -470,9 +468,8 @@ pub unsafe extern "C" fn file_create(
         Ok((path, path_len)) => (path, path_len),
         Err(e) => return return_encoded_errno(e),
     };
-    let type_ = decode_filetype(type_);
 
-    let e = host::wasmtime_ssp_file_create(curfds, fd, path, path_len, type_);
+    let e = host::wasmtime_ssp_file_mkdir(curfds, fd, path, path_len);
 
     return_encoded_errno(e)
 }
