@@ -48,6 +48,7 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_fd_read()`](#fd_read)
 - [`__wasi_fd_replace()`](#fd_replace)
 - [`__wasi_fd_seek()`](#fd_seek)
+- [`__wasi_fd_tell()`](#fd_tell)
 - [`__wasi_fd_stat_get()`](#fd_stat_get)
 - [`__wasi_fd_stat_put()`](#fd_stat_put)
 - [`__wasi_fd_sync()`](#fd_sync)
@@ -280,6 +281,24 @@ Inputs:
 Outputs:
 
 - <a href="#fd_seek.newoffset" name="fd_seek.newoffset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>newoffset</strong></code>
+
+    The new offset of the file descriptor,
+    relative to the start of the file.
+
+### <a href="#fd_tell" name="fd_tell"></a>`__wasi_fd_tell()`
+
+Obtains the offset of the file descriptor.
+
+Inputs:
+
+- <a href="#fd_tell.fd" name="fd_tell.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+
+    The file descriptor whose offset has to be
+    moved.
+
+Outputs:
+
+- <a href="#fd_tell.newoffset" name="fd_tell.newoffset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>newoffset</strong></code>
 
     The new offset of the file descriptor,
     relative to the start of the file.
@@ -1469,7 +1488,7 @@ Used by [`__wasi_fd_seek()`](#fd_seek).
 
 Non-negative file size or length of a region within a file.
 
-Used by [`__wasi_event_t`](#event), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_pread()`](#fd_pread), [`__wasi_fd_pwrite()`](#fd_pwrite), [`__wasi_fd_seek()`](#fd_seek), [`__wasi_file_advise()`](#file_advise), and [`__wasi_file_allocate()`](#file_allocate).
+Used by [`__wasi_event_t`](#event), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_pread()`](#fd_pread), [`__wasi_fd_pwrite()`](#fd_pwrite), [`__wasi_fd_seek()`](#fd_seek), [`__wasi_file_tell()`](#file_tell), [`__wasi_file_advise()`](#file_advise), and [`__wasi_file_allocate()`](#file_allocate).
 
 ### <a href="#filestat" name="filestat"></a>`__wasi_filestat_t` (`struct`)
 
@@ -1753,7 +1772,7 @@ Possible values:
 
     The right to invoke [`__wasi_fd_seek()`](#fd_seek) in such a way that the
     file offset remains unaltered (i.e., [`__WASI_WHENCE_CUR`](#whence.cur) with
-    offset zero).
+    offset zero), or to invoke [`__wasi_fd_tell()`](#fd_seek).
 
 - <a href="#rights.fd_write" name="rights.fd_write"></a>**`__WASI_RIGHT_FD_WRITE`**
 
