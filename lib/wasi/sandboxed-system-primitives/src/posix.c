@@ -975,6 +975,27 @@ __wasi_errno_t wasmtime_ssp_fd_seek(
   return 0;
 }
 
+__wasi_errno_t wasmtime_ssp_fd_tell(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
+    struct fd_table *curfds,
+#endif
+    __wasi_fd_t fd,
+    __wasi_filesize_t *newoffset
+) {
+  struct fd_object *fo;
+  __wasi_errno_t error =
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FD_TELL, 0);
+  if (error != 0)
+    return error;
+
+  off_t ret = lseek(fd_number(fo), 0, SEEK_CUR);
+  fd_object_release(fo);
+  if (ret < 0)
+    return convert_errno(errno);
+  *newoffset = ret;
+  return 0;
+}
+
 __wasi_errno_t wasmtime_ssp_fd_stat_get(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,

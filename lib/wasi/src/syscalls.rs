@@ -302,6 +302,29 @@ pub unsafe extern "C" fn fd_seek(
     return_encoded_errno(e)
 }
 
+pub unsafe extern "C" fn fd_tell(
+    vmctx: *mut VMContext,
+    fd: wasm32::__wasi_fd_t,
+    newoffset: wasm32::uintptr_t,
+) -> wasm32::__wasi_errno_t {
+    trace!("fd_tell(fd={:?}, newoffset={:#x?})", fd, newoffset);
+
+    let vmctx = &mut *vmctx;
+    let curfds = get_curfds(vmctx);
+    let fd = decode_fd(fd);
+    let mut host_newoffset = match decode_filesize_byref(vmctx, newoffset) {
+        Ok(host_newoffset) => host_newoffset,
+        Err(e) => return return_encoded_errno(e),
+    };
+
+    let e = host::wasmtime_ssp_fd_tell(curfds, fd, &mut host_newoffset);
+
+    trace!("     | *newoffset={:?}", host_newoffset);
+    encode_filesize_byref(vmctx, newoffset, host_newoffset).unwrap();
+
+    return_encoded_errno(e)
+}
+
 pub unsafe extern "C" fn fd_stat_get(
     vmctx: *mut VMContext,
     fd: wasm32::__wasi_fd_t,

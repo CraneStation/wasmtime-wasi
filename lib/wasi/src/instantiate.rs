@@ -59,6 +59,7 @@ pub fn instantiate_wasi(
     signature!(fd_read(I32, I32, I32, I32) -> (I32));
     signature!(fd_replace(I32, I32) -> (I32));
     signature!(fd_seek(I32, I64, I32, I32) -> (I32));
+    signature!(fd_tell(I32, I32) -> (I32));
     signature!(fd_stat_get(I32, I32) -> (I32));
     signature!(fd_stat_put(I32, I32, I32) -> (I32));
     signature!(fd_sync(I32) -> (I32));

@@ -624,6 +624,14 @@ __wasi_errno_t wasmtime_ssp_fd_seek(
     __wasi_filesize_t *newoffset
 ) WASMTIME_SSP_SYSCALL_NAME(fd_seek) __attribute__((__warn_unused_result__));
 
+__wasi_errno_t wasmtime_ssp_fd_tell(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
+    struct fd_table *curfds,
+#endif
+    __wasi_fd_t fd,
+    __wasi_filesize_t *newoffset
+) WASMTIME_SSP_SYSCALL_NAME(fd_tell) __attribute__((__warn_unused_result__));
+
 __wasi_errno_t wasmtime_ssp_fd_stat_get(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
