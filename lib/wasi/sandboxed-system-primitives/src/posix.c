@@ -1527,33 +1527,26 @@ static void path_put(
   fd_object_release(pa->fd_object);
 }
 
-__wasi_errno_t wasmtime_ssp_file_create(
+__wasi_errno_t wasmtime_ssp_file_mkdir(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
     __wasi_fd_t fd,
     const char *path,
-    size_t pathlen,
-    __wasi_filetype_t type
+    size_t pathlen
 ) {
-  switch (type) {
-    case __WASI_FILETYPE_DIRECTORY: {
-      struct path_access pa;
-      __wasi_errno_t error =
-          path_get_nofollow(curfds, &pa, fd, path, pathlen,
-                            __WASI_RIGHT_FILE_CREATE_DIRECTORY, 0, true);
-      if (error != 0)
-        return error;
+  struct path_access pa;
+  __wasi_errno_t error =
+      path_get_nofollow(curfds, &pa, fd, path, pathlen,
+                        __WASI_RIGHT_FILE_CREATE_DIRECTORY, 0, true);
+  if (error != 0)
+    return error;
 
-      int ret = mkdirat(pa.fd, pa.path, 0777);
-      path_put(&pa);
-      if (ret < 0)
-        return convert_errno(errno);
-      return 0;
-    }
-    default:
-      return __WASI_EINVAL;
-  }
+  int ret = mkdirat(pa.fd, pa.path, 0777);
+  path_put(&pa);
+  if (ret < 0)
+    return convert_errno(errno);
+  return 0;
 }
 
 __wasi_errno_t wasmtime_ssp_file_link(
