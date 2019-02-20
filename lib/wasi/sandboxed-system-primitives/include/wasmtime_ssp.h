@@ -566,14 +566,6 @@ __wasi_errno_t wasmtime_ssp_fd_datasync(
     __wasi_fd_t fd
 ) WASMTIME_SSP_SYSCALL_NAME(fd_datasync) __attribute__((__warn_unused_result__));
 
-__wasi_errno_t wasmtime_ssp_fd_dup(
-#if !defined(WASMTIME_SSP_STATIC_CURFDS)
-    struct fd_table *curfds,
-#endif
-    __wasi_fd_t from,
-    __wasi_fd_t *fd
-) WASMTIME_SSP_SYSCALL_NAME(fd_dup) __attribute__((__warn_unused_result__));
-
 __wasi_errno_t wasmtime_ssp_fd_pread(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,

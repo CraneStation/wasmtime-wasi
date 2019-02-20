@@ -53,7 +53,6 @@ pub fn instantiate_wasi(
     signature!(clock_time_get(I32, I64, I32) -> (I32));
     signature!(fd_close(I32) -> (I32));
     signature!(fd_datasync(I32) -> (I32));
-    signature!(fd_dup(I32, I32) -> (I32));
     signature!(fd_pread(I32, I32, I32, I64, I32) -> (I32));
     signature!(fd_pwrite(I32, I32, I32, I64, I32) -> (I32));
     signature!(fd_read(I32, I32, I32, I32) -> (I32));

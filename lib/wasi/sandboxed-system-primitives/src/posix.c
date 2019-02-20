@@ -724,36 +724,6 @@ __wasi_errno_t wasmtime_ssp_fd_datasync(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_fd_dup(
-#if !defined(WASMTIME_SSP_STATIC_CURFDS)
-    struct fd_table *curfds,
-#endif
-    __wasi_fd_t from,
-    __wasi_fd_t *fd
-) {
-  struct fd_table *ft = curfds;
-  rwlock_wrlock(&ft->lock);
-  struct fd_entry *fe;
-  __wasi_errno_t error = fd_table_get_entry(ft, from, 0, 0, &fe);
-  if (error != 0) {
-    rwlock_unlock(&ft->lock);
-    return error;
-  }
-
-  // Grow the file descriptor table if needed.
-  if (!fd_table_grow(ft, 0, 1)) {
-    rwlock_unlock(&ft->lock);
-    return convert_errno(errno);
-  }
-
-  // Attach it to a new place in the table.
-  *fd = fd_table_unused(ft);
-  refcount_acquire(&fe->object->refcount);
-  fd_table_attach(ft, *fd, fe->object, fe->rights_base, fe->rights_inheriting);
-  rwlock_unlock(&ft->lock);
-  return 0;
-}
-
 __wasi_errno_t wasmtime_ssp_fd_pread(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
