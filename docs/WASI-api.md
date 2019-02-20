@@ -42,7 +42,6 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_clock_time_get()`](#clock_time_get)
 - [`__wasi_fd_close()`](#fd_close)
 - [`__wasi_fd_datasync()`](#fd_datasync)
-- [`__wasi_fd_dup()`](#fd_dup)
 - [`__wasi_fd_pread()`](#fd_pread)
 - [`__wasi_fd_pwrite()`](#fd_pwrite)
 - [`__wasi_fd_read()`](#fd_read)
@@ -136,23 +135,6 @@ Inputs:
 
     The file descriptor of the file whose data
     needs to be synchronized to disk.
-
-### <a href="#fd_dup" name="fd_dup"></a>`__wasi_fd_dup()`
-
-Duplicates a file descriptor.
-
-Inputs:
-
-- <a href="#fd_dup.from" name="fd_dup.from"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>from</strong></code>
-
-    The file descriptor that needs to be
-    duplicated.
-
-Outputs:
-
-- <a href="#fd_dup.fd" name="fd_dup.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
-
-    The new file descriptor.
 
 ### <a href="#fd_pread" name="fd_pread"></a>`__wasi_fd_pread()`
 
