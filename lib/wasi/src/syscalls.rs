@@ -104,29 +104,6 @@ pub unsafe extern "C" fn fd_datasync(
     return_encoded_errno(e)
 }
 
-pub unsafe extern "C" fn fd_dup(
-    vmctx: *mut VMContext,
-    from: wasm32::__wasi_fd_t,
-    fd: wasm32::uintptr_t,
-) -> wasm32::__wasi_errno_t {
-    trace!("fd_dup(from={:?}, fd={:#x?})", from, fd);
-
-    let vmctx = &mut *vmctx;
-    let curfds = get_curfds(vmctx);
-    let from = decode_fd(from);
-    let mut host_fd = match decode_fd_byref(vmctx, fd) {
-        Ok(host_fd) => host_fd,
-        Err(e) => return return_encoded_errno(e),
-    };
-
-    let e = host::wasmtime_ssp_fd_dup(curfds, from, &mut host_fd);
-
-    trace!("     | *fd={:?}", host_fd);
-    encode_fd_byref(vmctx, fd, host_fd).unwrap();
-
-    return_encoded_errno(e)
-}
-
 pub unsafe extern "C" fn fd_pread(
     vmctx: *mut VMContext,
     fd: wasm32::__wasi_fd_t,
