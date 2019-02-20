@@ -28,13 +28,18 @@ pub fn instantiate_wasi(
     let call_conv = isa::CallConv::triple_default(&HOST);
 
     macro_rules! signature {
-        ( $name:ident ( $( $args:ident ),* ) -> ( $( $rets:ident ),* ) ) => {
+        ($name:ident) => {
             {
-                use cranelift_codegen::ir::types::*;
                 let sig = module.signatures.push(translate_signature(
                     ir::Signature {
-                        params: vec![$( ir::AbiParam::new($args) ),*],
-                        returns: vec![$( ir::AbiParam::new($rets) ),*],
+                        params: syscalls::$name::params()
+                            .into_iter()
+                            .map(ir::AbiParam::new)
+                            .collect(),
+                        returns: syscalls::$name::results()
+                            .into_iter()
+                            .map(ir::AbiParam::new)
+                            .collect(),
                         call_conv,
                     },
                     pointer_type,
@@ -43,48 +48,47 @@ pub fn instantiate_wasi(
                 module
                     .exports
                     .insert(prefix.to_owned() + stringify!($name), Export::Function(func));
-                finished_functions.push(syscalls::$name as *const VMFunctionBody);
+                finished_functions.push(syscalls::$name::SHIM as *const VMFunctionBody);
             }
         }
     }
 
-    // TODO: It'd be even cooler if we could infer the signatures automatically.
-    signature!(clock_res_get(I32, I32) -> (I32));
-    signature!(clock_time_get(I32, I64, I32) -> (I32));
-    signature!(fd_close(I32) -> (I32));
-    signature!(fd_datasync(I32) -> (I32));
-    signature!(fd_pread(I32, I32, I32, I64, I32) -> (I32));
-    signature!(fd_pwrite(I32, I32, I32, I64, I32) -> (I32));
-    signature!(fd_read(I32, I32, I32, I32) -> (I32));
-    signature!(fd_replace(I32, I32) -> (I32));
-    signature!(fd_seek(I32, I64, I32, I32) -> (I32));
-    signature!(fd_tell(I32, I32) -> (I32));
-    signature!(fd_stat_get(I32, I32) -> (I32));
-    signature!(fd_stat_put(I32, I32, I32) -> (I32));
-    signature!(fd_sync(I32) -> (I32));
-    signature!(fd_write(I32, I32, I32, I32) -> (I32));
-    signature!(file_advise(I32, I64, I64, I32) -> (I32));
-    signature!(file_allocate(I32, I64, I64) -> (I32));
-    signature!(file_mkdir(I32, I32, I32) -> (I32));
-    signature!(file_link(I32, I32, I32, I32, I32, I32) -> (I32));
-    signature!(file_open(I32, I32, I32, I32, I32, I32) -> (I32));
-    signature!(file_readdir(I32, I32, I32, I64, I32) -> (I32));
-    signature!(file_readlink(I32, I32, I32, I32, I32, I32) -> (I32));
-    signature!(file_rename(I32, I32, I32, I32, I32, I32) -> (I32));
-    signature!(file_stat_fget(I32, I32) -> (I32));
-    signature!(file_stat_fput(I32, I32, I32) -> (I32));
-    signature!(file_stat_get(I32, I32, I32, I32) -> (I32));
-    signature!(file_stat_put(I32, I32, I32, I32, I32) -> (I32));
-    signature!(file_symlink(I32, I32, I32, I32, I32) -> (I32));
-    signature!(file_unlink(I32, I32, I32, I32) -> (I32));
-    signature!(poll_oneoff(I32, I32, I32, I32) -> (I32));
-    signature!(proc_exit(I32) -> ());
-    signature!(proc_raise(I32) -> (I32));
-    signature!(random_get(I32, I32) -> (I32));
-    signature!(sched_yield() -> (I32));
-    signature!(sock_recv(I32, I32, I32) -> (I32));
-    signature!(sock_send(I32, I32, I32) -> (I32));
-    signature!(sock_shutdown(I32, I32) -> (I32));
+    signature!(clock_res_get);
+    signature!(clock_time_get);
+    signature!(fd_close);
+    signature!(fd_datasync);
+    signature!(fd_pread);
+    signature!(fd_pwrite);
+    signature!(fd_read);
+    signature!(fd_replace);
+    signature!(fd_seek);
+    signature!(fd_tell);
+    signature!(fd_stat_get);
+    signature!(fd_stat_put);
+    signature!(fd_sync);
+    signature!(fd_write);
+    signature!(file_advise);
+    signature!(file_allocate);
+    signature!(file_mkdir);
+    signature!(file_link);
+    signature!(file_open);
+    signature!(file_readdir);
+    signature!(file_readlink);
+    signature!(file_rename);
+    signature!(file_stat_fget);
+    signature!(file_stat_fput);
+    signature!(file_stat_get);
+    signature!(file_stat_put);
+    signature!(file_symlink);
+    signature!(file_unlink);
+    signature!(poll_oneoff);
+    signature!(proc_exit);
+    signature!(proc_raise);
+    signature!(random_get);
+    signature!(sched_yield);
+    signature!(sock_recv);
+    signature!(sock_send);
+    signature!(sock_shutdown);
 
     let imports = Imports::none();
     let data_initializers = Vec::new();
