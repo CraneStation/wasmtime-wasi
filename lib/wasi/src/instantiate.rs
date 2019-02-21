@@ -28,29 +28,28 @@ pub fn instantiate_wasi(
     let call_conv = isa::CallConv::triple_default(&HOST);
 
     macro_rules! signature {
-        ($name:ident) => {
-            {
-                let sig = module.signatures.push(translate_signature(
-                    ir::Signature {
-                        params: syscalls::$name::params()
-                            .into_iter()
-                            .map(ir::AbiParam::new)
-                            .collect(),
-                        returns: syscalls::$name::results()
-                            .into_iter()
-                            .map(ir::AbiParam::new)
-                            .collect(),
-                        call_conv,
-                    },
-                    pointer_type,
-                ));
-                let func = module.functions.push(sig);
-                module
-                    .exports
-                    .insert(prefix.to_owned() + stringify!($name), Export::Function(func));
-                finished_functions.push(syscalls::$name::SHIM as *const VMFunctionBody);
-            }
-        }
+        ($name:ident) => {{
+            let sig = module.signatures.push(translate_signature(
+                ir::Signature {
+                    params: syscalls::$name::params()
+                        .into_iter()
+                        .map(ir::AbiParam::new)
+                        .collect(),
+                    returns: syscalls::$name::results()
+                        .into_iter()
+                        .map(ir::AbiParam::new)
+                        .collect(),
+                    call_conv,
+                },
+                pointer_type,
+            ));
+            let func = module.functions.push(sig);
+            module.exports.insert(
+                prefix.to_owned() + stringify!($name),
+                Export::Function(func),
+            );
+            finished_functions.push(syscalls::$name::SHIM as *const VMFunctionBody);
+        }};
     }
 
     signature!(clock_res_get);

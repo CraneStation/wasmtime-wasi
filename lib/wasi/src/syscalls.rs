@@ -86,7 +86,9 @@ cast64!(i64 u64);
 impl AbiRet for () {
     type Abi = ();
     fn convert(self) {}
-    fn codegen_tys() -> Vec<Type> { Vec::new() }
+    fn codegen_tys() -> Vec<Type> {
+        Vec::new()
+    }
 }
 
 macro_rules! syscalls {
