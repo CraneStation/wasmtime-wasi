@@ -598,13 +598,13 @@ __wasi_errno_t wasmtime_ssp_fd_read(
     size_t *nread
 ) WASMTIME_SSP_SYSCALL_NAME(fd_read) __attribute__((__warn_unused_result__));
 
-__wasi_errno_t wasmtime_ssp_fd_replace(
+__wasi_errno_t wasmtime_ssp_fd_renumber(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
     __wasi_fd_t from,
     __wasi_fd_t to
-) WASMTIME_SSP_SYSCALL_NAME(fd_replace) __attribute__((__warn_unused_result__));
+) WASMTIME_SSP_SYSCALL_NAME(fd_renumber) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_fd_seek(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)

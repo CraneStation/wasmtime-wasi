@@ -346,19 +346,19 @@ syscalls! {
         return_encoded_errno(e)
     }
 
-    pub unsafe extern "C" fn fd_replace(
+    pub unsafe extern "C" fn fd_renumber(
         vmctx: *mut VMContext,
         from: wasm32::__wasi_fd_t,
         to: wasm32::__wasi_fd_t,
     ) -> wasm32::__wasi_errno_t {
-        trace!("fd_replace(from={:?}, to={:?})", from, to);
+        trace!("fd_renumber(from={:?}, to={:?})", from, to);
 
         let vmctx = &mut *vmctx;
         let curfds = get_curfds(vmctx);
         let from = decode_fd(from);
         let to = decode_fd(to);
 
-        let e = host::wasmtime_ssp_fd_replace(curfds, from, to);
+        let e = host::wasmtime_ssp_fd_renumber(curfds, from, to);
 
         return_encoded_errno(e)
     }

@@ -45,7 +45,7 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_fd_pread()`](#fd_pread)
 - [`__wasi_fd_pwrite()`](#fd_pwrite)
 - [`__wasi_fd_read()`](#fd_read)
-- [`__wasi_fd_replace()`](#fd_replace)
+- [`__wasi_fd_renumber()`](#fd_renumber)
 - [`__wasi_fd_seek()`](#fd_seek)
 - [`__wasi_fd_tell()`](#fd_tell)
 - [`__wasi_fd_stat_get()`](#fd_stat_get)
@@ -214,28 +214,29 @@ Outputs:
 
     The number of bytes read.
 
-### <a href="#fd_replace" name="fd_replace"></a>`__wasi_fd_replace()`
+### <a href="#fd_renumber" name="fd_renumber"></a>`__wasi_fd_renumber()`
 
-Atomically replaces a file descriptor by a copy of another
+Atomically replaces a file descriptor by renumbering another
 file descriptor.
 
 Due to the strong focus on thread safety, this environment
-does not provide a mechanism to duplicate a file descriptor to
-an arbitrary number, like dup2(). This would be prone to race
-conditions, as an actual file descriptor with the same number
-could be allocated by a different thread at the same time.
+does not provide a mechanism to duplicate or renumber a file
+descriptor to an arbitrary number, like dup2(). This would be
+prone to race conditions, as an actual file descriptor with the
+same number could be allocated by a different thread at the same
+time.
 
-This system call provides a way to atomically replace file
+This system call provides a way to atomically renumber file
 descriptors, which would disappear if dup2() were to be
 removed entirely.
 
 Inputs:
 
-- <a href="#fd_replace.from" name="fd_replace.from"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>from</strong></code>
+- <a href="#fd_renumber.from" name="fd_renumber.from"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>from</strong></code>
 
-    The file descriptor that needs to be copied.
+    The file descriptor that needs to be renumbered.
 
-- <a href="#fd_replace.to" name="fd_replace.to"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>to</strong></code>
+- <a href="#fd_renumber.to" name="fd_renumber.to"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>to</strong></code>
 
     The file descriptor that needs to be
     overwritten.
