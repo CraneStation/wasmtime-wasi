@@ -871,7 +871,7 @@ __wasi_errno_t wasmtime_ssp_fd_read(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_fd_replace(
+__wasi_errno_t wasmtime_ssp_fd_renumber(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -900,6 +900,13 @@ __wasi_errno_t wasmtime_ssp_fd_replace(
                   fe_from->rights_inheriting);
   rwlock_unlock(&ft->lock);
   fd_object_release(fo);
+
+  // Remove the old fd from the file descriptor table.
+  fd_table_detach(ft, from, &fo);
+  fd_object_release(fo);
+  --ft->used;
+
+  rwlock_unlock(&ft->lock);
   return 0;
 }
 

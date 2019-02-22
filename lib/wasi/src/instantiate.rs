@@ -59,7 +59,7 @@ pub fn instantiate_wasi(
     signature!(fd_pread);
     signature!(fd_pwrite);
     signature!(fd_read);
-    signature!(fd_replace);
+    signature!(fd_renumber);
     signature!(fd_seek);
     signature!(fd_tell);
     signature!(fd_stat_get);
