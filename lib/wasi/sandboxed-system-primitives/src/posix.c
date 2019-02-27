@@ -2434,15 +2434,6 @@ __wasi_errno_t wasmtime_ssp_sock_recv(
   if ((in->ri_flags & __WASI_SOCK_RECV_WAITALL) != 0)
     nflags |= MSG_WAITALL;
 
-  // Provide space for a control message header if we should receive
-  // file descriptors.
-  if (in->ri_fds_len > 0) {
-    hdr.msg_controllen = CMSG_SPACE(in->ri_fds_len * sizeof(int));
-    hdr.msg_control = malloc(hdr.msg_controllen);
-    if (hdr.msg_control == NULL)
-      return __WASI_ENOMEM;
-  }
-
   struct fd_object *fo;
   __wasi_errno_t error = fd_object_get(curfds, &fo, sock, __WASI_RIGHT_FD_READ, 0);
   if (error != 0) {
@@ -2457,36 +2448,9 @@ __wasi_errno_t wasmtime_ssp_sock_recv(
     return convert_errno(errno);
   }
 
-  // Extract file descriptors from control message headers.
-  size_t fdslen = 0;
-  for (struct cmsghdr *chdr = CMSG_FIRSTHDR(&hdr); chdr != NULL;
-       chdr = CMSG_NXTHDR(&hdr, chdr)) {
-    if (chdr->cmsg_level == SOL_SOCKET && chdr->cmsg_type == SCM_RIGHTS) {
-      for (size_t i = 0; i < (chdr->cmsg_len - CMSG_LEN(0)) / sizeof(int);
-           ++i) {
-        int nfd;
-        memcpy(&nfd, CMSG_DATA(chdr) + i * sizeof(nfd), sizeof(nfd));
-        __wasi_filetype_t type;
-        __wasi_rights_t max_base, max_inheriting;
-        if (fd_determine_type_rights(nfd, &type, &max_base, &max_inheriting) !=
-                0 ||
-            fd_table_insert_fd(curfds, nfd, type, max_base, max_inheriting,
-                               &in->ri_fds[fdslen]) != 0) {
-          // Corner case: received file descriptor cannot be installed.
-          // For now, close the original file descriptor and replace it
-          // by -1 in the emulated process.
-          close(nfd);
-          in->ri_fds[fdslen] = -1;
-        }
-        ++fdslen;
-      }
-    }
-  }
-
   // Convert msghdr to output.
   *out = (__wasi_recv_out_t){
       .ro_datalen = datalen,
-      .ro_fdslen = fdslen,
   };
   if ((hdr.msg_flags & MSG_CTRUNC) != 0)
     out->ro_flags |= __WASI_SOCK_RECV_FDS_TRUNCATED;
@@ -2514,46 +2478,6 @@ __wasi_errno_t wasmtime_ssp_sock_send(
   __wasi_errno_t error;
   struct fd_object **fos = NULL;
   size_t nfos = 0;
-  if (in->si_fds_len > 0) {
-    // Allocate space for message and file descriptor objects.
-    hdr.msg_controllen = CMSG_SPACE(in->si_fds_len * sizeof(int));
-    hdr.msg_control = calloc(hdr.msg_controllen, 1);
-    if (hdr.msg_control == NULL)
-      return __WASI_ENOMEM;
-    fos = malloc(in->si_fds_len * sizeof(fos[0]));
-    if (fos == NULL) {
-      free(hdr.msg_control);
-      return __WASI_ENOMEM;
-    }
-
-    // Initialize SCM_RIGHTS control message header.
-    struct cmsghdr *chdr = CMSG_FIRSTHDR(&hdr);
-    chdr->cmsg_len = CMSG_LEN(in->si_fds_len * sizeof(int));
-    chdr->cmsg_level = SOL_SOCKET;
-    chdr->cmsg_type = SCM_RIGHTS;
-    unsigned char *data = CMSG_DATA(chdr);
-
-    // Acquire file descriptors that need to remain valid during the
-    // call to sendmsg().
-    struct fd_table *ft = curfds;
-    rwlock_rdlock(&ft->lock);
-    for (size_t i = 0; i < in->si_fds_len; ++i) {
-      error = fd_object_get_locked(&fos[i], ft, in->si_fds[i], 0, 0);
-      if (error != 0) {
-        rwlock_unlock(&ft->lock);
-        goto out;
-      }
-      nfos = i + 1;
-      if (fos[i]->number < 0) {
-        error = __WASI_EBADF;
-        rwlock_unlock(&ft->lock);
-        goto out;
-      }
-      memcpy(data, &fos[i]->number, sizeof(fos[i]->number));
-      data += sizeof(fos[i]->number);
-    }
-    rwlock_unlock(&ft->lock);
-  }
 
   // Send message.
   struct fd_object *fo;

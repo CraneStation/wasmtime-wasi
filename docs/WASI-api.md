@@ -1665,11 +1665,6 @@ Members:
     List of scatter/gather vectors where message data
     should be stored.
 
-- <a href="#recv_in.ri_fds" name="recv_in.ri_fds"></a><code>[\_\_wasi\_fd\_t](#fd) *<strong>ri\_fds</strong></code> and <a href="#recv_in.ri_fds_len" name="recv_in.ri_fds_len"></a><code>size\_t <strong>ri\_fds\_len</strong></code>
-
-    Buffer where numbers of incoming file descriptors
-    should be stored.
-
 - <a href="#recv_in.ri_flags" name="recv_in.ri_flags"></a><code>[\_\_wasi\_riflags\_t](#riflags) <strong>ri\_flags</strong></code>
 
     Message flags.
@@ -1683,10 +1678,6 @@ Members:
 - <a href="#recv_out.ro_datalen" name="recv_out.ro_datalen"></a><code>size\_t <strong>ro\_datalen</strong></code>
 
     Number of bytes stored in [`__wasi_recv_in_t::ri_data`](#recv_in.ri_data).
-
-- <a href="#recv_out.ro_fdslen" name="recv_out.ro_fdslen"></a><code>size\_t <strong>ro\_fdslen</strong></code>
-
-    Number of file descriptors stored in [`__wasi_recv_in_t::ri_fds`](#recv_in.ri_fds).
 
 - <a href="#recv_out.ro_flags" name="recv_out.ro_flags"></a><code>[\_\_wasi\_roflags\_t](#roflags) <strong>ro\_flags</strong></code>
 
@@ -1905,11 +1896,6 @@ Members:
 
     List of scatter/gather vectors where message data
     should be retrieved.
-
-- <a href="#send_in.si_fds" name="send_in.si_fds"></a><code>const [\_\_wasi\_fd\_t](#fd) *<strong>si\_fds</strong></code> and <a href="#send_in.si_fds_len" name="send_in.si_fds_len"></a><code>size\_t <strong>si\_fds\_len</strong></code>
-
-    File descriptors that need to be attached to the
-    message.
 
 - <a href="#send_in.si_flags" name="send_in.si_flags"></a><code>[\_\_wasi\_siflags\_t](#siflags) <strong>si\_flags</strong></code>
 
