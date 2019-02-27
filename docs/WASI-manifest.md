@@ -2,27 +2,27 @@
 
 The following is a very rough draft.
 
-## Defined module names
+## Background: Module names
 
 First, WASI uses the following import module names:
 
 Name                     | Description
 ------------------------ | -----------
-"wasi:indexed"           | functions that take "resource indices" (integer file descriptors)
-"wasi"                   | functions that take "resource references"
-"wasi:resources:indexed" | i32 immutable global variable imports with names as described below
-"wasi:resources"         | ref immutable global variable imports with names as described below
+`wasi:indexed`           | functions that take "resource indices" (integer file descriptors)
+`wasi`                   | functions that take "resource references"
+`wasi:resources:indexed` | i32 immutable global variable imports with names as described below
+`wasi:resources`         | ref immutable global variable imports with names as described below
 
-The "indexed" forms use i32 indices instead of reference types. These
+The `:indexed` forms use i32 indices instead of reference types. These
 are sometimes called "file descriptors" due to our POSIX heritage.
 And currently all the documentation and implementation here are using
-the "indexed" forms, but we're starting to anticipate reference-typed
+the `:indexed` forms, but we're starting to anticipate reference-typed
 things here too.
 
 ## Resource import names
 
-Within the "wasi:resources:indexed" and "wasi:resources" modules, wasm modules
-can declare requests for access to various capabilities. The details of the
+Now, within the `wasi:resources:indexed` and `wasi:resources` modules, wasm
+modules can declare requests for access to various capabilities. The details of the
 requests are encoded in the import names.
 
 Note that these aren't a limit on what modules may access, as capabilities may
@@ -34,53 +34,53 @@ The first substring identifies the type:
 
 Name                     | Description
 ------------------------ | -----------
-"file"                   | a single byte-oriented file
-"directory"              | a directory, which may contain files, directories, or other things
-"socket"                 | a network socket
+`file`                   | a single byte-oriented file, preopened
+`directory`              | a directory, which may contain files, directories, or other things, preopened
+`socket`                 | an openable socket (network or otherwise, stream or otherwise), not pre-opened
 
-### "file" imports
+### `file` imports
 
-For "file" imports, the next substring is the name, which is
-a UTF-8 string.
+For `file` imports, the next substring is the name, which is a UTF-8 string.
 
 Backslash is interpreted as an escape character as follows:
 
-Name                     | Description
------------------------- | -----------
-"\\"                     | a single backslash
-"\|"                     | a literal "|"
+Name                       | Description
+-------------------------- | -----------
+"\\\\"                     | a single backslash
+"\\\|"                     | a literal "\|"
 
 Note that the name here isn't a path; it's just a key that the implementation
-can map to a path, possibly with input from the user.
+can map to a path, possibly with input from the user. There are no significant
+path separators such as '/'.
 
-The rest of the string is '|'-separated attributes in any order, which may be:
+The rest of the string is "\|"-separated attributes in any order, which may be:
+
+Name       | Description
+---------- | -----------
+'read'     | supports `fd_read`
+'write'    | supports `fd_write`
+'tell'     | supports reading the current position in the file
+'seek'     | supports seeking as with lseek
+'append'   | if file already exists, it is opened for appending
+'new'      | if file already exists, `file_open` returns `__WASI_EEXIST`
+'truncate' | if file already exists, its size and position are set to 0
+
+`append`, `new`, and `truncate` depend on `write`.
 
 Name     | Description
 -------- | -----------
-"read"   | supports `fd_read`
-"write"  | supports `fd_write`
-"tell"   | reading the current position in the file
-"seek"   | seeking as with lseek
-...      | ...
-
-A "write" import must additionally have exactly one of the following attributes:
-
-Name     | Description
--------- | -----------
-"append" | file is opened with "O\_APPEND"
-"new"    | file is opened with "O\_EXCL"
 
 Examples:
 
 Import Name                       | Meaning
 --------------------------------- | -----------
-"file\|errors.log\|write\|append" | file named "errors.log" opened for appending to
-"file\|.gitconfig\|read"          | file named ".gitconfig" opened for reading
+`file\|errors.log\|write\|append` | file named "errors.log" opened for appending to
+`file\|.gitconfig\|read`          | file named ".gitconfig" opened for reading
 
-### "directory" imports
+### `directory` imports
 
-For "directory" imports, the next substring is the name, which
-is a UTF-8 string, interpreted in the same as "file" import names.
+For `directory` imports, the next substring is the name, which
+is a UTF-8 string, interpreted in the same way as `file` import names.
 
 The name may any application-determined name, though the following names are
 recognized and implementations may choose to streamline the user experience
@@ -88,118 +88,102 @@ for these paths:
 
 Name        |
 ----------- |
-"Desktop"   | 
-"Documents" |
-"Downloads" |
-"Music"     |
-"Pictures"  |
-"Videos"    |
+`Desktop`   |
+`Documents` |
+`Downloads` |
+`Music`     |
+`Pictures`  |
+`Videos`    |
 
 The rest of the string is '|'-separated attributes in any order, which may be:
 
 Name    | Description
 ------- | -----------
-"write" | can create files
-"list"  | can get a listing of this directory's contents (aka readdir)
-...     | ...
+`list`  | can get a listing of this directory's contents (aka readdir)
+`write` | can create or rename files
+
+`write` depends on `list`.
 
 Examples:
 
 Import Name                 | Meaning
 --------------------------- | -----------
-"directory\|Pictures\|list" | can list and read the contents of the user's Pictures folder
-"directory\|logs\|write"    | can write to log files (but not see the names of existing log files)
+`directory\|Pictures\|list` | can list and read the contents of the user's Pictures folder
+`directory\|logs\|write`    | can write to log files (but not see the names of existing log files)
 
-TODO: Does "write" without "list" make sense?
+### `socket` imports
 
-### "socket" imports
+For `socket` imports, the next substring is the name, which
+is a UTF-8 string, interpreted in the same way as `file` import names.
 
-For "socket" imports, the next field specifies the type, which is one of the following:
+The next field specifies the domain, which is one of the following:
 
 Name            | Description
 --------------- | -----------
-"stream"        | connection-based socket
-"datagram"      | connectionless socket
+`ip`            | IPv4 or IPv6
+
+The next field specifies the type, which is one of the following:
+
+Name            | Description
+--------------- | -----------
+`stream`        | connection-based socket
+`datagram`      | connectionless socket
 
 This is followed by a mode, which is one of the following:
 
 Name                      | Description
 ------------------------- | -----------
-"listen=\<LISTEN\_AT\>"   | listen for incoming connections or packets
-"connect=\<CONNECT\_TO\>" | initiate a connection (for "stream") or set a default destination (for datagram); see below for details
+`listen`                  | listen for incoming connections or packets
+`connect`                 | initiate a connection (for `stream`) or set a default destination (for `datagram`); see below for details
 
-The rest of the string is '|'-separated attributes in any order.
+#### `listen` sockets
 
-#### "listen" sockets
-
-For "listen" sockets, the next field specifies the address, which is one of the following:
-
-"\<LISTEN\_AT\>" starts with the address scope:
+For `listen` socket imports, the next substring is the arity, which
+is one of the following:
 
 Name            | Description
 --------------- | -----------
-"local"         | allow binding to localhost only, preventing connections from other hosts
-"remote"        | allow binding to remotely-accessible addresses
+`single`        | exactly one address will be provided by the implementation
+`multiple`      | the implementation may provide multiple addresses
 
-The scope may optionally be followed by a colon and a set of ports,
-as a comma-separated list of ranges. Ranges are either single numbers, or
-ranges using `[`/`(`/`]`/`)` inclusive/exclusive notation. If this is
-omitted, any port is permitted.
-
-TODO: How can applications determine which address(s) they should bind to
-for "remote" connections.
-
-The rest of the string is '|'-separated attributes in any order, which may be:
-
-Name                | Description
-------------------- | -----------
-... | ...
-
-TODO: for "local" sockets, how do we chose between ipv4 and ipv6?
+This is optionally followed by a port suggestion, which for `ip` sockets
+is `:` followed by either a number, an [IANA port name], or "i want it all 🎶".
 
 Examples:
 
 Import Name                                 | Meaning
 ------------------------------------------- | -----------
-"socket\|datagram\|listen=remote:80"        | Allow listening for incoming datagrams on port 80
-"socket\|stream\|listen=local:\[8080,8090)" | Allow listening on localhost for incoming connections on ports where 8080 <= port < 8090.
+`socket\|ip\|datagram\|listen\|:ntp`        | Request a socket address that maybe listened on for network datagrams, and suggest port 123
+`socket\|ip\|stream\|listen\|:8080`         | Request a socket address that maybe listened on for network streams, and suggest port 8080
+`socket\|ip\|stream\|listen\|:i want it all 🎶` | Request a socket address that maybe listened on for network streams, and suggest allowing any port
 
-#### "connect" sockets
+#### `connect` sockets
 
-"\<CONNECT\_TO\>" is a comma-separated list of network destination descriptions.
+For `connect` socket imports, an optional destination suggestion may follow.
 
-Network destination description start with an address set, which is either
-[CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
-or a fully-qualified domain name in which components may be replaced by
-"\*" to indicate that any name at that level is to be permitted.
-
+Destination description for `ip` sockets starts with an address set,
+which is either [CIDR notation] or a [domain name] in which components may be
+replaced by "\*" to indicate that any name at that level is to be permitted.
 For IPV6 addresses, the CIDR notation is enclosed in brackets ("\[" and "\]").
-
-The address set may optionally be followed by a colon and a set of ports,
-as a comma-separated list of ranges. Ranges are either single numbers, or
-ranges using `[`/`(`/`]`/`)` inclusive/exclusive notation. If this is
-omitted, any port is permitted.
-
-The rest of the string is '|'-separated attributes in any order, which may be:
-
-Name                | Description
-------------------- | -----------
-... | ...
-
-TODO: Is it worth trying harder to foil deceptive-looking network addresses?
-For example, we may want to require special syntax for "access most any host on
-the internet" rather than allowing this to be done through CIDR notation, so
-that it stands out.
-
-#### socket examples
+It is followed by ":" and either a port number, an [IANA port name], or
+"the whole marshmellon".
 
 Examples:
 
 Import Name                        | Meaning
 ---------------------------------- | -----------
-"socket\|stream\|connect=\*.example.com:\[20,22),\[989,991)" | Allow connecting to ftp and ftps ports on hosts under example.com
-"socket\|datagram\|connect=10.0.0.0/24:\[0,1024)" | Default to sending datagrams to well known ports on addresses in 10.0.0.\*
-"socket\|stream\|connect=\[2001:4860:4860::8888/125\]:80" | IPv6 CIDR notation with brackets, single port
+`socket\|ip\|stream\|connect\|\*.example.com:20` | Suggest allowing connecting to ftp ports on hosts under example.com
+`socket\|ip\|stream\|connect\|\[2001:4860:4860::8888/125\]:80` | IPv6 CIDR notation with brackets, single port
+`socket\|ip\|datagram\|connect\|10.0.0.0/24:the whole marshmellon` | Suggest allowing sending datagrams to any port on addresses in 10.0.0.\*
 
-Note that WASI currently does not support `sendto`, so datagram sockets can\'t
+Note that WASI does not currently support `sendto`, so datagram sockets can\'t
 send packets to non-default addresses.
+
+## To make all this work:
+
+Merge read/recv and write/send.
+Add functions to create/bind/listen/connect sockets. getpeername? getsockname?
+
+[IANA port name]: https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
+[CIDR notation]: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
+[domain name]: https://en.wikipedia.org/wiki/Domain_name
