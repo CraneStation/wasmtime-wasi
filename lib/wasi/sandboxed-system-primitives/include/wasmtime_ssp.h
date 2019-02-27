@@ -393,8 +393,6 @@ _Static_assert(sizeof(void *) != 8 ||
 typedef struct __wasi_recv_in_t {
     const __wasi_iovec_t *ri_data;
     size_t ri_data_len;
-    __wasi_fd_t *ri_fds;
-    size_t ri_fds_len;
     __wasi_riflags_t ri_flags;
 } __wasi_recv_in_t;
 _Static_assert(offsetof(__wasi_recv_in_t, ri_data) == 0, "non-wasi data layout");
@@ -403,21 +401,13 @@ _Static_assert(sizeof(void *) != 4 ||
 _Static_assert(sizeof(void *) != 8 ||
     offsetof(__wasi_recv_in_t, ri_data_len) == 8, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_recv_in_t, ri_fds) == 8, "non-wasi data layout");
+    offsetof(__wasi_recv_in_t, ri_flags) == 8, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_recv_in_t, ri_fds) == 16, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_recv_in_t, ri_fds_len) == 12, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_recv_in_t, ri_fds_len) == 24, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
     offsetof(__wasi_recv_in_t, ri_flags) == 16, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_recv_in_t, ri_flags) == 32, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 4 ||
-    sizeof(__wasi_recv_in_t) == 20, "non-wasi data layout");
+    sizeof(__wasi_recv_in_t) == 12, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 8 ||
-    sizeof(__wasi_recv_in_t) == 40, "non-wasi data layout");
+    sizeof(__wasi_recv_in_t) == 24, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 4 ||
     _Alignof(__wasi_recv_in_t) == 4, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 8 ||
@@ -425,23 +415,18 @@ _Static_assert(sizeof(void *) != 8 ||
 
 typedef struct __wasi_recv_out_t {
     size_t ro_datalen;
-    size_t ro_fdslen;
     __wasi_roflags_t ro_flags;
 } __wasi_recv_out_t;
 _Static_assert(
     offsetof(__wasi_recv_out_t, ro_datalen) == 0, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_recv_out_t, ro_fdslen) == 4, "non-wasi data layout");
+    offsetof(__wasi_recv_out_t, ro_flags) == 4, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_recv_out_t, ro_fdslen) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
     offsetof(__wasi_recv_out_t, ro_flags) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_recv_out_t, ro_flags) == 16, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 4 ||
-    sizeof(__wasi_recv_out_t) == 12, "non-wasi data layout");
+    sizeof(__wasi_recv_out_t) == 8, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 8 ||
-    sizeof(__wasi_recv_out_t) == 24, "non-wasi data layout");
+    sizeof(__wasi_recv_out_t) == 16, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 4 ||
     _Alignof(__wasi_recv_out_t) == 4, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 8 ||
@@ -450,8 +435,6 @@ _Static_assert(sizeof(void *) != 8 ||
 typedef struct __wasi_send_in_t {
     const __wasi_ciovec_t *si_data;
     size_t si_data_len;
-    const __wasi_fd_t *si_fds;
-    size_t si_fds_len;
     __wasi_siflags_t si_flags;
 } __wasi_send_in_t;
 _Static_assert(
@@ -461,21 +444,13 @@ _Static_assert(sizeof(void *) != 4 ||
 _Static_assert(sizeof(void *) != 8 ||
     offsetof(__wasi_send_in_t, si_data_len) == 8, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_send_in_t, si_fds) == 8, "non-wasi data layout");
+    offsetof(__wasi_send_in_t, si_flags) == 8, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_send_in_t, si_fds) == 16, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_send_in_t, si_fds_len) == 12, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_send_in_t, si_fds_len) == 24, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
     offsetof(__wasi_send_in_t, si_flags) == 16, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_send_in_t, si_flags) == 32, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 4 ||
-    sizeof(__wasi_send_in_t) == 20, "non-wasi data layout");
+    sizeof(__wasi_send_in_t) == 12, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 8 ||
-    sizeof(__wasi_send_in_t) == 40, "non-wasi data layout");
+    sizeof(__wasi_send_in_t) == 24, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 4 ||
     _Alignof(__wasi_send_in_t) == 4, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 8 ||
