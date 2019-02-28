@@ -1108,33 +1108,36 @@ syscalls! {
     pub unsafe extern "C" fn sock_recv(
         vmctx: *mut VMContext,
         sock: wasm32::__wasi_fd_t,
-        in_: wasm32::uintptr_t,
-        out: wasm32::uintptr_t,
+        ri_data: wasm32::uintptr_t,
+        ri_data_len: wasm32::size_t,
+        ri_flags: wasm32::__wasi_riflags_t,
+        ro_datalen: wasm32::size_t,
     ) -> wasm32::__wasi_errno_t {
         trace!(
-            "sock_recv(sock={:?}, in={:#x?}, out={:#x?})",
+            "sock_recv(sock={:?}, ri_data={:#x?}, ri_data_len={}, ri_flags={:#x?}, ro_datalen={:#x?})",
             sock,
-            in_,
-            out
+            ri_data, ri_data_len, ri_flags,
+            ro_datalen
         );
 
         let vmctx = &mut *vmctx;
         let curfds = get_curfds(vmctx);
         let sock = decode_fd(sock);
-        let in_ = match decode_recv_in_byref(vmctx, in_) {
-            Ok(in_) => in_,
+        let ri_data = match decode_iovec_slice(vmctx, ri_data, ri_data_len) {
+            Ok(ri_data) => ri_data,
             Err(e) => return return_encoded_errno(e),
         };
-        let mut host_out = match decode_recv_out_byref(vmctx, out) {
-            Ok(host_out) => host_out,
+        let ri_flags = decode_riflags(ri_flags);
+        let mut host_ro_datalen = match decode_usize_byref(vmctx, ro_datalen) {
+            Ok(host_ro_datalen) => host_ro_datalen,
             Err(e) => return return_encoded_errno(e),
         };
 
-        let e = host::wasmtime_ssp_sock_recv(curfds, sock, &in_, &mut host_out);
+        let e = host::wasmtime_ssp_sock_recv(curfds, sock, ri_data.as_ptr(), ri_data.len(), ri_flags, &mut host_ro_datalen);
 
         // TODO: Format the output for tracing.
-        trace!("     | *out=...");
-        encode_recv_out_byref(vmctx, out, host_out).unwrap();
+        trace!("     | *ro_datalen={}", host_ro_datalen);
+        encode_usize_byref(vmctx, ro_datalen, host_ro_datalen).unwrap();
 
         return_encoded_errno(e)
     }
@@ -1142,32 +1145,34 @@ syscalls! {
     pub unsafe extern "C" fn sock_send(
         vmctx: *mut VMContext,
         sock: wasm32::__wasi_fd_t,
-        in_: wasm32::uintptr_t,
-        out: wasm32::uintptr_t,
+        si_data: wasm32::uintptr_t,
+        si_data_len: wasm32::size_t,
+        si_flags: wasm32::__wasi_siflags_t,
+        so_datalen: wasm32::uintptr_t,
     ) -> wasm32::__wasi_errno_t {
         trace!(
-            "sock_send(sock={:?}, in={:#x?}, out={:#x?})",
+            "sock_send(sock={:?}, si_data={:#x?}, si_data_len={}, si_flags={:#x?}, so_datalen={:#x?})",
             sock,
-            in_,
-            out
+            si_data, si_data_len, si_flags, so_datalen,
         );
 
         let vmctx = &mut *vmctx;
         let curfds = get_curfds(vmctx);
         let sock = decode_fd(sock);
-        let in_ = match decode_send_in_byref(vmctx, in_) {
-            Ok(in_) => in_,
+        let si_data = match decode_ciovec_slice(vmctx, si_data, si_data_len) {
+            Ok(si_data) => si_data,
             Err(e) => return return_encoded_errno(e),
         };
-        let mut host_out = match decode_send_out_byref(vmctx, out) {
-            Ok(host_out) => host_out,
+        let si_flags = decode_siflags(si_flags);
+        let mut host_so_datalen = match decode_usize_byref(vmctx, so_datalen) {
+            Ok(so_datalen) => so_datalen,
             Err(e) => return return_encoded_errno(e),
         };
 
-        let e = host::wasmtime_ssp_sock_send(curfds, sock, &in_, &mut host_out);
+        let e = host::wasmtime_ssp_sock_send(curfds, sock, si_data.as_ptr(), si_data.len(), si_flags, &mut host_so_datalen);
 
-        trace!("     | *out={:?}", host_out);
-        encode_send_out_byref(vmctx, out, host_out).unwrap();
+        trace!("     | *so_datalen={:?}", host_so_datalen);
+        encode_usize_byref(vmctx, so_datalen, host_so_datalen).unwrap();
 
         return_encoded_errno(e)
     }
