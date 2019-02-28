@@ -10,7 +10,7 @@ use std::rc::Rc;
 use syscalls;
 use target_lexicon::HOST;
 use wasmtime_environ::{translate_signature, Export, Module};
-use wasmtime_runtime::{Imports, Instance, InstantiationError, VMFunctionBody};
+use wasmtime_runtime::{Imports, InstanceHandle, InstantiationError, VMFunctionBody};
 
 pub(crate) struct WASIState {
     pub curfds: Box<fd_table>,
@@ -20,7 +20,7 @@ pub(crate) struct WASIState {
 pub fn instantiate_wasi(
     prefix: &str,
     global_exports: Rc<RefCell<HashMap<String, Option<wasmtime_runtime::Export>>>>,
-) -> Result<Instance, InstantiationError> {
+) -> Result<InstanceHandle, InstantiationError> {
     let pointer_type = types::Type::triple_pointer_type(&HOST);
     let mut module = Module::new();
     let mut finished_functions: PrimaryMap<DefinedFuncIndex, *const VMFunctionBody> =
@@ -105,7 +105,7 @@ pub fn instantiate_wasi(
     }
     let host_state = WASIState { curfds };
 
-    Instance::new(
+    InstanceHandle::new(
         Rc::new(module),
         global_exports,
         finished_functions.into_boxed_slice(),
