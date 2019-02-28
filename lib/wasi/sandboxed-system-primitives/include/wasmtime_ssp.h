@@ -216,10 +216,6 @@ typedef uint64_t __wasi_rights_t;
 #define __WASI_RIGHT_POLL_FD_READWRITE     (0x0000000002000000)
 #define __WASI_RIGHT_SOCK_SHUTDOWN         (0x0000000004000000)
 
-typedef uint16_t __wasi_roflags_t;
-#define __WASI_SOCK_RECV_FDS_TRUNCATED  (0x0001)
-#define __WASI_SOCK_RECV_DATA_TRUNCATED (0x0002)
-
 typedef uint8_t __wasi_sdflags_t;
 #define __WASI_SHUT_RD (0x01)
 #define __WASI_SHUT_WR (0x02)
@@ -389,86 +385,6 @@ _Static_assert(sizeof(void *) != 4 ||
     _Alignof(__wasi_iovec_t) == 4, "non-wasi data layout");
 _Static_assert(sizeof(void *) != 8 ||
     _Alignof(__wasi_iovec_t) == 8, "non-wasi data layout");
-
-typedef struct __wasi_recv_in_t {
-    const __wasi_iovec_t *ri_data;
-    size_t ri_data_len;
-    __wasi_riflags_t ri_flags;
-} __wasi_recv_in_t;
-_Static_assert(offsetof(__wasi_recv_in_t, ri_data) == 0, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_recv_in_t, ri_data_len) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_recv_in_t, ri_data_len) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_recv_in_t, ri_flags) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_recv_in_t, ri_flags) == 16, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    sizeof(__wasi_recv_in_t) == 12, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    sizeof(__wasi_recv_in_t) == 24, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    _Alignof(__wasi_recv_in_t) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    _Alignof(__wasi_recv_in_t) == 8, "non-wasi data layout");
-
-typedef struct __wasi_recv_out_t {
-    size_t ro_datalen;
-    __wasi_roflags_t ro_flags;
-} __wasi_recv_out_t;
-_Static_assert(
-    offsetof(__wasi_recv_out_t, ro_datalen) == 0, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_recv_out_t, ro_flags) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_recv_out_t, ro_flags) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    sizeof(__wasi_recv_out_t) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    sizeof(__wasi_recv_out_t) == 16, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    _Alignof(__wasi_recv_out_t) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    _Alignof(__wasi_recv_out_t) == 8, "non-wasi data layout");
-
-typedef struct __wasi_send_in_t {
-    const __wasi_ciovec_t *si_data;
-    size_t si_data_len;
-    __wasi_siflags_t si_flags;
-} __wasi_send_in_t;
-_Static_assert(
-    offsetof(__wasi_send_in_t, si_data) == 0, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_send_in_t, si_data_len) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_send_in_t, si_data_len) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    offsetof(__wasi_send_in_t, si_flags) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    offsetof(__wasi_send_in_t, si_flags) == 16, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    sizeof(__wasi_send_in_t) == 12, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    sizeof(__wasi_send_in_t) == 24, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    _Alignof(__wasi_send_in_t) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    _Alignof(__wasi_send_in_t) == 8, "non-wasi data layout");
-
-typedef struct __wasi_send_out_t {
-    size_t so_datalen;
-} __wasi_send_out_t;
-_Static_assert(
-    offsetof(__wasi_send_out_t, so_datalen) == 0, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    sizeof(__wasi_send_out_t) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    sizeof(__wasi_send_out_t) == 8, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 4 ||
-    _Alignof(__wasi_send_out_t) == 4, "non-wasi data layout");
-_Static_assert(sizeof(void *) != 8 ||
-    _Alignof(__wasi_send_out_t) == 8, "non-wasi data layout");
 
 typedef struct __wasi_subscription_t {
     __wasi_userdata_t userdata;
@@ -811,8 +727,10 @@ __wasi_errno_t wasmtime_ssp_sock_recv(
     struct fd_table *curfds,
 #endif
     __wasi_fd_t sock,
-    const __wasi_recv_in_t *in,
-    __wasi_recv_out_t *out
+    const __wasi_iovec_t *ri_data,
+    size_t ri_data_len,
+    __wasi_riflags_t ri_flags,
+    size_t *ro_datalen
 ) WASMTIME_SSP_SYSCALL_NAME(sock_recv) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_sock_send(
@@ -820,8 +738,10 @@ __wasi_errno_t wasmtime_ssp_sock_send(
     struct fd_table *curfds,
 #endif
     __wasi_fd_t sock,
-    const __wasi_send_in_t *in,
-    __wasi_send_out_t *out
+    const __wasi_ciovec_t *si_data,
+    size_t si_data_len,
+    __wasi_siflags_t si_flags,
+    size_t *so_datalen
 ) WASMTIME_SSP_SYSCALL_NAME(sock_send) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_sock_shutdown(

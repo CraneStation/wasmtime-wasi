@@ -2420,18 +2420,20 @@ __wasi_errno_t wasmtime_ssp_sock_recv(
     struct fd_table *curfds,
 #endif
     __wasi_fd_t sock,
-    const __wasi_recv_in_t *in,
-    __wasi_recv_out_t *out
+    const __wasi_iovec_t *ri_data,
+    size_t ri_data_len,
+    __wasi_riflags_t ri_flags,
+    size_t *ro_datalen
 ) {
   // Convert input to msghdr.
   struct msghdr hdr = {
-      .msg_iov = (struct iovec *)in->ri_data,
-      .msg_iovlen = in->ri_data_len,
+      .msg_iov = (struct iovec *)ri_data,
+      .msg_iovlen = ri_data_len,
   };
   int nflags = 0;
-  if ((in->ri_flags & __WASI_SOCK_RECV_PEEK) != 0)
+  if ((ri_flags & __WASI_SOCK_RECV_PEEK) != 0)
     nflags |= MSG_PEEK;
-  if ((in->ri_flags & __WASI_SOCK_RECV_WAITALL) != 0)
+  if ((ri_flags & __WASI_SOCK_RECV_WAITALL) != 0)
     nflags |= MSG_WAITALL;
 
   struct fd_object *fo;
@@ -2449,13 +2451,7 @@ __wasi_errno_t wasmtime_ssp_sock_recv(
   }
 
   // Convert msghdr to output.
-  *out = (__wasi_recv_out_t){
-      .ro_datalen = datalen,
-  };
-  if ((hdr.msg_flags & MSG_CTRUNC) != 0)
-    out->ro_flags |= __WASI_SOCK_RECV_FDS_TRUNCATED;
-  if ((hdr.msg_flags & MSG_TRUNC) != 0)
-    out->ro_flags |= __WASI_SOCK_RECV_DATA_TRUNCATED;
+  *ro_datalen = datalen;
   free(hdr.msg_control);
   return 0;
 }
@@ -2465,13 +2461,15 @@ __wasi_errno_t wasmtime_ssp_sock_send(
     struct fd_table *curfds,
 #endif
     __wasi_fd_t sock,
-    const __wasi_send_in_t *in,
-    __wasi_send_out_t *out
+    const __wasi_ciovec_t *si_data,
+    size_t si_data_len,
+    __wasi_siflags_t si_flags,
+    size_t *so_datalen
 ) NO_LOCK_ANALYSIS {
   // Convert input to msghdr.
   struct msghdr hdr = {
-      .msg_iov = (struct iovec *)in->si_data,
-      .msg_iovlen = in->si_data_len,
+      .msg_iov = (struct iovec *)si_data,
+      .msg_iovlen = si_data_len,
   };
 
   // Attach file descriptors if present.
@@ -2489,9 +2487,7 @@ __wasi_errno_t wasmtime_ssp_sock_send(
   if (len < 0) {
     error = convert_errno(errno);
   } else {
-    *out = (__wasi_send_out_t){
-        .so_datalen = len,
-    };
+    *so_datalen = len;
   }
 
 out:

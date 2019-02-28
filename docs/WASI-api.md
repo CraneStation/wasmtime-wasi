@@ -797,13 +797,24 @@ Inputs:
     The socket on which a message should be
     received.
 
-- <a href="#sock_recv.in" name="sock_recv.in"></a><code>const [\_\_wasi\_recv\_in\_t](#recv_in) *<strong>in</strong></code>
+- <a href="#sock_recv.ri_data" name="sock_recv.ri_data"></a><code>const [\_\_wasi\_iovec\_t](#iovec) *<strong>ri\_data</strong></code> and <a href="#sock_recv.ri_data_len" name="sock_recv.ri_data_len"></a><code>size\_t <strong>ri\_data\_len</strong></code>
 
-    Input parameters.
+    List of scatter/gather vectors where message data
+    should be stored.
 
-- <a href="#sock_recv.out" name="sock_recv.out"></a><code>[\_\_wasi\_recv\_out\_t](#recv_out) *<strong>out</strong></code>
+- <a href="#sock_recv.ri_flags" name="sock_recv.ri_flags"></a><code>[\_\_wasi\_riflags\_t](#riflags) <strong>ri\_flags</strong></code>
 
-    Output parameters.
+    Message flags.
+
+Output:
+
+- <a href="#sock_recv.ro_datalen" name="sock_recv.ro_datalen"></a><code>size\_t <strong>ro\_datalen</strong></code>
+
+    Number of bytes stored in [`ri_data`](#sock_recv.ri_data).
+
+- <a href="#sock_recv.ro_flags" name="sock_recv.ro_flags"></a><code>[\_\_wasi\_roflags\_t](#roflags) <strong>ro\_flags</strong></code>
+
+    Message flags.
 
 ### <a href="#sock_send" name="sock_send"></a>`__wasi_sock_send()`
 
@@ -815,13 +826,20 @@ Inputs:
 
     The socket on which a message should be sent.
 
-- <a href="#sock_send.in" name="sock_send.in"></a><code>const [\_\_wasi\_send\_in\_t](#send_in) *<strong>in</strong></code>
+- <a href="#sock_send.si_data" name="sock_send.si_data"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) *<strong>si\_data</strong></code> and <a href="#sock_send.si_data_len" name="sock_send.si_data_len"></a><code>size\_t <strong>si\_data\_len</strong></code>
 
-    Input parameters.
+    List of scatter/gather vectors where message data
+    should be retrieved.
 
-- <a href="#sock_send.out" name="sock_send.out"></a><code>[\_\_wasi\_send\_out\_t](#send_out) *<strong>out</strong></code>
+- <a href="#sock_send.si_flags" name="sock_send.si_flags"></a><code>[\_\_wasi\_siflags\_t](#siflags) <strong>si\_flags</strong></code>
 
-    Output parameters.
+    Message flags.
+
+Outputs:
+
+- <a href="#sock_send.so_datalen" name="sock_send.so_datalen"></a><code>size\_t <strong>so\_datalen</strong></code>
+
+    Number of bytes transmitted.
 
 ### <a href="#sock_shutdown" name="sock_shutdown"></a>`__wasi_sock_shutdown()`
 
@@ -886,7 +904,7 @@ Possible values:
 
 A region of memory for scatter/gather writes.
 
-Used by [`__wasi_send_in_t`](#send_in), [`__wasi_fd_pwrite()`](#fd_pwrite), and [`__wasi_fd_write()`](#fd_write).
+Used by [`__wasi_sock_send`](#sock_send), [`__wasi_fd_pwrite()`](#fd_pwrite), and [`__wasi_fd_write()`](#fd_write).
 
 Members:
 
@@ -1605,7 +1623,7 @@ Used by [`__wasi_dirent_t`](#dirent) and [`__wasi_filestat_t`](#filestat).
 
 A region of memory for scatter/gather reads.
 
-Used by [`__wasi_recv_in_t`](#recv_in), [`__wasi_fd_pread()`](#fd_pread), and [`__wasi_fd_read()`](#fd_read).
+Used by [`__wasi_sock_recv`](#sock_recv), [`__wasi_fd_pread()`](#fd_pread), and [`__wasi_fd_read()`](#fd_read).
 
 Members:
 
@@ -1654,40 +1672,11 @@ Possible values:
 
     Truncate file to size 0.
 
-### <a href="#recv_in" name="recv_in"></a>`__wasi_recv_in_t` (`struct`)
-
-Arguments of [`__wasi_sock_recv()`](#sock_recv).
-
-Members:
-
-- <a href="#recv_in.ri_data" name="recv_in.ri_data"></a><code>const [\_\_wasi\_iovec\_t](#iovec) *<strong>ri\_data</strong></code> and <a href="#recv_in.ri_data_len" name="recv_in.ri_data_len"></a><code>size\_t <strong>ri\_data\_len</strong></code>
-
-    List of scatter/gather vectors where message data
-    should be stored.
-
-- <a href="#recv_in.ri_flags" name="recv_in.ri_flags"></a><code>[\_\_wasi\_riflags\_t](#riflags) <strong>ri\_flags</strong></code>
-
-    Message flags.
-
-### <a href="#recv_out" name="recv_out"></a>`__wasi_recv_out_t` (`struct`)
-
-Results of [`__wasi_sock_recv()`](#sock_recv).
-
-Members:
-
-- <a href="#recv_out.ro_datalen" name="recv_out.ro_datalen"></a><code>size\_t <strong>ro\_datalen</strong></code>
-
-    Number of bytes stored in [`__wasi_recv_in_t::ri_data`](#recv_in.ri_data).
-
-- <a href="#recv_out.ro_flags" name="recv_out.ro_flags"></a><code>[\_\_wasi\_roflags\_t](#roflags) <strong>ro\_flags</strong></code>
-
-    Message flags.
-
 ### <a href="#riflags" name="riflags"></a>`__wasi_riflags_t` (`uint16_t` bitfield)
 
 Flags provided to [`__wasi_sock_recv()`](#sock_recv).
 
-Used by [`__wasi_recv_in_t`](#recv_in).
+Used by [`__wasi_sock_recv`](#sock_recv).
 
 Possible values:
 
@@ -1856,14 +1845,9 @@ Possible values:
 
 Flags returned by [`__wasi_sock_recv()`](#sock_recv).
 
-Used by [`__wasi_recv_out_t`](#recv_out).
+Used by [`__wasi_sock_recv`](#sock_recv).
 
 Possible values:
-
-- <a href="#roflags.fds_truncated" name="roflags.fds_truncated"></a>**`__WASI_SOCK_RECV_FDS_TRUNCATED`**
-
-    Returned by [`__wasi_sock_recv()`](#sock_recv): List of file descriptors
-    has been truncated.
 
 - <a href="#roflags.data_truncated" name="roflags.data_truncated"></a>**`__WASI_SOCK_RECV_DATA_TRUNCATED`**
 
@@ -1886,37 +1870,12 @@ Possible values:
 
     Disables further send operations.
 
-### <a href="#send_in" name="send_in"></a>`__wasi_send_in_t` (`struct`)
-
-Arguments of [`__wasi_sock_send()`](#sock_send).
-
-Members:
-
-- <a href="#send_in.si_data" name="send_in.si_data"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) *<strong>si\_data</strong></code> and <a href="#send_in.si_data_len" name="send_in.si_data_len"></a><code>size\_t <strong>si\_data\_len</strong></code>
-
-    List of scatter/gather vectors where message data
-    should be retrieved.
-
-- <a href="#send_in.si_flags" name="send_in.si_flags"></a><code>[\_\_wasi\_siflags\_t](#siflags) <strong>si\_flags</strong></code>
-
-    Message flags.
-
-### <a href="#send_out" name="send_out"></a>`__wasi_send_out_t` (`struct`)
-
-Results of [`__wasi_sock_send()`](#sock_send).
-
-Members:
-
-- <a href="#send_out.so_datalen" name="send_out.so_datalen"></a><code>size\_t <strong>so\_datalen</strong></code>
-
-    Number of bytes transmitted.
-
 ### <a href="#siflags" name="siflags"></a>`__wasi_siflags_t` (`uint16_t` bitfield)
 
 Flags provided to [`__wasi_sock_send()`](#sock_send). As there are currently no flags
 defined, it must be set to zero.
 
-Used by [`__wasi_send_in_t`](#send_in).
+Used by [`__wasi_sock_send`](#sock_send).
 
 ### <a href="#signal" name="signal"></a>`__wasi_signal_t` (`uint8_t`)
 

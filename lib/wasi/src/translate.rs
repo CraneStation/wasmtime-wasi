@@ -195,6 +195,14 @@ pub fn encode_rights(rights: host::__wasi_rights_t) -> wasm32::__wasi_rights_t {
     rights
 }
 
+pub fn decode_riflags(riflags: wasm32::__wasi_riflags_t) -> host::__wasi_riflags_t {
+    riflags
+}
+
+pub fn decode_siflags(siflags: wasm32::__wasi_siflags_t) -> host::__wasi_siflags_t {
+    siflags
+}
+
 pub fn decode_fdstat(
     _vmctx: &mut VMContext,
     _fdstat_ptr: wasm32::uintptr_t,
@@ -414,50 +422,6 @@ pub unsafe fn encode_filestat_byref(
     _host_filestat: host::__wasi_filestat_t,
 ) -> Result<(), host::__wasi_errno_t> {
     unimplemented!("encode_filestat_byref");
-}
-
-pub unsafe fn decode_recv_out_byref(
-    _vmctx: &mut VMContext,
-    _recv_out_ptr: wasm32::uintptr_t,
-) -> Result<host::__wasi_recv_out_t, host::__wasi_errno_t> {
-    unimplemented!("decode_recv_out_byref");
-}
-
-pub unsafe fn encode_recv_out_byref(
-    _vmctx: &mut VMContext,
-    _recv_out_ptr: wasm32::uintptr_t,
-    _host_recv_out: host::__wasi_recv_out_t,
-) -> Result<(), host::__wasi_errno_t> {
-    unimplemented!("encode_recv_out_byref");
-}
-
-pub unsafe fn decode_send_out_byref(
-    _vmctx: &mut VMContext,
-    _send_out_ptr: wasm32::uintptr_t,
-) -> Result<host::__wasi_send_out_t, host::__wasi_errno_t> {
-    unimplemented!("decode_send_out_byref");
-}
-
-pub unsafe fn encode_send_out_byref(
-    _vmctx: &mut VMContext,
-    _send_out_ptr: wasm32::uintptr_t,
-    _host_send_out: host::__wasi_send_out_t,
-) -> Result<(), host::__wasi_errno_t> {
-    unimplemented!("encode_send_out_byref");
-}
-
-pub unsafe fn decode_send_in_byref(
-    _vmctx: &mut VMContext,
-    _send_in_ptr: wasm32::uintptr_t,
-) -> Result<host::__wasi_send_in_t, host::__wasi_errno_t> {
-    unimplemented!("decode_send_in_byref");
-}
-
-pub unsafe fn decode_recv_in_byref(
-    _vmctx: &mut VMContext,
-    _recv_in_ptr: wasm32::uintptr_t,
-) -> Result<host::__wasi_recv_in_t, host::__wasi_errno_t> {
-    unimplemented!("decode_recv_in_byref");
 }
 
 pub fn encode_errno(e: host::__wasi_errno_t) -> wasm32::__wasi_errno_t {
