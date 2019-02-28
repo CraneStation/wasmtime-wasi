@@ -143,7 +143,7 @@ fn main() {
     // Make wasi available by default.
     let global_exports = context.get_global_exports();
     context.name_instance(
-        Some("wasi_unstable".to_owned()),
+        "wasi_unstable".to_owned(),
         instantiate_wasi("", global_exports).expect("instantiating wasi"),
     );
 
