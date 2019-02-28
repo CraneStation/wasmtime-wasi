@@ -74,10 +74,11 @@ pub fn instantiate_wasi(
     signature!(file_readdir);
     signature!(file_readlink);
     signature!(file_rename);
-    signature!(file_stat_fget);
-    signature!(file_stat_fput);
+    signature!(file_fstat_get);
+    signature!(file_fstat_set_times);
+    signature!(file_fstat_set_size);
     signature!(file_stat_get);
-    signature!(file_stat_put);
+    signature!(file_stat_set_times);
     signature!(file_symlink);
     signature!(file_unlink);
     signature!(poll_oneoff);
