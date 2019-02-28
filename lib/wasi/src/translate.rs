@@ -162,13 +162,13 @@ pub fn encode_filetype(filetype: host::__wasi_filetype_t) -> wasm32::__wasi_file
     filetype
 }
 
-pub fn decode_fsflags(fsflags: wasm32::__wasi_fsflags_t) -> host::__wasi_fsflags_t {
-    fsflags
+pub fn decode_fstflags(fstflags: wasm32::__wasi_fstflags_t) -> host::__wasi_fstflags_t {
+    fstflags
 }
 
 #[allow(dead_code)]
-pub fn encode_fsflags(fsflags: host::__wasi_fsflags_t) -> wasm32::__wasi_fsflags_t {
-    fsflags
+pub fn encode_fstflags(fstflags: host::__wasi_fstflags_t) -> wasm32::__wasi_fstflags_t {
+    fstflags
 }
 
 pub fn decode_fdflags(fdflags: wasm32::__wasi_fdflags_t) -> host::__wasi_fdflags_t {

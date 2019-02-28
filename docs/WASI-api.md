@@ -60,10 +60,11 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_file_readdir()`](#file_readdir)
 - [`__wasi_file_readlink()`](#file_readlink)
 - [`__wasi_file_rename()`](#file_rename)
-- [`__wasi_file_stat_fget()`](#file_stat_fget)
-- [`__wasi_file_stat_fput()`](#file_stat_fput)
+- [`__wasi_file_fstat_get()`](#file_fstat_get)
+- [`__wasi_file_fstat_set_times()`](#file_fstat_set_times)
+- [`__wasi_file_fstat_set_size()`](#file_fstat_set_size)
 - [`__wasi_file_stat_get()`](#file_stat_get)
-- [`__wasi_file_stat_put()`](#file_stat_put)
+- [`__wasi_file_stat_set_times()`](#file_stat_set_times)
 - [`__wasi_file_symlink()`](#file_symlink)
 - [`__wasi_file_unlink()`](#file_unlink)
 - [`__wasi_poll_oneoff()`](#poll_oneoff)
@@ -585,42 +586,58 @@ Inputs:
     The destination path to which the file should
     be renamed.
 
-### <a href="#file_stat_fget" name="file_stat_fget"></a>`__wasi_file_stat_fget()`
+### <a href="#file_fstat_get" name="file_fstat_get"></a>`__wasi_file_fstat_get()`
 
 Gets attributes of a file by file descriptor.
 
 Inputs:
 
-- <a href="#file_stat_fget.fd" name="file_stat_fget.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_fstat_get.fd" name="file_fstat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be obtained.
 
-- <a href="#file_stat_fget.buf" name="file_stat_fget.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_fstat_get.buf" name="file_fstat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
 
     The buffer where the file's attributes are
     stored.
 
-### <a href="#file_stat_fput" name="file_stat_fput"></a>`__wasi_file_stat_fput()`
+### <a href="#file_fstat_set_times" name="file_fstat_set_times"></a>`__wasi_file_fstat_set_times()`
 
-Adjusts attributes of a file by file descriptor.
+Adjusts the timestamps of a file by file descriptor.
 
 Inputs:
 
-- <a href="#file_stat_fput.fd" name="file_stat_fput.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_fstat_set_times.fd" name="file_fstat_set_times.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor whose attributes have to
+    The file descriptor whose times have to
     be adjusted.
 
-- <a href="#file_stat_fput.buf" name="file_stat_fput.buf"></a><code>const [\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_fstat_set_times.st_atim" name="file_fstat_set_times.st_atim"></a><code>const [\_\_wasi\_timestamp\_t](#timestamp) *<strong>st\_atim</strong></code>
 
-    The desired values of the file attributes that
-    are adjusted.
+    The desired values of the data access timestamp.
 
-- <a href="#file_stat_fput.fsflags" name="file_stat_fput.fsflags"></a><code>[\_\_wasi\_fsflags\_t](#fsflags) <strong>fsflags</strong></code>
+- <a href="#file_fstat_set_times.st_mtim" name="file_fstat_set_times.st_mtim"></a><code>const [\_\_wasi\_timestamp\_t](#timestamp) *<strong>st\_mtim</strong></code>
 
-    A bitmask indicating which attributes have to
-    be adjusted.
+    The desired values of the data modification timestamp.
+
+- <a href="#file_fstat_set_times.fstflags" name="file_fstat_set_times.fstflags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fstflags</strong></code>
+
+    A bitmask indicating which timestamps have to be adjusted.
+
+### <a href="#file_fstat_set_size" name="file_fstat_set_size"></a>`__wasi_file_fstat_set_size()`
+
+Adjusts the size of a file by file descriptor.
+
+Inputs:
+
+- <a href="#file_fstat_set_size.fd" name="file_fstat_set_size.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+
+    The file descriptor whose size has to be adjusted.
+
+- <a href="#file_fstat_set_size.st_size" name="file_fstat_set_size.st_size"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>st\_size</strong></code>
+
+    The desired file size.
 
 ### <a href="#file_stat_get" name="file_stat_get"></a>`__wasi_file_stat_get()`
 
@@ -649,37 +666,39 @@ Inputs:
     The buffer where the file's attributes are
     stored.
 
-### <a href="#file_stat_put" name="file_stat_put"></a>`__wasi_file_stat_put()`
+### <a href="#file_stat_set_times" name="file_stat_set_times"></a>`__wasi_file_stat_set_times()`
 
-Adjusts attributes of a file by path.
+Adjusts the timestamps of a file by path.
 
 Inputs:
 
-- <a href="#file_stat_put.fd" name="file_stat_put.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_stat_set_times.fd" name="file_stat_set_times.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path whose attributes have to be
     adjusted starts.
 
-- <a href="#file_stat_put.flags" name="file_stat_put.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
+- <a href="#file_stat_set_times.flags" name="file_stat_set_times.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
 
     Flags determining the method of how the path is
     resolved.
 
-- <a href="#file_stat_put.path" name="file_stat_put.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_stat_put.path_len" name="file_stat_put.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#file_stat_set_times.path" name="file_stat_set_times.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_stat_set_times.path_len" name="file_stat_set_times.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path of the file whose attributes have to
     be adjusted.
 
-- <a href="#file_stat_put.buf" name="file_stat_put.buf"></a><code>const [\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_stat_set_times.st_atim" name="file_stat_set_times.st_atim"></a><code>const [\_\_wasi\_timestamp\_t](#timestamp) *<strong>st\_atim</strong></code>
 
-    The desired values of the file attributes that
-    are adjusted.
+    The desired values of the data access timestamp.
 
-- <a href="#file_stat_put.fsflags" name="file_stat_put.fsflags"></a><code>[\_\_wasi\_fsflags\_t](#fsflags) <strong>fsflags</strong></code>
+- <a href="#file_stat_set_times.st_mtim" name="file_stat_set_times.st_mtim"></a><code>const [\_\_wasi\_timestamp\_t](#timestamp) *<strong>st\_mtim</strong></code>
 
-    A bitmask indicating which attributes have to
-    be adjusted.
+    The desired values of the data modification timestamp.
+
+- <a href="#file_stat_set_times.fstflags" name="file_stat_set_times.fstflags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fstflags</strong></code>
+
+    A bitmask indicating which timestamps have to be adjusted.
 
 ### <a href="#file_symlink" name="file_symlink"></a>`__wasi_file_symlink()`
 
@@ -687,7 +706,7 @@ Creates a symbolic link.
 
 Inputs:
 
-- <a href="#file_symlink.old_path" name="file_symlink.old_path"></a><code>const char *<strong>old_path</strong></code> and <a href="#file_symlink.old_path_len" name="file_symlink.old_path_len"></a><code>size\_t <strong>old_path\_len</strong></code>
+- <a href="#file_symlink.old_path" name="file_symlink.old_path"></a><code>const char *<strong>old\_path</strong></code> and <a href="#file_symlink.old_path_len" name="file_symlink.old_path_len"></a><code>size\_t <strong>old_path\_len</strong></code>
 
     The contents of the symbolic link.
 
@@ -1495,7 +1514,7 @@ Used by [`__wasi_event_t`](#event), [`__wasi_filestat_t`](#filestat), [`__wasi_f
 
 File attributes.
 
-Used by [`__wasi_file_stat_fget()`](#file_stat_fget), [`__wasi_file_stat_fput()`](#file_stat_fput), [`__wasi_file_stat_get()`](#file_stat_get), and [`__wasi_file_stat_put()`](#file_stat_put).
+Used by [`__wasi_file_fstat_get()`](#file_fstat_get) and [`__wasi_file_stat_get()`](#file_stat_get).
 
 Members:
 
@@ -1580,38 +1599,33 @@ Possible values:
 
     The file refers to a symbolic link inode.
 
-### <a href="#fsflags" name="fsflags"></a>`__wasi_fsflags_t` (`uint16_t` bitfield)
+### <a href="#fstflags" name="fstflags"></a>`__wasi_fstflags_t` (`uint16_t` bitfield)
 
-Which file attributes to adjust.
+Which file time attributes to adjust.
 
-Used by [`__wasi_file_stat_fput()`](#file_stat_fput) and [`__wasi_file_stat_put()`](#file_stat_put).
+Used by [`__wasi_file_stat_set_times()`](#file_stat_set_times) and [`__wasi_file_fstat_set_times()`](#file_fstat_set_times).
 
 Possible values:
 
-- <a href="#fsflags.atim" name="fsflags.atim"></a>**`__WASI_FILESTAT_ATIM`**
+- <a href="#fstflags.atim" name="fstflags.atim"></a>**`__WASI_FILE_STAT_SET_ATIM`**
 
     Adjust the last data access timestamp to the value
     stored in [`__wasi_filestat_t::st_atim`](#filestat.st_atim).
 
-- <a href="#fsflags.atim_now" name="fsflags.atim_now"></a>**`__WASI_FILESTAT_ATIM_NOW`**
+- <a href="#fsflags.atim_now" name="fsflags.atim_now"></a>**`__WASI_FILE_STAT_SET_ATIM_NOW`**
 
     Adjust the last data access timestamp to the time
     of clock [`__WASI_CLOCK_REALTIME`](#clockid.realtime).
 
-- <a href="#fsflags.mtim" name="fsflags.mtim"></a>**`__WASI_FILESTAT_MTIM`**
+- <a href="#fsflags.mtim" name="fsflags.mtim"></a>**`__WASI_FILE_STAT_SET_MTIM`**
 
     Adjust the last data modification timestamp to the
     value stored in [`__wasi_filestat_t::st_mtim`](#filestat.st_mtim).
 
-- <a href="#fsflags.mtim_now" name="fsflags.mtim_now"></a>**`__WASI_FILESTAT_MTIM_NOW`**
+- <a href="#fsflags.mtim_now" name="fsflags.mtim_now"></a>**`__WASI_FILE_STAT_SET_MTIM_NOW`**
 
     Adjust the last data modification timestamp to the
     time of clock [`__WASI_CLOCK_REALTIME`](#clockid.realtime).
-
-- <a href="#fsflags.size" name="fsflags.size"></a>**`__WASI_FILESTAT_SIZE`**
-
-    Truncate or extend the file to the size stored in
-    [`__wasi_filestat_t::st_size`](#filestat.st_size).
 
 ### <a href="#inode" name="inode"></a>`__wasi_inode_t` (`uint64_t`)
 
@@ -1641,7 +1655,7 @@ Used by [`__wasi_filestat_t`](#filestat).
 
 Flags determining the method of how paths are resolved.
 
-Used by [`__wasi_file_link()`](#file_link), [`__wasi_file_open()`](#file_open), [`__wasi_file_stat_get()`](#file_stat_get), and [`__wasi_file_stat_put()`](#file_stat_put).
+Used by [`__wasi_file_link()`](#file_link), [`__wasi_file_open()`](#file_open), [`__wasi_file_stat_get()`](#file_stat_get), and [`__wasi_file_stat_set_times()`](#file_stat_set_times).
 
 Possible values:
 
@@ -1793,33 +1807,32 @@ Possible values:
     The right to invoke [`__wasi_file_rename()`](#file_rename) with the file
     descriptor as the target directory.
 
-- <a href="#rights.file_stat_fget" name="rights.file_stat_fget"></a>**`__WASI_RIGHT_FILE_STAT_FGET`**
+- <a href="#rights.file_fstat_get" name="rights.file_fstat_get"></a>**`__WASI_RIGHT_FILE_STAT_GET`**
 
-    The right to invoke [`__wasi_file_stat_fget()`](#file_stat_fget).
+    The right to invoke [`__wasi_file_fstat_get()`](#file_fstat_get).
 
-- <a href="#rights.file_stat_fput_size" name="rights.file_stat_fput_size"></a>**`__WASI_RIGHT_FILE_STAT_FPUT_SIZE`**
+- <a href="#rights.file_fstat_set_size" name="rights.file_fstat_set_size"></a>**`__WASI_RIGHT_FILE_STAT_SET_SIZE`**
 
-    The right to invoke [`__wasi_file_stat_fput()`](#file_stat_fput) with
-    [`__WASI_FILESTAT_SIZE`](#fsflags.size).
+    The right to invoke [`__wasi_file_fstat_set_size()`](#file_fstat_set_size).
 
     If [`__WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
     invoke [`__wasi_file_open()`](#file_open) with [`__WASI_O_TRUNC`](#oflags.trunc).
 
-- <a href="#rights.file_stat_fput_times" name="rights.file_stat_fput_times"></a>**`__WASI_RIGHT_FILE_STAT_FPUT_TIMES`**
+- <a href="#rights.file_fstat_set_times" name="rights.file_fstat_set_times"></a>**`__WASI_RIGHT_FILE_STAT_SET_TIMES`**
 
-    The right to invoke [`__wasi_file_stat_fput()`](#file_stat_fput) with
-    [`__WASI_FILESTAT_ATIM`](#fsflags.atim), [`__WASI_FILESTAT_ATIM_NOW`](#fsflags.atim_now), [`__WASI_FILESTAT_MTIM`](#fsflags.mtim),
-    and [`__WASI_FILESTAT_MTIM_NOW`](#fsflags.mtim_now).
+    The right to invoke [`__wasi_file_fstat_set_times()`](#file_fstat_set_times) with
+    [`__WASI_FILE_STAT_SET_ATIM`](#fstflags.atim), [`__WASI_FILE_STAT_SET_ATIM_NOW`](#fstflags.atim_now), [`__WASI_FILE_STAT_SET_MTIM`](#fstflags.mtim),
+    and [`__WASI_FILE_STAT_SET_MTIM_NOW`](#fstflags.mtim_now).
 
 - <a href="#rights.file_stat_get" name="rights.file_stat_get"></a>**`__WASI_RIGHT_FILE_STAT_GET`**
 
     The right to invoke [`__wasi_file_stat_get()`](#file_stat_get).
 
-- <a href="#rights.file_stat_put_times" name="rights.file_stat_put_times"></a>**`__WASI_RIGHT_FILE_STAT_PUT_TIMES`**
+- <a href="#rights.file_stat_set_times" name="rights.file_stat_set_times"></a>**`__WASI_RIGHT_FILE_STAT_SET_TIMES`**
 
-    The right to invoke [`__wasi_file_stat_put()`](#file_stat_put) with
-    [`__WASI_FILESTAT_ATIM`](#fsflags.atim), [`__WASI_FILESTAT_ATIM_NOW`](#fsflags.atim_now), [`__WASI_FILESTAT_MTIM`](#fsflags.mtim),
-    and [`__WASI_FILESTAT_MTIM_NOW`](#fsflags.mtim_now).
+    The right to invoke [`__wasi_file_stat_set_times()`](#file_stat_set_times) with
+    [`__WASI_FILE_STAT_SET_ATIM`](#fstflags.atim), [`__WASI_FILE_STAT_SET_ATIM_NOW`](#fstflags.atim_now), [`__WASI_FILE_STAT_SET_MTIM`](#fstflags.mtim),
+    and [`__WASI_FILE_STAT_SET_MTIM_NOW`](#fstflags.mtim_now).
 
 - <a href="#rights.file_symlink" name="rights.file_symlink"></a>**`__WASI_RIGHT_FILE_SYMLINK`**
 

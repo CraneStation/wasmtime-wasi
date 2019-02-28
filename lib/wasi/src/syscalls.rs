@@ -820,12 +820,12 @@ syscalls! {
         return_encoded_errno(e)
     }
 
-    pub unsafe extern "C" fn file_stat_fget(
+    pub unsafe extern "C" fn file_fstat_get(
         vmctx: *mut VMContext,
         fd: wasm32::__wasi_fd_t,
         buf: wasm32::uintptr_t,
     ) -> wasm32::__wasi_errno_t {
-        trace!("file_stat_fget(fd={:?}, buf={:#x?})", fd, buf);
+        trace!("file_fstat_get(fd={:?}, buf={:#x?})", fd, buf);
 
         let vmctx = &mut *vmctx;
         let curfds = get_curfds(vmctx);
@@ -835,7 +835,7 @@ syscalls! {
             Err(e) => return return_encoded_errno(e),
         };
 
-        let e = host::wasmtime_ssp_file_stat_fget(curfds, fd, &mut host_buf);
+        let e = host::wasmtime_ssp_file_fstat_get(curfds, fd, &mut host_buf);
 
         trace!("     | *buf={:?}", host_buf);
         encode_filestat_byref(vmctx, buf, host_buf).unwrap();
@@ -843,29 +843,49 @@ syscalls! {
         return_encoded_errno(e)
     }
 
-    pub unsafe extern "C" fn file_stat_fput(
+    pub unsafe extern "C" fn file_fstat_set_times(
         vmctx: *mut VMContext,
         fd: wasm32::__wasi_fd_t,
-        buf: wasm32::uintptr_t,
-        fsflags: wasm32::__wasi_fsflags_t,
+        st_atim: wasm32::__wasi_timestamp_t,
+        st_mtim: wasm32::__wasi_timestamp_t,
+        fstflags: wasm32::__wasi_fstflags_t,
     ) -> wasm32::__wasi_errno_t {
         trace!(
-            "file_stat_fput(fd={:?}, buf={:#x?}, fsflags={:#x?})",
+            "file_fstat_set_times(fd={:?}, st_atim={}, st_mtim={}, fstflags={:#x?})",
             fd,
-            buf,
-            fsflags
+            st_atim, st_mtim,
+            fstflags
         );
 
         let vmctx = &mut *vmctx;
         let curfds = get_curfds(vmctx);
         let fd = decode_fd(fd);
-        let host_buf = match decode_filestat_byref(vmctx, buf) {
-            Ok(host_buf) => host_buf,
-            Err(e) => return return_encoded_errno(e),
-        };
-        let fsflags = decode_fsflags(fsflags);
+        let st_atim = decode_timestamp(st_atim);
+        let st_mtim = decode_timestamp(st_mtim);
+        let fstflags = decode_fstflags(fstflags);
 
-        let e = host::wasmtime_ssp_file_stat_fput(curfds, fd, &host_buf, fsflags);
+        let e = host::wasmtime_ssp_file_fstat_set_times(curfds, fd, st_atim, st_mtim, fstflags);
+
+        return_encoded_errno(e)
+    }
+
+    pub unsafe extern "C" fn file_fstat_set_size(
+        vmctx: *mut VMContext,
+        fd: wasm32::__wasi_fd_t,
+        size: wasm32::__wasi_filesize_t,
+    ) -> wasm32::__wasi_errno_t {
+        trace!(
+            "file_fstat_set_size(fd={:?}, size={})",
+            fd,
+            size
+        );
+
+        let vmctx = &mut *vmctx;
+        let curfds = get_curfds(vmctx);
+        let fd = decode_fd(fd);
+        let size = decode_filesize(size);
+
+        let e = host::wasmtime_ssp_file_fstat_set_size(curfds, fd, size);
 
         return_encoded_errno(e)
     }
@@ -908,23 +928,24 @@ syscalls! {
         return_encoded_errno(e)
     }
 
-    pub unsafe extern "C" fn file_stat_put(
+    pub unsafe extern "C" fn file_stat_set_times(
         vmctx: *mut VMContext,
         fd: wasm32::__wasi_fd_t,
         flags: wasm32::__wasi_lookupflags_t,
         path: wasm32::uintptr_t,
         path_len: wasm32::size_t,
-        buf: wasm32::uintptr_t,
-        fsflags: wasm32::__wasi_fsflags_t,
+        st_atim: wasm32::__wasi_timestamp_t,
+        st_mtim: wasm32::__wasi_timestamp_t,
+        fstflags: wasm32::__wasi_fstflags_t,
     ) -> wasm32::__wasi_errno_t {
         trace!(
-            "file_stat_put(fd={:?}, flags={:?}, path={:#x?}, path_len={}, buf={:#x?}, fsflags={:#x?})",
+            "file_stat_set_times(fd={:?}, flags={:?}, path={:#x?}, path_len={}, st_atim={}, st_mtim={}, fstflags={:#x?})",
             fd,
             flags,
             path,
             path_len,
-            buf,
-            fsflags
+            st_atim, st_mtim,
+            fstflags
         );
 
         let vmctx = &mut *vmctx;
@@ -935,13 +956,11 @@ syscalls! {
             Ok((path, path_len)) => (path, path_len),
             Err(e) => return return_encoded_errno(e),
         };
-        let host_buf = match decode_filestat_byref(vmctx, buf) {
-            Ok(host_buf) => host_buf,
-            Err(e) => return return_encoded_errno(e),
-        };
-        let fsflags = decode_fsflags(fsflags);
+        let st_atim = decode_timestamp(st_atim);
+        let st_mtim = decode_timestamp(st_mtim);
+        let fstflags = decode_fstflags(fstflags);
 
-        let e = host::wasmtime_ssp_file_stat_put(curfds, fd, flags, path, path_len, &host_buf, fsflags);
+        let e = host::wasmtime_ssp_file_stat_set_times(curfds, fd, flags, path, path_len, st_atim, st_mtim, fstflags);
 
         return_encoded_errno(e)
     }
