@@ -1598,12 +1598,14 @@ __wasi_errno_t wasmtime_ssp_file_open(
     const char *path,
     size_t pathlen,
     __wasi_oflags_t oflags,
-    const __wasi_fdstat_t *fds,
+    __wasi_rights_t fs_rights_base,
+    __wasi_rights_t fs_rights_inheriting,
+    __wasi_fdflags_t fs_flags,
     __wasi_fd_t *fd
 ) {
   // Rights that should be installed on the new file descriptor.
-  __wasi_rights_t rights_base = fds->fs_rights_base;
-  __wasi_rights_t rights_inheriting = fds->fs_rights_inheriting;
+  __wasi_rights_t rights_base = fs_rights_base;
+  __wasi_rights_t rights_inheriting = fs_rights_inheriting;
 
   // Which open() mode should be used to satisfy the needed rights.
   bool read =
@@ -1633,9 +1635,9 @@ __wasi_errno_t wasmtime_ssp_file_open(
   }
 
   // Convert file descriptor flags.
-  if ((fds->fs_flags & __WASI_FDFLAG_APPEND) != 0)
+  if ((fs_flags & __WASI_FDFLAG_APPEND) != 0)
     noflags |= O_APPEND;
-  if ((fds->fs_flags & __WASI_FDFLAG_DSYNC) != 0) {
+  if ((fs_flags & __WASI_FDFLAG_DSYNC) != 0) {
 #ifdef O_DSYNC
     noflags |= O_DSYNC;
 #else
@@ -1643,9 +1645,9 @@ __wasi_errno_t wasmtime_ssp_file_open(
 #endif
     needed_inheriting |= __WASI_RIGHT_FD_DATASYNC;
   }
-  if ((fds->fs_flags & __WASI_FDFLAG_NONBLOCK) != 0)
+  if ((fs_flags & __WASI_FDFLAG_NONBLOCK) != 0)
     noflags |= O_NONBLOCK;
-  if ((fds->fs_flags & __WASI_FDFLAG_RSYNC) != 0) {
+  if ((fs_flags & __WASI_FDFLAG_RSYNC) != 0) {
 #ifdef O_RSYNC
     noflags |= O_RSYNC;
 #else
@@ -1653,7 +1655,7 @@ __wasi_errno_t wasmtime_ssp_file_open(
 #endif
     needed_inheriting |= __WASI_RIGHT_FD_SYNC;
   }
-  if ((fds->fs_flags & __WASI_FDFLAG_SYNC) != 0) {
+  if ((fs_flags & __WASI_FDFLAG_SYNC) != 0) {
     noflags |= O_SYNC;
     needed_inheriting |= __WASI_RIGHT_FD_SYNC;
   }
