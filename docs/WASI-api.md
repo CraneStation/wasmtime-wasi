@@ -1447,6 +1447,8 @@ Used by [`__wasi_event_t`](#event) and [`__wasi_proc_exit()`](#proc_exit).
 
 A file descriptor number.
 
+Used by many functions in this API.
+
 As on POSIX-compliant systems, three file descriptor numbers are
 provided to instances on startup -- 0, 1, and 2, (a.k.a. `STDIN_FILENO`,
 `STDOUT_FILENO`, and `STDERR_FILENO`).
@@ -1458,7 +1460,7 @@ new file descriptors in ascending order.
 
 File descriptor flags.
 
-Used by [`__wasi_fdstat_t`](#fdstat).
+Used by [`__wasi_fdstat_t`](#fdstat) and [`__wasi_file_open()`](#file_open).
 
 Possible values:
 
