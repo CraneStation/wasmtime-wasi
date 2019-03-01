@@ -1906,7 +1906,7 @@ __wasi_errno_t wasmtime_ssp_file_fstat_get(
 ) {
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_STAT_GET, 0);
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_FSTAT_GET, 0);
   if (error != 0)
     return error;
 
@@ -1972,7 +1972,7 @@ __wasi_errno_t wasmtime_ssp_file_fstat_set_size(
 ) {
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_STAT_SET_SIZE, 0);
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_FSTAT_SET_SIZE, 0);
   if (error != 0)
     return error;
 
@@ -1998,7 +1998,7 @@ __wasi_errno_t wasmtime_ssp_file_fstat_set_times(
 
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_STAT_SET_TIMES, 0);
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_FSTAT_SET_TIMES, 0);
   if (error != 0)
     return error;
 

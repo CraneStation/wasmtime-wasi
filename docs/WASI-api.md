@@ -1816,20 +1816,33 @@ Possible values:
 
 - <a href="#rights.file_stat_get" name="rights.file_stat_get"></a>**`__WASI_RIGHT_FILE_STAT_GET`**
 
-    The right to invoke [`__wasi_file_fstat_get()`](#file_fstat_get) and
-    [`__wasi_file_stat_get()`](#file_stat_get).
+    The right to invoke [`__wasi_file_stat_get()`](#file_stat_get).
 
 - <a href="#rights.file_stat_set_size" name="rights.file_stat_set_size"></a>**`__WASI_RIGHT_FILE_STAT_SET_SIZE`**
 
-    The right to invoke [`__wasi_file_fstat_set_size()`](#file_fstat_set_size).
+    The right to change a file's size (there is no `__wasi_file_stat_set_size()`).
 
     If [`__WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
     invoke [`__wasi_file_open()`](#file_open) with [`__WASI_O_TRUNC`](#oflags.trunc).
 
 - <a href="#rights.file_stat_set_times" name="rights.file_stat_set_times"></a>**`__WASI_RIGHT_FILE_STAT_SET_TIMES`**
 
-    The right to invoke [`__wasi_file_fstat_set_times()`](#file_fstat_set_times)
-    and [`__wasi_file_stat_set_times()`](#file_stat_set_times).
+    The right to invoke [`__wasi_file_stat_set_times()`](#file_stat_set_times).
+
+- <a href="#rights.file_fstat_get" name="rights.file_fstat_get"></a>**`__WASI_RIGHT_FILE_FSTAT_GET`**
+
+    The right to invoke [`__wasi_file_fstat_get()`](#file_fstat_get).
+
+- <a href="#rights.file_fstat_set_size" name="rights.file_fstat_set_size"></a>**`__WASI_RIGHT_FILE_FSTAT_SET_SIZE`**
+
+    The right to invoke [`__wasi_file_fstat_set_size()`](#file_fstat_set_size).
+
+    If [`__WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
+    invoke [`__wasi_file_open()`](#file_open) with [`__WASI_O_TRUNC`](#oflags.trunc).
+
+- <a href="#rights.file_fstat_set_times" name="rights.file_fstat_set_times"></a>**`__WASI_RIGHT_FILE_FSTAT_SET_TIMES`**
+
+    The right to invoke [`__wasi_file_fstat_set_times()`](#file_fstat_set_times).
 
 - <a href="#rights.file_symlink" name="rights.file_symlink"></a>**`__WASI_RIGHT_FILE_SYMLINK`**
 
