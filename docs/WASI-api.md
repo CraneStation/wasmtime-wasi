@@ -512,7 +512,7 @@ Inputs:
     than specified, if and only if those rights do
     not apply to the type of file being opened.
 
-- <a href="#file_open.fs_flags" name="file_open.fs_flags"></a><code>[\_\_wasi\_fdflags\_t](#fdflags) *<strong>fs\_flags</strong></code>
+- <a href="#file_open.fs_flags" name="file_open.fs_flags"></a><code>[\_\_wasi\_fdflags\_t](#fdflags) <strong>fs\_flags</strong></code>
 
     The initial flags of the file descriptor.
 
