@@ -1523,7 +1523,7 @@ static void path_put(
   fd_object_release(pa->fd_object);
 }
 
-__wasi_errno_t wasmtime_ssp_file_mkdir(
+__wasi_errno_t wasmtime_ssp_file_create_directory(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
