@@ -2116,28 +2116,69 @@ __wasi_errno_t wasmtime_ssp_file_symlink(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_unlink(
+__wasi_errno_t wasmtime_ssp_file_unlink_file(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
     __wasi_fd_t fd,
     const char *path,
-    size_t pathlen,
-    __wasi_ulflags_t flags
+    size_t pathlen
 ) {
   struct path_access pa;
   __wasi_errno_t error = path_get_nofollow(curfds,
-      &pa, fd, path, pathlen, __WASI_RIGHT_FILE_UNLINK, 0, true);
+      &pa, fd, path, pathlen, __WASI_RIGHT_FILE_UNLINK_FILE, 0, true);
   if (error != 0)
     return error;
 
-  int ret =
-      unlinkat(pa.fd, pa.path,
-               (flags & __WASI_UNLINK_REMOVEDIR) != 0 ? AT_REMOVEDIR : 0);
+  int ret = unlinkat(pa.fd, pa.path, 0);
+#ifndef __linux__
+  // Non-Linux implementations may return EPERM when attempting to remove a
+  // directory without REMOVEDIR. While that's what POSIX specifies, it's
+  // less useful. Adjust this to EISDIR. It doesn't matter that this is not
+  // atomic with the unlinkat, because if the file is removed and a directory
+  // is created before fstatat sees it, we're racing with that change anyway
+  // and unlinkat could have legitimately seen the directory if the race had
+  // turned out differently.
+  if (ret < 0 && errno == EPERM) {
+    struct stat statbuf;
+    if (fstatat(pa.fd, pa.path, &statbuf, AT_SYMLINK_NOFOLLOW) == 0 &&
+        S_ISDIR(statbuf.st_mode)) {
+      errno = EISDIR;
+    }
+  }
+#endif
   path_put(&pa);
   if (ret < 0) {
-    // Linux returns EISDIR, whereas EPERM is what's required by POSIX.
-    return errno == EISDIR ? __WASI_EPERM : convert_errno(errno);
+    return convert_errno(errno);
+  }
+  return 0;
+}
+
+__wasi_errno_t wasmtime_ssp_file_unlink_directory(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
+    struct fd_table *curfds,
+#endif
+    __wasi_fd_t fd,
+    const char *path,
+    size_t pathlen
+) {
+  struct path_access pa;
+  __wasi_errno_t error = path_get_nofollow(curfds,
+      &pa, fd, path, pathlen, __WASI_RIGHT_FILE_UNLINK_DIRECTORY, 0, true);
+  if (error != 0)
+    return error;
+
+  int ret = unlinkat(pa.fd, pa.path, AT_REMOVEDIR);
+#ifndef __linux__
+  // POSIX permits either EEXIST or ENOTEMPTY when the directory is not empty.
+  // Map it to ENOTEMPTY.
+  if (ret < 0 && errno == EEXIST) {
+    errno = ENOTEMPTY;
+  }
+#endif
+  path_put(&pa);
+  if (ret < 0) {
+    return convert_errno(errno);
   }
   return 0;
 }

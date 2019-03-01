@@ -183,10 +183,6 @@ pub fn decode_sdflags(sdflags: wasm32::__wasi_sdflags_t) -> host::__wasi_sdflags
     sdflags
 }
 
-pub fn decode_ulflags(ulflags: wasm32::__wasi_ulflags_t) -> host::__wasi_ulflags_t {
-    ulflags
-}
-
 pub fn decode_rights(rights: wasm32::__wasi_rights_t) -> host::__wasi_rights_t {
     rights
 }

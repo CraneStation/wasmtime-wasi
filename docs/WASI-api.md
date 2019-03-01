@@ -67,7 +67,8 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_file_stat_get()`](#file_stat_get)
 - [`__wasi_file_stat_set_times()`](#file_stat_set_times)
 - [`__wasi_file_symlink()`](#file_symlink)
-- [`__wasi_file_unlink()`](#file_unlink)
+- [`__wasi_file_unlink_file()`](#file_unlink_file)
+- [`__wasi_file_unlink_directory()`](#file_unlink_directory)
 - [`__wasi_poll_oneoff()`](#poll_oneoff)
 - [`__wasi_proc_exit()`](#proc_exit)
 - [`__wasi_proc_raise()`](#proc_raise)
@@ -755,29 +756,43 @@ Inputs:
     The destination path at which the symbolic
     link should be created.
 
-### <a href="#file_unlink" name="file_unlink"></a>`__wasi_file_unlink()`
+### <a href="#file_unlink_file" name="file_unlink_file"></a>`__wasi_file_unlink_file()`
 
-Unlinks a file, or removes a directory.
+Unlinks a file.
+
+Returns [`__WASI_EISDIR`](#errno.isdir) if the path refers to a directory.
+
+Note: This is similar to `unlinkat(fd, path, 0)` in POSIX.
 
 Inputs:
 
-- <a href="#file_unlink.fd" name="file_unlink.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_unlink_file.fd" name="file_unlink_file.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path starts.
 
-- <a href="#file_unlink.path" name="file_unlink.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_unlink.path_len" name="file_unlink.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#file_unlink_file.path" name="file_unlink_file.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_unlink_file.path_len" name="file_unlink_file.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path that needs to be unlinked or removed.
 
-- <a href="#file_unlink.flags" name="file_unlink.flags"></a><code>[\_\_wasi\_ulflags\_t](#ulflags) <strong>flags</strong></code>
+### <a href="#file_unlink_directory" name="file_unlink_directory"></a>`__wasi_file_unlink_directory()`
 
-    Possible values:
+Removes a directory.
 
-    - [`__WASI_UNLINK_REMOVEDIR`](#ulflags.removedir)
+Returns [`__WASI_ENOTEMPTY`](#errno.notempty) if the directory is not empty.
 
-        If set, attempt to remove a directory.
-        Otherwise, unlink a file.
+Note: This is similar to `unlinkat(fd, path, AT_REMOVEDIR)` in POSIX.
+
+Inputs:
+
+- <a href="#file_unlink_directory.fd" name="file_unlink_directory.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+
+    The working directory at which the resolution
+    of the path starts.
+
+- <a href="#file_unlink_directory.path" name="file_unlink_directory.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_unlink_directory.path_len" name="file_unlink_directory.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+
+    The path that needs to be unlinked or removed.
 
 ### <a href="#poll_oneoff" name="poll_oneoff"></a>`__wasi_poll_oneoff()`
 
@@ -1855,9 +1870,13 @@ Possible values:
 
     The right to invoke [`__wasi_file_symlink()`](#file_symlink).
 
-- <a href="#rights.file_unlink" name="rights.file_unlink"></a>**`__WASI_RIGHT_FILE_UNLINK`**
+- <a href="#rights.file_unlink_file" name="rights.file_unlink_file"></a>**`__WASI_RIGHT_FILE_UNLINK_FILE`**
 
-    The right to invoke [`__wasi_file_unlink()`](#file_unlink).
+    The right to invoke [`__wasi_file_unlink_file()`](#file_unlink_file).
+
+- <a href="#rights.file_unlink_directory" name="rights.file_unlink_directory"></a>**`__WASI_RIGHT_FILE_UNLINK_DIRECTORY`**
+
+    The right to invoke [`__wasi_file_unlink_directory()`](#file_unlink_directory).
 
 - <a href="#rights.poll_fd_readwrite" name="rights.poll_fd_readwrite"></a>**`__WASI_RIGHT_POLL_FD_READWRITE`**
 
@@ -2154,20 +2173,6 @@ Members:
 Timestamp in nanoseconds.
 
 Used by [`__wasi_filestat_t`](#filestat), [`__wasi_subscription_t`](#subscription), [`__wasi_clock_res_get()`](#clock_res_get), [`__wasi_clock_time_get()`](#clock_time_get), [`__wasi_file_fstat_set_times()`](#file_fstat_set_times), and [`__wasi_file_stat_set_times()`](#file_stat_set_times).
-
-### <a href="#ulflags" name="ulflags"></a>`__wasi_ulflags_t` (`uint8_t` bitfield)
-
-Specifies whether files are unlinked or directories are
-removed.
-
-Used by [`__wasi_file_unlink()`](#file_unlink).
-
-Possible values:
-
-- <a href="#ulflags.removedir" name="ulflags.removedir"></a>**`__WASI_UNLINK_REMOVEDIR`**
-
-    If set, removes a directory. Otherwise, unlinks any
-    non-directory file.
 
 ### <a href="#userdata" name="userdata"></a>`__wasi_userdata_t` (`uint64_t`)
 
