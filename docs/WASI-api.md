@@ -55,7 +55,7 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_fd_write()`](#fd_write)
 - [`__wasi_file_advise()`](#file_advise)
 - [`__wasi_file_allocate()`](#file_allocate)
-- [`__wasi_file_mkdir()`](#file_mkdir)
+- [`__wasi_file_create_directory()`](#file_create_directory)
 - [`__wasi_file_link()`](#file_link)
 - [`__wasi_file_open()`](#file_open)
 - [`__wasi_file_readdir()`](#file_readdir)
@@ -143,6 +143,8 @@ Inputs:
 Reads from a file descriptor, without using and updating the
 file descriptor's offset.
 
+Note: This is similar to `preadv` in POSIX.
+
 Inputs:
 
 - <a href="#fd_pread.fd" name="fd_pread.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
@@ -171,6 +173,8 @@ Outputs:
 Writes to a file descriptor, without using and updating the
 file descriptor's offset.
 
+Note: This is similar to `pwritev` in POSIX.
+
 Inputs:
 
 - <a href="#fd_pwrite.fd" name="fd_pwrite.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
@@ -197,6 +201,8 @@ Outputs:
 ### <a href="#fd_read" name="fd_read"></a>`__wasi_fd_read()`
 
 Reads from a file descriptor.
+
+Note: This is similar to `readv` in POSIX.
 
 Inputs:
 
@@ -363,6 +369,8 @@ Inputs:
 
 Writes to a file descriptor.
 
+Note: This is similar to `writev` in POSIX.
+
 Inputs:
 
 - <a href="#fd_write.fd" name="fd_write.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
@@ -384,6 +392,8 @@ Outputs:
 ### <a href="#file_advise" name="file_advise"></a>`__wasi_file_advise()`
 
 Provides file advisory information on a file descriptor.
+
+Note: This is similar to `fadvise` in POSIX.
 
 Inputs:
 
@@ -410,6 +420,8 @@ Inputs:
 
 Forces the allocation of space in a file.
 
+Note: This is similar to `posix_fallocate` in POSIX.
+
 Inputs:
 
 - <a href="#file_allocate.fd" name="file_allocate.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
@@ -426,18 +438,20 @@ Inputs:
 
     The length of the area that is allocated.
 
-### <a href="#file_mkdir" name="file_mkdir"></a>`__wasi_file_mkdir()`
+### <a href="#file_create_directory" name="file_create_directory"></a>`__wasi_file_create_directory()`
 
 Creates a file of a specified type.
 
+Note: This is similar to `mkdirat` in POSIX.
+
 Inputs:
 
-- <a href="#file_mkdir.fd" name="file_mkdir.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_create_directory.fd" name="file_create_directory.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the directory to be created starts.
 
-- <a href="#file_mkdir.path" name="file_mkdir.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_mkdir.path_len" name="file_mkdir.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#file_create_directory.path" name="file_create_directory.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_create_directory.path_len" name="file_create_directory.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path at which the directory should be created.
 
@@ -1564,7 +1578,7 @@ Members:
 
 The type of a file descriptor or file.
 
-Used by [`__wasi_dirent_t`](#dirent), [`__wasi_fdstat_t`](#fdstat), [`__wasi_filestat_t`](#filestat), and [`__wasi_file_mkdir()`](#file_mkdir).
+Used by [`__wasi_dirent_t`](#dirent), [`__wasi_fdstat_t`](#fdstat), [`__wasi_filestat_t`](#filestat), and [`__wasi_file_create_directory()`](#file_create_directory).
 
 Possible values:
 
@@ -1775,7 +1789,7 @@ Possible values:
 
 - <a href="#rights.file_create_directory" name="rights.file_create_directory"></a>**`__WASI_RIGHT_FILE_CREATE_DIRECTORY`**
 
-    The right to invoke [`__wasi_file_mkdir()`](#file_mkdir).
+    The right to invoke [`__wasi_file_create_directory()`](#file_create_directory).
 
 - <a href="#rights.file_create_file" name="rights.file_create_file"></a>**`__WASI_RIGHT_FILE_CREATE_FILE`**
 

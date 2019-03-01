@@ -583,14 +583,14 @@ syscalls! {
         return_encoded_errno(e)
     }
 
-    pub unsafe extern "C" fn file_mkdir(
+    pub unsafe extern "C" fn file_create_directory(
         vmctx: *mut VMContext,
         fd: wasm32::__wasi_fd_t,
         path: wasm32::uintptr_t,
         path_len: wasm32::size_t,
     ) -> wasm32::__wasi_errno_t {
         trace!(
-            "file_mkdir(fd={:?}, path={:#x?}, path_len={})",
+            "file_create_directory(fd={:?}, path={:#x?}, path_len={})",
             fd,
             path,
             path_len,
@@ -604,7 +604,7 @@ syscalls! {
             Err(e) => return return_encoded_errno(e),
         };
 
-        let e = host::wasmtime_ssp_file_mkdir(curfds, fd, path, path_len);
+        let e = host::wasmtime_ssp_file_create_directory(curfds, fd, path, path_len);
 
         return_encoded_errno(e)
     }

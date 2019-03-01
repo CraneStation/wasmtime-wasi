@@ -573,14 +573,14 @@ __wasi_errno_t wasmtime_ssp_file_allocate(
     __wasi_filesize_t len
 ) WASMTIME_SSP_SYSCALL_NAME(file_allocate) __attribute__((__warn_unused_result__));
 
-__wasi_errno_t wasmtime_ssp_file_mkdir(
+__wasi_errno_t wasmtime_ssp_file_create_directory(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
     __wasi_fd_t fd,
     const char *path,
     size_t path_len
-) WASMTIME_SSP_SYSCALL_NAME(file_mkdir) __attribute__((__warn_unused_result__));
+) WASMTIME_SSP_SYSCALL_NAME(file_create_directory) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_file_link(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)

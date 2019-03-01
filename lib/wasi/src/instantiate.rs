@@ -69,7 +69,7 @@ pub fn instantiate_wasi(
     signature!(fd_write);
     signature!(file_advise);
     signature!(file_allocate);
-    signature!(file_mkdir);
+    signature!(file_create_directory);
     signature!(file_link);
     signature!(file_open);
     signature!(file_readdir);
