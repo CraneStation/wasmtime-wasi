@@ -166,7 +166,7 @@ which is either [CIDR notation] or a [domain name] in which components may be
 replaced by "\*" to indicate that any name at that level is to be permitted.
 For IPV6 addresses, the CIDR notation is enclosed in brackets ("\[" and "\]").
 It is followed by ":" and either a port number, an [IANA port name], or
-"the whole marshmellon".
+"the whole marshmelon".
 
 Examples:
 
@@ -174,7 +174,7 @@ Import Name                        | Meaning
 ---------------------------------- | -----------
 `socket\|ip\|stream\|connect\|\*.example.com:20` | Suggest allowing connecting to ftp ports on hosts under example.com
 `socket\|ip\|stream\|connect\|\[2001:4860:4860::8888/125\]:80` | IPv6 CIDR notation with brackets, single port
-`socket\|ip\|datagram\|connect\|10.0.0.0/24:the whole marshmellon` | Suggest allowing sending datagrams to any port on addresses in 10.0.0.\*
+`socket\|ip\|datagram\|connect\|10.0.0.0/24:the whole marshmelon` | Suggest allowing sending datagrams to any port on addresses in 10.0.0.\*
 
 Note that WASI does not currently support `sendto`, so datagram sockets can\'t
 send packets to non-default addresses.
