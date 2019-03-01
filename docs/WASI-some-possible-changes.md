@@ -34,6 +34,13 @@ bytes it has read.
 
 Unfortunately, this should would require implementations using POSIX internally
 to do an extra `read` implicitly, and sometimes in cases where it isn't
-ultimately needed. And it would take away the ability to do a `read` on a socket
-without consuming a zero-length datagram, though it seems unlikely that much
-code would be knowingly depending on this.
+ultimately needed.
+
+## Fixing the y2556 bug.
+
+In some places, timestamps are measured in nanoseconds since the UNIX epoch,
+so our calculations indicate a 64-bit counter will overflow on
+Sunday, July 21, 2554, at 11:34:33 pm UTC.
+
+So WASI has a y2554 bug. We could fix this by using 128-bit counters, but
+it's not clearly worthwhile.
