@@ -143,16 +143,21 @@ It would be kind of cool to have a WebAssembly-powered Unix shell
 environment or even a graphical desktop environment running inside a
 browser. But would it be *really* cool? Significantly more cool than,
 say, an SSH or VNC session to an instance in the cloud? Because to do
-much with it, you'll want a filesystem.
+much with it, you'll want a filesystem, a network stack, and so on,
+and there's only so much that browsers will let you do.
 
-To be sure, it certainly would be cool. But there's a tendancy in
+To be sure, it certainly would be cool. But there's a tendency in
 some circles to think of something like Debian as the natural end goal
 in a system API and toolchain for WebAssembly. I feel this tendancy
-too. So I'm specifically proposing that we not think of it this way.
-WebAssembly isn't a normal hardware ISA, and it isn't well served by
-forcing it to emulate functionality that is awkward to support.
-So I'm proposing we seek a balance between the needs of applications
-and the constraints imposed by the natural shape of the platform.
+too myself. But it was never really clear how we should make it work.
+
+The insight here is that we can split the design space, rather than
+trying to solve everything at once. We can have a core set of APIs
+that will be enough for most applications, but that doesn't try to
+support all of Debian userland. This will make implementations more
+portable, flexible, testable, and robust than if we tried to make
+every implementation support everything, or come up with custom
+subsets.
 
 As mentioned above, there is room for additional optional APIs to be
 added beyond the core WASI set. And there's absolutely a place for
