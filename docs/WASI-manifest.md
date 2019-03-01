@@ -181,7 +181,6 @@ send packets to non-default addresses.
 
 ## To make all this work:
 
-Merge read/recv and write/send.
 Add functions to create/bind/listen/connect sockets. getpeername? getsockname?
 
 [IANA port name]: https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
