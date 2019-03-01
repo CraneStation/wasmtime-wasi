@@ -495,20 +495,17 @@ Inputs:
 
     The method at which the file should be opened.
 
-- <a href="#file_open.fds" name="file_open.fds"></a><code>const [\_\_wasi\_fdstat\_t](#fdstat) *<strong>fds</strong></code>
+- <a href="#file_open.fs_rights_base" name="file_open.fs_rights_base"></a><code>[\_\_wasi\_rights\_t](#rights) *<strong>fs\_rights\_base</strong></code> and <a href="#file_open.fs_rights_inheriting" name="file_open.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) *<strong>fs\_rights\_inheriting</strong></code>
 
-    [`__wasi_fdstat_t::fs_rights_base`](#fdstat.fs_rights_base) and
-    [`__wasi_fdstat_t::fs_rights_inheriting`](#fdstat.fs_rights_inheriting) specify the
-    initial rights of the newly created file
+    The initial rights of the newly created file
     descriptor. The operating system is allowed to
     return a file descriptor with fewer rights
     than specified, if and only if those rights do
     not apply to the type of file being opened.
 
-    [`__wasi_fdstat_t::fs_flags`](#fdstat.fs_flags) specifies the initial flags
-    of the file descriptor.
+- <a href="#file_open.fs_flags" name="file_open.fs_flags"></a><code>[\_\_wasi\_fdflags\_t](#fdflags) *<strong>fs\_flags</strong></code>
 
-    [`__wasi_fdstat_t::fs_filetype`](#fdstat.fs_filetype) is ignored.
+    The initial flags of the file descriptor.
 
 Outputs:
 
@@ -1486,7 +1483,7 @@ Possible values:
 
 File descriptor attributes.
 
-Used by [`__wasi_fd_stat_get()`](#fd_stat_get) and [`__wasi_file_open()`](#file_open).
+Used by [`__wasi_fd_stat_get()`](#fd_stat_get).
 
 Members:
 
@@ -1719,7 +1716,7 @@ Possible values:
 File descriptor rights, determining which actions may be
 performed.
 
-Used by [`__wasi_fdstat_t`](#fdstat).
+Used by [`__wasi_fdstat_t`](#fdstat) and [`__wasi_file_open()`](#file_open).
 
 Possible values:
 

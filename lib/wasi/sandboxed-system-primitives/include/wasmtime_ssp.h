@@ -601,7 +601,9 @@ __wasi_errno_t wasmtime_ssp_file_open(
     const char *path,
     size_t path_len,
     __wasi_oflags_t oflags,
-    const __wasi_fdstat_t *fds,
+    __wasi_rights_t fs_rights_base,
+    __wasi_rights_t fs_rights_inheriting,
+    __wasi_fdflags_t fs_flags,
     __wasi_fd_t *fd
 ) WASMTIME_SSP_SYSCALL_NAME(file_open) __attribute__((__warn_unused_result__));
 

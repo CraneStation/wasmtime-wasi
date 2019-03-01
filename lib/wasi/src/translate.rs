@@ -203,13 +203,6 @@ pub fn decode_siflags(siflags: wasm32::__wasi_siflags_t) -> host::__wasi_siflags
     siflags
 }
 
-pub fn decode_fdstat(
-    _vmctx: &mut VMContext,
-    _fdstat_ptr: wasm32::uintptr_t,
-) -> host::__wasi_fdstat_t {
-    unimplemented!("decode_oflags");
-}
-
 pub unsafe fn decode_char_slice(
     vmctx: &mut VMContext,
     ptr: wasm32::uintptr_t,

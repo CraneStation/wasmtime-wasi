@@ -659,17 +659,21 @@ syscalls! {
         path: wasm32::uintptr_t,
         path_len: wasm32::size_t,
         oflags: wasm32::__wasi_oflags_t,
-        fds: wasm32::uintptr_t,
+        fs_rights_base: wasm32::__wasi_rights_t,
+        fs_rights_inheriting: wasm32::__wasi_rights_t,
+        fs_flags: wasm32::__wasi_fdflags_t,
         fd: wasm32::uintptr_t,
     ) -> wasm32::__wasi_errno_t {
         trace!(
-            "file_open(dirfd={:?}, dirflags={:?}, path={:#x?}, path_len={:?}, oflags={:#x?}, fds={:#x?}, fd={:#x?})",
+            "file_open(dirfd={:?}, dirflags={:?}, path={:#x?}, path_len={:?}, oflags={:#x?}, fs_rights_base={:#x?}, fs_rights_inheriting={:#x?}, fs_flags={:#x?}, fd={:#x?})",
             dirfd,
             dirflags,
             path,
             path_len,
             oflags,
-            fds,
+            fs_rights_base,
+            fs_rights_inheriting,
+            fs_flags,
             fd
         );
 
@@ -682,7 +686,9 @@ syscalls! {
             Err(e) => return return_encoded_errno(e),
         };
         let oflags = decode_oflags(oflags);
-        let fds = decode_fdstat(vmctx, fds);
+        let fs_rights_base = decode_rights(fs_rights_base);
+        let fs_rights_inheriting = decode_rights(fs_rights_inheriting);
+        let fs_flags = decode_fdflags(fs_flags);
         let mut host_fd = match decode_fd_byref(vmctx, fd) {
             Ok(host_fd) => host_fd,
             Err(e) => return return_encoded_errno(e),
@@ -695,7 +701,9 @@ syscalls! {
             path,
             path_len,
             oflags,
-            &fds,
+            fs_rights_base,
+            fs_rights_inheriting,
+            fs_flags,
             &mut host_fd,
         );
 
