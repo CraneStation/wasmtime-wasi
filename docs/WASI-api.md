@@ -50,6 +50,7 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_fd_tell()`](#fd_tell)
 - [`__wasi_fd_stat_get()`](#fd_stat_get)
 - [`__wasi_fd_stat_set_flags()`](#fd_stat_set_flags)
+- [`__wasi_fd_stat_set_rights()`](#fd_stat_set_rights)
 - [`__wasi_fd_sync()`](#fd_sync)
 - [`__wasi_fd_write()`](#fd_write)
 - [`__wasi_file_advise()`](#file_advise)
@@ -1515,7 +1516,7 @@ Used by [`__wasi_fd_seek()`](#fd_seek).
 
 Non-negative file size or length of a region within a file.
 
-Used by [`__wasi_event_t`](#event), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_pread()`](#fd_pread), [`__wasi_fd_pwrite()`](#fd_pwrite), [`__wasi_fd_seek()`](#fd_seek), [`__wasi_file_tell()`](#file_tell), [`__wasi_file_advise()`](#file_advise), and [`__wasi_file_allocate()`](#file_allocate).
+Used by [`__wasi_event_t`](#event), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_pread()`](#fd_pread), [`__wasi_fd_pwrite()`](#fd_pwrite), [`__wasi_fd_seek()`](#fd_seek), [`__wasi_file_tell()`](#file_tell), [`__wasi_file_advise()`](#file_advise), [`__wasi_file_allocate()`](#file_allocate), and [`__wasi_file_fstat_set_size()`](#file_fstat_set_size).
 
 ### <a href="#filestat" name="filestat"></a>`__wasi_filestat_t` (`struct`)
 
@@ -1619,17 +1620,17 @@ Possible values:
     Adjust the last data access timestamp to the value
     stored in [`__wasi_filestat_t::st_atim`](#filestat.st_atim).
 
-- <a href="#fsflags.atim_now" name="fsflags.atim_now"></a>**`__WASI_FILE_STAT_SET_ATIM_NOW`**
+- <a href="#fstflags.atim_now" name="fstflags.atim_now"></a>**`__WASI_FILE_STAT_SET_ATIM_NOW`**
 
     Adjust the last data access timestamp to the time
     of clock [`__WASI_CLOCK_REALTIME`](#clockid.realtime).
 
-- <a href="#fsflags.mtim" name="fsflags.mtim"></a>**`__WASI_FILE_STAT_SET_MTIM`**
+- <a href="#fstflags.mtim" name="fstflags.mtim"></a>**`__WASI_FILE_STAT_SET_MTIM`**
 
     Adjust the last data modification timestamp to the
     value stored in [`__wasi_filestat_t::st_mtim`](#filestat.st_mtim).
 
-- <a href="#fsflags.mtim_now" name="fsflags.mtim_now"></a>**`__WASI_FILE_STAT_SET_MTIM_NOW`**
+- <a href="#fstflags.mtim_now" name="fstflags.mtim_now"></a>**`__WASI_FILE_STAT_SET_MTIM_NOW`**
 
     Adjust the last data modification timestamp to the
     time of clock [`__WASI_CLOCK_REALTIME`](#clockid.realtime).
@@ -1716,7 +1717,7 @@ Possible values:
 File descriptor rights, determining which actions may be
 performed.
 
-Used by [`__wasi_fdstat_t`](#fdstat) and [`__wasi_file_open()`](#file_open).
+Used by [`__wasi_fdstat_t`](#fdstat), [`__wasi_file_open()`](#file_open), and [`__wasi_fd_stat_set_rights()`](#fd_stat_set_rights).
 
 Possible values:
 
@@ -2132,7 +2133,7 @@ Members:
 
 Timestamp in nanoseconds.
 
-Used by [`__wasi_filestat_t`](#filestat), [`__wasi_subscription_t`](#subscription), [`__wasi_clock_res_get()`](#clock_res_get), and [`__wasi_clock_time_get()`](#clock_time_get).
+Used by [`__wasi_filestat_t`](#filestat), [`__wasi_subscription_t`](#subscription), [`__wasi_clock_res_get()`](#clock_res_get), [`__wasi_clock_time_get()`](#clock_time_get), [`__wasi_file_fstat_set_times()`](#file_fstat_set_times), and [`__wasi_file_stat_set_times()`](#file_stat_set_times).
 
 ### <a href="#ulflags" name="ulflags"></a>`__wasi_ulflags_t` (`uint8_t` bitfield)
 
