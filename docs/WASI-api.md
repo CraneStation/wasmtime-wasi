@@ -1837,9 +1837,6 @@ Possible values:
 
     The right to invoke [`__wasi_file_fstat_set_size()`](#file_fstat_set_size).
 
-    If [`__WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
-    invoke [`__wasi_file_open()`](#file_open) with [`__WASI_O_TRUNC`](#oflags.trunc).
-
 - <a href="#rights.file_fstat_set_times" name="rights.file_fstat_set_times"></a>**`__WASI_RIGHT_FILE_FSTAT_SET_TIMES`**
 
     The right to invoke [`__wasi_file_fstat_set_times()`](#file_fstat_set_times).
