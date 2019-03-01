@@ -949,7 +949,7 @@ Possible values:
 
 A region of memory for scatter/gather writes.
 
-Used by [`__wasi_sock_send`](#sock_send), [`__wasi_fd_pwrite()`](#fd_pwrite), and [`__wasi_fd_write()`](#fd_write).
+Used by [`__wasi_sock_send()`](#sock_send), [`__wasi_fd_pwrite()`](#fd_pwrite), and [`__wasi_fd_write()`](#fd_write).
 
 Members:
 
@@ -1644,7 +1644,7 @@ Used by [`__wasi_dirent_t`](#dirent) and [`__wasi_filestat_t`](#filestat).
 
 A region of memory for scatter/gather reads.
 
-Used by [`__wasi_sock_recv`](#sock_recv), [`__wasi_fd_pread()`](#fd_pread), and [`__wasi_fd_read()`](#fd_read).
+Used by [`__wasi_sock_recv()`](#sock_recv), [`__wasi_fd_pread()`](#fd_pread), and [`__wasi_fd_read()`](#fd_read).
 
 Members:
 
@@ -1697,7 +1697,7 @@ Possible values:
 
 Flags provided to [`__wasi_sock_recv()`](#sock_recv).
 
-Used by [`__wasi_sock_recv`](#sock_recv).
+Used by [`__wasi_sock_recv()`](#sock_recv).
 
 Possible values:
 
@@ -1854,7 +1854,7 @@ Possible values:
 
 Flags returned by [`__wasi_sock_recv()`](#sock_recv).
 
-Used by [`__wasi_sock_recv`](#sock_recv).
+Used by [`__wasi_sock_recv()`](#sock_recv).
 
 Possible values:
 
