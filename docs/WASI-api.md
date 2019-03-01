@@ -2130,7 +2130,7 @@ Members:
 
 - When `type` is [`__WASI_EVENTTYPE_CLOCK`](#eventtype.u.clock):
 
-    - <a href="#subscription.u.clock" name="subscription.u.clock"></a>**`clock`**
+    - <a href="#subscription.u.clock" name="subscription.u.clock"></a>**`u.clock`**
 
         - <a href="#subscription.u.clock.identifier" name="subscription.u.clock.identifier"></a><code>[__wasi\_userdata\_t](#userdata) <strong>identifier</strong></code>
 
