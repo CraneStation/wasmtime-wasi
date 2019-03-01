@@ -2423,7 +2423,8 @@ __wasi_errno_t wasmtime_ssp_sock_recv(
     const __wasi_iovec_t *ri_data,
     size_t ri_data_len,
     __wasi_riflags_t ri_flags,
-    size_t *ro_datalen
+    size_t *ro_datalen,
+    __wasi_roflags_t *ro_flags
 ) {
   // Convert input to msghdr.
   struct msghdr hdr = {
@@ -2450,8 +2451,12 @@ __wasi_errno_t wasmtime_ssp_sock_recv(
     return convert_errno(errno);
   }
 
+
   // Convert msghdr to output.
   *ro_datalen = datalen;
+  *ro_flags = 0;
+  if ((hdr.msg_flags & MSG_TRUNC) != 0)
+    *ro_flags |= __WASI_SOCK_RECV_DATA_TRUNCATED;
   free(hdr.msg_control);
   return 0;
 }

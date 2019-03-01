@@ -138,6 +138,10 @@ pub fn decode_lookupflags(lookupflags: wasm32::__wasi_lookupflags_t) -> host::__
     lookupflags
 }
 
+pub fn decode_roflags(roflags: wasm32::__wasi_roflags_t) -> host::__wasi_roflags_t {
+    roflags
+}
+
 pub fn decode_oflags(_oflags: wasm32::__wasi_oflags_t) -> host::__wasi_oflags_t {
     unimplemented!("decode_oflags");
 }
@@ -357,6 +361,25 @@ pub unsafe fn encode_filesize_byref(
         vmctx,
         filesize_ptr,
         wasm32::__wasi_filesize_t::cast(host_filesize),
+    )
+}
+
+pub unsafe fn decode_roflags_byref(
+    vmctx: &mut VMContext,
+    roflags_ptr: wasm32::uintptr_t,
+) -> Result<host::__wasi_roflags_t, host::__wasi_errno_t> {
+    decode_pointee::<wasm32::__wasi_roflags_t>(vmctx, roflags_ptr).map(decode_roflags)
+}
+
+pub unsafe fn encode_roflags_byref(
+    vmctx: &mut VMContext,
+    roflags_ptr: wasm32::uintptr_t,
+    host_roflags: host::__wasi_roflags_t,
+) -> Result<(), host::__wasi_errno_t> {
+    encode_pointee::<wasm32::__wasi_roflags_t>(
+        vmctx,
+        roflags_ptr,
+        wasm32::__wasi_roflags_t::cast(host_roflags),
     )
 }
 

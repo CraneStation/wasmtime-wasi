@@ -170,8 +170,6 @@ typedef uint32_t __wasi_linkcount_t;
 typedef uint32_t __wasi_lookupflags_t;
 #define __WASI_LOOKUP_SYMLINK_FOLLOW (0x00000001)
 
-typedef uint32_t __wasi_nthreads_t;
-
 typedef uint16_t __wasi_oflags_t;
 #define __WASI_O_CREAT     (0x0001)
 #define __WASI_O_DIRECTORY (0x0002)
@@ -208,6 +206,9 @@ typedef uint64_t __wasi_rights_t;
 #define __WASI_RIGHT_FILE_UNLINK           (0x0000000000400000)
 #define __WASI_RIGHT_POLL_FD_READWRITE     (0x0000000000800000)
 #define __WASI_RIGHT_SOCK_SHUTDOWN         (0x0000000001000000)
+
+typedef uint16_t __wasi_roflags_t;
+#define __WASI_SOCK_RECV_DATA_TRUNCATED (UINT16_C(0x0001))
 
 typedef uint8_t __wasi_sdflags_t;
 #define __WASI_SHUT_RD (0x01)
@@ -741,7 +742,8 @@ __wasi_errno_t wasmtime_ssp_sock_recv(
     const __wasi_iovec_t *ri_data,
     size_t ri_data_len,
     __wasi_riflags_t ri_flags,
-    size_t *ro_datalen
+    size_t *ro_datalen,
+    __wasi_roflags_t *ro_flags
 ) WASMTIME_SSP_SYSCALL_NAME(sock_recv) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_sock_send(

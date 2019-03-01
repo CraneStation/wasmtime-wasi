@@ -1148,13 +1148,14 @@ syscalls! {
         ri_data: wasm32::uintptr_t,
         ri_data_len: wasm32::size_t,
         ri_flags: wasm32::__wasi_riflags_t,
-        ro_datalen: wasm32::size_t,
+        ro_datalen: wasm32::uintptr_t,
+        ro_flags: wasm32::uintptr_t,
     ) -> wasm32::__wasi_errno_t {
         trace!(
-            "sock_recv(sock={:?}, ri_data={:#x?}, ri_data_len={}, ri_flags={:#x?}, ro_datalen={:#x?})",
+            "sock_recv(sock={:?}, ri_data={:#x?}, ri_data_len={}, ri_flags={:#x?}, ro_datalen={:#x?}, ro_flags={:#x?})",
             sock,
             ri_data, ri_data_len, ri_flags,
-            ro_datalen
+            ro_datalen, ro_flags
         );
 
         let vmctx = &mut *vmctx;
@@ -1169,12 +1170,19 @@ syscalls! {
             Ok(host_ro_datalen) => host_ro_datalen,
             Err(e) => return return_encoded_errno(e),
         };
+        let mut host_ro_flags = match decode_roflags_byref(vmctx, ro_flags) {
+            Ok(host_ro_flags) => host_ro_flags,
+            Err(e) => return return_encoded_errno(e),
+        };
 
-        let e = host::wasmtime_ssp_sock_recv(curfds, sock, ri_data.as_ptr(), ri_data.len(), ri_flags, &mut host_ro_datalen);
+        let e = host::wasmtime_ssp_sock_recv(curfds, sock, ri_data.as_ptr(), ri_data.len(), ri_flags,
+                                             &mut host_ro_datalen, &mut host_ro_flags);
 
         // TODO: Format the output for tracing.
         trace!("     | *ro_datalen={}", host_ro_datalen);
+        trace!("     | *ro_flags={}", host_ro_flags);
         encode_usize_byref(vmctx, ro_datalen, host_ro_datalen).unwrap();
+        encode_roflags_byref(vmctx, ro_flags, host_ro_flags).unwrap();
 
         return_encoded_errno(e)
     }
