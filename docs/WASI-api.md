@@ -246,6 +246,8 @@ Inputs:
 
 Moves the offset of the file descriptor.
 
+Note: This is similar to `lseek` in POSIX.
+
 Inputs:
 
 - <a href="#fd_seek.fd" name="fd_seek.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
@@ -307,6 +309,8 @@ Inputs:
 
 Adjusts flags of a file descriptor.
 
+Note: This is similar to `fcntl(fd, F_SETFL, flags)` in POSIX.
+
 Inputs:
 
 - <a href="#fd_stat_set_flags.fd" name="fd_stat_set_flags.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
@@ -322,6 +326,9 @@ Inputs:
 ### <a href="#fd_stat_set_rights" name="fd_stat_set_rights"></a>`__wasi_fd_stat_set_rights()`
 
 Adjusts rights of a file descriptor.
+
+This can only be used to remove rights, and returns `__WASI_ENOTCAPABLE`
+if called in a way that would attempt to add rights.
 
 Inputs:
 
@@ -622,6 +629,8 @@ Inputs:
 
 Adjusts the timestamps of a file by file descriptor.
 
+Note: This is similar to `futimens` in POSIX.
+
 Inputs:
 
 - <a href="#file_fstat_set_times.fd" name="file_fstat_set_times.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
@@ -644,6 +653,8 @@ Inputs:
 ### <a href="#file_fstat_set_size" name="file_fstat_set_size"></a>`__wasi_file_fstat_set_size()`
 
 Adjusts the size of a file by file descriptor.
+
+Note: This is similar to `ftruncate` in POSIX.
 
 Inputs:
 
@@ -685,6 +696,8 @@ Inputs:
 ### <a href="#file_stat_set_times" name="file_stat_set_times"></a>`__wasi_file_stat_set_times()`
 
 Adjusts the timestamps of a file by path.
+
+Note: This is similar to `utimensat` in POSIX.
 
 Inputs:
 
