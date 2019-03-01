@@ -638,11 +638,11 @@ Inputs:
     The file descriptor whose times have to
     be adjusted.
 
-- <a href="#file_fstat_set_times.st_atim" name="file_fstat_set_times.st_atim"></a><code>const [\_\_wasi\_timestamp\_t](#timestamp) *<strong>st\_atim</strong></code>
+- <a href="#file_fstat_set_times.st_atim" name="file_fstat_set_times.st_atim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
 
     The desired values of the data access timestamp.
 
-- <a href="#file_fstat_set_times.st_mtim" name="file_fstat_set_times.st_mtim"></a><code>const [\_\_wasi\_timestamp\_t](#timestamp) *<strong>st\_mtim</strong></code>
+- <a href="#file_fstat_set_times.st_mtim" name="file_fstat_set_times.st_mtim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_mtim</strong></code>
 
     The desired values of the data modification timestamp.
 
@@ -717,11 +717,11 @@ Inputs:
     The path of the file whose attributes have to
     be adjusted.
 
-- <a href="#file_stat_set_times.st_atim" name="file_stat_set_times.st_atim"></a><code>const [\_\_wasi\_timestamp\_t](#timestamp) *<strong>st\_atim</strong></code>
+- <a href="#file_stat_set_times.st_atim" name="file_stat_set_times.st_atim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
 
     The desired values of the data access timestamp.
 
-- <a href="#file_stat_set_times.st_mtim" name="file_stat_set_times.st_mtim"></a><code>const [\_\_wasi\_timestamp\_t](#timestamp) *<strong>st\_mtim</strong></code>
+- <a href="#file_stat_set_times.st_mtim" name="file_stat_set_times.st_mtim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_mtim</strong></code>
 
     The desired values of the data modification timestamp.
 
@@ -1486,7 +1486,7 @@ Possible values:
 
 File descriptor attributes.
 
-Used by [`__wasi_fd_stat_get()`](#fd_stat_get), [`__wasi_fd_stat_put()`](#fd_stat_put), and [`__wasi_file_open()`](#file_open).
+Used by [`__wasi_fd_stat_get()`](#fd_stat_get) and [`__wasi_file_open()`](#file_open).
 
 Members:
 
@@ -1816,32 +1816,22 @@ Possible values:
     The right to invoke [`__wasi_file_rename()`](#file_rename) with the file
     descriptor as the target directory.
 
-- <a href="#rights.file_fstat_get" name="rights.file_fstat_get"></a>**`__WASI_RIGHT_FILE_STAT_GET`**
+- <a href="#rights.file_stat_get" name="rights.file_stat_get"></a>**`__WASI_RIGHT_FILE_STAT_GET`**
 
-    The right to invoke [`__wasi_file_fstat_get()`](#file_fstat_get).
+    The right to invoke [`__wasi_file_fstat_get()`](#file_fstat_get) and
+    [`__wasi_file_stat_get()`](#file_stat_get).
 
-- <a href="#rights.file_fstat_set_size" name="rights.file_fstat_set_size"></a>**`__WASI_RIGHT_FILE_STAT_SET_SIZE`**
+- <a href="#rights.file_stat_set_size" name="rights.file_stat_set_size"></a>**`__WASI_RIGHT_FILE_STAT_SET_SIZE`**
 
     The right to invoke [`__wasi_file_fstat_set_size()`](#file_fstat_set_size).
 
     If [`__WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
     invoke [`__wasi_file_open()`](#file_open) with [`__WASI_O_TRUNC`](#oflags.trunc).
 
-- <a href="#rights.file_fstat_set_times" name="rights.file_fstat_set_times"></a>**`__WASI_RIGHT_FILE_STAT_SET_TIMES`**
-
-    The right to invoke [`__wasi_file_fstat_set_times()`](#file_fstat_set_times) with
-    [`__WASI_FILE_STAT_SET_ATIM`](#fstflags.atim), [`__WASI_FILE_STAT_SET_ATIM_NOW`](#fstflags.atim_now), [`__WASI_FILE_STAT_SET_MTIM`](#fstflags.mtim),
-    and [`__WASI_FILE_STAT_SET_MTIM_NOW`](#fstflags.mtim_now).
-
-- <a href="#rights.file_stat_get" name="rights.file_stat_get"></a>**`__WASI_RIGHT_FILE_STAT_GET`**
-
-    The right to invoke [`__wasi_file_stat_get()`](#file_stat_get).
-
 - <a href="#rights.file_stat_set_times" name="rights.file_stat_set_times"></a>**`__WASI_RIGHT_FILE_STAT_SET_TIMES`**
 
-    The right to invoke [`__wasi_file_stat_set_times()`](#file_stat_set_times) with
-    [`__WASI_FILE_STAT_SET_ATIM`](#fstflags.atim), [`__WASI_FILE_STAT_SET_ATIM_NOW`](#fstflags.atim_now), [`__WASI_FILE_STAT_SET_MTIM`](#fstflags.mtim),
-    and [`__WASI_FILE_STAT_SET_MTIM_NOW`](#fstflags.mtim_now).
+    The right to invoke [`__wasi_file_fstat_set_times()`](#file_fstat_set_times)
+    and [`__wasi_file_stat_set_times()`](#file_stat_set_times).
 
 - <a href="#rights.file_symlink" name="rights.file_symlink"></a>**`__WASI_RIGHT_FILE_SYMLINK`**
 
