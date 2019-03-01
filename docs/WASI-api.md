@@ -1924,7 +1924,7 @@ Possible values:
 Flags provided to [`__wasi_sock_send()`](#sock_send). As there are currently no flags
 defined, it must be set to zero.
 
-Used by [`__wasi_sock_send`](#sock_send).
+Used by [`__wasi_sock_send()`](#sock_send).
 
 ### <a href="#signal" name="signal"></a>`__wasi_signal_t` (`uint8_t`)
 
