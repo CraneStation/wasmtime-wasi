@@ -206,9 +206,10 @@ typedef uint64_t __wasi_rights_t;
 #define __WASI_RIGHT_FILE_FSTAT_SET_SIZE   (0x0000000000400000)
 #define __WASI_RIGHT_FILE_FSTAT_SET_TIMES  (0x0000000000800000)
 #define __WASI_RIGHT_FILE_SYMLINK          (0x0000000001000000)
-#define __WASI_RIGHT_FILE_UNLINK           (0x0000000002000000)
-#define __WASI_RIGHT_POLL_FD_READWRITE     (0x0000000004000000)
-#define __WASI_RIGHT_SOCK_SHUTDOWN         (0x0000000008000000)
+#define __WASI_RIGHT_FILE_UNLINK_DIRECTORY (0x0000000002000000)
+#define __WASI_RIGHT_FILE_UNLINK_FILE      (0x0000000004000000)
+#define __WASI_RIGHT_POLL_FD_READWRITE     (0x0000000008000000)
+#define __WASI_RIGHT_SOCK_SHUTDOWN         (0x0000000010000000)
 
 typedef uint16_t __wasi_roflags_t;
 #define __WASI_SOCK_RECV_DATA_TRUNCATED (UINT16_C(0x0001))
@@ -256,9 +257,6 @@ typedef uint16_t __wasi_subclockflags_t;
 #define __WASI_SUBSCRIPTION_CLOCK_ABSTIME (0x0001)
 
 typedef uint64_t __wasi_timestamp_t;
-
-typedef uint8_t __wasi_ulflags_t;
-#define __WASI_UNLINK_REMOVEDIR (0x01)
 
 typedef uint64_t __wasi_userdata_t;
 
@@ -706,15 +704,23 @@ __wasi_errno_t wasmtime_ssp_file_symlink(
     size_t new_path_len
 ) WASMTIME_SSP_SYSCALL_NAME(file_symlink) __attribute__((__warn_unused_result__));
 
-__wasi_errno_t wasmtime_ssp_file_unlink(
+__wasi_errno_t wasmtime_ssp_file_unlink_file(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
     __wasi_fd_t fd,
     const char *path,
-    size_t path_len,
-    __wasi_ulflags_t flags
-) WASMTIME_SSP_SYSCALL_NAME(file_unlink) __attribute__((__warn_unused_result__));
+    size_t path_len
+) WASMTIME_SSP_SYSCALL_NAME(file_unlink_file) __attribute__((__warn_unused_result__));
+
+__wasi_errno_t wasmtime_ssp_file_unlink_directory(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
+    struct fd_table *curfds,
+#endif
+    __wasi_fd_t fd,
+    const char *path,
+    size_t path_len
+) WASMTIME_SSP_SYSCALL_NAME(file_unlink_directory) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_poll_oneoff(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
