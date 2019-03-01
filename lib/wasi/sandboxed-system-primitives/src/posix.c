@@ -1025,71 +1025,69 @@ __wasi_errno_t wasmtime_ssp_fd_stat_get(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_fd_stat_put(
+__wasi_errno_t wasmtime_ssp_fd_stat_set_flags(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
     __wasi_fd_t fd,
-    const __wasi_fdstat_t *buf,
-    __wasi_fdsflags_t flags
+    __wasi_fdflags_t fs_flags
 ) {
-  // TODO: Upstream cloudabi-utils uses a switch on flags, but this appears to
-  // be a bug. Report it.
-  if ((flags & ~(__WASI_FDSTAT_FLAGS | __WASI_FDSTAT_RIGHTS)) != 0) {
-    return __WASI_EINVAL;
-  }
-  if (flags & __WASI_FDSTAT_FLAGS) {
-      int noflags = 0;
-      if ((buf->fs_flags & __WASI_FDFLAG_APPEND) != 0)
-        noflags |= O_APPEND;
-      if ((buf->fs_flags & __WASI_FDFLAG_DSYNC) != 0)
+  int noflags = 0;
+  if ((fs_flags & __WASI_FDFLAG_APPEND) != 0)
+    noflags |= O_APPEND;
+  if ((fs_flags & __WASI_FDFLAG_DSYNC) != 0)
 #ifdef O_DSYNC
-        noflags |= O_DSYNC;
+    noflags |= O_DSYNC;
 #else
-        noflags |= O_SYNC;
+    noflags |= O_SYNC;
 #endif
-      if ((buf->fs_flags & __WASI_FDFLAG_NONBLOCK) != 0)
-        noflags |= O_NONBLOCK;
-      if ((buf->fs_flags & __WASI_FDFLAG_RSYNC) != 0)
+  if ((fs_flags & __WASI_FDFLAG_NONBLOCK) != 0)
+    noflags |= O_NONBLOCK;
+  if ((fs_flags & __WASI_FDFLAG_RSYNC) != 0)
 #ifdef O_RSYNC
-        noflags |= O_RSYNC;
+    noflags |= O_RSYNC;
 #else
-        noflags |= O_SYNC;
+    noflags |= O_SYNC;
 #endif
-      if ((buf->fs_flags & __WASI_FDFLAG_SYNC) != 0)
-        noflags |= O_SYNC;
+  if ((fs_flags & __WASI_FDFLAG_SYNC) != 0)
+    noflags |= O_SYNC;
 
-      struct fd_object *fo;
-      __wasi_errno_t error =
-          fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FD_STAT_PUT_FLAGS, 0);
-      if (error != 0)
-        return error;
+  struct fd_object *fo;
+  __wasi_errno_t error =
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FD_STAT_SET_FLAGS, 0);
+  if (error != 0)
+    return error;
 
-      int ret = fcntl(fd_number(fo), F_SETFL, noflags);
-      fd_object_release(fo);
-      if (ret < 0)
-        return convert_errno(errno);
-      return 0;
-    }
-  if (flags & __WASI_FDSTAT_RIGHTS) {
-      struct fd_table *ft = curfds;
-      rwlock_wrlock(&ft->lock);
-      struct fd_entry *fe;
-      __wasi_rights_t base = buf->fs_rights_base;
-      __wasi_rights_t inheriting = buf->fs_rights_inheriting;
-      __wasi_errno_t error =
-          fd_table_get_entry(ft, fd, base, inheriting, &fe);
-      if (error != 0) {
-        rwlock_unlock(&ft->lock);
-        return error;
-      }
+  int ret = fcntl(fd_number(fo), F_SETFL, noflags);
+  fd_object_release(fo);
+  if (ret < 0)
+    return convert_errno(errno);
+  return 0;
+}
 
-      // Restrict the rights on the file descriptor.
-      fe->rights_base = base;
-      fe->rights_inheriting = inheriting;
-      rwlock_unlock(&ft->lock);
-      return 0;
+__wasi_errno_t wasmtime_ssp_fd_stat_set_rights(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
+    struct fd_table *curfds,
+#endif
+    __wasi_fd_t fd,
+    __wasi_rights_t fs_rights_base,
+    __wasi_rights_t fs_rights_inheriting
+) {
+  struct fd_table *ft = curfds;
+  rwlock_wrlock(&ft->lock);
+  struct fd_entry *fe;
+  __wasi_errno_t error =
+      fd_table_get_entry(ft, fd, fs_rights_base, fs_rights_inheriting, &fe);
+  if (error != 0) {
+    rwlock_unlock(&ft->lock);
+    return error;
   }
+
+  // Restrict the rights on the file descriptor.
+  fe->rights_base = fs_rights_base;
+  fe->rights_inheriting = fs_rights_inheriting;
+  rwlock_unlock(&ft->lock);
+  return 0;
 }
 
 __wasi_errno_t wasmtime_ssp_fd_sync(
@@ -1972,7 +1970,7 @@ __wasi_errno_t wasmtime_ssp_file_fstat_set_size(
 ) {
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_STAT_SET_SIZE, 0); // fixme: rename the right
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_STAT_SET_SIZE, 0);
   if (error != 0)
     return error;
 

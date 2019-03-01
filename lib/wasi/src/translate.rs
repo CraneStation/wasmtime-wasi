@@ -150,10 +150,6 @@ pub fn decode_dircookie(dircookie: wasm32::__wasi_dircookie_t) -> host::__wasi_d
     dircookie
 }
 
-pub fn decode_fdsflags(fdsflags: wasm32::__wasi_fdsflags_t) -> host::__wasi_fdsflags_t {
-    fdsflags
-}
-
 pub fn decode_filetype(filetype: wasm32::__wasi_filetype_t) -> host::__wasi_filetype_t {
     filetype
 }

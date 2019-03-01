@@ -14,7 +14,7 @@
 
 #define RIGHTS_ALL                                                         \
   (__WASI_RIGHT_FD_DATASYNC | __WASI_RIGHT_FD_READ |                       \
-   __WASI_RIGHT_FD_SEEK | __WASI_RIGHT_FD_STAT_PUT_FLAGS |                 \
+   __WASI_RIGHT_FD_SEEK | __WASI_RIGHT_FD_STAT_SET_FLAGS |                 \
    __WASI_RIGHT_FD_SYNC | __WASI_RIGHT_FD_TELL | __WASI_RIGHT_FD_WRITE |   \
    __WASI_RIGHT_FILE_ADVISE | __WASI_RIGHT_FILE_ALLOCATE |                 \
    __WASI_RIGHT_FILE_CREATE_DIRECTORY | __WASI_RIGHT_FILE_CREATE_FILE |    \
@@ -37,7 +37,7 @@
 // Only allow directory operations on directories. Directories can only
 // yield file descriptors to other directories and files.
 #define RIGHTS_DIRECTORY_BASE                                          \
-  (__WASI_RIGHT_FD_STAT_PUT_FLAGS | __WASI_RIGHT_FD_SYNC |             \
+  (__WASI_RIGHT_FD_STAT_SET_FLAGS | __WASI_RIGHT_FD_SYNC |             \
    __WASI_RIGHT_FILE_ADVISE | __WASI_RIGHT_FILE_CREATE_DIRECTORY |     \
    __WASI_RIGHT_FILE_CREATE_FILE | __WASI_RIGHT_FILE_LINK_SOURCE |     \
    __WASI_RIGHT_FILE_LINK_TARGET | __WASI_RIGHT_FILE_OPEN |            \
@@ -53,7 +53,7 @@
 // Operations that apply to regular files.
 #define RIGHTS_REGULAR_FILE_BASE                                           \
   (__WASI_RIGHT_FD_DATASYNC | __WASI_RIGHT_FD_READ |                       \
-   __WASI_RIGHT_FD_SEEK | __WASI_RIGHT_FD_STAT_PUT_FLAGS |                 \
+   __WASI_RIGHT_FD_SEEK | __WASI_RIGHT_FD_STAT_SET_FLAGS |                 \
    __WASI_RIGHT_FD_SYNC | __WASI_RIGHT_FD_TELL | __WASI_RIGHT_FD_WRITE |   \
    __WASI_RIGHT_FILE_ADVISE | __WASI_RIGHT_FILE_ALLOCATE |                 \
    __WASI_RIGHT_FILE_STAT_GET | __WASI_RIGHT_FILE_STAT_SET_SIZE |          \
@@ -68,14 +68,14 @@
 
 // Operations that apply to sockets and socket pairs.
 #define RIGHTS_SOCKET_BASE                                     \
-  (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FD_STAT_PUT_FLAGS |     \
+  (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FD_STAT_SET_FLAGS |     \
    __WASI_RIGHT_FD_WRITE | __WASI_RIGHT_FILE_STAT_GET |        \
    __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_SOCK_SHUTDOWN)
 #define RIGHTS_SOCKET_INHERITING RIGHTS_ALL
 
 // Operations that apply to TTYs.
 #define RIGHTS_TTY_BASE                                        \
-  (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FD_STAT_PUT_FLAGS |     \
+  (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FD_STAT_SET_FLAGS |     \
    __WASI_RIGHT_FD_WRITE | __WASI_RIGHT_FILE_STAT_GET |        \
    __WASI_RIGHT_POLL_FD_READWRITE)
 #define RIGHTS_TTY_INHERITING 0

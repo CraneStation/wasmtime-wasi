@@ -143,10 +143,6 @@ typedef uint16_t __wasi_fdflags_t;
 #define __WASI_FDFLAG_RSYNC    (0x0008)
 #define __WASI_FDFLAG_SYNC     (0x0010)
 
-typedef uint16_t __wasi_fdsflags_t;
-#define __WASI_FDSTAT_FLAGS  (0x0001)
-#define __WASI_FDSTAT_RIGHTS (0x0002)
-
 typedef int64_t __wasi_filedelta_t;
 
 typedef uint64_t __wasi_filesize_t;
@@ -190,7 +186,7 @@ typedef uint64_t __wasi_rights_t;
 #define __WASI_RIGHT_FD_DATASYNC           (0x0000000000000001)
 #define __WASI_RIGHT_FD_READ               (0x0000000000000002)
 #define __WASI_RIGHT_FD_SEEK               (0x0000000000000004)
-#define __WASI_RIGHT_FD_STAT_PUT_FLAGS     (0x0000000000000008) // rename PUTs to SETs
+#define __WASI_RIGHT_FD_STAT_SET_FLAGS     (0x0000000000000008)
 #define __WASI_RIGHT_FD_SYNC               (0x0000000000000010)
 #define __WASI_RIGHT_FD_TELL               (0x0000000000000020)
 #define __WASI_RIGHT_FD_WRITE              (0x0000000000000040)
@@ -520,14 +516,22 @@ __wasi_errno_t wasmtime_ssp_fd_stat_get(
     __wasi_fdstat_t *buf
 ) WASMTIME_SSP_SYSCALL_NAME(fd_stat_get) __attribute__((__warn_unused_result__));
 
-__wasi_errno_t wasmtime_ssp_fd_stat_put(
+__wasi_errno_t wasmtime_ssp_fd_stat_set_flags(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
     __wasi_fd_t fd,
-    const __wasi_fdstat_t *buf,
-    __wasi_fdsflags_t flags
-) WASMTIME_SSP_SYSCALL_NAME(fd_stat_put) __attribute__((__warn_unused_result__));
+    __wasi_fdflags_t flags
+) WASMTIME_SSP_SYSCALL_NAME(fd_stat_set_flags) __attribute__((__warn_unused_result__));
+
+__wasi_errno_t wasmtime_ssp_fd_stat_set_rights(
+#if !defined(WASMTIME_SSP_STATIC_CURFDS)
+    struct fd_table *curfds,
+#endif
+    __wasi_fd_t fd,
+    __wasi_rights_t fs_rights_base,
+    __wasi_rights_t fs_rights_inheriting
+) WASMTIME_SSP_SYSCALL_NAME(fd_stat_set_rights) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_fd_sync(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)

@@ -442,29 +442,47 @@ syscalls! {
         return_encoded_errno(e)
     }
 
-    pub unsafe extern "C" fn fd_stat_put(
+    pub unsafe extern "C" fn fd_stat_set_flags(
         vmctx: *mut VMContext,
         fd: wasm32::__wasi_fd_t,
-        buf: wasm32::uintptr_t,
-        flags: wasm32::__wasi_fdsflags_t,
+        flags: wasm32::__wasi_fdflags_t,
     ) -> wasm32::__wasi_errno_t {
         trace!(
-            "fd_stat_put(fd={:?}, buf={:#x?}, flags={:#x?})",
+            "fd_stat_set_flags(fd={:?}, flags={:#x?})",
             fd,
-            buf,
             flags
         );
 
         let vmctx = &mut *vmctx;
         let curfds = get_curfds(vmctx);
         let fd = decode_fd(fd);
-        let host_buf = match decode_fdstat_byref(vmctx, buf) {
-            Ok(host_buf) => host_buf,
-            Err(e) => return return_encoded_errno(e),
-        };
-        let flags = decode_fdsflags(flags);
+        let flags = decode_fdflags(flags);
 
-        let e = host::wasmtime_ssp_fd_stat_put(curfds, fd, &host_buf, flags);
+        let e = host::wasmtime_ssp_fd_stat_set_flags(curfds, fd, flags);
+
+        return_encoded_errno(e)
+    }
+
+    pub unsafe extern "C" fn fd_stat_set_rights(
+        vmctx: *mut VMContext,
+        fd: wasm32::__wasi_fd_t,
+        fs_rights_base: wasm32::__wasi_rights_t,
+        fs_rights_inheriting: wasm32::__wasi_rights_t,
+    ) -> wasm32::__wasi_errno_t {
+        trace!(
+            "fd_stat_set_rights(fd={:?}, fs_rights_base={:#x?}, fs_rights_inheriting={:#x?})",
+            fd,
+            fs_rights_base,
+            fs_rights_inheriting
+        );
+
+        let vmctx = &mut *vmctx;
+        let curfds = get_curfds(vmctx);
+        let fd = decode_fd(fd);
+        let fs_rights_base = decode_rights(fs_rights_base);
+        let fs_rights_inheriting = decode_rights(fs_rights_inheriting);
+
+        let e = host::wasmtime_ssp_fd_stat_set_rights(curfds, fd, fs_rights_base, fs_rights_inheriting);
 
         return_encoded_errno(e)
     }
