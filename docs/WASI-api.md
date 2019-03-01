@@ -344,15 +344,9 @@ Inputs:
     The file descriptor whose attributes have to
     be adjusted.
 
-- <a href="#fd_stat_set_rights.fs_rights_base" name="fd_stat_set_rights.fs_rights_base"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code>
+- <a href="#fd_stat_set_rights.fs_rights_base" name="fd_stat_set_rights.fs_rights_base"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code> and <a href="#fd_stat_set_rights.fs_rights_inheriting" name="fd_stat_set_rights.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
 
-    The desired values of the file descriptor
-    base rights.
-
-- <a href="#fd_stat_set_rights.fs_rights_inheriting" name="fd_stat_set_rights.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
-
-    The desired values of the file descriptor
-    inheriting rights.
+    The desired rights of the file descriptor.
 
 ### <a href="#fd_sync" name="fd_sync"></a>`__wasi_fd_sync()`
 
@@ -510,7 +504,7 @@ Inputs:
 
     The method at which the file should be opened.
 
-- <a href="#file_open.fs_rights_base" name="file_open.fs_rights_base"></a><code>[\_\_wasi\_rights\_t](#rights) *<strong>fs\_rights\_base</strong></code> and <a href="#file_open.fs_rights_inheriting" name="file_open.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) *<strong>fs\_rights\_inheriting</strong></code>
+- <a href="#file_open.fs_rights_base" name="file_open.fs_rights_base"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code> and <a href="#file_open.fs_rights_inheriting" name="file_open.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
 
     The initial rights of the newly created file
     descriptor. The operating system is allowed to
