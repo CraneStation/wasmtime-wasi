@@ -145,3 +145,23 @@ minimal userspace emulation of `mmap` and `munmap`.
 [POSIX mmap spec]: http://pubs.opengroup.org/onlinepubs/7908799/xsh/mmap.html
 [LevelDB's decision to stop using mmap]: https://groups.google.com/forum/#!topic/leveldb/C5Hh__JfdrQ
 [Future Features]: https://webassembly.org/docs/future-features/.
+
+## Why no UNIX-domain sockets?
+
+UNIX-domain sockets can communicate three things:
+ - bytes
+ - file descriptors
+ - user credentials
+
+The concept of "users" doesn't fit within WASI, because many implementations
+won't be multi-user in that way.
+
+It can be useful to pass file descriptor between wasm instances, however in
+wasm this can be done by passing them as arguments in plain function calls,
+which is much simpler and quicker. And, in WASI implementations where file
+descriptors don't correspond to an underlying Unix file descriptor concept,
+it's not feasible to do this if the other side of the socket isn't a
+cooperating WebAssembly engine.
+
+We may eventually want to introduce a concept of a WASI-domain socket, for
+bidirectional byte-oriented local communication.
