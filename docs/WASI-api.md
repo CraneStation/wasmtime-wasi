@@ -335,8 +335,9 @@ Inputs:
 
 Adjusts rights of a file descriptor.
 
-This can only be used to remove rights, and returns `__WASI_ENOTCAPABLE`
-if called in a way that would attempt to add rights.
+This can only be used to remove rights, and returns
+[`__WASI_ENOTCAPABLE`](#errno.notcapable) if called in a way that would attempt
+to add rights.
 
 Inputs:
 
