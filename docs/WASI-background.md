@@ -148,7 +148,7 @@ and there's only so much that browsers will let you do.
 
 To be sure, it certainly would be cool. But there's a tendency in
 some circles to think of something like Debian as the natural end goal
-in a system API and toolchain for WebAssembly. I feel this tendancy
+in a system API and toolchain for WebAssembly. I feel this tendency
 too myself. But it was never really clear how we should make it work.
 
 The insight here is that we can split the design space, rather than
