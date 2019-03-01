@@ -49,7 +49,7 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_fd_seek()`](#fd_seek)
 - [`__wasi_fd_tell()`](#fd_tell)
 - [`__wasi_fd_stat_get()`](#fd_stat_get)
-- [`__wasi_fd_stat_put()`](#fd_stat_put)
+- [`__wasi_fd_stat_set_flags()`](#fd_stat_set_flags)
 - [`__wasi_fd_sync()`](#fd_sync)
 - [`__wasi_fd_write()`](#fd_write)
 - [`__wasi_file_advise()`](#file_advise)
@@ -303,26 +303,42 @@ Inputs:
     The buffer where the file descriptor's
     attributes are stored.
 
-### <a href="#fd_stat_put" name="fd_stat_put"></a>`__wasi_fd_stat_put()`
+### <a href="#fd_stat_set_flags" name="fd_stat_set_flags"></a>`__wasi_fd_stat_set_flags()`
 
-Adjusts attributes of a file descriptor.
+Adjusts flags of a file descriptor.
 
 Inputs:
 
-- <a href="#fd_stat_put.fd" name="fd_stat_put.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_stat_set_flags.fd" name="fd_stat_set_flags.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be adjusted.
 
-- <a href="#fd_stat_put.buf" name="fd_stat_put.buf"></a><code>const [\_\_wasi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
+- <a href="#fd_stat_set_flags.flags" name="fd_stat_set_flags.flags"></a><code>[\_\_wasi\_fdflags\_t](#fdflags) <strong>flags</strong></code>
 
     The desired values of the file descriptor
-    attributes that are adjusted.
+    flags.
 
-- <a href="#fd_stat_put.flags" name="fd_stat_put.flags"></a><code>[\_\_wasi\_fdsflags\_t](#fdsflags) <strong>flags</strong></code>
+### <a href="#fd_stat_set_rights" name="fd_stat_set_rights"></a>`__wasi_fd_stat_set_rights()`
 
-    A bitmask indicating which attributes have to
+Adjusts rights of a file descriptor.
+
+Inputs:
+
+- <a href="#fd_stat_set_rights.fd" name="fd_stat_set_rights.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+
+    The file descriptor whose attributes have to
     be adjusted.
+
+- <a href="#fd_stat_set_rights.fs_rights_base" name="fd_stat_set_rights.fs_rights_base"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code>
+
+    The desired values of the file descriptor
+    base rights.
+
+- <a href="#fd_stat_set_rights.fs_rights_inheriting" name="fd_stat_set_rights.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
+
+    The desired values of the file descriptor
+    inheriting rights.
 
 ### <a href="#fd_sync" name="fd_sync"></a>`__wasi_fd_sync()`
 
@@ -1453,25 +1469,6 @@ Possible values:
     stored in the file, the system may also synchronously
     update the file's metadata.
 
-### <a href="#fdsflags" name="fdsflags"></a>`__wasi_fdsflags_t` (`uint16_t` bitfield)
-
-Which file descriptor attributes to adjust.
-
-Used by [`__wasi_fd_stat_put()`](#fd_stat_put).
-
-Possible values:
-
-- <a href="#fdsflags.flags" name="fdsflags.flags"></a>**`__WASI_FDSTAT_FLAGS`**
-
-    Adjust the file descriptor flags stored in
-    [`__wasi_fdstat_t::fs_flags`](#fdstat.fs_flags).
-
-- <a href="#fdsflags.rights" name="fdsflags.rights"></a>**`__WASI_FDSTAT_RIGHTS`**
-
-    Restrict the rights of the file descriptor to the
-    rights stored in [`__wasi_fdstat_t::fs_rights_base`](#fdstat.fs_rights_base) and
-    [`__wasi_fdstat_t::fs_rights_inheriting`](#fdstat.fs_rights_inheriting).
-
 ### <a href="#fdstat" name="fdstat"></a>`__wasi_fdstat_t` (`struct`)
 
 File descriptor attributes.
@@ -1732,10 +1729,9 @@ Possible values:
     The right to invoke [`__wasi_fd_seek()`](#fd_seek). This flag implies
     [`__WASI_RIGHT_FD_TELL`](#rights.fd_tell).
 
-- <a href="#rights.fd_stat_put_flags" name="rights.fd_stat_put_flags"></a>**`__WASI_RIGHT_FD_STAT_PUT_FLAGS`**
+- <a href="#rights.fd_stat_set_flags" name="rights.fd_stat_set_flags"></a>**`__WASI_RIGHT_FD_STAT_SET_FLAGS`**
 
-    The right to invoke [`__wasi_fd_stat_put()`](#fd_stat_put) with
-    [`__WASI_FDSTAT_FLAGS`](#fdsflags.flags).
+    The right to invoke [`__wasi_fd_stat_set_flags()`](#fd_stat_set_flags).
 
 - <a href="#rights.fd_sync" name="rights.fd_sync"></a>**`__WASI_RIGHT_FD_SYNC`**
 

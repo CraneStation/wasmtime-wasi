@@ -63,7 +63,8 @@ pub fn instantiate_wasi(
     signature!(fd_seek);
     signature!(fd_tell);
     signature!(fd_stat_get);
-    signature!(fd_stat_put);
+    signature!(fd_stat_set_flags);
+    signature!(fd_stat_set_rights);
     signature!(fd_sync);
     signature!(fd_write);
     signature!(file_advise);
