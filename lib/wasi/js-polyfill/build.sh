@@ -5,10 +5,10 @@ EMCC=emcc
 
 # TODO: Remove the clang include once Emscripten supports <stdatomic.h>
 
-"$EMCC" ../src/*.c \
+"$EMCC" ../sandboxed-system-primitives/src/*.c \
     -DWASMTIME_SSP_WASI_API \
     -DWASMTIME_SSP_STATIC_CURFDS \
-    -I../include \
+    -I../sandboxed-system-primitives/include \
     -Iclang \
     polyfill.c \
     -s WARN_ON_UNDEFINED_SYMBOLS=0 \
