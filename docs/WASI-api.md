@@ -673,6 +673,11 @@ Inputs:
     than specified, if and only if those rights do
     not apply to the type of file being opened.
 
+    The *base* rights are rights that will apply to
+    operations using the file descriptor itself, while
+    the *inheriting* rights are rights that apply to
+    file descriptors derived from it.
+
 - <a href="#path_open.fs_flags" name="path_open.fs_flags"></a><code>[\_\_wasi\_fdflags\_t](#fdflags) <strong>fs\_flags</strong></code>
 
     The initial flags of the file descriptor.
