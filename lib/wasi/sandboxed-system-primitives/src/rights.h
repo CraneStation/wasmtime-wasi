@@ -17,17 +17,17 @@
    __WASI_RIGHT_FD_SEEK | __WASI_RIGHT_FD_FDSTAT_SET_FLAGS |               \
    __WASI_RIGHT_FD_SYNC | __WASI_RIGHT_FD_TELL | __WASI_RIGHT_FD_WRITE |   \
    __WASI_RIGHT_FD_ADVISE | __WASI_RIGHT_FD_ALLOCATE |                     \
-   __WASI_RIGHT_FILE_CREATE_DIRECTORY | __WASI_RIGHT_FILE_CREATE_FILE |    \
-   __WASI_RIGHT_FILE_LINK_SOURCE | __WASI_RIGHT_FILE_LINK_TARGET |         \
-   __WASI_RIGHT_FILE_OPEN | __WASI_RIGHT_FD_READDIR |                      \
-   __WASI_RIGHT_FILE_READLINK | __WASI_RIGHT_FILE_RENAME_SOURCE |          \
-   __WASI_RIGHT_FILE_RENAME_TARGET | __WASI_RIGHT_FILE_FILESTAT_GET |      \
-   __WASI_RIGHT_FILE_FILESTAT_SET_SIZE |                                   \
-   __WASI_RIGHT_FILE_FILESTAT_SET_TIMES |                                  \
+   __WASI_RIGHT_PATH_CREATE_DIRECTORY | __WASI_RIGHT_PATH_CREATE_FILE |    \
+   __WASI_RIGHT_PATH_LINK_SOURCE | __WASI_RIGHT_PATH_LINK_TARGET |         \
+   __WASI_RIGHT_PATH_OPEN | __WASI_RIGHT_FD_READDIR |                      \
+   __WASI_RIGHT_PATH_READLINK | __WASI_RIGHT_PATH_RENAME_SOURCE |          \
+   __WASI_RIGHT_PATH_RENAME_TARGET | __WASI_RIGHT_PATH_FILESTAT_GET |      \
+   __WASI_RIGHT_PATH_FILESTAT_SET_SIZE |                                   \
+   __WASI_RIGHT_PATH_FILESTAT_SET_TIMES |                                  \
    __WASI_RIGHT_FD_FILESTAT_GET | __WASI_RIGHT_FD_FILESTAT_SET_TIMES |     \
    __WASI_RIGHT_FD_FILESTAT_SET_SIZE |                                     \
-   __WASI_RIGHT_FILE_SYMLINK | __WASI_RIGHT_FILE_UNLINK_FILE |             \
-   __WASI_RIGHT_FILE_UNLINK_DIRECTORY |                                    \
+   __WASI_RIGHT_PATH_SYMLINK | __WASI_RIGHT_PATH_UNLINK_FILE |             \
+   __WASI_RIGHT_PATH_UNLINK_DIRECTORY |                                    \
    __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_SOCK_SHUTDOWN)
 
 // Block and character device interaction is outside the scope of
@@ -41,16 +41,16 @@
 // yield file descriptors to other directories and files.
 #define RIGHTS_DIRECTORY_BASE                                          \
   (__WASI_RIGHT_FD_FDSTAT_SET_FLAGS | __WASI_RIGHT_FD_SYNC |           \
-   __WASI_RIGHT_FD_ADVISE | __WASI_RIGHT_FILE_CREATE_DIRECTORY |       \
-   __WASI_RIGHT_FILE_CREATE_FILE | __WASI_RIGHT_FILE_LINK_SOURCE |     \
-   __WASI_RIGHT_FILE_LINK_TARGET | __WASI_RIGHT_FILE_OPEN |            \
-   __WASI_RIGHT_FD_READDIR | __WASI_RIGHT_FILE_READLINK |              \
-   __WASI_RIGHT_FILE_RENAME_SOURCE | __WASI_RIGHT_FILE_RENAME_TARGET | \
-   __WASI_RIGHT_FILE_FILESTAT_GET |                                    \
-   __WASI_RIGHT_FILE_FILESTAT_SET_TIMES |                              \
+   __WASI_RIGHT_FD_ADVISE | __WASI_RIGHT_PATH_CREATE_DIRECTORY |       \
+   __WASI_RIGHT_PATH_CREATE_FILE | __WASI_RIGHT_PATH_LINK_SOURCE |     \
+   __WASI_RIGHT_PATH_LINK_TARGET | __WASI_RIGHT_PATH_OPEN |            \
+   __WASI_RIGHT_FD_READDIR | __WASI_RIGHT_PATH_READLINK |              \
+   __WASI_RIGHT_PATH_RENAME_SOURCE | __WASI_RIGHT_PATH_RENAME_TARGET | \
+   __WASI_RIGHT_PATH_FILESTAT_GET |                                    \
+   __WASI_RIGHT_PATH_FILESTAT_SET_TIMES |                              \
    __WASI_RIGHT_FD_FILESTAT_GET | __WASI_RIGHT_FD_FILESTAT_SET_TIMES | \
-   __WASI_RIGHT_FILE_SYMLINK | __WASI_RIGHT_FILE_UNLINK_FILE |         \
-   __WASI_RIGHT_FILE_UNLINK_DIRECTORY |                                \
+   __WASI_RIGHT_PATH_SYMLINK | __WASI_RIGHT_PATH_UNLINK_FILE |         \
+   __WASI_RIGHT_PATH_UNLINK_DIRECTORY |                                \
    __WASI_RIGHT_POLL_FD_READWRITE)
 #define RIGHTS_DIRECTORY_INHERITING \
   (RIGHTS_DIRECTORY_BASE | RIGHTS_REGULAR_FILE_BASE)

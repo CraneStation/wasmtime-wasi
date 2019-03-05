@@ -45,4 +45,4 @@ We have `fsync` and `fdatasync`, but even these have been a topic of
 [much discussion]: https://wiki.postgresql.org/wiki/Fsync_Errors
 
 Also, currently WASI's docs don't make any guarantees about things like
-`file_rename` being atomic.
+`path_rename` being atomic.

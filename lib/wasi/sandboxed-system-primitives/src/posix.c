@@ -1523,7 +1523,7 @@ static void path_put(
   fd_object_release(pa->fd_object);
 }
 
-__wasi_errno_t wasmtime_ssp_file_create_directory(
+__wasi_errno_t wasmtime_ssp_path_create_directory(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1534,7 +1534,7 @@ __wasi_errno_t wasmtime_ssp_file_create_directory(
   struct path_access pa;
   __wasi_errno_t error =
       path_get_nofollow(curfds, &pa, fd, path, pathlen,
-                        __WASI_RIGHT_FILE_CREATE_DIRECTORY, 0, true);
+                        __WASI_RIGHT_PATH_CREATE_DIRECTORY, 0, true);
   if (error != 0)
     return error;
 
@@ -1545,7 +1545,7 @@ __wasi_errno_t wasmtime_ssp_file_create_directory(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_link(
+__wasi_errno_t wasmtime_ssp_path_link(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1559,13 +1559,13 @@ __wasi_errno_t wasmtime_ssp_file_link(
 ) {
   struct path_access old_pa;
   __wasi_errno_t error = path_get(curfds, &old_pa, old_fd, old_flags, old_path, old_path_len,
-                                  __WASI_RIGHT_FILE_LINK_SOURCE, 0, false);
+                                  __WASI_RIGHT_PATH_LINK_SOURCE, 0, false);
   if (error != 0)
     return error;
 
   struct path_access new_pa;
   error = path_get_nofollow(curfds, &new_pa, new_fd, new_path, new_path_len,
-                            __WASI_RIGHT_FILE_LINK_TARGET, 0, true);
+                            __WASI_RIGHT_PATH_LINK_TARGET, 0, true);
   if (error != 0) {
     path_put(&old_pa);
     return error;
@@ -1589,7 +1589,7 @@ __wasi_errno_t wasmtime_ssp_file_link(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_open(
+__wasi_errno_t wasmtime_ssp_path_open(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1613,17 +1613,17 @@ __wasi_errno_t wasmtime_ssp_file_open(
   bool write =
       (rights_base & (__WASI_RIGHT_FD_DATASYNC | __WASI_RIGHT_FD_WRITE |
                       __WASI_RIGHT_FD_ALLOCATE |
-                      __WASI_RIGHT_FILE_FILESTAT_SET_SIZE)) != 0;
+                      __WASI_RIGHT_PATH_FILESTAT_SET_SIZE)) != 0;
   int noflags = write ? read ? O_RDWR : O_WRONLY : O_RDONLY;
 
   // Which rights are needed on the directory file descriptor.
-  __wasi_rights_t needed_base = __WASI_RIGHT_FILE_OPEN;
+  __wasi_rights_t needed_base = __WASI_RIGHT_PATH_OPEN;
   __wasi_rights_t needed_inheriting = rights_base | rights_inheriting;
 
   // Convert open flags.
   if ((oflags & __WASI_O_CREAT) != 0) {
     noflags |= O_CREAT;
-    needed_base |= __WASI_RIGHT_FILE_CREATE_FILE;
+    needed_base |= __WASI_RIGHT_PATH_CREATE_FILE;
   }
   if ((oflags & __WASI_O_DIRECTORY) != 0)
     noflags |= O_DIRECTORY;
@@ -1631,7 +1631,7 @@ __wasi_errno_t wasmtime_ssp_file_open(
     noflags |= O_EXCL;
   if ((oflags & __WASI_O_TRUNC) != 0) {
     noflags |= O_TRUNC;
-    needed_inheriting |= __WASI_RIGHT_FILE_FILESTAT_SET_SIZE;
+    needed_inheriting |= __WASI_RIGHT_PATH_FILESTAT_SET_SIZE;
   }
 
   // Convert file descriptor flags.
@@ -1817,7 +1817,7 @@ __wasi_errno_t wasmtime_ssp_fd_readdir(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_readlink(
+__wasi_errno_t wasmtime_ssp_path_readlink(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1830,7 +1830,7 @@ __wasi_errno_t wasmtime_ssp_file_readlink(
 ) {
   struct path_access pa;
   __wasi_errno_t error = path_get_nofollow(curfds,
-      &pa, fd, path, pathlen, __WASI_RIGHT_FILE_READLINK, 0, false);
+      &pa, fd, path, pathlen, __WASI_RIGHT_PATH_READLINK, 0, false);
   if (error != 0)
     return error;
 
@@ -1846,7 +1846,7 @@ __wasi_errno_t wasmtime_ssp_file_readlink(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_rename(
+__wasi_errno_t wasmtime_ssp_path_rename(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1859,13 +1859,13 @@ __wasi_errno_t wasmtime_ssp_file_rename(
 ) {
   struct path_access old_pa;
   __wasi_errno_t error = path_get_nofollow(curfds, &old_pa, old_fd, old_path, old_path_len,
-                                           __WASI_RIGHT_FILE_RENAME_SOURCE, 0, true);
+                                           __WASI_RIGHT_PATH_RENAME_SOURCE, 0, true);
   if (error != 0)
     return error;
 
   struct path_access new_pa;
   error = path_get_nofollow(curfds, &new_pa, new_fd, new_path, new_path_len,
-                            __WASI_RIGHT_FILE_RENAME_TARGET, 0, true);
+                            __WASI_RIGHT_PATH_RENAME_TARGET, 0, true);
   if (error != 0) {
     path_put(&old_pa);
     return error;
@@ -1946,17 +1946,17 @@ static void convert_utimens_arguments(
     __wasi_fstflags_t fstflags,
     struct timespec *ts
 ) {
-  if ((fstflags & __WASI_FILE_FILESTAT_SET_ATIM_NOW) != 0) {
+  if ((fstflags & __WASI_PATH_FILESTAT_SET_ATIM_NOW) != 0) {
     ts[0].tv_nsec = UTIME_NOW;
-  } else if ((fstflags & __WASI_FILE_FILESTAT_SET_ATIM) != 0) {
+  } else if ((fstflags & __WASI_PATH_FILESTAT_SET_ATIM) != 0) {
     convert_timestamp(st_atim, &ts[0]);
   } else {
     ts[0].tv_nsec = UTIME_OMIT;
   }
 
-  if ((fstflags & __WASI_FILE_FILESTAT_SET_MTIM_NOW) != 0) {
+  if ((fstflags & __WASI_PATH_FILESTAT_SET_MTIM_NOW) != 0) {
     ts[1].tv_nsec = UTIME_NOW;
-  } else if ((fstflags & __WASI_FILE_FILESTAT_SET_MTIM) != 0) {
+  } else if ((fstflags & __WASI_PATH_FILESTAT_SET_MTIM) != 0) {
     convert_timestamp(st_mtim, &ts[1]);
   } else {
     ts[1].tv_nsec = UTIME_OMIT;
@@ -1992,8 +1992,8 @@ __wasi_errno_t wasmtime_ssp_fd_filestat_set_times(
     __wasi_timestamp_t st_mtim,
     __wasi_fstflags_t fstflags
 ) {
-  if ((fstflags & ~(__WASI_FILE_FILESTAT_SET_ATIM | __WASI_FILE_FILESTAT_SET_ATIM_NOW |
-                    __WASI_FILE_FILESTAT_SET_MTIM | __WASI_FILE_FILESTAT_SET_MTIM_NOW)) != 0)
+  if ((fstflags & ~(__WASI_PATH_FILESTAT_SET_ATIM | __WASI_PATH_FILESTAT_SET_ATIM_NOW |
+                    __WASI_PATH_FILESTAT_SET_MTIM | __WASI_PATH_FILESTAT_SET_MTIM_NOW)) != 0)
     return __WASI_EINVAL;
 
   struct fd_object *fo;
@@ -2012,7 +2012,7 @@ __wasi_errno_t wasmtime_ssp_fd_filestat_set_times(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_filestat_get(
+__wasi_errno_t wasmtime_ssp_path_filestat_get(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -2024,7 +2024,7 @@ __wasi_errno_t wasmtime_ssp_file_filestat_get(
 ) {
   struct path_access pa;
   __wasi_errno_t error =
-      path_get(curfds, &pa, fd, flags, path, pathlen, __WASI_RIGHT_FILE_FILESTAT_GET, 0, false);
+      path_get(curfds, &pa, fd, flags, path, pathlen, __WASI_RIGHT_PATH_FILESTAT_GET, 0, false);
   if (error != 0)
     return error;
 
@@ -2054,7 +2054,7 @@ __wasi_errno_t wasmtime_ssp_file_filestat_get(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_filestat_set_times(
+__wasi_errno_t wasmtime_ssp_path_filestat_set_times(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -2066,13 +2066,13 @@ __wasi_errno_t wasmtime_ssp_file_filestat_set_times(
     __wasi_timestamp_t st_mtim,
     __wasi_fstflags_t fstflags
 ) {
-  if ((fstflags & ~(__WASI_FILE_FILESTAT_SET_ATIM | __WASI_FILE_FILESTAT_SET_ATIM_NOW |
-                    __WASI_FILE_FILESTAT_SET_MTIM | __WASI_FILE_FILESTAT_SET_MTIM_NOW)) != 0)
+  if ((fstflags & ~(__WASI_PATH_FILESTAT_SET_ATIM | __WASI_PATH_FILESTAT_SET_ATIM_NOW |
+                    __WASI_PATH_FILESTAT_SET_MTIM | __WASI_PATH_FILESTAT_SET_MTIM_NOW)) != 0)
     return __WASI_EINVAL;
 
   struct path_access pa;
   __wasi_errno_t error = path_get(curfds,
-      &pa, fd, flags, path, pathlen, __WASI_RIGHT_FILE_FILESTAT_SET_TIMES, 0, false);
+      &pa, fd, flags, path, pathlen, __WASI_RIGHT_PATH_FILESTAT_SET_TIMES, 0, false);
   if (error != 0)
     return error;
 
@@ -2086,7 +2086,7 @@ __wasi_errno_t wasmtime_ssp_file_filestat_set_times(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_symlink(
+__wasi_errno_t wasmtime_ssp_path_symlink(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -2102,7 +2102,7 @@ __wasi_errno_t wasmtime_ssp_file_symlink(
 
   struct path_access pa;
   __wasi_errno_t error = path_get_nofollow(curfds,
-      &pa, fd, new_path, new_path_len, __WASI_RIGHT_FILE_SYMLINK, 0, true);
+      &pa, fd, new_path, new_path_len, __WASI_RIGHT_PATH_SYMLINK, 0, true);
   if (error != 0) {
     free(target);
     return error;
@@ -2116,7 +2116,7 @@ __wasi_errno_t wasmtime_ssp_file_symlink(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_unlink_file(
+__wasi_errno_t wasmtime_ssp_path_unlink_file(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -2126,7 +2126,7 @@ __wasi_errno_t wasmtime_ssp_file_unlink_file(
 ) {
   struct path_access pa;
   __wasi_errno_t error = path_get_nofollow(curfds,
-      &pa, fd, path, pathlen, __WASI_RIGHT_FILE_UNLINK_FILE, 0, true);
+      &pa, fd, path, pathlen, __WASI_RIGHT_PATH_UNLINK_FILE, 0, true);
   if (error != 0)
     return error;
 
@@ -2154,7 +2154,7 @@ __wasi_errno_t wasmtime_ssp_file_unlink_file(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_unlink_directory(
+__wasi_errno_t wasmtime_ssp_path_unlink_directory(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -2164,7 +2164,7 @@ __wasi_errno_t wasmtime_ssp_file_unlink_directory(
 ) {
   struct path_access pa;
   __wasi_errno_t error = path_get_nofollow(curfds,
-      &pa, fd, path, pathlen, __WASI_RIGHT_FILE_UNLINK_DIRECTORY, 0, true);
+      &pa, fd, path, pathlen, __WASI_RIGHT_PATH_UNLINK_DIRECTORY, 0, true);
   if (error != 0)
     return error;
 
