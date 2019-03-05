@@ -973,7 +973,7 @@ __wasi_errno_t wasmtime_ssp_fd_tell(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_fd_stat_get(
+__wasi_errno_t wasmtime_ssp_fd_fdstat_get(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1025,7 +1025,7 @@ __wasi_errno_t wasmtime_ssp_fd_stat_get(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_fd_stat_set_flags(
+__wasi_errno_t wasmtime_ssp_fd_fdstat_set_flags(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1054,7 +1054,7 @@ __wasi_errno_t wasmtime_ssp_fd_stat_set_flags(
 
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FD_STAT_SET_FLAGS, 0);
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FD_FDSTAT_SET_FLAGS, 0);
   if (error != 0)
     return error;
 
@@ -1065,7 +1065,7 @@ __wasi_errno_t wasmtime_ssp_fd_stat_set_flags(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_fd_stat_set_rights(
+__wasi_errno_t wasmtime_ssp_fd_fdstat_set_rights(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1130,7 +1130,7 @@ __wasi_errno_t wasmtime_ssp_fd_write(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_advise(
+__wasi_errno_t wasmtime_ssp_fd_advise(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1166,7 +1166,7 @@ __wasi_errno_t wasmtime_ssp_file_advise(
 
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_ADVISE, 0);
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FD_ADVISE, 0);
   if (error != 0)
     return error;
 
@@ -1194,13 +1194,13 @@ __wasi_errno_t wasmtime_ssp_file_advise(
   rwlock_rdlock(&ft->lock);
   struct fd_entry *fe;
   __wasi_errno_t error =
-      fd_table_get_entry(ft, fd, __WASI_RIGHT_FILE_ADVISE, 0, &fe);
+      fd_table_get_entry(ft, fd, __WASI_RIGHT_FD_ADVISE, 0, &fe);
   rwlock_unlock(&ft->lock);
   return error;
 #endif
 }
 
-__wasi_errno_t wasmtime_ssp_file_allocate(
+__wasi_errno_t wasmtime_ssp_fd_allocate(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1210,7 +1210,7 @@ __wasi_errno_t wasmtime_ssp_file_allocate(
 ) {
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_ALLOCATE, 0);
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FD_ALLOCATE, 0);
   if (error != 0)
     return error;
 
@@ -1609,11 +1609,11 @@ __wasi_errno_t wasmtime_ssp_file_open(
 
   // Which open() mode should be used to satisfy the needed rights.
   bool read =
-      (rights_base & (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FILE_READDIR)) != 0;
+      (rights_base & (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FD_READDIR)) != 0;
   bool write =
       (rights_base & (__WASI_RIGHT_FD_DATASYNC | __WASI_RIGHT_FD_WRITE |
-                      __WASI_RIGHT_FILE_ALLOCATE |
-                      __WASI_RIGHT_FILE_STAT_SET_SIZE)) != 0;
+                      __WASI_RIGHT_FD_ALLOCATE |
+                      __WASI_RIGHT_FILE_FILESTAT_SET_SIZE)) != 0;
   int noflags = write ? read ? O_RDWR : O_WRONLY : O_RDONLY;
 
   // Which rights are needed on the directory file descriptor.
@@ -1631,7 +1631,7 @@ __wasi_errno_t wasmtime_ssp_file_open(
     noflags |= O_EXCL;
   if ((oflags & __WASI_O_TRUNC) != 0) {
     noflags |= O_TRUNC;
-    needed_inheriting |= __WASI_RIGHT_FILE_STAT_SET_SIZE;
+    needed_inheriting |= __WASI_RIGHT_FILE_FILESTAT_SET_SIZE;
   }
 
   // Convert file descriptor flags.
@@ -1706,7 +1706,7 @@ __wasi_errno_t wasmtime_ssp_file_open(
 
 // Copies out directory entry metadata or filename, potentially
 // truncating it in the process.
-static void file_readdir_put(
+static void fd_readdir_put(
     void *buf,
     size_t bufsize,
     size_t *bufused,
@@ -1720,7 +1720,7 @@ static void file_readdir_put(
   *bufused += elemsize;
 }
 
-__wasi_errno_t wasmtime_ssp_file_readdir(
+__wasi_errno_t wasmtime_ssp_fd_readdir(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1732,7 +1732,7 @@ __wasi_errno_t wasmtime_ssp_file_readdir(
 ) {
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_READDIR, 0);
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FD_READDIR, 0);
   if (error != 0) {
     return error;
   }
@@ -1809,8 +1809,8 @@ __wasi_errno_t wasmtime_ssp_file_readdir(
         cde.d_type = __WASI_FILETYPE_UNKNOWN;
         break;
     }
-    file_readdir_put(buf, nbyte, bufused, &cde, sizeof(cde));
-    file_readdir_put(buf, nbyte, bufused, de->d_name, namlen);
+    fd_readdir_put(buf, nbyte, bufused, &cde, sizeof(cde));
+    fd_readdir_put(buf, nbyte, bufused, de->d_name, namlen);
   }
   mutex_unlock(&fo->directory.lock);
   fd_object_release(fo);
@@ -1897,7 +1897,7 @@ static void convert_stat(
   };
 }
 
-__wasi_errno_t wasmtime_ssp_file_fstat_get(
+__wasi_errno_t wasmtime_ssp_fd_filestat_get(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1906,7 +1906,7 @@ __wasi_errno_t wasmtime_ssp_file_fstat_get(
 ) {
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_FSTAT_GET, 0);
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FD_FILESTAT_GET, 0);
   if (error != 0)
     return error;
 
@@ -1946,24 +1946,24 @@ static void convert_utimens_arguments(
     __wasi_fstflags_t fstflags,
     struct timespec *ts
 ) {
-  if ((fstflags & __WASI_FILE_STAT_SET_ATIM_NOW) != 0) {
+  if ((fstflags & __WASI_FILE_FILESTAT_SET_ATIM_NOW) != 0) {
     ts[0].tv_nsec = UTIME_NOW;
-  } else if ((fstflags & __WASI_FILE_STAT_SET_ATIM) != 0) {
+  } else if ((fstflags & __WASI_FILE_FILESTAT_SET_ATIM) != 0) {
     convert_timestamp(st_atim, &ts[0]);
   } else {
     ts[0].tv_nsec = UTIME_OMIT;
   }
 
-  if ((fstflags & __WASI_FILE_STAT_SET_MTIM_NOW) != 0) {
+  if ((fstflags & __WASI_FILE_FILESTAT_SET_MTIM_NOW) != 0) {
     ts[1].tv_nsec = UTIME_NOW;
-  } else if ((fstflags & __WASI_FILE_STAT_SET_MTIM) != 0) {
+  } else if ((fstflags & __WASI_FILE_FILESTAT_SET_MTIM) != 0) {
     convert_timestamp(st_mtim, &ts[1]);
   } else {
     ts[1].tv_nsec = UTIME_OMIT;
   }
 }
 
-__wasi_errno_t wasmtime_ssp_file_fstat_set_size(
+__wasi_errno_t wasmtime_ssp_fd_filestat_set_size(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1972,7 +1972,7 @@ __wasi_errno_t wasmtime_ssp_file_fstat_set_size(
 ) {
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_FSTAT_SET_SIZE, 0);
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FD_FILESTAT_SET_SIZE, 0);
   if (error != 0)
     return error;
 
@@ -1983,7 +1983,7 @@ __wasi_errno_t wasmtime_ssp_file_fstat_set_size(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_fstat_set_times(
+__wasi_errno_t wasmtime_ssp_fd_filestat_set_times(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -1992,13 +1992,13 @@ __wasi_errno_t wasmtime_ssp_file_fstat_set_times(
     __wasi_timestamp_t st_mtim,
     __wasi_fstflags_t fstflags
 ) {
-  if ((fstflags & ~(__WASI_FILE_STAT_SET_ATIM | __WASI_FILE_STAT_SET_ATIM_NOW |
-                    __WASI_FILE_STAT_SET_MTIM | __WASI_FILE_STAT_SET_MTIM_NOW)) != 0)
+  if ((fstflags & ~(__WASI_FILE_FILESTAT_SET_ATIM | __WASI_FILE_FILESTAT_SET_ATIM_NOW |
+                    __WASI_FILE_FILESTAT_SET_MTIM | __WASI_FILE_FILESTAT_SET_MTIM_NOW)) != 0)
     return __WASI_EINVAL;
 
   struct fd_object *fo;
   __wasi_errno_t error =
-      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FILE_FSTAT_SET_TIMES, 0);
+      fd_object_get(curfds, &fo, fd, __WASI_RIGHT_FD_FILESTAT_SET_TIMES, 0);
   if (error != 0)
     return error;
 
@@ -2012,7 +2012,7 @@ __wasi_errno_t wasmtime_ssp_file_fstat_set_times(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_stat_get(
+__wasi_errno_t wasmtime_ssp_file_filestat_get(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -2024,7 +2024,7 @@ __wasi_errno_t wasmtime_ssp_file_stat_get(
 ) {
   struct path_access pa;
   __wasi_errno_t error =
-      path_get(curfds, &pa, fd, flags, path, pathlen, __WASI_RIGHT_FILE_STAT_GET, 0, false);
+      path_get(curfds, &pa, fd, flags, path, pathlen, __WASI_RIGHT_FILE_FILESTAT_GET, 0, false);
   if (error != 0)
     return error;
 
@@ -2054,7 +2054,7 @@ __wasi_errno_t wasmtime_ssp_file_stat_get(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_file_stat_set_times(
+__wasi_errno_t wasmtime_ssp_file_filestat_set_times(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -2066,13 +2066,13 @@ __wasi_errno_t wasmtime_ssp_file_stat_set_times(
     __wasi_timestamp_t st_mtim,
     __wasi_fstflags_t fstflags
 ) {
-  if ((fstflags & ~(__WASI_FILE_STAT_SET_ATIM | __WASI_FILE_STAT_SET_ATIM_NOW |
-                    __WASI_FILE_STAT_SET_MTIM | __WASI_FILE_STAT_SET_MTIM_NOW)) != 0)
+  if ((fstflags & ~(__WASI_FILE_FILESTAT_SET_ATIM | __WASI_FILE_FILESTAT_SET_ATIM_NOW |
+                    __WASI_FILE_FILESTAT_SET_MTIM | __WASI_FILE_FILESTAT_SET_MTIM_NOW)) != 0)
     return __WASI_EINVAL;
 
   struct path_access pa;
   __wasi_errno_t error = path_get(curfds,
-      &pa, fd, flags, path, pathlen, __WASI_RIGHT_FILE_STAT_SET_TIMES, 0, false);
+      &pa, fd, flags, path, pathlen, __WASI_RIGHT_FILE_FILESTAT_SET_TIMES, 0, false);
   if (error != 0)
     return error;
 

@@ -48,24 +48,24 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_fd_renumber()`](#fd_renumber)
 - [`__wasi_fd_seek()`](#fd_seek)
 - [`__wasi_fd_tell()`](#fd_tell)
-- [`__wasi_fd_stat_get()`](#fd_stat_get)
-- [`__wasi_fd_stat_set_flags()`](#fd_stat_set_flags)
-- [`__wasi_fd_stat_set_rights()`](#fd_stat_set_rights)
+- [`__wasi_fd_fdstat_get()`](#fd_fdstat_get)
+- [`__wasi_fd_fdstat_set_flags()`](#fd_fdstat_set_flags)
+- [`__wasi_fd_fdstat_set_rights()`](#fd_fdstat_set_rights)
 - [`__wasi_fd_sync()`](#fd_sync)
 - [`__wasi_fd_write()`](#fd_write)
-- [`__wasi_file_advise()`](#file_advise)
-- [`__wasi_file_allocate()`](#file_allocate)
+- [`__wasi_fd_advise()`](#fd_advise)
+- [`__wasi_fd_allocate()`](#fd_allocate)
 - [`__wasi_file_create_directory()`](#file_create_directory)
 - [`__wasi_file_link()`](#file_link)
 - [`__wasi_file_open()`](#file_open)
-- [`__wasi_file_readdir()`](#file_readdir)
+- [`__wasi_fd_readdir()`](#fd_readdir)
 - [`__wasi_file_readlink()`](#file_readlink)
 - [`__wasi_file_rename()`](#file_rename)
-- [`__wasi_file_fstat_get()`](#file_fstat_get)
-- [`__wasi_file_fstat_set_times()`](#file_fstat_set_times)
-- [`__wasi_file_fstat_set_size()`](#file_fstat_set_size)
-- [`__wasi_file_stat_get()`](#file_stat_get)
-- [`__wasi_file_stat_set_times()`](#file_stat_set_times)
+- [`__wasi_fd_filestat_get()`](#fd_filestat_get)
+- [`__wasi_fd_filestat_set_times()`](#fd_filestat_set_times)
+- [`__wasi_fd_filestat_set_size()`](#fd_filestat_set_size)
+- [`__wasi_file_filestat_get()`](#file_filestat_get)
+- [`__wasi_file_filestat_set_times()`](#file_filestat_set_times)
 - [`__wasi_file_symlink()`](#file_symlink)
 - [`__wasi_file_unlink_file()`](#file_unlink_file)
 - [`__wasi_file_unlink_directory()`](#file_unlink_directory)
@@ -297,23 +297,23 @@ Outputs:
     The new offset of the file descriptor,
     relative to the start of the file.
 
-### <a href="#fd_stat_get" name="fd_stat_get"></a>`__wasi_fd_stat_get()`
+### <a href="#fd_fdstat_get" name="fd_fdstat_get"></a>`__wasi_fd_fdstat_get()`
 
 Gets attributes of a file descriptor.
 
 Inputs:
 
-- <a href="#fd_stat_get.fd" name="fd_stat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_fdstat_get.fd" name="fd_fdstat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be obtained.
 
-- <a href="#fd_stat_get.buf" name="fd_stat_get.buf"></a><code>[\_\_wasi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
+- <a href="#fd_fdstat_get.buf" name="fd_fdstat_get.buf"></a><code>[\_\_wasi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
 
     The buffer where the file descriptor's
     attributes are stored.
 
-### <a href="#fd_stat_set_flags" name="fd_stat_set_flags"></a>`__wasi_fd_stat_set_flags()`
+### <a href="#fd_fdstat_set_flags" name="fd_fdstat_set_flags"></a>`__wasi_fd_fdstat_set_flags()`
 
 Adjusts flags of a file descriptor.
 
@@ -321,17 +321,17 @@ Note: This is similar to `fcntl(fd, F_SETFL, flags)` in POSIX.
 
 Inputs:
 
-- <a href="#fd_stat_set_flags.fd" name="fd_stat_set_flags.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_fdstat_set_flags.fd" name="fd_fdstat_set_flags.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be adjusted.
 
-- <a href="#fd_stat_set_flags.flags" name="fd_stat_set_flags.flags"></a><code>[\_\_wasi\_fdflags\_t](#fdflags) <strong>flags</strong></code>
+- <a href="#fd_fdstat_set_flags.flags" name="fd_fdstat_set_flags.flags"></a><code>[\_\_wasi\_fdflags\_t](#fdflags) <strong>flags</strong></code>
 
     The desired values of the file descriptor
     flags.
 
-### <a href="#fd_stat_set_rights" name="fd_stat_set_rights"></a>`__wasi_fd_stat_set_rights()`
+### <a href="#fd_fdstat_set_rights" name="fd_fdstat_set_rights"></a>`__wasi_fd_fdstat_set_rights()`
 
 Adjusts rights of a file descriptor.
 
@@ -341,12 +341,12 @@ to add rights.
 
 Inputs:
 
-- <a href="#fd_stat_set_rights.fd" name="fd_stat_set_rights.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_fdstat_set_rights.fd" name="fd_fdstat_set_rights.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be adjusted.
 
-- <a href="#fd_stat_set_rights.fs_rights_base" name="fd_stat_set_rights.fs_rights_base"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code> and <a href="#fd_stat_set_rights.fs_rights_inheriting" name="fd_stat_set_rights.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
+- <a href="#fd_fdstat_set_rights.fs_rights_base" name="fd_fdstat_set_rights.fs_rights_base"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code> and <a href="#fd_fdstat_set_rights.fs_rights_inheriting" name="fd_fdstat_set_rights.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
 
     The desired rights of the file descriptor.
 
@@ -385,7 +385,7 @@ Outputs:
 
     The number of bytes written.
 
-### <a href="#file_advise" name="file_advise"></a>`__wasi_file_advise()`
+### <a href="#fd_advise" name="fd_advise"></a>`__wasi_fd_advise()`
 
 Provides file advisory information on a file descriptor.
 
@@ -393,26 +393,26 @@ Note: This is similar to `fadvise` in POSIX.
 
 Inputs:
 
-- <a href="#file_advise.fd" name="file_advise.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_advise.fd" name="fd_advise.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor for which to provide file
     advisory information.
 
-- <a href="#file_advise.offset" name="file_advise.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
+- <a href="#fd_advise.offset" name="fd_advise.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
     The offset within the file to which the
     advisory applies.
 
-- <a href="#file_advise.len" name="file_advise.len"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>len</strong></code>
+- <a href="#fd_advise.len" name="fd_advise.len"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>len</strong></code>
 
     The length of the region to which the advisory
     applies.
 
-- <a href="#file_advise.advice" name="file_advise.advice"></a><code>[\_\_wasi\_advice\_t](#advice) <strong>advice</strong></code>
+- <a href="#fd_advise.advice" name="fd_advise.advice"></a><code>[\_\_wasi\_advice\_t](#advice) <strong>advice</strong></code>
 
     The advice.
 
-### <a href="#file_allocate" name="file_allocate"></a>`__wasi_file_allocate()`
+### <a href="#fd_allocate" name="fd_allocate"></a>`__wasi_fd_allocate()`
 
 Forces the allocation of space in a file.
 
@@ -420,17 +420,17 @@ Note: This is similar to `posix_fallocate` in POSIX.
 
 Inputs:
 
-- <a href="#file_allocate.fd" name="file_allocate.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_allocate.fd" name="fd_allocate.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file in which the space should be
     allocated.
 
-- <a href="#file_allocate.offset" name="file_allocate.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
+- <a href="#fd_allocate.offset" name="fd_allocate.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
     The offset at which the allocation should
     start.
 
-- <a href="#file_allocate.len" name="file_allocate.len"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>len</strong></code>
+- <a href="#fd_allocate.len" name="fd_allocate.len"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>len</strong></code>
 
     The length of the area that is allocated.
 
@@ -525,7 +525,7 @@ Outputs:
     The file descriptor of the file that has been
     opened.
 
-### <a href="#file_readdir" name="file_readdir"></a>`__wasi_file_readdir()`
+### <a href="#fd_readdir" name="fd_readdir"></a>`__wasi_fd_readdir()`
 
 Reads directory entries from a directory.
 
@@ -542,23 +542,23 @@ directory entry.
 
 Inputs:
 
-- <a href="#file_readdir.fd" name="file_readdir.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_readdir.fd" name="fd_readdir.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The directory from which to read the directory
     entries.
 
-- <a href="#file_readdir.buf" name="file_readdir.buf"></a><code>void *<strong>buf</strong></code> and <a href="#file_readdir.buf_len" name="file_readdir.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
+- <a href="#fd_readdir.buf" name="fd_readdir.buf"></a><code>void *<strong>buf</strong></code> and <a href="#fd_readdir.buf_len" name="fd_readdir.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
 
     The buffer where directory entries are stored.
 
-- <a href="#file_readdir.cookie" name="file_readdir.cookie"></a><code>[\_\_wasi\_dircookie\_t](#dircookie) <strong>cookie</strong></code>
+- <a href="#fd_readdir.cookie" name="fd_readdir.cookie"></a><code>[\_\_wasi\_dircookie\_t](#dircookie) <strong>cookie</strong></code>
 
     The location within the directory to start
     reading.
 
 Outputs:
 
-- <a href="#file_readdir.bufused" name="file_readdir.bufused"></a><code>size\_t <strong>bufused</strong></code>
+- <a href="#fd_readdir.bufused" name="fd_readdir.bufused"></a><code>size\_t <strong>bufused</strong></code>
 
     The number of bytes stored in the read buffer.
     If less than the size of the read buffer, the
@@ -617,23 +617,23 @@ Inputs:
     The destination path to which the file should
     be renamed.
 
-### <a href="#file_fstat_get" name="file_fstat_get"></a>`__wasi_file_fstat_get()`
+### <a href="#fd_filestat_get" name="fd_filestat_get"></a>`__wasi_fd_filestat_get()`
 
 Gets attributes of a file by file descriptor.
 
 Inputs:
 
-- <a href="#file_fstat_get.fd" name="file_fstat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_filestat_get.fd" name="fd_filestat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose attributes have to
     be obtained.
 
-- <a href="#file_fstat_get.buf" name="file_fstat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#fd_filestat_get.buf" name="fd_filestat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
 
     The buffer where the file's attributes are
     stored.
 
-### <a href="#file_fstat_set_times" name="file_fstat_set_times"></a>`__wasi_file_fstat_set_times()`
+### <a href="#fd_filestat_set_times" name="fd_filestat_set_times"></a>`__wasi_fd_filestat_set_times()`
 
 Adjusts the timestamps of a file by file descriptor.
 
@@ -641,24 +641,24 @@ Note: This is similar to `futimens` in POSIX.
 
 Inputs:
 
-- <a href="#file_fstat_set_times.fd" name="file_fstat_set_times.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_filestat_set_times.fd" name="fd_filestat_set_times.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose times have to
     be adjusted.
 
-- <a href="#file_fstat_set_times.st_atim" name="file_fstat_set_times.st_atim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
+- <a href="#fd_filestat_set_times.st_atim" name="fd_filestat_set_times.st_atim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
 
     The desired values of the data access timestamp.
 
-- <a href="#file_fstat_set_times.st_mtim" name="file_fstat_set_times.st_mtim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_mtim</strong></code>
+- <a href="#fd_filestat_set_times.st_mtim" name="fd_filestat_set_times.st_mtim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_mtim</strong></code>
 
     The desired values of the data modification timestamp.
 
-- <a href="#file_fstat_set_times.fstflags" name="file_fstat_set_times.fstflags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fstflags</strong></code>
+- <a href="#fd_filestat_set_times.fstflags" name="fd_filestat_set_times.fstflags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fstflags</strong></code>
 
     A bitmask indicating which timestamps have to be adjusted.
 
-### <a href="#file_fstat_set_size" name="file_fstat_set_size"></a>`__wasi_file_fstat_set_size()`
+### <a href="#fd_filestat_set_size" name="fd_filestat_set_size"></a>`__wasi_fd_filestat_set_size()`
 
 Adjusts the size of a file by file descriptor.
 
@@ -666,42 +666,42 @@ Note: This is similar to `ftruncate` in POSIX.
 
 Inputs:
 
-- <a href="#file_fstat_set_size.fd" name="file_fstat_set_size.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#fd_filestat_set_size.fd" name="fd_filestat_set_size.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The file descriptor whose size has to be adjusted.
 
-- <a href="#file_fstat_set_size.st_size" name="file_fstat_set_size.st_size"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>st\_size</strong></code>
+- <a href="#fd_filestat_set_size.st_size" name="fd_filestat_set_size.st_size"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>st\_size</strong></code>
 
     The desired file size.
 
-### <a href="#file_stat_get" name="file_stat_get"></a>`__wasi_file_stat_get()`
+### <a href="#file_filestat_get" name="file_filestat_get"></a>`__wasi_file_filestat_get()`
 
 Gets attributes of a file by path.
 
 Inputs:
 
-- <a href="#file_stat_get.fd" name="file_stat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_filestat_get.fd" name="file_filestat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path whose attributes have to be
     obtained starts.
 
-- <a href="#file_stat_get.flags" name="file_stat_get.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
+- <a href="#file_filestat_get.flags" name="file_filestat_get.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
 
     Flags determining the method of how the path is
     resolved.
 
-- <a href="#file_stat_get.path" name="file_stat_get.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_stat_get.path_len" name="file_stat_get.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#file_filestat_get.path" name="file_filestat_get.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_filestat_get.path_len" name="file_filestat_get.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path of the file whose attributes have to
     be obtained.
 
-- <a href="#file_stat_get.buf" name="file_stat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#file_filestat_get.buf" name="file_filestat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
 
     The buffer where the file's attributes are
     stored.
 
-### <a href="#file_stat_set_times" name="file_stat_set_times"></a>`__wasi_file_stat_set_times()`
+### <a href="#file_filestat_set_times" name="file_filestat_set_times"></a>`__wasi_file_filestat_set_times()`
 
 Adjusts the timestamps of a file by path.
 
@@ -709,31 +709,31 @@ Note: This is similar to `utimensat` in POSIX.
 
 Inputs:
 
-- <a href="#file_stat_set_times.fd" name="file_stat_set_times.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+- <a href="#file_filestat_set_times.fd" name="file_filestat_set_times.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
     The working directory at which the resolution
     of the path whose attributes have to be
     adjusted starts.
 
-- <a href="#file_stat_set_times.flags" name="file_stat_set_times.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
+- <a href="#file_filestat_set_times.flags" name="file_filestat_set_times.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
 
     Flags determining the method of how the path is
     resolved.
 
-- <a href="#file_stat_set_times.path" name="file_stat_set_times.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_stat_set_times.path_len" name="file_stat_set_times.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#file_filestat_set_times.path" name="file_filestat_set_times.path"></a><code>const char *<strong>path</strong></code> and <a href="#file_filestat_set_times.path_len" name="file_filestat_set_times.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path of the file whose attributes have to
     be adjusted.
 
-- <a href="#file_stat_set_times.st_atim" name="file_stat_set_times.st_atim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
+- <a href="#file_filestat_set_times.st_atim" name="file_filestat_set_times.st_atim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
 
     The desired values of the data access timestamp.
 
-- <a href="#file_stat_set_times.st_mtim" name="file_stat_set_times.st_mtim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_mtim</strong></code>
+- <a href="#file_filestat_set_times.st_mtim" name="file_filestat_set_times.st_mtim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_mtim</strong></code>
 
     The desired values of the data modification timestamp.
 
-- <a href="#file_stat_set_times.fstflags" name="file_stat_set_times.fstflags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fstflags</strong></code>
+- <a href="#file_filestat_set_times.fstflags" name="file_filestat_set_times.fstflags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fstflags</strong></code>
 
     A bitmask indicating which timestamps have to be adjusted.
 
@@ -936,7 +936,7 @@ Temporarily yields execution of the calling thread.
 
 File or memory access pattern advisory information.
 
-Used by [`__wasi_file_advise()`](#file_advise) and [`__wasi_mem_advise()`](#mem_advise).
+Used by [`__wasi_fd_advise()`](#fd_advise) and [`__wasi_mem_advise()`](#mem_advise).
 
 Possible values:
 
@@ -1025,7 +1025,7 @@ Used by [`__wasi_filestat_t`](#filestat).
 
 A reference to the offset of a directory entry.
 
-Used by [`__wasi_dirent_t`](#dirent) and [`__wasi_file_readdir()`](#file_readdir).
+Used by [`__wasi_dirent_t`](#dirent) and [`__wasi_fd_readdir()`](#fd_readdir).
 
 Special values:
 
@@ -1510,7 +1510,7 @@ Possible values:
 
 File descriptor attributes.
 
-Used by [`__wasi_fd_stat_get()`](#fd_stat_get).
+Used by [`__wasi_fd_fdstat_get()`](#fd_fdstat_get).
 
 Members:
 
@@ -1542,13 +1542,13 @@ Used by [`__wasi_fd_seek()`](#fd_seek).
 
 Non-negative file size or length of a region within a file.
 
-Used by [`__wasi_event_t`](#event), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_pread()`](#fd_pread), [`__wasi_fd_pwrite()`](#fd_pwrite), [`__wasi_fd_seek()`](#fd_seek), [`__wasi_file_tell()`](#file_tell), [`__wasi_file_advise()`](#file_advise), [`__wasi_file_allocate()`](#file_allocate), and [`__wasi_file_fstat_set_size()`](#file_fstat_set_size).
+Used by [`__wasi_event_t`](#event), [`__wasi_filestat_t`](#filestat), [`__wasi_fd_pread()`](#fd_pread), [`__wasi_fd_pwrite()`](#fd_pwrite), [`__wasi_fd_seek()`](#fd_seek), [`__wasi_file_tell()`](#file_tell), [`__wasi_fd_advise()`](#fd_advise), [`__wasi_fd_allocate()`](#fd_allocate), and [`__wasi_fd_filestat_set_size()`](#fd_filestat_set_size).
 
 ### <a href="#filestat" name="filestat"></a>`__wasi_filestat_t` (`struct`)
 
 File attributes.
 
-Used by [`__wasi_file_fstat_get()`](#file_fstat_get) and [`__wasi_file_stat_get()`](#file_stat_get).
+Used by [`__wasi_fd_filestat_get()`](#fd_filestat_get) and [`__wasi_file_filestat_get()`](#file_filestat_get).
 
 Members:
 
@@ -1637,26 +1637,26 @@ Possible values:
 
 Which file time attributes to adjust.
 
-Used by [`__wasi_file_stat_set_times()`](#file_stat_set_times) and [`__wasi_file_fstat_set_times()`](#file_fstat_set_times).
+Used by [`__wasi_file_filestat_set_times()`](#file_filestat_set_times) and [`__wasi_fd_filestat_set_times()`](#fd_filestat_set_times).
 
 Possible values:
 
-- <a href="#fstflags.atim" name="fstflags.atim"></a>**`__WASI_FILE_STAT_SET_ATIM`**
+- <a href="#fstflags.atim" name="fstflags.atim"></a>**`__WASI_FILE_FILESTAT_SET_ATIM`**
 
     Adjust the last data access timestamp to the value
     stored in [`__wasi_filestat_t::st_atim`](#filestat.st_atim).
 
-- <a href="#fstflags.atim_now" name="fstflags.atim_now"></a>**`__WASI_FILE_STAT_SET_ATIM_NOW`**
+- <a href="#fstflags.atim_now" name="fstflags.atim_now"></a>**`__WASI_FILE_FILESTAT_SET_ATIM_NOW`**
 
     Adjust the last data access timestamp to the time
     of clock [`__WASI_CLOCK_REALTIME`](#clockid.realtime).
 
-- <a href="#fstflags.mtim" name="fstflags.mtim"></a>**`__WASI_FILE_STAT_SET_MTIM`**
+- <a href="#fstflags.mtim" name="fstflags.mtim"></a>**`__WASI_FILE_FILESTAT_SET_MTIM`**
 
     Adjust the last data modification timestamp to the
     value stored in [`__wasi_filestat_t::st_mtim`](#filestat.st_mtim).
 
-- <a href="#fstflags.mtim_now" name="fstflags.mtim_now"></a>**`__WASI_FILE_STAT_SET_MTIM_NOW`**
+- <a href="#fstflags.mtim_now" name="fstflags.mtim_now"></a>**`__WASI_FILE_FILESTAT_SET_MTIM_NOW`**
 
     Adjust the last data modification timestamp to the
     time of clock [`__WASI_CLOCK_REALTIME`](#clockid.realtime).
@@ -1689,7 +1689,7 @@ Used by [`__wasi_filestat_t`](#filestat).
 
 Flags determining the method of how paths are resolved.
 
-Used by [`__wasi_file_link()`](#file_link), [`__wasi_file_open()`](#file_open), [`__wasi_file_stat_get()`](#file_stat_get), and [`__wasi_file_stat_set_times()`](#file_stat_set_times).
+Used by [`__wasi_file_link()`](#file_link), [`__wasi_file_open()`](#file_open), [`__wasi_file_filestat_get()`](#file_filestat_get), and [`__wasi_file_filestat_set_times()`](#file_filestat_set_times).
 
 Possible values:
 
@@ -1743,7 +1743,7 @@ Possible values:
 File descriptor rights, determining which actions may be
 performed.
 
-Used by [`__wasi_fdstat_t`](#fdstat), [`__wasi_file_open()`](#file_open), and [`__wasi_fd_stat_set_rights()`](#fd_stat_set_rights).
+Used by [`__wasi_fdstat_t`](#fdstat), [`__wasi_file_open()`](#file_open), and [`__wasi_fd_fdstat_set_rights()`](#fd_fdstat_set_rights).
 
 Possible values:
 
@@ -1766,9 +1766,9 @@ Possible values:
     The right to invoke [`__wasi_fd_seek()`](#fd_seek). This flag implies
     [`__WASI_RIGHT_FD_TELL`](#rights.fd_tell).
 
-- <a href="#rights.fd_stat_set_flags" name="rights.fd_stat_set_flags"></a>**`__WASI_RIGHT_FD_STAT_SET_FLAGS`**
+- <a href="#rights.fd_fdstat_set_flags" name="rights.fd_fdstat_set_flags"></a>**`__WASI_RIGHT_FD_FDSTAT_SET_FLAGS`**
 
-    The right to invoke [`__wasi_fd_stat_set_flags()`](#fd_stat_set_flags).
+    The right to invoke [`__wasi_fd_fdstat_set_flags()`](#fd_fdstat_set_flags).
 
 - <a href="#rights.fd_sync" name="rights.fd_sync"></a>**`__WASI_RIGHT_FD_SYNC`**
 
@@ -1791,13 +1791,13 @@ Possible values:
     If [`__WASI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to
     invoke [`__wasi_fd_pwrite()`](#fd_pwrite).
 
-- <a href="#rights.file_advise" name="rights.file_advise"></a>**`__WASI_RIGHT_FILE_ADVISE`**
+- <a href="#rights.fd_advise" name="rights.fd_advise"></a>**`__WASI_RIGHT_FD_ADVISE`**
 
-    The right to invoke [`__wasi_file_advise()`](#file_advise).
+    The right to invoke [`__wasi_fd_advise()`](#fd_advise).
 
-- <a href="#rights.file_allocate" name="rights.file_allocate"></a>**`__WASI_RIGHT_FILE_ALLOCATE`**
+- <a href="#rights.fd_allocate" name="rights.fd_allocate"></a>**`__WASI_RIGHT_FD_ALLOCATE`**
 
-    The right to invoke [`__wasi_file_allocate()`](#file_allocate).
+    The right to invoke [`__wasi_fd_allocate()`](#fd_allocate).
 
 - <a href="#rights.file_create_directory" name="rights.file_create_directory"></a>**`__WASI_RIGHT_FILE_CREATE_DIRECTORY`**
 
@@ -1822,9 +1822,9 @@ Possible values:
 
     The right to invoke [`__wasi_file_open()`](#file_open).
 
-- <a href="#rights.file_readdir" name="rights.file_readdir"></a>**`__WASI_RIGHT_FILE_READDIR`**
+- <a href="#rights.fd_readdir" name="rights.fd_readdir"></a>**`__WASI_RIGHT_FD_READDIR`**
 
-    The right to invoke [`__wasi_file_readdir()`](#file_readdir).
+    The right to invoke [`__wasi_fd_readdir()`](#fd_readdir).
 
 - <a href="#rights.file_readlink" name="rights.file_readlink"></a>**`__WASI_RIGHT_FILE_READLINK`**
 
@@ -1840,32 +1840,32 @@ Possible values:
     The right to invoke [`__wasi_file_rename()`](#file_rename) with the file
     descriptor as the target directory.
 
-- <a href="#rights.file_stat_get" name="rights.file_stat_get"></a>**`__WASI_RIGHT_FILE_STAT_GET`**
+- <a href="#rights.file_filestat_get" name="rights.file_filestat_get"></a>**`__WASI_RIGHT_FILE_FILESTAT_GET`**
 
-    The right to invoke [`__wasi_file_stat_get()`](#file_stat_get).
+    The right to invoke [`__wasi_file_filestat_get()`](#file_filestat_get).
 
-- <a href="#rights.file_stat_set_size" name="rights.file_stat_set_size"></a>**`__WASI_RIGHT_FILE_STAT_SET_SIZE`**
+- <a href="#rights.file_filestat_set_size" name="rights.file_filestat_set_size"></a>**`__WASI_RIGHT_FILE_FILESTAT_SET_SIZE`**
 
-    The right to change a file's size (there is no `__wasi_file_stat_set_size()`).
+    The right to change a file's size (there is no `__wasi_file_filestat_set_size()`).
 
     If [`__WASI_RIGHT_FILE_OPEN`](#rights.file_open) is set, includes the right to
     invoke [`__wasi_file_open()`](#file_open) with [`__WASI_O_TRUNC`](#oflags.trunc).
 
-- <a href="#rights.file_stat_set_times" name="rights.file_stat_set_times"></a>**`__WASI_RIGHT_FILE_STAT_SET_TIMES`**
+- <a href="#rights.file_filestat_set_times" name="rights.file_filestat_set_times"></a>**`__WASI_RIGHT_FILE_FILESTAT_SET_TIMES`**
 
-    The right to invoke [`__wasi_file_stat_set_times()`](#file_stat_set_times).
+    The right to invoke [`__wasi_file_filestat_set_times()`](#file_filestat_set_times).
 
-- <a href="#rights.file_fstat_get" name="rights.file_fstat_get"></a>**`__WASI_RIGHT_FILE_FSTAT_GET`**
+- <a href="#rights.fd_filestat_get" name="rights.fd_filestat_get"></a>**`__WASI_RIGHT_FD_FILESTAT_GET`**
 
-    The right to invoke [`__wasi_file_fstat_get()`](#file_fstat_get).
+    The right to invoke [`__wasi_fd_filestat_get()`](#fd_filestat_get).
 
-- <a href="#rights.file_fstat_set_size" name="rights.file_fstat_set_size"></a>**`__WASI_RIGHT_FILE_FSTAT_SET_SIZE`**
+- <a href="#rights.fd_filestat_set_size" name="rights.fd_filestat_set_size"></a>**`__WASI_RIGHT_FD_FILESTAT_SET_SIZE`**
 
-    The right to invoke [`__wasi_file_fstat_set_size()`](#file_fstat_set_size).
+    The right to invoke [`__wasi_fd_filestat_set_size()`](#fd_filestat_set_size).
 
-- <a href="#rights.file_fstat_set_times" name="rights.file_fstat_set_times"></a>**`__WASI_RIGHT_FILE_FSTAT_SET_TIMES`**
+- <a href="#rights.fd_filestat_set_times" name="rights.fd_filestat_set_times"></a>**`__WASI_RIGHT_FD_FILESTAT_SET_TIMES`**
 
-    The right to invoke [`__wasi_file_fstat_set_times()`](#file_fstat_set_times).
+    The right to invoke [`__wasi_fd_filestat_set_times()`](#fd_filestat_set_times).
 
 - <a href="#rights.file_symlink" name="rights.file_symlink"></a>**`__WASI_RIGHT_FILE_SYMLINK`**
 
@@ -2173,7 +2173,7 @@ Members:
 
 Timestamp in nanoseconds.
 
-Used by [`__wasi_filestat_t`](#filestat), [`__wasi_subscription_t`](#subscription), [`__wasi_clock_res_get()`](#clock_res_get), [`__wasi_clock_time_get()`](#clock_time_get), [`__wasi_file_fstat_set_times()`](#file_fstat_set_times), and [`__wasi_file_stat_set_times()`](#file_stat_set_times).
+Used by [`__wasi_filestat_t`](#filestat), [`__wasi_subscription_t`](#subscription), [`__wasi_clock_res_get()`](#clock_res_get), [`__wasi_clock_time_get()`](#clock_time_get), [`__wasi_fd_filestat_set_times()`](#fd_filestat_set_times), and [`__wasi_file_filestat_set_times()`](#file_filestat_set_times).
 
 ### <a href="#userdata" name="userdata"></a>`__wasi_userdata_t` (`uint64_t`)
 
