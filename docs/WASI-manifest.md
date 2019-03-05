@@ -62,7 +62,7 @@ Name       | Description
 'tell'     | supports reading the current position in the file
 'seek'     | supports seeking as with lseek
 'append'   | if file already exists, it is opened for appending
-'new'      | if file already exists, `file_open` returns `__WASI_EEXIST`
+'new'      | if file already exists, `path_open` returns `__WASI_EEXIST`
 'truncate' | if file already exists, its size and position are set to 0
 
 `append`, `new`, and `truncate` depend on `write`.

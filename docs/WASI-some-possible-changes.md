@@ -39,13 +39,13 @@ were required but not present.
 
 ## Rename directory-oriented syscalls to `__wasi_dir_*`?
 
-`__wasi_file_readdir` isn't really about files, so maybe it could be
-`__wasi_dir_read`, along with renaming `__wasi_file_create_directory`
-to `__wasi_dir_create`, and `__wasi_file_unlink_directory` to
+`__wasi_fd_readdir` isn't really about files, so maybe it could be
+`__wasi_dir_read`, along with renaming `__wasi_path_create_directory`
+to `__wasi_dir_create`, and `__wasi_path_unlink_directory` to
 `__wasi_dir_unlink`.
 
-We could also split `__WASI_RIGHT_FILE_OPEN` into file vs directory, and
-then maybe also split a `__wasi_dir_open` out of `__wasi_file_open` too
+We could also split `__WASI_RIGHT_PATH_OPEN` into file vs directory, and
+then maybe also split a `__wasi_dir_open` out of `__wasi_path_open` too
 (obviating `__WASI_O_DIRECTORY`).
 
 ## Fix the y2556 bug
@@ -59,10 +59,10 @@ much to widen these timestamps. We can either just extend the current type to
 128 bits (two i64's in wasm) or move to a `timespec`-like `tv_sec`/`tv_nsec`
 pair.
 
-## Remove `file_allocate`?
+## Remove `fd_allocate`?
 
-Darwin doesn't implement `file_allocate`, despite it being a in POSIX
-since 2001. So we don't currently know any way to implement `file_allocate`
+Darwin doesn't implement `fd_allocate`, despite it being a in POSIX
+since 2001. So we don't currently know any way to implement `fd_allocate`
 on Darwin that's safe from race conditions. Should we remove it from the API?
 
 ## Redesign `fstflags_t`
@@ -77,5 +77,5 @@ we redesign how directory reading works?
 
 # symlinks
 
-Symlinks are fairly UNIX-specific. Should we remove `__wasi_file_symlink`
-and `__wasi_file_readlink`?
+Symlinks are fairly UNIX-specific. Should we remove `__wasi_path_symlink`
+and `__wasi_path_readlink`?
