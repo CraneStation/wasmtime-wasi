@@ -18,6 +18,20 @@ by making up a new index.
 When the reference-types proposal lands, references will be unforgeable, and
 will likely subsume the current integer-based APIs, at the WASI API layer.
 
+## Static vs dynamic capabilities.
+
+There are two levels of capabilities that we can describe: static and dynamic.
+
+The static capabilities of a wasm module are its imports. These essentially
+declare the set of "rights" the module itself will be able to request.
+An important caveat though is that this doesn't consider capabilities which
+may be passed into an instance at runtime.
+
+The dynamic capabilities of a wasm module are a set of boolean values
+associated with a file descriptor, indicating individual "rights". This
+includes things like the right to read, or to write, using a given file
+descriptor.
+
 ## Filesystem rules.
 
 It happens that integer indices representing capabilities is same thing that
