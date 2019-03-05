@@ -5,9 +5,9 @@ along with the accompanying LICENSE file from that repository.
 The modifications are marked with `WASMTIME_*` preprocessor macros.
 
 The files were copied at git revision
-a4bae5c4255107f3df31d92a07178cb8398da769
+be1ce21e1dded9c0c0a6ebe144cbea01cf44a874
 which is dated
-Sun Jan 13 23:23:39 2019 +0100
+Sun Jan 13 23:26:03 2019 +0100
 .
 
 [libemulator]: https://github.com/NuxiNL/cloudabi-utils/tree/master/src/libemulator
