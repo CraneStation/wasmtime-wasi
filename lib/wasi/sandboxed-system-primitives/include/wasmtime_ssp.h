@@ -212,7 +212,7 @@ typedef uint64_t __wasi_rights_t;
 #define __WASI_RIGHT_SOCK_SHUTDOWN           (0x0000000010000000)
 
 typedef uint16_t __wasi_roflags_t;
-#define __WASI_SOCK_RECV_DATA_TRUNCATED (UINT16_C(0x0001))
+#define __WASI_SOCK_RECV_DATA_TRUNCATED (0x0001)
 
 typedef uint8_t __wasi_sdflags_t;
 #define __WASI_SHUT_RD (0x01)
@@ -221,7 +221,7 @@ typedef uint8_t __wasi_sdflags_t;
 typedef uint16_t __wasi_siflags_t;
 
 typedef uint8_t __wasi_signal_t;
-// UINT8_C(0) is reserved; POSIX has special semantics for kill(pid, 0).
+// 0 is reserved; POSIX has special semantics for kill(pid, 0).
 #define __WASI_SIGHUP    (1)
 #define __WASI_SIGINT    (2)
 #define __WASI_SIGQUIT   (3)
