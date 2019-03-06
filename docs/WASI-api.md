@@ -532,7 +532,7 @@ Outputs:
 
 ### <a href="#path_create_directory" name="path_create_directory"></a>`__wasi_path_create_directory()`
 
-Creates a file of a specified type.
+Creates a directory.
 
 Note: This is similar to `mkdirat` in POSIX.
 
@@ -798,7 +798,7 @@ Inputs:
 
 - <a href="#path_unlink_file.path" name="path_unlink_file.path"></a><code>const char *<strong>path</strong></code> and <a href="#path_unlink_file.path_len" name="path_unlink_file.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
-    The path that needs to be unlinked or removed.
+    The path that needs to be unlinked.
 
 ### <a href="#poll_oneoff" name="poll_oneoff"></a>`__wasi_poll_oneoff()`
 
