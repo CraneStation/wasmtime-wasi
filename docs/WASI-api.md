@@ -294,7 +294,7 @@ Inputs:
 
     The desired values of the data modification timestamp.
 
-- <a href="#fd_filestat_set_times.fstflags" name="fd_filestat_set_times.fstflags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fstflags</strong></code>
+- <a href="#fd_filestat_set_times.fst_flags" name="fd_filestat_set_times.fst_flags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fst\_flags</strong></code>
 
     A bitmask indicating which timestamps have to be adjusted.
 
@@ -606,7 +606,7 @@ Inputs:
 
     The desired values of the data modification timestamp.
 
-- <a href="#path_filestat_set_times.fstflags" name="path_filestat_set_times.fstflags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fstflags</strong></code>
+- <a href="#path_filestat_set_times.fst_flags" name="path_filestat_set_times.fst_flags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fst\_flags</strong></code>
 
     A bitmask indicating which timestamps have to be adjusted.
 
