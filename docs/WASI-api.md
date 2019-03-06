@@ -259,7 +259,8 @@ Inputs:
 
 ### <a href="#fd_filestat_set_size" name="fd_filestat_set_size"></a>`__wasi_fd_filestat_set_size()`
 
-Adjusts the size of a file by file descriptor.
+Adjusts the size of a file by file descriptor. If this increases the file's
+size, the extra bytes are filled with zeros.
 
 Note: This is similar to `ftruncate` in POSIX.
 
