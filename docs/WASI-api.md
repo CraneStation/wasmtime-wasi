@@ -65,9 +65,9 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_path_link()`](#path_link)
 - [`__wasi_path_open()`](#path_open)
 - [`__wasi_path_readlink()`](#path_readlink)
+- [`__wasi_path_remove_directory()`](#path_remove_directory)
 - [`__wasi_path_rename()`](#path_rename)
 - [`__wasi_path_symlink()`](#path_symlink)
-- [`__wasi_path_remove_directory()`](#path_remove_directory)
 - [`__wasi_path_unlink_file()`](#path_unlink_file)
 - [`__wasi_poll_oneoff()`](#poll_oneoff)
 - [`__wasi_proc_exit()`](#proc_exit)
@@ -716,6 +716,25 @@ Outputs:
 
     The number of bytes placed in the buffer.
 
+### <a href="#path_remove_directory" name="path_remove_directory"></a>`__wasi_path_remove_directory()`
+
+Removes a directory.
+
+Returns [`__WASI_ENOTEMPTY`](#errno.notempty) if the directory is not empty.
+
+Note: This is similar to `unlinkat(fd, path, AT_REMOVEDIR)` in POSIX.
+
+Inputs:
+
+- <a href="#path_remove_directory.fd" name="path_remove_directory.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
+
+    The working directory at which the resolution
+    of the path starts.
+
+- <a href="#path_remove_directory.path" name="path_remove_directory.path"></a><code>const char *<strong>path</strong></code> and <a href="#path_remove_directory.path_len" name="path_remove_directory.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+
+    The path that needs to be removed.
+
 ### <a href="#path_rename" name="path_rename"></a>`__wasi_path_rename()`
 
 Renames a file.
@@ -761,25 +780,6 @@ Inputs:
 
     The destination path at which the symbolic
     link should be created.
-
-### <a href="#path_remove_directory" name="path_remove_directory"></a>`__wasi_path_remove_directory()`
-
-Removes a directory.
-
-Returns [`__WASI_ENOTEMPTY`](#errno.notempty) if the directory is not empty.
-
-Note: This is similar to `unlinkat(fd, path, AT_REMOVEDIR)` in POSIX.
-
-Inputs:
-
-- <a href="#path_remove_directory.fd" name="path_remove_directory.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
-
-    The working directory at which the resolution
-    of the path starts.
-
-- <a href="#path_remove_directory.path" name="path_remove_directory.path"></a><code>const char *<strong>path</strong></code> and <a href="#path_remove_directory.path_len" name="path_remove_directory.path_len"></a><code>size\_t <strong>path\_len</strong></code>
-
-    The path that needs to be unlinked or removed.
 
 ### <a href="#path_unlink_file" name="path_unlink_file"></a>`__wasi_path_unlink_file()`
 
