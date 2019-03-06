@@ -80,14 +80,15 @@ Source: https://github.com/NuxiNL/cloudabi
 
 ### <a href="#clock_res_get" name="clock_res_get"></a>`__wasi_clock_res_get()`
 
-Obtains the resolution of a clock.
+Return the resolution of a clock.
+
+Note: This is similar to `clock_getres` in POSIX.
 
 Inputs:
 
 - <a href="#clock_res_get.clock_id" name="clock_res_get.clock_id"></a><code>[\_\_wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
 
-    The clock for which the resolution needs to be
-    returned.
+    The clock for which to return the resolution.
 
 Outputs:
 
@@ -97,14 +98,15 @@ Outputs:
 
 ### <a href="#clock_time_get" name="clock_time_get"></a>`__wasi_clock_time_get()`
 
-Obtains the time value of a clock.
+Return the time value of a clock.
+
+Note: This is similar to `clock_gettime` in POSIX.
 
 Inputs:
 
 - <a href="#clock_time_get.clock_id" name="clock_time_get.clock_id"></a><code>[\_\_wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
 
-    The clock for which the time needs to be
-    returned.
+    The clock for which to return the time.
 
 - <a href="#clock_time_get.precision" name="clock_time_get.precision"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
 
@@ -120,26 +122,23 @@ Outputs:
 
 ### <a href="#fd_advise" name="fd_advise"></a>`__wasi_fd_advise()`
 
-Provides file advisory information on a file descriptor.
+Provide file advisory information on a file descriptor.
 
-Note: This is similar to `fadvise` in POSIX.
+Note: This is similar to `posix_fadvise` in POSIX.
 
 Inputs:
 
 - <a href="#fd_advise.fd" name="fd_advise.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor for which to provide file
-    advisory information.
+    The file descriptor for the file for which to provide file advisory information.
 
 - <a href="#fd_advise.offset" name="fd_advise.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
-    The offset within the file to which the
-    advisory applies.
+    The offset within the file to which the advisory applies.
 
 - <a href="#fd_advise.len" name="fd_advise.len"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>len</strong></code>
 
-    The length of the region to which the advisory
-    applies.
+    The length of the region to which the advisory applies.
 
 - <a href="#fd_advise.advice" name="fd_advise.advice"></a><code>[\_\_wasi\_advice\_t](#advice) <strong>advice</strong></code>
 
@@ -147,7 +146,7 @@ Inputs:
 
 ### <a href="#fd_allocate" name="fd_allocate"></a>`__wasi_fd_allocate()`
 
-Forces the allocation of space in a file.
+Force the allocation of space in a file.
 
 Note: This is similar to `posix_fallocate` in POSIX.
 
@@ -155,13 +154,11 @@ Inputs:
 
 - <a href="#fd_allocate.fd" name="fd_allocate.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file in which the space should be
-    allocated.
+    The file descriptor for the file in which to allocate space.
 
 - <a href="#fd_allocate.offset" name="fd_allocate.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
-    The offset at which the allocation should
-    start.
+    The offset at which to start the allocation.
 
 - <a href="#fd_allocate.len" name="fd_allocate.len"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>len</strong></code>
 
@@ -169,44 +166,48 @@ Inputs:
 
 ### <a href="#fd_close" name="fd_close"></a>`__wasi_fd_close()`
 
-Closes a file descriptor.
+Close a file descriptor.
+
+Note: This is similar to `close` in POSIX.
 
 Inputs:
 
 - <a href="#fd_close.fd" name="fd_close.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor that needs to be closed.
+    The file descriptor to close.
 
 ### <a href="#fd_datasync" name="fd_datasync"></a>`__wasi_fd_datasync()`
 
-Synchronizes the data of a file to disk.
+Synchronize the data of a file to disk.
+
+Note: This is similar to `fdatasync` in POSIX.
 
 Inputs:
 
 - <a href="#fd_datasync.fd" name="fd_datasync.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor of the file whose data
-    needs to be synchronized to disk.
+    The file descriptor of the file to synchronize to disk.
 
 ### <a href="#fd_fdstat_get" name="fd_fdstat_get"></a>`__wasi_fd_fdstat_get()`
 
-Gets attributes of a file descriptor.
+Get the attributes of a file descriptor.
+
+Note: This returns similar flags to `fsync(fd, F_GETFL)` in POSIX, as well
+as additional fields.
 
 Inputs:
 
 - <a href="#fd_fdstat_get.fd" name="fd_fdstat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor whose attributes have to
-    be obtained.
+    The file descriptor to inspect.
 
 - <a href="#fd_fdstat_get.buf" name="fd_fdstat_get.buf"></a><code>[\_\_wasi\_fdstat\_t](#fdstat) \*<strong>buf</strong></code>
 
-    The buffer where the file descriptor's
-    attributes are stored.
+    The buffer where the file descriptor's attributes are stored.
 
 ### <a href="#fd_fdstat_set_flags" name="fd_fdstat_set_flags"></a>`__wasi_fd_fdstat_set_flags()`
 
-Adjusts flags of a file descriptor.
+Adjust the flags associated with a file descriptor.
 
 Note: This is similar to `fcntl(fd, F_SETFL, flags)` in POSIX.
 
@@ -214,8 +215,7 @@ Inputs:
 
 - <a href="#fd_fdstat_set_flags.fd" name="fd_fdstat_set_flags.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor whose attributes have to
-    be adjusted.
+    The file descriptor to operate on.
 
 - <a href="#fd_fdstat_set_flags.flags" name="fd_fdstat_set_flags.flags"></a><code>[\_\_wasi\_fdflags\_t](#fdflags) <strong>flags</strong></code>
 
@@ -224,7 +224,7 @@ Inputs:
 
 ### <a href="#fd_fdstat_set_rights" name="fd_fdstat_set_rights"></a>`__wasi_fd_fdstat_set_rights()`
 
-Adjusts rights of a file descriptor.
+Adjust the rights associated with a file descriptor.
 
 This can only be used to remove rights, and returns
 [`__WASI_ENOTCAPABLE`](#errno.notcapable) if called in a way that would attempt
@@ -234,8 +234,7 @@ Inputs:
 
 - <a href="#fd_fdstat_set_rights.fd" name="fd_fdstat_set_rights.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor whose attributes have to
-    be adjusted.
+    The file descriptor to operate on.
 
 - <a href="#fd_fdstat_set_rights.fs_rights_base" name="fd_fdstat_set_rights.fs_rights_base"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code> and <a href="#fd_fdstat_set_rights.fs_rights_inheriting" name="fd_fdstat_set_rights.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
 
@@ -243,14 +242,13 @@ Inputs:
 
 ### <a href="#fd_filestat_get" name="fd_filestat_get"></a>`__wasi_fd_filestat_get()`
 
-Gets attributes of a file by file descriptor.
+Return the attributes of an open file.
 
 Inputs:
 
 - <a href="#fd_filestat_get.fd" name="fd_filestat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor whose attributes have to
-    be obtained.
+    The file descriptor to inspect.
 
 - <a href="#fd_filestat_get.buf" name="fd_filestat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) \*<strong>buf</strong></code>
 
@@ -259,8 +257,8 @@ Inputs:
 
 ### <a href="#fd_filestat_set_size" name="fd_filestat_set_size"></a>`__wasi_fd_filestat_set_size()`
 
-Adjusts the size of a file by file descriptor. If this increases the file's
-size, the extra bytes are filled with zeros.
+Adjust the size of an open file. If this increases the file's size, the extra
+bytes are filled with zeros.
 
 Note: This is similar to `ftruncate` in POSIX.
 
@@ -268,7 +266,7 @@ Inputs:
 
 - <a href="#fd_filestat_set_size.fd" name="fd_filestat_set_size.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor whose size has to be adjusted.
+    A file descriptor for the file to adjust.
 
 - <a href="#fd_filestat_set_size.st_size" name="fd_filestat_set_size.st_size"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>st\_size</strong></code>
 
@@ -276,7 +274,7 @@ Inputs:
 
 ### <a href="#fd_filestat_set_times" name="fd_filestat_set_times"></a>`__wasi_fd_filestat_set_times()`
 
-Adjusts the timestamps of a file by file descriptor.
+Adjust the timestamps of an open file or directory.
 
 Note: This is similar to `futimens` in POSIX.
 
@@ -284,8 +282,7 @@ Inputs:
 
 - <a href="#fd_filestat_set_times.fd" name="fd_filestat_set_times.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor whose times have to
-    be adjusted.
+    The file descriptor to operate on.
 
 - <a href="#fd_filestat_set_times.st_atim" name="fd_filestat_set_times.st_atim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
 
@@ -297,11 +294,11 @@ Inputs:
 
 - <a href="#fd_filestat_set_times.fst_flags" name="fd_filestat_set_times.fst_flags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fst\_flags</strong></code>
 
-    A bitmask indicating which timestamps have to be adjusted.
+    A bitmask indicating which timestamps to adjust.
 
 ### <a href="#fd_pread" name="fd_pread"></a>`__wasi_fd_pread()`
 
-Reads from a file descriptor, without using and updating the
+Read from a file descriptor, without using and updating the
 file descriptor's offset.
 
 Note: This is similar to `preadv` in POSIX.
@@ -310,18 +307,15 @@ Inputs:
 
 - <a href="#fd_pread.fd" name="fd_pread.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor from which data should be
-    read.
+    The file descriptor from which to read data.
 
 - <a href="#fd_pread.iovs" name="fd_pread.iovs"></a><code>const [\_\_wasi\_iovec\_t](#iovec) \*<strong>iovs</strong></code> and <a href="#fd_pread.iovs_len" name="fd_pread.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
-    List of scatter/gather vectors where data
-    should be stored.
+    List of scatter/gather vectors in which to store data.
 
 - <a href="#fd_pread.offset" name="fd_pread.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
-    The offset within the file at which reading
-    should start.
+    The offset within the file at which to read.
 
 Outputs:
 
@@ -331,7 +325,7 @@ Outputs:
 
 ### <a href="#fd_pwrite" name="fd_pwrite"></a>`__wasi_fd_pwrite()`
 
-Writes to a file descriptor, without using and updating the
+Write to a file descriptor, without using and updating the
 file descriptor's offset.
 
 Note: This is similar to `pwritev` in POSIX.
@@ -340,18 +334,15 @@ Inputs:
 
 - <a href="#fd_pwrite.fd" name="fd_pwrite.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor to which data should be
-    written.
+    The file descriptor to which to write data.
 
 - <a href="#fd_pwrite.iovs" name="fd_pwrite.iovs"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) \*<strong>iovs</strong></code> and <a href="#fd_pwrite.iovs_len" name="fd_pwrite.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
-    List of scatter/gather vectors where data
-    should be retrieved.
+    List of scatter/gather vectors from which to retrieve data.
 
 - <a href="#fd_pwrite.offset" name="fd_pwrite.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
-    The offset within the file at which writing
-    should start.
+    The offset within the file at which to write.
 
 Outputs:
 
@@ -361,7 +352,7 @@ Outputs:
 
 ### <a href="#fd_read" name="fd_read"></a>`__wasi_fd_read()`
 
-Reads from a file descriptor.
+Read from a file descriptor.
 
 Note: This is similar to `readv` in POSIX.
 
@@ -369,13 +360,11 @@ Inputs:
 
 - <a href="#fd_read.fd" name="fd_read.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor from which data should be
-    read.
+    The file descriptor from which to read data.
 
 - <a href="#fd_read.iovs" name="fd_read.iovs"></a><code>const [\_\_wasi\_iovec\_t](#iovec) \*<strong>iovs</strong></code> and <a href="#fd_read.iovs_len" name="fd_read.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
-    List of scatter/gather vectors where data
-    should be stored.
+    List of scatter/gather vectors to which to store data.
 
 Outputs:
 
@@ -385,14 +374,14 @@ Outputs:
 
 ### <a href="#fd_readdir" name="fd_readdir"></a>`__wasi_fd_readdir()`
 
-Reads directory entries from a directory.
+Read directory entries from a directory.
 
 When successful, the contents of the output buffer consist of
 a sequence of directory entries. Each directory entry consists
 of a [`__wasi_dirent_t`](#dirent) object, followed by [`__wasi_dirent_t::d_namlen`](#dirent.d_namlen) bytes
 holding the name of the directory entry.
 
-This system call fills the output buffer as much as possible,
+This function fills the output buffer as much as possible,
 potentially truncating the last directory entry. This allows
 the caller to grow its read buffer size in case it's too small
 to fit a single large directory entry, or skip the oversized
@@ -424,7 +413,7 @@ Outputs:
 
 ### <a href="#fd_renumber" name="fd_renumber"></a>`__wasi_fd_renumber()`
 
-Atomically replaces a file descriptor by renumbering another
+Atomically replace a file descriptor by renumbering another
 file descriptor.
 
 Due to the strong focus on thread safety, this environment
@@ -434,7 +423,7 @@ prone to race conditions, as an actual file descriptor with the
 same number could be allocated by a different thread at the same
 time.
 
-This system call provides a way to atomically renumber file
+This function provides a way to atomically renumber file
 descriptors, which would disappear if dup2() were to be
 removed entirely.
 
@@ -442,16 +431,15 @@ Inputs:
 
 - <a href="#fd_renumber.from" name="fd_renumber.from"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>from</strong></code>
 
-    The file descriptor that needs to be renumbered.
+    The file descriptor to renumber.
 
 - <a href="#fd_renumber.to" name="fd_renumber.to"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>to</strong></code>
 
-    The file descriptor that needs to be
-    overwritten.
+    The file descriptor to overwrite.
 
 ### <a href="#fd_seek" name="fd_seek"></a>`__wasi_fd_seek()`
 
-Moves the offset of the file descriptor.
+Move the offset of a file descriptor.
 
 Note: This is similar to `lseek` in POSIX.
 
@@ -459,8 +447,7 @@ Inputs:
 
 - <a href="#fd_seek.fd" name="fd_seek.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor whose offset has to be
-    moved.
+    The file descriptor to operate on.
 
 - <a href="#fd_seek.offset" name="fd_seek.offset"></a><code>[\_\_wasi\_filedelta\_t](#filedelta) <strong>offset</strong></code>
 
@@ -468,8 +455,7 @@ Inputs:
 
 - <a href="#fd_seek.whence" name="fd_seek.whence"></a><code>[\_\_wasi\_whence\_t](#whence) <strong>whence</strong></code>
 
-    Relative to which position the move should
-    take place.
+    The base from which the offset is relative.
 
 Outputs:
 
@@ -480,36 +466,38 @@ Outputs:
 
 ### <a href="#fd_sync" name="fd_sync"></a>`__wasi_fd_sync()`
 
-Synchronizes the data and metadata of a file to disk.
+Synchronize the data and metadata of a file to disk.
+
+Note: This is similar to `fsync` in POSIX.
 
 Inputs:
 
 - <a href="#fd_sync.fd" name="fd_sync.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor of the file whose data
-    and metadata needs to be synchronized to disk.
+    The file descriptor of the file containing the data
+    and metadata to synchronize to disk.
 
 ### <a href="#fd_tell" name="fd_tell"></a>`__wasi_fd_tell()`
 
-Obtains the offset of the file descriptor.
+Return the current offset of a file descriptor.
+
+Note: This is similar to `lseek(fd, 0, SEEK_CUR)` in POSIX.
 
 Inputs:
 
 - <a href="#fd_tell.fd" name="fd_tell.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor whose offset has to be
-    moved.
+    The file descriptor to inspect.
 
 Outputs:
 
-- <a href="#fd_tell.newoffset" name="fd_tell.newoffset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>newoffset</strong></code>
+- <a href="#fd_tell.offset" name="fd_tell.offset"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>offset</strong></code>
 
-    The new offset of the file descriptor,
-    relative to the start of the file.
+    The current offset of the file descriptor, relative to the start of the file.
 
 ### <a href="#fd_write" name="fd_write"></a>`__wasi_fd_write()`
 
-Writes to a file descriptor.
+Write to a file descriptor.
 
 Note: This is similar to `writev` in POSIX.
 
@@ -517,13 +505,11 @@ Inputs:
 
 - <a href="#fd_write.fd" name="fd_write.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The file descriptor to which data should be
-    written.
+    The file descriptor to which to write data.
 
 - <a href="#fd_write.iovs" name="fd_write.iovs"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) \*<strong>iovs</strong></code> and <a href="#fd_write.iovs_len" name="fd_write.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
-    List of scatter/gather vectors where data
-    should be retrieved.
+    List of scatter/gather vectors from which to retrieve data.
 
 Outputs:
 
@@ -533,7 +519,7 @@ Outputs:
 
 ### <a href="#path_create_directory" name="path_create_directory"></a>`__wasi_path_create_directory()`
 
-Creates a directory.
+Create a directory.
 
 Note: This is similar to `mkdirat` in POSIX.
 
@@ -541,34 +527,31 @@ Inputs:
 
 - <a href="#path_create_directory.fd" name="path_create_directory.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The working directory at which the resolution
-    of the directory to be created starts.
+    The working directory at which the resolution of the path starts.
 
 - <a href="#path_create_directory.path" name="path_create_directory.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_create_directory.path_len" name="path_create_directory.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
-    The path at which the directory should be created.
+    The path at which to create the directory.
 
 ### <a href="#path_filestat_get" name="path_filestat_get"></a>`__wasi_path_filestat_get()`
 
-Gets attributes of a file by path.
+Return the attributes of a file or directory.
+
+Note: This is similar to `stat` in POSIX.
 
 Inputs:
 
 - <a href="#path_filestat_get.fd" name="path_filestat_get.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The working directory at which the resolution
-    of the path whose attributes have to be
-    obtained starts.
+    The working directory at which the resolution of the path starts.
 
 - <a href="#path_filestat_get.flags" name="path_filestat_get.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
 
-    Flags determining the method of how the path is
-    resolved.
+    Flags determining the method of how the path is resolved.
 
 - <a href="#path_filestat_get.path" name="path_filestat_get.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_filestat_get.path_len" name="path_filestat_get.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
-    The path of the file whose attributes have to
-    be obtained.
+    The path of the file or directory to inspect.
 
 - <a href="#path_filestat_get.buf" name="path_filestat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) \*<strong>buf</strong></code>
 
@@ -577,7 +560,7 @@ Inputs:
 
 ### <a href="#path_filestat_set_times" name="path_filestat_set_times"></a>`__wasi_path_filestat_set_times()`
 
-Adjusts the timestamps of a file by path.
+Adjust the timestamps of a file or directory.
 
 Note: This is similar to `utimensat` in POSIX.
 
@@ -585,19 +568,15 @@ Inputs:
 
 - <a href="#path_filestat_set_times.fd" name="path_filestat_set_times.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The working directory at which the resolution
-    of the path whose attributes have to be
-    adjusted starts.
+    The working directory at which the resolution of the path starts.
 
 - <a href="#path_filestat_set_times.flags" name="path_filestat_set_times.flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>flags</strong></code>
 
-    Flags determining the method of how the path is
-    resolved.
+    Flags determining the method of how the path is resolved.
 
 - <a href="#path_filestat_set_times.path" name="path_filestat_set_times.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_filestat_set_times.path_len" name="path_filestat_set_times.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
-    The path of the file whose attributes have to
-    be adjusted.
+    The path of the file or directory to operate on.
 
 - <a href="#path_filestat_set_times.st_atim" name="path_filestat_set_times.st_atim"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>st\_atim</strong></code>
 
@@ -609,75 +588,70 @@ Inputs:
 
 - <a href="#path_filestat_set_times.fst_flags" name="path_filestat_set_times.fst_flags"></a><code>[\_\_wasi\_fstflags\_t](#fstflags) <strong>fst\_flags</strong></code>
 
-    A bitmask indicating which timestamps have to be adjusted.
+    A bitmask indicating which timestamps to adjust.
 
 ### <a href="#path_link" name="path_link"></a>`__wasi_path_link()`
 
-Creates a hard link.
+Create a hard link.
+
+Note: This is similar to `linkat` in POSIX.
 
 Inputs:
 
 - <a href="#path_link.old_fd" name="path_link.old_fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>old\_fd</strong></code>
 
-    The working directory at which the resolution
-    of the source path starts.
+    The working directory at which the resolution of the old path starts.
 
 - <a href="#path_link.old_flags" name="path_link.old_flags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>old\_flags</strong></code>
 
-    Flags determining the method of how the path is
-    resolved.
+    Flags determining the method of how the path is resolved.
 
 - <a href="#path_link.old_path" name="path_link.old_path"></a><code>const char \*<strong>old\_path</strong></code> and <a href="#path_link.old_path_len" name="path_link.old_path_len"></a><code>size\_t <strong>old\_path\_len</strong></code>
 
-    The source path of the file that should be
-    hard linked.
+    The source path from which to link.
 
 - <a href="#path_link.new_fd" name="path_link.new_fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>new\_fd</strong></code>
 
-    The working directory at which the resolution
-    of the destination path starts.
+    The working directory at which the resolution of the new path starts.
 
 - <a href="#path_link.new_path" name="path_link.new_path"></a><code>const char \*<strong>new\_path</strong></code> and <a href="#path_link.new_path_len" name="path_link.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
 
-    The destination path at which the hard link
-    should be created.
+    The destination path at which to create the hard link.
 
 ### <a href="#path_open" name="path_open"></a>`__wasi_path_open()`
 
-Opens a file.
+Open a file or directory.
+
+Note: This is similar to `openat` in POSIX.
 
 Inputs:
 
 - <a href="#path_open.dirfd" name="path_open.dirfd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>dirfd</strong></code>
 
-    The working directory at which the resolution
-    of the file to be opened starts.
+    The working directory at which the resolution of the path starts.
 
 - <a href="#path_open.dirflags" name="path_open.dirflags"></a><code>[\_\_wasi\_lookupflags\_t](#lookupflags) <strong>dirflags</strong></code>
 
-    Flags determining the method of how the path is
-    resolved.
+    Flags determining the method of how the path is resolved.
 
 - <a href="#path_open.path" name="path_open.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_open.path_len" name="path_open.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
-    The path of the file that should be opened.
+    The path of the file or directory to open.
 
 - <a href="#path_open.o_flags" name="path_open.o_flags"></a><code>[\_\_wasi\_oflags\_t](#oflags) <strong>o_flags</strong></code>
 
-    The method at which the file should be opened.
+    The method by which to open the file.
 
 - <a href="#path_open.fs_rights_base" name="path_open.fs_rights_base"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_base</strong></code> and <a href="#path_open.fs_rights_inheriting" name="path_open.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
 
-    The initial rights of the newly created file
-    descriptor. The operating system is allowed to
-    return a file descriptor with fewer rights
-    than specified, if and only if those rights do
-    not apply to the type of file being opened.
+    The initial rights of the newly created file descriptor. The
+    implementation is allowed to return a file descriptor with fewer
+    rights than specified, if and only if those rights do not apply
+    to the type of file being opened.
 
-    The *base* rights are rights that will apply to
-    operations using the file descriptor itself, while
-    the *inheriting* rights are rights that apply to
-    file descriptors derived from it.
+    The *base* rights are rights that will apply to operations using
+    the file descriptor itself, while the *inheriting* rights are
+    rights that apply to file descriptors derived from it.
 
 - <a href="#path_open.fs_flags" name="path_open.fs_flags"></a><code>[\_\_wasi\_fdflags\_t](#fdflags) <strong>fs\_flags</strong></code>
 
@@ -692,24 +666,23 @@ Outputs:
 
 ### <a href="#path_readlink" name="path_readlink"></a>`__wasi_path_readlink()`
 
-Reads the contents of a symbolic link.
+Read the contents of a symbolic link.
+
+Note: This is similar to `readlinkat` in POSIX.
 
 Inputs:
 
 - <a href="#path_readlink.fd" name="path_readlink.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The working directory at which the resolution
-    of the path of the symbolic starts.
+    The working directory at which the resolution of the path starts.
 
 - <a href="#path_readlink.path" name="path_readlink.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_readlink.path_len" name="path_readlink.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
-    The path of the symbolic link whose contents
-    should be read.
+    The path of the symbolic link from which to read.
 
 - <a href="#path_readlink.buf" name="path_readlink.buf"></a><code>char \*<strong>buf</strong></code> and <a href="#path_readlink.buf_len" name="path_readlink.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
 
-    The buffer where the contents of the symbolic
-    link should be stored.
+    The buffer to which to write the contents of the symbolic link.
 
 Outputs:
 
@@ -719,9 +692,9 @@ Outputs:
 
 ### <a href="#path_remove_directory" name="path_remove_directory"></a>`__wasi_path_remove_directory()`
 
-Removes a directory.
+Remove a directory.
 
-Returns [`__WASI_ENOTEMPTY`](#errno.notempty) if the directory is not empty.
+Return [`__WASI_ENOTEMPTY`](#errno.notempty) if the directory is not empty.
 
 Note: This is similar to `unlinkat(fd, path, AT_REMOVEDIR)` in POSIX.
 
@@ -729,42 +702,41 @@ Inputs:
 
 - <a href="#path_remove_directory.fd" name="path_remove_directory.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The working directory at which the resolution
-    of the path starts.
+    The working directory at which the resolution of the path starts.
 
 - <a href="#path_remove_directory.path" name="path_remove_directory.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_remove_directory.path_len" name="path_remove_directory.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
-    The path that needs to be removed.
+    The path to a directory to remove.
 
 ### <a href="#path_rename" name="path_rename"></a>`__wasi_path_rename()`
 
-Renames a file.
+Rename a file or directory.
+
+Note: This is similar to `renameat` in POSIX.
 
 Inputs:
 
 - <a href="#path_rename.old_fd" name="path_rename.old_fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>old\_fd</strong></code>
 
-    The working directory at which the resolution
-    of the source path starts.
+    The working directory at which the resolution of the old path starts.
 
 - <a href="#path_rename.old_path" name="path_rename.old_path"></a><code>const char \*<strong>old\_path</strong></code> and <a href="#path_rename.old_path_len" name="path_rename.old_path_len"></a><code>size\_t <strong>old\_path\_len</strong></code>
 
-    The source path of the file that should be
-    renamed.
+    The source path of the file or directory to rename.
 
 - <a href="#path_rename.new_fd" name="path_rename.new_fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>new\_fd</strong></code>
 
-    The working directory at which the resolution
-    of the destination path starts.
+    The working directory at which the resolution of the new path starts.
 
 - <a href="#path_rename.new_path" name="path_rename.new_path"></a><code>const char \*<strong>new\_path</strong></code> and <a href="#path_rename.new_path_len" name="path_rename.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
 
-    The destination path to which the file should
-    be renamed.
+    The destination path to which to rename the file or directory.
 
 ### <a href="#path_symlink" name="path_symlink"></a>`__wasi_path_symlink()`
 
-Creates a symbolic link.
+Create a symbolic link.
+
+Note: This is similar to `symlinkat` in POSIX.
 
 Inputs:
 
@@ -774,19 +746,17 @@ Inputs:
 
 - <a href="#path_symlink.fd" name="path_symlink.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The working directory at which the resolution
-    of the destination path starts.
+    The working directory at which the resolution of the path starts.
 
 - <a href="#path_symlink.new_path" name="path_symlink.new_path"></a><code>const char \*<strong>new\_path</strong></code> and <a href="#path_symlink.new_path_len" name="path_symlink.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
 
-    The destination path at which the symbolic
-    link should be created.
+    The destination path at which to create the symbolic link.
 
 ### <a href="#path_unlink_file" name="path_unlink_file"></a>`__wasi_path_unlink_file()`
 
-Unlinks a file.
+Unlink a file.
 
-Returns [`__WASI_EISDIR`](#errno.isdir) if the path refers to a directory.
+Return [`__WASI_EISDIR`](#errno.isdir) if the path refers to a directory.
 
 Note: This is similar to `unlinkat(fd, path, 0)` in POSIX.
 
@@ -794,16 +764,15 @@ Inputs:
 
 - <a href="#path_unlink_file.fd" name="path_unlink_file.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-    The working directory at which the resolution
-    of the path starts.
+    The working directory at which the resolution of the path starts.
 
 - <a href="#path_unlink_file.path" name="path_unlink_file.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_unlink_file.path_len" name="path_unlink_file.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
-    The file path that needs to be unlinked.
+    The path to a file to unlink.
 
 ### <a href="#poll_oneoff" name="poll_oneoff"></a>`__wasi_poll_oneoff()`
 
-Concurrently polls for the occurrence of a set of events.
+Concurrently poll for the occurrence of a set of events.
 
 Inputs:
 
@@ -827,7 +796,11 @@ Outputs:
 
 ### <a href="#proc_exit" name="proc_exit"></a>`__wasi_proc_exit()`
 
-Terminates the process normally.
+Terminate the process normally. An exit code of 0 indicates successful
+termination of the program. The meanings of other values is dependent on
+the environment.
+
+Note: This is similar to `_Exit` in POSIX.
 
 Inputs:
 
@@ -839,48 +812,53 @@ Does not return.
 
 ### <a href="#proc_raise" name="proc_raise"></a>`__wasi_proc_raise()`
 
-Sends a signal to the process of the calling thread.
+Send a signal to the process of the calling thread.
+
+Note: This is similar to `raise` in POSIX.
 
 Inputs:
 
 - <a href="#proc_raise.sig" name="proc_raise.sig"></a><code>[\_\_wasi\_signal\_t](#signal) <strong>sig</strong></code>
 
-    The signal condition that should be triggered.
+    The signal condition to trigger.
 
 ### <a href="#random_get" name="random_get"></a>`__wasi_random_get()`
 
-Obtains random data from the kernel random number generator.
+Write high-quality random data into a buffer.
 
-As this interface is not guaranteed to be fast, it is advised
-that the random data obtained through this system call is used
-as the seed for a userspace pseudo-random number generator.
+This function may execute slowly, so when large mounts of random
+data are required, it's advisable to use this function to seed a
+pseudo-random number generator, rather than to provide the
+random data directly.
 
 Inputs:
 
 - <a href="#random_get.buf" name="random_get.buf"></a><code>void \*<strong>buf</strong></code> and <a href="#random_get.buf_len" name="random_get.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
 
-    The buffer that needs to be filled with random
-    data.
+    The buffer to fill with random data.
 
 ### <a href="#sched_yield" name="sched_yield"></a>`__wasi_sched_yield()`
 
-Temporarily yields execution of the calling thread.
+Temporarily yield execution of the calling thread.
+
+Note: This is similar to `sched_yield` in POSIX.
 
 ### <a href="#sock_recv" name="sock_recv"></a>`__wasi_sock_recv()`
 
-Receives a message on a socket.
+Receive a message from a socket.
+
+Note: This is similar to `recv` in POSIX, though it also supports reading
+the data into multiple buffers in the manner of `readv`.
 
 Inputs:
 
 - <a href="#sock_recv.sock" name="sock_recv.sock"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>sock</strong></code>
 
-    The socket on which a message should be
-    received.
+    The socket on which to receive data.
 
 - <a href="#sock_recv.ri_data" name="sock_recv.ri_data"></a><code>const [\_\_wasi\_iovec\_t](#iovec) \*<strong>ri\_data</strong></code> and <a href="#sock_recv.ri_data_len" name="sock_recv.ri_data_len"></a><code>size\_t <strong>ri\_data\_len</strong></code>
 
-    List of scatter/gather vectors where message data
-    should be stored.
+    List of scatter/gather vectors to which to store data.
 
 - <a href="#sock_recv.ri_flags" name="sock_recv.ri_flags"></a><code>[\_\_wasi\_riflags\_t](#riflags) <strong>ri\_flags</strong></code>
 
@@ -898,18 +876,20 @@ Outputs:
 
 ### <a href="#sock_send" name="sock_send"></a>`__wasi_sock_send()`
 
-Sends a message on a socket.
+Send a message on a socket.
+
+Note: This is similar to `send` in POSIX, though it also supports writing
+the data from multiple buffers in the manner of `writev`.
 
 Inputs:
 
 - <a href="#sock_send.sock" name="sock_send.sock"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>sock</strong></code>
 
-    The socket on which a message should be sent.
+    The socket on which to send data.
 
 - <a href="#sock_send.si_data" name="sock_send.si_data"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) \*<strong>si\_data</strong></code> and <a href="#sock_send.si_data_len" name="sock_send.si_data_len"></a><code>size\_t <strong>si\_data\_len</strong></code>
 
-    List of scatter/gather vectors where message data
-    should be retrieved.
+    List of scatter/gather vectors to which to retrieve data
 
 - <a href="#sock_send.si_flags" name="sock_send.si_flags"></a><code>[\_\_wasi\_siflags\_t](#siflags) <strong>si\_flags</strong></code>
 
@@ -923,18 +903,19 @@ Outputs:
 
 ### <a href="#sock_shutdown" name="sock_shutdown"></a>`__wasi_sock_shutdown()`
 
-Shuts down socket send and receive channels.
+Shut down socket send and receive channels.
+
+Note: This is similar to `shutdown` in POSIX.
 
 Inputs:
 
 - <a href="#sock_shutdown.sock" name="sock_shutdown.sock"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>sock</strong></code>
 
-    The socket that needs its channels shut down.
+    The socket on which to shutdown channels.
 
 - <a href="#sock_shutdown.how" name="sock_shutdown.how"></a><code>[\_\_wasi\_sdflags\_t](#sdflags) <strong>how</strong></code>
 
-    Which channels on the socket need to be shut
-    down.
+    Which channels on the socket to shut down.
 
 ## Types
 
@@ -998,7 +979,7 @@ Possible values:
 
 - <a href="#clockid.monotonic" name="clockid.monotonic"></a>**`__WASI_CLOCK_MONOTONIC`**
 
-    The system-wide monotonic clock, which is defined as a
+    The store-wide monotonic clock, which is defined as a
     clock measuring real time, whose value cannot be
     adjusted and which cannot have negative clock jumps.
 
@@ -1012,7 +993,7 @@ Possible values:
 
 - <a href="#clockid.realtime" name="clockid.realtime"></a>**`__WASI_CLOCK_REALTIME`**
 
-    The system-wide clock measuring real time. Time value
+    The clock measuring real time. Time value
     zero corresponds with 1970-01-01T00:00:00Z.
 
 - <a href="#clockid.thread_cputime_id" name="clockid.thread_cputime_id"></a>**`__WASI_CLOCK_THREAD_CPUTIME_ID`**
@@ -1022,8 +1003,8 @@ Possible values:
 ### <a href="#device" name="device"></a>`__wasi_device_t` (`uint64_t`)
 
 Identifier for a device containing a file system. Can be used
-in combination with [`__wasi_inode_t`](#inode) to uniquely identify a file on the
-local system.
+in combination with [`__wasi_inode_t`](#inode) to uniquely identify a file or
+directory in the filesystem.
 
 Used by [`__wasi_filestat_t`](#filestat).
 
@@ -1067,11 +1048,11 @@ Members:
 
 ### <a href="#errno" name="errno"></a>`__wasi_errno_t` (`uint16_t`)
 
-Error codes returned by system calls.
+Error codes returned by functions.
 
-Not all of these error codes are returned by the system calls
-provided by this environment, but are either used in userspace
-exclusively or merely provided for alignment with POSIX.
+Not all of these error codes are returned by the functions
+provided by this API; some are used in higher-level library layers,
+and others are provided merely for alignment with POSIX.
 
 Used by [`__wasi_event_t`](#event).
 
@@ -1413,13 +1394,11 @@ Members:
 
         - <a href="#event.u.fd_readwrite.nbytes" name="event.u.fd_readwrite.nbytes"></a><code>[\_\_wasi\_filesize\_t](#filesize) <strong>nbytes</strong></code>
 
-            The number of bytes available
-            for reading or writing.
+            The number of bytes available for reading or writing.
 
         - <a href="#event.u.fd_readwrite.flags" name="event.u.fd_readwrite.flags"></a><code>[\_\_wasi\_eventrwflags\_t](#eventrwflags) <strong>flags</strong></code>
 
-            The state of the file
-            descriptor.
+            The state of the file descriptor.
 
 ### <a href="#eventrwflags" name="eventrwflags"></a>`__wasi_eventrwflags_t` (`uint16_t` bitfield)
 
@@ -1471,9 +1450,9 @@ A file descriptor number.
 
 Used by many functions in this API.
 
-As on POSIX-compliant systems, three file descriptor numbers are
-provided to instances on startup -- 0, 1, and 2, (a.k.a. `STDIN_FILENO`,
-`STDOUT_FILENO`, and `STDERR_FILENO`).
+As in POSIX, three file descriptor numbers are provided to instances
+on startup -- 0, 1, and 2, (a.k.a. `STDIN_FILENO`, `STDOUT_FILENO`,
+and `STDERR_FILENO`).
 
 Other than these, WASI implementations are not required to allocate
 new file descriptors in ascending order.
@@ -1507,10 +1486,9 @@ Possible values:
 
 - <a href="#fdflags.sync" name="fdflags.sync"></a>**`__WASI_FDFLAG_SYNC`**
 
-    Write according to synchronized I/O file integrity
-    completion. In addition to synchronizing the data
-    stored in the file, the system may also synchronously
-    update the file's metadata.
+    Write according to synchronized I/O file integrity completion.
+    In addition to synchronizing the data stored in the file, the
+    implementation may also synchronously update the file's metadata.
 
 ### <a href="#fdstat" name="fdstat"></a>`__wasi_fdstat_t` (`struct`)
 
@@ -1534,7 +1512,7 @@ Members:
 
 - <a href="#fdstat.fs_rights_inheriting" name="fdstat.fs_rights_inheriting"></a><code>[\_\_wasi\_rights\_t](#rights) <strong>fs\_rights\_inheriting</strong></code>
 
-    Maximum set of rights that can be installed on new
+    Maximum set of rights that may be installed on new
     file descriptors that are created through this file
     descriptor, e.g., through [`__wasi_path_open()`](#path_open).
 
@@ -1914,7 +1892,7 @@ Possible values:
 
 ### <a href="#sdflags" name="sdflags"></a>`__wasi_sdflags_t` (`uint8_t` bitfield)
 
-Which channels on a socket need to be shut down.
+Which channels on a socket to shut down.
 
 Used by [`__wasi_sock_shutdown()`](#sock_shutdown).
 
@@ -2101,8 +2079,8 @@ Possible values:
 
 ### <a href="#subclockflags" name="subclockflags"></a>`__wasi_subclockflags_t` (`uint16_t` bitfield)
 
-Flags determining how the timestamp provided in
-[`__wasi_subscription_t::u.clock.timeout`](#subscription.u.clock.timeout) should be interpreted.
+Flags determining how to interpret the timestamp provided in
+[`__wasi_subscription_t::u.clock.timeout`](#subscription.u.clock.timeout).
 
 Used by [`__wasi_subscription_t`](#subscription).
 
@@ -2128,8 +2106,8 @@ Members:
 
 - <a href="#subscription.userdata" name="subscription.userdata"></a><code>[\_\_wasi\_userdata\_t](#userdata) <strong>userdata</strong></code>
 
-    User-provided value that is attached to the
-    subscription in the kernel and returned through
+    User-provided value that is attached to the subscription in the
+    implementation and returned through
     [`__wasi_event_t::userdata`](#event.userdata).
 
 - <a href="#subscription.type" name="subscription.type"></a><code>[\_\_wasi\_eventtype\_t](#eventtype) <strong>type</strong></code>
@@ -2142,30 +2120,24 @@ Members:
 
         - <a href="#subscription.u.clock.identifier" name="subscription.u.clock.identifier"></a><code>[\_\_wasi\_userdata\_t](#userdata) <strong>identifier</strong></code>
 
-            The user-defined unique
-            identifier of the clock.
+            The user-defined unique identifier of the clock.
 
         - <a href="#subscription.u.clock.clock_id" name="subscription.u.clock.clock_id"></a><code>[\_\_wasi\_clockid\_t](#clockid) <strong>clock\_id</strong></code>
 
-            The clock against which the
-            timestamp should be compared.
+            The clock against which to compare the timestamp.
 
         - <a href="#subscription.u.clock.timeout" name="subscription.u.clock.timeout"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>timeout</strong></code>
 
-            The absolute or relative
-            timestamp.
+            The absolute or relative timestamp.
 
         - <a href="#subscription.u.clock.precision" name="subscription.u.clock.precision"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>precision</strong></code>
 
-            The amount of time that the
-            kernel may wait additionally
+            The amount of time that the implementation may wait additionally
             to coalesce with other events.
 
         - <a href="#subscription.u.clock.flags" name="subscription.u.clock.flags"></a><code>[\_\_wasi\_subclockflags\_t](#subclockflags) <strong>flags</strong></code>
 
-            Flags specifying whether the
-            timeout is absolute or
-            relative.
+            Flags specifying whether the timeout is absolute or relative.
 
 - When `type` is [`__WASI_EVENTTYPE_FD_READ`](#eventtype.fd_read) or [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write):
 
@@ -2173,8 +2145,7 @@ Members:
 
         - <a href="#subscription.u.fd_readwrite.fd" name="subscription.u.fd_readwrite.fd"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>fd</strong></code>
 
-            The file descriptor on which
-            to wait for it to become ready
+            The file descriptor on which to wait for it to become ready
             for reading or writing.
 
 ### <a href="#timestamp" name="timestamp"></a>`__wasi_timestamp_t` (`uint64_t`)
@@ -2185,15 +2156,14 @@ Used by [`__wasi_filestat_t`](#filestat), [`__wasi_subscription_t`](#subscriptio
 
 ### <a href="#userdata" name="userdata"></a>`__wasi_userdata_t` (`uint64_t`)
 
-User-provided value that can be attached to objects that is
-retained when extracted from the kernel.
+User-provided value that may be attached to objects that is
+retained when extracted from the implementation.
 
 Used by [`__wasi_event_t`](#event) and [`__wasi_subscription_t`](#subscription).
 
 ### <a href="#whence" name="whence"></a>`__wasi_whence_t` (`uint8_t`)
 
-Relative to which position the offset of the file descriptor
-should be set.
+The position relative to which to set the offset of the file descriptor.
 
 Used by [`__wasi_fd_seek()`](#fd_seek).
 
