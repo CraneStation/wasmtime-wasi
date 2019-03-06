@@ -1051,14 +1051,14 @@ syscalls! {
         return_encoded_errno(e)
     }
 
-    pub unsafe extern "C" fn path_unlink_directory(
+    pub unsafe extern "C" fn path_remove_directory(
         vmctx: *mut VMContext,
         fd: wasm32::__wasi_fd_t,
         path: wasm32::uintptr_t,
         path_len: wasm32::size_t,
     ) -> wasm32::__wasi_errno_t {
         trace!(
-            "path_unlink_directory(fd={:?}, path={:#x?}, path_len={})",
+            "path_remove_directory(fd={:?}, path={:#x?}, path_len={})",
             fd,
             path,
             path_len
@@ -1072,7 +1072,7 @@ syscalls! {
             Err(e) => return return_encoded_errno(e),
         };
 
-        let e = host::wasmtime_ssp_path_unlink_directory(curfds, fd, path, path_len);
+        let e = host::wasmtime_ssp_path_remove_directory(curfds, fd, path, path_len);
 
         return_encoded_errno(e)
     }
