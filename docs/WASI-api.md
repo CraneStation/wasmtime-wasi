@@ -82,6 +82,10 @@ Source: https://github.com/NuxiNL/cloudabi
 
 Return the resolution of a clock.
 
+Implementations are required to return a non-zero value. A return value of
+the maximum representable timestamp indicates the specified clock is
+unsupported.
+
 Note: This is similar to `clock_getres` in POSIX.
 
 Inputs:
