@@ -199,7 +199,7 @@ Inputs:
     The file descriptor whose attributes have to
     be obtained.
 
-- <a href="#fd_fdstat_get.buf" name="fd_fdstat_get.buf"></a><code>[\_\_wasi\_fdstat\_t](#fdstat) *<strong>buf</strong></code>
+- <a href="#fd_fdstat_get.buf" name="fd_fdstat_get.buf"></a><code>[\_\_wasi\_fdstat\_t](#fdstat) \*<strong>buf</strong></code>
 
     The buffer where the file descriptor's
     attributes are stored.
@@ -252,7 +252,7 @@ Inputs:
     The file descriptor whose attributes have to
     be obtained.
 
-- <a href="#fd_filestat_get.buf" name="fd_filestat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#fd_filestat_get.buf" name="fd_filestat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) \*<strong>buf</strong></code>
 
     The buffer where the file's attributes are
     stored.
@@ -312,7 +312,7 @@ Inputs:
     The file descriptor from which data should be
     read.
 
-- <a href="#fd_pread.iovs" name="fd_pread.iovs"></a><code>const [\_\_wasi\_iovec\_t](#iovec) *<strong>iovs</strong></code> and <a href="#fd_pread.iovs_len" name="fd_pread.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_pread.iovs" name="fd_pread.iovs"></a><code>const [\_\_wasi\_iovec\_t](#iovec) \*<strong>iovs</strong></code> and <a href="#fd_pread.iovs_len" name="fd_pread.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be stored.
@@ -342,7 +342,7 @@ Inputs:
     The file descriptor to which data should be
     written.
 
-- <a href="#fd_pwrite.iovs" name="fd_pwrite.iovs"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) *<strong>iovs</strong></code> and <a href="#fd_pwrite.iovs_len" name="fd_pwrite.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_pwrite.iovs" name="fd_pwrite.iovs"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) \*<strong>iovs</strong></code> and <a href="#fd_pwrite.iovs_len" name="fd_pwrite.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be retrieved.
@@ -371,7 +371,7 @@ Inputs:
     The file descriptor from which data should be
     read.
 
-- <a href="#fd_read.iovs" name="fd_read.iovs"></a><code>const [\_\_wasi\_iovec\_t](#iovec) *<strong>iovs</strong></code> and <a href="#fd_read.iovs_len" name="fd_read.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_read.iovs" name="fd_read.iovs"></a><code>const [\_\_wasi\_iovec\_t](#iovec) \*<strong>iovs</strong></code> and <a href="#fd_read.iovs_len" name="fd_read.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be stored.
@@ -404,7 +404,7 @@ Inputs:
     The directory from which to read the directory
     entries.
 
-- <a href="#fd_readdir.buf" name="fd_readdir.buf"></a><code>void *<strong>buf</strong></code> and <a href="#fd_readdir.buf_len" name="fd_readdir.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
+- <a href="#fd_readdir.buf" name="fd_readdir.buf"></a><code>void \*<strong>buf</strong></code> and <a href="#fd_readdir.buf_len" name="fd_readdir.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
 
     The buffer where directory entries are stored.
 
@@ -519,7 +519,7 @@ Inputs:
     The file descriptor to which data should be
     written.
 
-- <a href="#fd_write.iovs" name="fd_write.iovs"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) *<strong>iovs</strong></code> and <a href="#fd_write.iovs_len" name="fd_write.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
+- <a href="#fd_write.iovs" name="fd_write.iovs"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) \*<strong>iovs</strong></code> and <a href="#fd_write.iovs_len" name="fd_write.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors where data
     should be retrieved.
@@ -543,7 +543,7 @@ Inputs:
     The working directory at which the resolution
     of the directory to be created starts.
 
-- <a href="#path_create_directory.path" name="path_create_directory.path"></a><code>const char *<strong>path</strong></code> and <a href="#path_create_directory.path_len" name="path_create_directory.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#path_create_directory.path" name="path_create_directory.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_create_directory.path_len" name="path_create_directory.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path at which the directory should be created.
 
@@ -564,12 +564,12 @@ Inputs:
     Flags determining the method of how the path is
     resolved.
 
-- <a href="#path_filestat_get.path" name="path_filestat_get.path"></a><code>const char *<strong>path</strong></code> and <a href="#path_filestat_get.path_len" name="path_filestat_get.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#path_filestat_get.path" name="path_filestat_get.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_filestat_get.path_len" name="path_filestat_get.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path of the file whose attributes have to
     be obtained.
 
-- <a href="#path_filestat_get.buf" name="path_filestat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) *<strong>buf</strong></code>
+- <a href="#path_filestat_get.buf" name="path_filestat_get.buf"></a><code>[\_\_wasi\_filestat\_t](#filestat) \*<strong>buf</strong></code>
 
     The buffer where the file's attributes are
     stored.
@@ -593,7 +593,7 @@ Inputs:
     Flags determining the method of how the path is
     resolved.
 
-- <a href="#path_filestat_set_times.path" name="path_filestat_set_times.path"></a><code>const char *<strong>path</strong></code> and <a href="#path_filestat_set_times.path_len" name="path_filestat_set_times.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#path_filestat_set_times.path" name="path_filestat_set_times.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_filestat_set_times.path_len" name="path_filestat_set_times.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path of the file whose attributes have to
     be adjusted.
@@ -626,7 +626,7 @@ Inputs:
     Flags determining the method of how the path is
     resolved.
 
-- <a href="#path_link.old_path" name="path_link.old_path"></a><code>const char *<strong>old\_path</strong></code> and <a href="#path_link.old_path_len" name="path_link.old_path_len"></a><code>size\_t <strong>old\_path\_len</strong></code>
+- <a href="#path_link.old_path" name="path_link.old_path"></a><code>const char \*<strong>old\_path</strong></code> and <a href="#path_link.old_path_len" name="path_link.old_path_len"></a><code>size\_t <strong>old\_path\_len</strong></code>
 
     The source path of the file that should be
     hard linked.
@@ -636,7 +636,7 @@ Inputs:
     The working directory at which the resolution
     of the destination path starts.
 
-- <a href="#path_link.new_path" name="path_link.new_path"></a><code>const char *<strong>new\_path</strong></code> and <a href="#path_link.new_path_len" name="path_link.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
+- <a href="#path_link.new_path" name="path_link.new_path"></a><code>const char \*<strong>new\_path</strong></code> and <a href="#path_link.new_path_len" name="path_link.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
 
     The destination path at which the hard link
     should be created.
@@ -657,7 +657,7 @@ Inputs:
     Flags determining the method of how the path is
     resolved.
 
-- <a href="#path_open.path" name="path_open.path"></a><code>const char *<strong>path</strong></code> and <a href="#path_open.path_len" name="path_open.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#path_open.path" name="path_open.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_open.path_len" name="path_open.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path of the file that should be opened.
 
@@ -700,12 +700,12 @@ Inputs:
     The working directory at which the resolution
     of the path of the symbolic starts.
 
-- <a href="#path_readlink.path" name="path_readlink.path"></a><code>const char *<strong>path</strong></code> and <a href="#path_readlink.path_len" name="path_readlink.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#path_readlink.path" name="path_readlink.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_readlink.path_len" name="path_readlink.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path of the symbolic link whose contents
     should be read.
 
-- <a href="#path_readlink.buf" name="path_readlink.buf"></a><code>char *<strong>buf</strong></code> and <a href="#path_readlink.buf_len" name="path_readlink.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
+- <a href="#path_readlink.buf" name="path_readlink.buf"></a><code>char \*<strong>buf</strong></code> and <a href="#path_readlink.buf_len" name="path_readlink.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
 
     The buffer where the contents of the symbolic
     link should be stored.
@@ -731,7 +731,7 @@ Inputs:
     The working directory at which the resolution
     of the path starts.
 
-- <a href="#path_remove_directory.path" name="path_remove_directory.path"></a><code>const char *<strong>path</strong></code> and <a href="#path_remove_directory.path_len" name="path_remove_directory.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#path_remove_directory.path" name="path_remove_directory.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_remove_directory.path_len" name="path_remove_directory.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path that needs to be removed.
 
@@ -746,7 +746,7 @@ Inputs:
     The working directory at which the resolution
     of the source path starts.
 
-- <a href="#path_rename.old_path" name="path_rename.old_path"></a><code>const char *<strong>old\_path</strong></code> and <a href="#path_rename.old_path_len" name="path_rename.old_path_len"></a><code>size\_t <strong>old\_path\_len</strong></code>
+- <a href="#path_rename.old_path" name="path_rename.old_path"></a><code>const char \*<strong>old\_path</strong></code> and <a href="#path_rename.old_path_len" name="path_rename.old_path_len"></a><code>size\_t <strong>old\_path\_len</strong></code>
 
     The source path of the file that should be
     renamed.
@@ -756,7 +756,7 @@ Inputs:
     The working directory at which the resolution
     of the destination path starts.
 
-- <a href="#path_rename.new_path" name="path_rename.new_path"></a><code>const char *<strong>new\_path</strong></code> and <a href="#path_rename.new_path_len" name="path_rename.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
+- <a href="#path_rename.new_path" name="path_rename.new_path"></a><code>const char \*<strong>new\_path</strong></code> and <a href="#path_rename.new_path_len" name="path_rename.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
 
     The destination path to which the file should
     be renamed.
@@ -767,7 +767,7 @@ Creates a symbolic link.
 
 Inputs:
 
-- <a href="#path_symlink.old_path" name="path_symlink.old_path"></a><code>const char *<strong>old\_path</strong></code> and <a href="#path_symlink.old_path_len" name="path_symlink.old_path_len"></a><code>size\_t <strong>old_path\_len</strong></code>
+- <a href="#path_symlink.old_path" name="path_symlink.old_path"></a><code>const char \*<strong>old\_path</strong></code> and <a href="#path_symlink.old_path_len" name="path_symlink.old_path_len"></a><code>size\_t <strong>old_path\_len</strong></code>
 
     The contents of the symbolic link.
 
@@ -776,7 +776,7 @@ Inputs:
     The working directory at which the resolution
     of the destination path starts.
 
-- <a href="#path_symlink.new_path" name="path_symlink.new_path"></a><code>const char *<strong>new\_path</strong></code> and <a href="#path_symlink.new_path_len" name="path_symlink.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
+- <a href="#path_symlink.new_path" name="path_symlink.new_path"></a><code>const char \*<strong>new\_path</strong></code> and <a href="#path_symlink.new_path_len" name="path_symlink.new_path_len"></a><code>size\_t <strong>new\_path\_len</strong></code>
 
     The destination path at which the symbolic
     link should be created.
@@ -796,7 +796,7 @@ Inputs:
     The working directory at which the resolution
     of the path starts.
 
-- <a href="#path_unlink_file.path" name="path_unlink_file.path"></a><code>const char *<strong>path</strong></code> and <a href="#path_unlink_file.path_len" name="path_unlink_file.path_len"></a><code>size\_t <strong>path\_len</strong></code>
+- <a href="#path_unlink_file.path" name="path_unlink_file.path"></a><code>const char \*<strong>path</strong></code> and <a href="#path_unlink_file.path_len" name="path_unlink_file.path_len"></a><code>size\_t <strong>path\_len</strong></code>
 
     The path that needs to be unlinked.
 
@@ -806,11 +806,11 @@ Concurrently polls for the occurrence of a set of events.
 
 Inputs:
 
-- <a href="#poll_oneoff.in" name="poll_oneoff.in"></a><code>const [\_\_wasi\_subscription\_t](#subscription) *<strong>in</strong></code>
+- <a href="#poll_oneoff.in" name="poll_oneoff.in"></a><code>const [\_\_wasi\_subscription\_t](#subscription) \*<strong>in</strong></code>
 
     The events to which to subscribe.
 
-- <a href="#poll_oneoff.out" name="poll_oneoff.out"></a><code>[\_\_wasi\_event\_t](#event) *<strong>out</strong></code>
+- <a href="#poll_oneoff.out" name="poll_oneoff.out"></a><code>[\_\_wasi\_event\_t](#event) \*<strong>out</strong></code>
 
     The events that have occurred.
 
@@ -856,7 +856,7 @@ as the seed for a userspace pseudo-random number generator.
 
 Inputs:
 
-- <a href="#random_get.buf" name="random_get.buf"></a><code>void *<strong>buf</strong></code> and <a href="#random_get.buf_len" name="random_get.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
+- <a href="#random_get.buf" name="random_get.buf"></a><code>void \*<strong>buf</strong></code> and <a href="#random_get.buf_len" name="random_get.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
 
     The buffer that needs to be filled with random
     data.
@@ -876,7 +876,7 @@ Inputs:
     The socket on which a message should be
     received.
 
-- <a href="#sock_recv.ri_data" name="sock_recv.ri_data"></a><code>const [\_\_wasi\_iovec\_t](#iovec) *<strong>ri\_data</strong></code> and <a href="#sock_recv.ri_data_len" name="sock_recv.ri_data_len"></a><code>size\_t <strong>ri\_data\_len</strong></code>
+- <a href="#sock_recv.ri_data" name="sock_recv.ri_data"></a><code>const [\_\_wasi\_iovec\_t](#iovec) \*<strong>ri\_data</strong></code> and <a href="#sock_recv.ri_data_len" name="sock_recv.ri_data_len"></a><code>size\_t <strong>ri\_data\_len</strong></code>
 
     List of scatter/gather vectors where message data
     should be stored.
@@ -905,7 +905,7 @@ Inputs:
 
     The socket on which a message should be sent.
 
-- <a href="#sock_send.si_data" name="sock_send.si_data"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) *<strong>si\_data</strong></code> and <a href="#sock_send.si_data_len" name="sock_send.si_data_len"></a><code>size\_t <strong>si\_data\_len</strong></code>
+- <a href="#sock_send.si_data" name="sock_send.si_data"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) \*<strong>si\_data</strong></code> and <a href="#sock_send.si_data_len" name="sock_send.si_data_len"></a><code>size\_t <strong>si\_data\_len</strong></code>
 
     List of scatter/gather vectors where message data
     should be retrieved.
@@ -983,7 +983,7 @@ Used by [`__wasi_sock_send()`](#sock_send), [`__wasi_fd_pwrite()`](#fd_pwrite), 
 
 Members:
 
-- <a href="#ciovec.buf" name="ciovec.buf"></a><code>const void *<strong>buf</strong></code> and <a href="#ciovec.buf_len" name="ciovec.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
+- <a href="#ciovec.buf" name="ciovec.buf"></a><code>const void \*<strong>buf</strong></code> and <a href="#ciovec.buf_len" name="ciovec.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
 
     The address and length of the buffer to be written.
 
@@ -1680,7 +1680,7 @@ Used by [`__wasi_sock_recv()`](#sock_recv), [`__wasi_fd_pread()`](#fd_pread), an
 
 Members:
 
-- <a href="#iovec.buf" name="iovec.buf"></a><code>void *<strong>buf</strong></code> and <a href="#iovec.buf_len" name="iovec.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
+- <a href="#iovec.buf" name="iovec.buf"></a><code>void \*<strong>buf</strong></code> and <a href="#iovec.buf_len" name="iovec.buf_len"></a><code>size\_t <strong>buf\_len</strong></code>
 
     The address and length of the buffer to be filled.
 
@@ -2123,13 +2123,13 @@ Used by [`__wasi_poll_oneoff()`](#poll_oneoff).
 
 Members:
 
-- <a href="#subscription.userdata" name="subscription.userdata"></a><code>[__wasi\_userdata\_t](#userdata) <strong>userdata</strong></code>
+- <a href="#subscription.userdata" name="subscription.userdata"></a><code>[\_\_wasi\_userdata\_t](#userdata) <strong>userdata</strong></code>
 
     User-provided value that is attached to the
     subscription in the kernel and returned through
     [`__wasi_event_t::userdata`](#event.userdata).
 
-- <a href="#subscription.type" name="subscription.type"></a><code>[__wasi\_eventtype\_t](#eventtype) <strong>type</strong></code>
+- <a href="#subscription.type" name="subscription.type"></a><code>[\_\_wasi\_eventtype\_t](#eventtype) <strong>type</strong></code>
 
     The type of the event to which to subscribe.
 
@@ -2137,7 +2137,7 @@ Members:
 
     - <a href="#subscription.u.clock" name="subscription.u.clock"></a>**`u.clock`**
 
-        - <a href="#subscription.u.clock.identifier" name="subscription.u.clock.identifier"></a><code>[__wasi\_userdata\_t](#userdata) <strong>identifier</strong></code>
+        - <a href="#subscription.u.clock.identifier" name="subscription.u.clock.identifier"></a><code>[\_\_wasi\_userdata\_t](#userdata) <strong>identifier</strong></code>
 
             The user-defined unique
             identifier of the clock.
