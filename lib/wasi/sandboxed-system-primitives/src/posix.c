@@ -1946,17 +1946,17 @@ static void convert_utimens_arguments(
     __wasi_fstflags_t fstflags,
     struct timespec *ts
 ) {
-  if ((fstflags & __WASI_PATH_FILESTAT_SET_ATIM_NOW) != 0) {
+  if ((fstflags & __WASI_FILESTAT_SET_ATIM_NOW) != 0) {
     ts[0].tv_nsec = UTIME_NOW;
-  } else if ((fstflags & __WASI_PATH_FILESTAT_SET_ATIM) != 0) {
+  } else if ((fstflags & __WASI_FILESTAT_SET_ATIM) != 0) {
     convert_timestamp(st_atim, &ts[0]);
   } else {
     ts[0].tv_nsec = UTIME_OMIT;
   }
 
-  if ((fstflags & __WASI_PATH_FILESTAT_SET_MTIM_NOW) != 0) {
+  if ((fstflags & __WASI_FILESTAT_SET_MTIM_NOW) != 0) {
     ts[1].tv_nsec = UTIME_NOW;
-  } else if ((fstflags & __WASI_PATH_FILESTAT_SET_MTIM) != 0) {
+  } else if ((fstflags & __WASI_FILESTAT_SET_MTIM) != 0) {
     convert_timestamp(st_mtim, &ts[1]);
   } else {
     ts[1].tv_nsec = UTIME_OMIT;
@@ -1992,8 +1992,8 @@ __wasi_errno_t wasmtime_ssp_fd_filestat_set_times(
     __wasi_timestamp_t st_mtim,
     __wasi_fstflags_t fstflags
 ) {
-  if ((fstflags & ~(__WASI_PATH_FILESTAT_SET_ATIM | __WASI_PATH_FILESTAT_SET_ATIM_NOW |
-                    __WASI_PATH_FILESTAT_SET_MTIM | __WASI_PATH_FILESTAT_SET_MTIM_NOW)) != 0)
+  if ((fstflags & ~(__WASI_FILESTAT_SET_ATIM | __WASI_FILESTAT_SET_ATIM_NOW |
+                    __WASI_FILESTAT_SET_MTIM | __WASI_FILESTAT_SET_MTIM_NOW)) != 0)
     return __WASI_EINVAL;
 
   struct fd_object *fo;
@@ -2066,8 +2066,8 @@ __wasi_errno_t wasmtime_ssp_path_filestat_set_times(
     __wasi_timestamp_t st_mtim,
     __wasi_fstflags_t fstflags
 ) {
-  if ((fstflags & ~(__WASI_PATH_FILESTAT_SET_ATIM | __WASI_PATH_FILESTAT_SET_ATIM_NOW |
-                    __WASI_PATH_FILESTAT_SET_MTIM | __WASI_PATH_FILESTAT_SET_MTIM_NOW)) != 0)
+  if ((fstflags & ~(__WASI_FILESTAT_SET_ATIM | __WASI_FILESTAT_SET_ATIM_NOW |
+                    __WASI_FILESTAT_SET_MTIM | __WASI_FILESTAT_SET_MTIM_NOW)) != 0)
     return __WASI_EINVAL;
 
   struct path_access pa;

@@ -1647,22 +1647,22 @@ Used by [`__wasi_fd_filestat_set_times()`](#fd_filestat_set_times) and [`__wasi_
 
 Possible values:
 
-- <a href="#fstflags.atim" name="fstflags.atim"></a>**`__WASI_PATH_FILESTAT_SET_ATIM`**
+- <a href="#fstflags.atim" name="fstflags.atim"></a>**`__WASI_FILESTAT_SET_ATIM`**
 
     Adjust the last data access timestamp to the value
     stored in [`__wasi_filestat_t::st_atim`](#filestat.st_atim).
 
-- <a href="#fstflags.atim_now" name="fstflags.atim_now"></a>**`__WASI_PATH_FILESTAT_SET_ATIM_NOW`**
+- <a href="#fstflags.atim_now" name="fstflags.atim_now"></a>**`__WASI_FILESTAT_SET_ATIM_NOW`**
 
     Adjust the last data access timestamp to the time
     of clock [`__WASI_CLOCK_REALTIME`](#clockid.realtime).
 
-- <a href="#fstflags.mtim" name="fstflags.mtim"></a>**`__WASI_PATH_FILESTAT_SET_MTIM`**
+- <a href="#fstflags.mtim" name="fstflags.mtim"></a>**`__WASI_FILESTAT_SET_MTIM`**
 
     Adjust the last data modification timestamp to the
     value stored in [`__wasi_filestat_t::st_mtim`](#filestat.st_mtim).
 
-- <a href="#fstflags.mtim_now" name="fstflags.mtim_now"></a>**`__WASI_PATH_FILESTAT_SET_MTIM_NOW`**
+- <a href="#fstflags.mtim_now" name="fstflags.mtim_now"></a>**`__WASI_FILESTAT_SET_MTIM_NOW`**
 
     Adjust the last data modification timestamp to the
     time of clock [`__WASI_CLOCK_REALTIME`](#clockid.realtime).
