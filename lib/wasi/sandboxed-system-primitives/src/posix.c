@@ -2154,7 +2154,7 @@ __wasi_errno_t wasmtime_ssp_path_unlink_file(
   return 0;
 }
 
-__wasi_errno_t wasmtime_ssp_path_unlink_directory(
+__wasi_errno_t wasmtime_ssp_path_remove_directory(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
@@ -2164,7 +2164,7 @@ __wasi_errno_t wasmtime_ssp_path_unlink_directory(
 ) {
   struct path_access pa;
   __wasi_errno_t error = path_get_nofollow(curfds,
-      &pa, fd, path, pathlen, __WASI_RIGHT_PATH_UNLINK_DIRECTORY, 0, true);
+      &pa, fd, path, pathlen, __WASI_RIGHT_PATH_REMOVE_DIRECTORY, 0, true);
   if (error != 0)
     return error;
 

@@ -27,7 +27,7 @@
    __WASI_RIGHT_FD_FILESTAT_GET | __WASI_RIGHT_FD_FILESTAT_SET_TIMES |     \
    __WASI_RIGHT_FD_FILESTAT_SET_SIZE |                                     \
    __WASI_RIGHT_PATH_SYMLINK | __WASI_RIGHT_PATH_UNLINK_FILE |             \
-   __WASI_RIGHT_PATH_UNLINK_DIRECTORY |                                    \
+   __WASI_RIGHT_PATH_REMOVE_DIRECTORY |                                    \
    __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_SOCK_SHUTDOWN)
 
 // Block and character device interaction is outside the scope of
@@ -50,7 +50,7 @@
    __WASI_RIGHT_PATH_FILESTAT_SET_TIMES |                              \
    __WASI_RIGHT_FD_FILESTAT_GET | __WASI_RIGHT_FD_FILESTAT_SET_TIMES | \
    __WASI_RIGHT_PATH_SYMLINK | __WASI_RIGHT_PATH_UNLINK_FILE |         \
-   __WASI_RIGHT_PATH_UNLINK_DIRECTORY |                                \
+   __WASI_RIGHT_PATH_REMOVE_DIRECTORY |                                \
    __WASI_RIGHT_POLL_FD_READWRITE)
 #define RIGHTS_DIRECTORY_INHERITING \
   (RIGHTS_DIRECTORY_BASE | RIGHTS_REGULAR_FILE_BASE)

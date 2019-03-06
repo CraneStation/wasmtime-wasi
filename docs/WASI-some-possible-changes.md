@@ -41,8 +41,8 @@ were required but not present.
 
 `__wasi_fd_readdir` isn't really about files, so maybe it could be
 `__wasi_dir_read`, along with renaming `__wasi_path_create_directory`
-to `__wasi_dir_create`, and `__wasi_path_unlink_directory` to
-`__wasi_dir_unlink`.
+to `__wasi_dir_create`, and `__wasi_path_remove_directory` to
+`__wasi_dir_remove`.
 
 We could also split `__WASI_RIGHT_PATH_OPEN` into file vs directory, and
 then maybe also split a `__wasi_dir_open` out of `__wasi_path_open` too

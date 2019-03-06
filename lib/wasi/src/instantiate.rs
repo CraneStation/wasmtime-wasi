@@ -82,7 +82,7 @@ pub fn instantiate_wasi(
     signature!(path_filestat_set_times);
     signature!(path_symlink);
     signature!(path_unlink_file);
-    signature!(path_unlink_directory);
+    signature!(path_remove_directory);
     signature!(poll_oneoff);
     signature!(proc_exit);
     signature!(proc_raise);

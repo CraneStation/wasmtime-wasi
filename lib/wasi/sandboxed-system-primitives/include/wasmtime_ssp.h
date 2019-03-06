@@ -206,7 +206,7 @@ typedef uint64_t __wasi_rights_t;
 #define __WASI_RIGHT_FD_FILESTAT_SET_SIZE    (0x0000000000400000)
 #define __WASI_RIGHT_FD_FILESTAT_SET_TIMES   (0x0000000000800000)
 #define __WASI_RIGHT_PATH_SYMLINK            (0x0000000001000000)
-#define __WASI_RIGHT_PATH_UNLINK_DIRECTORY   (0x0000000002000000)
+#define __WASI_RIGHT_PATH_REMOVE_DIRECTORY   (0x0000000002000000)
 #define __WASI_RIGHT_PATH_UNLINK_FILE        (0x0000000004000000)
 #define __WASI_RIGHT_POLL_FD_READWRITE       (0x0000000008000000)
 #define __WASI_RIGHT_SOCK_SHUTDOWN           (0x0000000010000000)
@@ -713,14 +713,14 @@ __wasi_errno_t wasmtime_ssp_path_unlink_file(
     size_t path_len
 ) WASMTIME_SSP_SYSCALL_NAME(path_unlink_file) __attribute__((__warn_unused_result__));
 
-__wasi_errno_t wasmtime_ssp_path_unlink_directory(
+__wasi_errno_t wasmtime_ssp_path_remove_directory(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
     __wasi_fd_t fd,
     const char *path,
     size_t path_len
-) WASMTIME_SSP_SYSCALL_NAME(path_unlink_directory) __attribute__((__warn_unused_result__));
+) WASMTIME_SSP_SYSCALL_NAME(path_remove_directory) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_poll_oneoff(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)

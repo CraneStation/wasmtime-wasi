@@ -28,13 +28,13 @@ unsafe fn decode_ptr(
                     Some(sum) => sum,
                     None => {
                         println!("!!! overflow");
-                        return Err(host::__WASI_EFAULT as host::__wasi_errno_t);
+                        return Err(host::__WASI_EFAULT as host::__wasi_errno_t); // fixme: this should trap instead of EFAULT
                     }
                 };
                 // Check for out of bounds.
                 if last >= (*definition).current_length {
                     println!("!!! out of bounds");
-                    return Err(host::__WASI_EFAULT as host::__wasi_errno_t);
+                    return Err(host::__WASI_EFAULT as host::__wasi_errno_t); // fixme: this should trap instead of EFAULT
                 }
             }
             // Check alignment.
