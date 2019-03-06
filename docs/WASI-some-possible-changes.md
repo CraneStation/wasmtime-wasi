@@ -7,6 +7,13 @@ of POSIX aren't unambiguously ideal.
 
 These are planned but not implemented yet.
 
+## Move higher-level and unused errno code out of the core API.
+
+The core API currently defines errno codes such as `EDOM` which are
+not used for anything. POSIX requires them to be defined, however
+that can be done in the higher-level libraries, rather than in the
+WASI core API itself.
+
 ## Detecting EOF from read/recv explicitly.
 
 POSIX's `read` returns 0 if and only if it reaches the end of a file or stream.
