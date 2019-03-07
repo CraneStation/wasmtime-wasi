@@ -141,9 +141,7 @@ pub type __wasi_lookupflags_t = u32;
 pub type __wasi_oflags_t = u16;
 pub type __wasi_riflags_t = u16;
 pub type __wasi_rights_t = u64;
-pub type __wasi_roflags_t = u16;
 pub type __wasi_sdflags_t = u8;
-pub type __wasi_siflags_t = u16;
 pub type __wasi_signal_t = u8;
 pub type __wasi_subclockflags_t = u16;
 pub type __wasi_timestamp_t = u64;
@@ -382,8 +380,8 @@ fn bindgen_test_layout_wasi_event_t() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct __wasi_fdstat_t {
-    pub fs_filetype: __wasi_filetype_t,
     pub fs_flags: __wasi_fdflags_t,
+    pub __bindgen_padding_1: u16,
     pub __bindgen_padding_0: u32,
     pub fs_rights_base: __wasi_rights_t,
     pub fs_rights_inheriting: __wasi_rights_t,
@@ -396,18 +394,8 @@ fn bindgen_test_layout_wasi_fdstat_t() {
         concat!("Size of: ", stringify!(__wasi_fdstat_t))
     );
     assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__wasi_fdstat_t>())).fs_filetype as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__wasi_fdstat_t),
-            "::",
-            stringify!(fs_filetype)
-        )
-    );
-    assert_eq!(
         unsafe { &(*(::std::ptr::null::<__wasi_fdstat_t>())).fs_flags as *const _ as usize },
-        2usize,
+        0usize,
         concat!(
             "Offset of field: ",
             stringify!(__wasi_fdstat_t),
@@ -1106,8 +1094,8 @@ pub const __WASI_O_CREAT: __wasi_oflags_t = 1;
 pub const __WASI_O_DIRECTORY: __wasi_oflags_t = 2;
 pub const __WASI_O_EXCL: __wasi_oflags_t = 4;
 pub const __WASI_O_TRUNC: __wasi_oflags_t = 8;
-pub const __WASI_SOCK_RECV_PEEK: __wasi_riflags_t = 1;
-pub const __WASI_SOCK_RECV_WAITALL: __wasi_riflags_t = 2;
+pub const __WASI_FD_PEEK: __wasi_riflags_t = 1;
+pub const __WASI_FD_WAITALL: __wasi_riflags_t = 2;
 pub const __WASI_RIGHT_FD_DATASYNC: __wasi_rights_t = 1;
 pub const __WASI_RIGHT_FD_READ: __wasi_rights_t = 2;
 pub const __WASI_RIGHT_FD_SEEK: __wasi_rights_t = 4;
@@ -1136,8 +1124,10 @@ pub const __WASI_RIGHT_PATH_SYMLINK: __wasi_rights_t = 16777216;
 pub const __WASI_RIGHT_PATH_REMOVE_DIRECTORY: __wasi_rights_t = 33554432;
 pub const __WASI_RIGHT_PATH_UNLINK_FILE: __wasi_rights_t = 67108864;
 pub const __WASI_RIGHT_POLL_FD_READWRITE: __wasi_rights_t = 134217728;
-pub const __WASI_RIGHT_SOCK_SHUTDOWN: __wasi_rights_t = 268435456;
-pub const __WASI_SOCK_RECV_DATA_TRUNCATED: __wasi_roflags_t = 1;
+pub const __WASI_RIGHT_FD_SHUTDOWN: __wasi_rights_t = 268435456;
+pub const __WASI_RIGHT_FD_PEEK: __wasi_rights_t = 536870912;
+pub const __WASI_RIGHT_FD_WAITALL: __wasi_rights_t = 1073741824;
+pub const __WASI_RIGHT_FD_ISATTY: __wasi_rights_t = 2147483648;
 pub const __WASI_SHUT_RD: __wasi_sdflags_t = 1;
 pub const __WASI_SHUT_WR: __wasi_sdflags_t = 2;
 pub const __WASI_SIGHUP: __wasi_signal_t = 1;

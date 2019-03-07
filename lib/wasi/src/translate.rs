@@ -138,10 +138,6 @@ pub fn decode_lookupflags(lookupflags: wasm32::__wasi_lookupflags_t) -> host::__
     lookupflags
 }
 
-pub fn decode_roflags(roflags: wasm32::__wasi_roflags_t) -> host::__wasi_roflags_t {
-    roflags
-}
-
 pub fn decode_oflags(_oflags: wasm32::__wasi_oflags_t) -> host::__wasi_oflags_t {
     unimplemented!("decode_oflags");
 }
@@ -193,10 +189,6 @@ pub fn encode_rights(rights: host::__wasi_rights_t) -> wasm32::__wasi_rights_t {
 
 pub fn decode_riflags(riflags: wasm32::__wasi_riflags_t) -> host::__wasi_riflags_t {
     riflags
-}
-
-pub fn decode_siflags(siflags: wasm32::__wasi_siflags_t) -> host::__wasi_siflags_t {
-    siflags
 }
 
 pub unsafe fn decode_char_slice(
@@ -353,25 +345,6 @@ pub unsafe fn encode_filesize_byref(
     )
 }
 
-pub unsafe fn decode_roflags_byref(
-    vmctx: &mut VMContext,
-    roflags_ptr: wasm32::uintptr_t,
-) -> Result<host::__wasi_roflags_t, host::__wasi_errno_t> {
-    decode_pointee::<wasm32::__wasi_roflags_t>(vmctx, roflags_ptr).map(decode_roflags)
-}
-
-pub unsafe fn encode_roflags_byref(
-    vmctx: &mut VMContext,
-    roflags_ptr: wasm32::uintptr_t,
-    host_roflags: host::__wasi_roflags_t,
-) -> Result<(), host::__wasi_errno_t> {
-    encode_pointee::<wasm32::__wasi_roflags_t>(
-        vmctx,
-        roflags_ptr,
-        wasm32::__wasi_roflags_t::cast(host_roflags),
-    )
-}
-
 pub unsafe fn decode_usize_byref(
     vmctx: &mut VMContext,
     usize_ptr: wasm32::uintptr_t,
@@ -394,7 +367,6 @@ pub unsafe fn decode_fdstat_byref(
     let wasm32_fdstat = decode_pointee::<wasm32::__wasi_fdstat_t>(vmctx, fdstat_ptr)?;
 
     Ok(host::__wasi_fdstat_t {
-        fs_filetype: decode_filetype(wasm32_fdstat.fs_filetype),
         fs_flags: decode_fdflags(wasm32_fdstat.fs_flags),
         fs_rights_base: decode_rights(wasm32_fdstat.fs_rights_base),
         fs_rights_inheriting: decode_rights(wasm32_fdstat.fs_rights_inheriting),
@@ -407,9 +379,9 @@ pub unsafe fn encode_fdstat_byref(
     host_fdstat: host::__wasi_fdstat_t,
 ) -> Result<(), host::__wasi_errno_t> {
     let wasm32_fdstat = wasm32::__wasi_fdstat_t {
-        fs_filetype: encode_filetype(host_fdstat.fs_filetype),
         fs_flags: encode_fdflags(host_fdstat.fs_flags),
         __bindgen_padding_0: 0,
+        __bindgen_padding_1: 0,
         fs_rights_base: encode_rights(host_fdstat.fs_rights_base),
         fs_rights_inheriting: encode_rights(host_fdstat.fs_rights_inheriting),
     };

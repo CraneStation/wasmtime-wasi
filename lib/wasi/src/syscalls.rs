@@ -316,13 +316,15 @@ syscalls! {
         fd: wasm32::__wasi_fd_t,
         iovs: wasm32::uintptr_t,
         iovs_len: wasm32::size_t,
+        ri_flags: wasm32::__wasi_riflags_t,
         nread: wasm32::uintptr_t,
     ) -> wasm32::__wasi_errno_t {
         trace!(
-            "fd_read(fd={:?}, iovs={:#x?}, iovs_len={:?}, nread={:#x?})",
+            "fd_read(fd={:?}, iovs={:#x?}, iovs_len={:?}, ri_flags={:#x?}, nread={:#x?})",
             fd,
             iovs,
             iovs_len,
+            ri_flags,
             nread
         );
 
@@ -333,12 +335,13 @@ syscalls! {
             Ok(iovs) => iovs,
             Err(e) => return return_encoded_errno(e),
         };
+        let ri_flags = decode_riflags(ri_flags);
         let mut host_nread = match decode_usize_byref(vmctx, nread) {
             Ok(host_nread) => host_nread,
             Err(e) => return return_encoded_errno(e),
         };
 
-        let e = host::wasmtime_ssp_fd_read(curfds, fd, iovs.as_ptr(), iovs.len(), &mut host_nread);
+        let e = host::wasmtime_ssp_fd_read(curfds, fd, iovs.as_ptr(), iovs.len(), ri_flags, &mut host_nread);
 
         trace!("     | *nread={:?}", host_nread);
         encode_usize_byref(vmctx, nread, host_nread).unwrap();
@@ -507,13 +510,15 @@ syscalls! {
         fd: wasm32::__wasi_fd_t,
         iovs: wasm32::uintptr_t,
         iovs_len: wasm32::size_t,
+        si_flags: wasm32::__wasi_siflags_t,
         nwritten: wasm32::uintptr_t,
     ) -> wasm32::__wasi_errno_t {
         trace!(
-            "fd_write(fd={:?}, iovs={:#x?}, iovs_len={:?}, nwritten={:#x?})",
+            "fd_write(fd={:?}, iovs={:#x?}, iovs_len={:?}, si_flags={:#x?}, nwritten={:#x?})",
             fd,
             iovs,
             iovs_len,
+            si_flags,
             nwritten
         );
 
@@ -524,12 +529,13 @@ syscalls! {
             Ok(iovs) => iovs,
             Err(e) => return return_encoded_errno(e),
         };
+        si_flags = decode_siflags(si_flags);
         let mut host_nwritten = match decode_usize_byref(vmctx, nwritten) {
             Ok(host_nwritten) => host_nwritten,
             Err(e) => return return_encoded_errno(e),
         };
 
-        let e = host::wasmtime_ssp_fd_write(curfds, fd, iovs.as_ptr(), iovs.len(), &mut host_nwritten);
+        let e = host::wasmtime_ssp_fd_write(curfds, fd, iovs.as_ptr(), iovs.len(), si_flags, &mut host_nwritten);
 
         trace!("     | *nwritten={:?}", host_nwritten);
         encode_usize_byref(vmctx, nwritten, host_nwritten).unwrap();
@@ -1173,99 +1179,19 @@ syscalls! {
         return_encoded_errno(e)
     }
 
-    pub unsafe extern "C" fn sock_recv(
-        vmctx: *mut VMContext,
-        sock: wasm32::__wasi_fd_t,
-        ri_data: wasm32::uintptr_t,
-        ri_data_len: wasm32::size_t,
-        ri_flags: wasm32::__wasi_riflags_t,
-        ro_datalen: wasm32::uintptr_t,
-        ro_flags: wasm32::uintptr_t,
-    ) -> wasm32::__wasi_errno_t {
-        trace!(
-            "sock_recv(sock={:?}, ri_data={:#x?}, ri_data_len={}, ri_flags={:#x?}, ro_datalen={:#x?}, ro_flags={:#x?})",
-            sock,
-            ri_data, ri_data_len, ri_flags,
-            ro_datalen, ro_flags
-        );
-
-        let vmctx = &mut *vmctx;
-        let curfds = get_curfds(vmctx);
-        let sock = decode_fd(sock);
-        let ri_data = match decode_iovec_slice(vmctx, ri_data, ri_data_len) {
-            Ok(ri_data) => ri_data,
-            Err(e) => return return_encoded_errno(e),
-        };
-        let ri_flags = decode_riflags(ri_flags);
-        let mut host_ro_datalen = match decode_usize_byref(vmctx, ro_datalen) {
-            Ok(host_ro_datalen) => host_ro_datalen,
-            Err(e) => return return_encoded_errno(e),
-        };
-        let mut host_ro_flags = match decode_roflags_byref(vmctx, ro_flags) {
-            Ok(host_ro_flags) => host_ro_flags,
-            Err(e) => return return_encoded_errno(e),
-        };
-
-        let e = host::wasmtime_ssp_sock_recv(curfds, sock, ri_data.as_ptr(), ri_data.len(), ri_flags,
-                                             &mut host_ro_datalen, &mut host_ro_flags);
-
-        // TODO: Format the output for tracing.
-        trace!("     | *ro_datalen={}", host_ro_datalen);
-        trace!("     | *ro_flags={}", host_ro_flags);
-        encode_usize_byref(vmctx, ro_datalen, host_ro_datalen).unwrap();
-        encode_roflags_byref(vmctx, ro_flags, host_ro_flags).unwrap();
-
-        return_encoded_errno(e)
-    }
-
-    pub unsafe extern "C" fn sock_send(
-        vmctx: *mut VMContext,
-        sock: wasm32::__wasi_fd_t,
-        si_data: wasm32::uintptr_t,
-        si_data_len: wasm32::size_t,
-        si_flags: wasm32::__wasi_siflags_t,
-        so_datalen: wasm32::uintptr_t,
-    ) -> wasm32::__wasi_errno_t {
-        trace!(
-            "sock_send(sock={:?}, si_data={:#x?}, si_data_len={}, si_flags={:#x?}, so_datalen={:#x?})",
-            sock,
-            si_data, si_data_len, si_flags, so_datalen,
-        );
-
-        let vmctx = &mut *vmctx;
-        let curfds = get_curfds(vmctx);
-        let sock = decode_fd(sock);
-        let si_data = match decode_ciovec_slice(vmctx, si_data, si_data_len) {
-            Ok(si_data) => si_data,
-            Err(e) => return return_encoded_errno(e),
-        };
-        let si_flags = decode_siflags(si_flags);
-        let mut host_so_datalen = match decode_usize_byref(vmctx, so_datalen) {
-            Ok(so_datalen) => so_datalen,
-            Err(e) => return return_encoded_errno(e),
-        };
-
-        let e = host::wasmtime_ssp_sock_send(curfds, sock, si_data.as_ptr(), si_data.len(), si_flags, &mut host_so_datalen);
-
-        trace!("     | *so_datalen={:?}", host_so_datalen);
-        encode_usize_byref(vmctx, so_datalen, host_so_datalen).unwrap();
-
-        return_encoded_errno(e)
-    }
-
-    pub unsafe extern "C" fn sock_shutdown(
+    pub unsafe extern "C" fn fd_shutdown(
         vmctx: *mut VMContext,
         sock: wasm32::__wasi_fd_t,
         how: wasm32::__wasi_sdflags_t,
     ) -> wasm32::__wasi_errno_t {
-        trace!("sock_shutdown(sock={:?}, how={:?})", sock, how);
+        trace!("fd_shutdown(sock={:?}, how={:?})", sock, how);
 
         let vmctx = &mut *vmctx;
         let curfds = get_curfds(vmctx);
         let sock = decode_fd(sock);
         let how = decode_sdflags(how);
 
-        let e = host::wasmtime_ssp_sock_shutdown(curfds, sock, how);
+        let e = host::wasmtime_ssp_fd_shutdown(curfds, sock, how);
 
         return_encoded_errno(e)
     }

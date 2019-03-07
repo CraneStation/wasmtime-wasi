@@ -28,7 +28,9 @@
    __WASI_RIGHT_FD_FILESTAT_SET_SIZE |                                     \
    __WASI_RIGHT_PATH_SYMLINK | __WASI_RIGHT_PATH_UNLINK_FILE |             \
    __WASI_RIGHT_PATH_REMOVE_DIRECTORY |                                    \
-   __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_SOCK_SHUTDOWN)
+   __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_FD_SHUTDOWN |             \
+   __WASI_RIGHT_FD_PEEK | __WASI_RIGHT_FD_WAITALL |                        \
+   __WASI_RIGHT_FD_ISATTY)
 
 // Block and character device interaction is outside the scope of
 // CloudABI. Simply allow everything.
@@ -69,14 +71,15 @@
 #define RIGHTS_SOCKET_BASE                                     \
   (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FD_FDSTAT_SET_FLAGS |   \
    __WASI_RIGHT_FD_WRITE | __WASI_RIGHT_FD_FILESTAT_GET |      \
-   __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_SOCK_SHUTDOWN)
+   __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_FD_SHUTDOWN | \
+   __WASI_RIGHT_FD_PEEK | __WASI_RIGHT_FD_WAITALL)
 #define RIGHTS_SOCKET_INHERITING RIGHTS_ALL
 
 // Operations that apply to TTYs.
 #define RIGHTS_TTY_BASE                                        \
   (__WASI_RIGHT_FD_READ | __WASI_RIGHT_FD_FDSTAT_SET_FLAGS |   \
    __WASI_RIGHT_FD_WRITE | __WASI_RIGHT_FD_FILESTAT_GET |      \
-   __WASI_RIGHT_POLL_FD_READWRITE)
+   __WASI_RIGHT_POLL_FD_READWRITE | __WASI_RIGHT_FD_ISATTY)
 #define RIGHTS_TTY_INHERITING 0
 
 #endif

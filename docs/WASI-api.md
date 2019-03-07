@@ -56,6 +56,7 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_fd_readdir()`](#fd_readdir)
 - [`__wasi_fd_renumber()`](#fd_renumber)
 - [`__wasi_fd_seek()`](#fd_seek)
+- [`__wasi_fd_shutdown()`](#fd_shutdown)
 - [`__wasi_fd_sync()`](#fd_sync)
 - [`__wasi_fd_tell()`](#fd_tell)
 - [`__wasi_fd_write()`](#fd_write)
@@ -74,9 +75,6 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_proc_raise()`](#proc_raise)
 - [`__wasi_random_get()`](#random_get)
 - [`__wasi_sched_yield()`](#sched_yield)
-- [`__wasi_sock_recv()`](#sock_recv)
-- [`__wasi_sock_send()`](#sock_send)
-- [`__wasi_sock_shutdown()`](#sock_shutdown)
 
 ### <a href="#clock_res_get" name="clock_res_get"></a>`__wasi_clock_res_get()`
 
@@ -358,7 +356,11 @@ Outputs:
 
 Read from a file descriptor.
 
-Note: This is similar to `readv` in POSIX.
+Return [`__WASI_EMSGSIZE`](#errno.msgsize) if the message was a datagram
+message and its data was larger than the provided buffers, and was truncated
+to fit.
+
+Note: This is similar to a union of `readv` and `recv` in POSIX.
 
 Inputs:
 
@@ -369,6 +371,10 @@ Inputs:
 - <a href="#fd_read.iovs" name="fd_read.iovs"></a><code>const [\_\_wasi\_iovec\_t](#iovec) \*<strong>iovs</strong></code> and <a href="#fd_read.iovs_len" name="fd_read.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors to which to store data.
+
+- <a href="#fd_read.ri_flags" name="fd_read.ri_flags"></a><code>[\_\_wasi\_riflags\_t](#riflags) <strong>ri\_flags</strong></code>
+
+    Message flags.
 
 Outputs:
 
@@ -503,7 +509,7 @@ Outputs:
 
 Write to a file descriptor.
 
-Note: This is similar to `writev` in POSIX.
+Note: This is similar to a union of `writev` and `send` in POSIX.
 
 Inputs:
 
@@ -514,6 +520,10 @@ Inputs:
 - <a href="#fd_write.iovs" name="fd_write.iovs"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) \*<strong>iovs</strong></code> and <a href="#fd_write.iovs_len" name="fd_write.iovs_len"></a><code>size\_t <strong>iovs\_len</strong></code>
 
     List of scatter/gather vectors from which to retrieve data.
+
+- <a href="#fd_write.si_flags" name="fd_write.si_flags"></a><code>[\_\_wasi\_siflags\_t](#siflags) <strong>si\_flags</strong></code>
+
+    Message flags.
 
 Outputs:
 
@@ -847,65 +857,7 @@ Temporarily yield execution of the calling thread.
 
 Note: This is similar to `sched_yield` in POSIX.
 
-### <a href="#sock_recv" name="sock_recv"></a>`__wasi_sock_recv()`
-
-Receive a message from a socket.
-
-Note: This is similar to `recv` in POSIX, though it also supports reading
-the data into multiple buffers in the manner of `readv`.
-
-Inputs:
-
-- <a href="#sock_recv.sock" name="sock_recv.sock"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>sock</strong></code>
-
-    The socket on which to receive data.
-
-- <a href="#sock_recv.ri_data" name="sock_recv.ri_data"></a><code>const [\_\_wasi\_iovec\_t](#iovec) \*<strong>ri\_data</strong></code> and <a href="#sock_recv.ri_data_len" name="sock_recv.ri_data_len"></a><code>size\_t <strong>ri\_data\_len</strong></code>
-
-    List of scatter/gather vectors to which to store data.
-
-- <a href="#sock_recv.ri_flags" name="sock_recv.ri_flags"></a><code>[\_\_wasi\_riflags\_t](#riflags) <strong>ri\_flags</strong></code>
-
-    Message flags.
-
-Outputs:
-
-- <a href="#sock_recv.ro_datalen" name="sock_recv.ro_datalen"></a><code>size\_t <strong>ro\_datalen</strong></code>
-
-    Number of bytes stored in [`ri_data`](#sock_recv.ri_data).
-
-- <a href="#sock_recv.ro_flags" name="sock_recv.ro_flags"></a><code>[\_\_wasi\_roflags\_t](#roflags) <strong>ro\_flags</strong></code>
-
-    Message flags.
-
-### <a href="#sock_send" name="sock_send"></a>`__wasi_sock_send()`
-
-Send a message on a socket.
-
-Note: This is similar to `send` in POSIX, though it also supports writing
-the data from multiple buffers in the manner of `writev`.
-
-Inputs:
-
-- <a href="#sock_send.sock" name="sock_send.sock"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>sock</strong></code>
-
-    The socket on which to send data.
-
-- <a href="#sock_send.si_data" name="sock_send.si_data"></a><code>const [\_\_wasi\_ciovec\_t](#ciovec) \*<strong>si\_data</strong></code> and <a href="#sock_send.si_data_len" name="sock_send.si_data_len"></a><code>size\_t <strong>si\_data\_len</strong></code>
-
-    List of scatter/gather vectors to which to retrieve data
-
-- <a href="#sock_send.si_flags" name="sock_send.si_flags"></a><code>[\_\_wasi\_siflags\_t](#siflags) <strong>si\_flags</strong></code>
-
-    Message flags.
-
-Outputs:
-
-- <a href="#sock_send.so_datalen" name="sock_send.so_datalen"></a><code>size\_t <strong>so\_datalen</strong></code>
-
-    Number of bytes transmitted.
-
-### <a href="#sock_shutdown" name="sock_shutdown"></a>`__wasi_sock_shutdown()`
+### <a href="#fd_shutdown" name="fd_shutdown"></a>`__wasi_fd_shutdown()`
 
 Shut down socket send and receive channels.
 
@@ -913,11 +865,11 @@ Note: This is similar to `shutdown` in POSIX.
 
 Inputs:
 
-- <a href="#sock_shutdown.sock" name="sock_shutdown.sock"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>sock</strong></code>
+- <a href="#fd_shutdown.sock" name="fd_shutdown.sock"></a><code>[\_\_wasi\_fd\_t](#fd) <strong>sock</strong></code>
 
     The socket on which to shutdown channels.
 
-- <a href="#sock_shutdown.how" name="sock_shutdown.how"></a><code>[\_\_wasi\_sdflags\_t](#sdflags) <strong>how</strong></code>
+- <a href="#fd_shutdown.how" name="fd_shutdown.how"></a><code>[\_\_wasi\_sdflags\_t](#sdflags) <strong>how</strong></code>
 
     Which channels on the socket to shut down.
 
@@ -965,7 +917,7 @@ Possible values:
 
 A region of memory for scatter/gather writes.
 
-Used by [`__wasi_fd_pwrite()`](#fd_pwrite), [`__wasi_fd_write()`](#fd_write), and [`__wasi_sock_send()`](#sock_send).
+Used by [`__wasi_fd_pwrite()`](#fd_pwrite), and [`__wasi_fd_write()`](#fd_write).
 
 Members:
 
@@ -1502,10 +1454,6 @@ Used by [`__wasi_fd_fdstat_get()`](#fd_fdstat_get).
 
 Members:
 
-- <a href="#fdstat.fs_filetype" name="fdstat.fs_filetype"></a><code>[\_\_wasi\_filetype\_t](#filetype) <strong>fs\_filetype</strong></code>
-
-    File type.
-
 - <a href="#fdstat.fs_flags" name="fdstat.fs_flags"></a><code>[\_\_wasi\_fdflags\_t](#fdflags) <strong>fs\_flags</strong></code>
 
     File descriptor flags.
@@ -1659,7 +1607,7 @@ Used by [`__wasi_dirent_t`](#dirent) and [`__wasi_filestat_t`](#filestat).
 
 A region of memory for scatter/gather reads.
 
-Used by [`__wasi_fd_pread()`](#fd_pread), [`__wasi_fd_read()`](#fd_read), and [`__wasi_sock_recv()`](#sock_recv).
+Used by [`__wasi_fd_pread()`](#fd_pread), and [`__wasi_fd_read()`](#fd_read).
 
 Members:
 
@@ -1712,18 +1660,18 @@ Possible values:
 
 ### <a href="#riflags" name="riflags"></a>`__wasi_riflags_t` (`uint16_t` bitfield)
 
-Flags provided to [`__wasi_sock_recv()`](#sock_recv).
+Flags provided to [`__wasi_fd_read()`](#fd_read).
 
-Used by [`__wasi_sock_recv()`](#sock_recv).
+Used by [`__wasi_fd_read()`](#fd_read).
 
 Possible values:
 
-- <a href="#riflags.peek" name="riflags.peek"></a>**`__WASI_SOCK_RECV_PEEK`**
+- <a href="#riflags.peek" name="riflags.peek"></a>**`__WASI_FD_PEEK`**
 
     Returns the message without removing it from the
     socket's receive queue.
 
-- <a href="#riflags.waitall" name="riflags.waitall"></a>**`__WASI_SOCK_RECV_WAITALL`**
+- <a href="#riflags.waitall" name="riflags.waitall"></a>**`__WASI_FD_WAITALL`**
 
     On byte-stream sockets, block until the full amount
     of data can be returned.
@@ -1746,7 +1694,7 @@ Possible values:
 
 - <a href="#rights.fd_read" name="rights.fd_read"></a>**`__WASI_RIGHT_FD_READ`**
 
-    The right to invoke [`__wasi_fd_read()`](#fd_read) and [`__wasi_sock_recv()`](#sock_recv).
+    The right to invoke [`__wasi_fd_read()`](#fd_read).
 
     If [`__WASI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to invoke
     [`__wasi_fd_pread()`](#fd_pread).
@@ -1776,7 +1724,7 @@ Possible values:
 
 - <a href="#rights.fd_write" name="rights.fd_write"></a>**`__WASI_RIGHT_FD_WRITE`**
 
-    The right to invoke [`__wasi_fd_write()`](#fd_write) and [`__wasi_sock_send()`](#sock_send).
+    The right to invoke [`__wasi_fd_write()`](#fd_write).
 
     If [`__WASI_RIGHT_FD_SEEK`](#rights.fd_seek) is set, includes the right to
     invoke [`__wasi_fd_pwrite()`](#fd_pwrite).
@@ -1877,28 +1825,27 @@ Possible values:
     If [`__WASI_RIGHT_FD_WRITE`](#rights.fd_write) is set, includes the right to
     invoke [`__wasi_poll_oneoff()`](#poll_oneoff) to subscribe to [`__WASI_EVENTTYPE_FD_WRITE`](#eventtype.fd_write).
 
-- <a href="#rights.sock_shutdown" name="rights.sock_shutdown"></a>**`__WASI_RIGHT_SOCK_SHUTDOWN`**
+- <a href="#rights.fd_shutdown" name="rights.fd_shutdown"></a>**`__WASI_FD_SHUTDOWN`**
 
-    The right to invoke [`__wasi_sock_shutdown()`](#sock_shutdown).
+    The right to invoke [`__wasi_fd_shutdown()`](#fd_shutdown).
 
-### <a href="#roflags" name="roflags"></a>`__wasi_roflags_t` (`uint16_t` bitfield)
+- <a href="#rights.fd_peek" name="rights.fd_peek"></a>**`__WASI_RIGHT_FD_PEEK`**
 
-Flags returned by [`__wasi_sock_recv()`](#sock_recv).
+    The right to invoke [`__wasi_read()`](#fd_read) with [`__WASI_FD_PEEK`](#riflags.peek).
 
-Used by [`__wasi_sock_recv()`](#sock_recv).
+- <a href="#rights.fd_waitall" name="rights.fd_waitall"></a>**`__WASI_RIGHT_FD_WAITALL`**
 
-Possible values:
+    The right to invoke [`__wasi_read()`](#fd_read) with [`__WASI_FD_WAITALL`](#riflags.waitall).
 
-- <a href="#roflags.data_truncated" name="roflags.data_truncated"></a>**`__WASI_SOCK_RECV_DATA_TRUNCATED`**
+- <a href="#rights.fd_isatty" name="rights.fd_isatty"></a>**`__WASI_RIGHT_FD_ISATTY`**
 
-    Returned by [`__wasi_sock_recv()`](#sock_recv): Message data has been
-    truncated.
+    The right to know that the output is a terminal.
 
 ### <a href="#sdflags" name="sdflags"></a>`__wasi_sdflags_t` (`uint8_t` bitfield)
 
 Which channels on a socket to shut down.
 
-Used by [`__wasi_sock_shutdown()`](#sock_shutdown).
+Used by [`__wasi_fd_shutdown()`](#fd_shutdown).
 
 Possible values:
 

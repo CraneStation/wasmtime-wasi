@@ -177,8 +177,8 @@ typedef uint16_t __wasi_oflags_t;
 #define __WASI_O_TRUNC     (0x0008)
 
 typedef uint16_t __wasi_riflags_t;
-#define __WASI_SOCK_RECV_PEEK    (0x0001)
-#define __WASI_SOCK_RECV_WAITALL (0x0002)
+#define __WASI_FD_PEEK    (0x0001)
+#define __WASI_FD_WAITALL (0x0002)
 
 typedef uint64_t __wasi_rights_t;
 #define __WASI_RIGHT_FD_DATASYNC             (0x0000000000000001)
@@ -209,10 +209,10 @@ typedef uint64_t __wasi_rights_t;
 #define __WASI_RIGHT_PATH_REMOVE_DIRECTORY   (0x0000000002000000)
 #define __WASI_RIGHT_PATH_UNLINK_FILE        (0x0000000004000000)
 #define __WASI_RIGHT_POLL_FD_READWRITE       (0x0000000008000000)
-#define __WASI_RIGHT_SOCK_SHUTDOWN           (0x0000000010000000)
-
-typedef uint16_t __wasi_roflags_t;
-#define __WASI_SOCK_RECV_DATA_TRUNCATED (0x0001)
+#define __WASI_RIGHT_FD_SHUTDOWN             (0x0000000010000000)
+#define __WASI_RIGHT_FD_PEEK                 (0x0000000020000000)
+#define __WASI_RIGHT_FD_WAITALL              (0x0000000040000000)
+#define __WASI_RIGHT_FD_ISATTY               (0x0000000080000000)
 
 typedef uint8_t __wasi_sdflags_t;
 #define __WASI_SHUT_RD (0x01)
@@ -302,14 +302,11 @@ _Static_assert(sizeof(__wasi_event_t) == 32, "non-wasi data layout");
 _Static_assert(_Alignof(__wasi_event_t) == 8, "non-wasi data layout");
 
 typedef struct __wasi_fdstat_t {
-    __wasi_filetype_t fs_filetype;
     __wasi_fdflags_t fs_flags;
     __wasi_rights_t fs_rights_base;
     __wasi_rights_t fs_rights_inheriting;
 } __wasi_fdstat_t;
-_Static_assert(
-    offsetof(__wasi_fdstat_t, fs_filetype) == 0, "non-wasi data layout");
-_Static_assert(offsetof(__wasi_fdstat_t, fs_flags) == 2, "non-wasi data layout");
+_Static_assert(offsetof(__wasi_fdstat_t, fs_flags) == 0, "non-wasi data layout");
 _Static_assert(
     offsetof(__wasi_fdstat_t, fs_rights_base) == 8, "non-wasi data layout");
 _Static_assert(
@@ -481,6 +478,7 @@ __wasi_errno_t wasmtime_ssp_fd_read(
     __wasi_fd_t fd,
     const __wasi_iovec_t *iovs,
     size_t iovs_len,
+    __wasi_riflags_t ri_flags,
     size_t *nread
 ) WASMTIME_SSP_SYSCALL_NAME(fd_read) __attribute__((__warn_unused_result__));
 
@@ -549,6 +547,7 @@ __wasi_errno_t wasmtime_ssp_fd_write(
     __wasi_fd_t fd,
     const __wasi_ciovec_t *iovs,
     size_t iovs_len,
+    __wasi_siflags_t si_flags,
     size_t *nwritten
 ) WASMTIME_SSP_SYSCALL_NAME(fd_write) __attribute__((__warn_unused_result__));
 
@@ -745,36 +744,13 @@ __wasi_errno_t wasmtime_ssp_random_get(
     size_t buf_len
 ) WASMTIME_SSP_SYSCALL_NAME(random_get) __attribute__((__warn_unused_result__));
 
-__wasi_errno_t wasmtime_ssp_sock_recv(
-#if !defined(WASMTIME_SSP_STATIC_CURFDS)
-    struct fd_table *curfds,
-#endif
-    __wasi_fd_t sock,
-    const __wasi_iovec_t *ri_data,
-    size_t ri_data_len,
-    __wasi_riflags_t ri_flags,
-    size_t *ro_datalen,
-    __wasi_roflags_t *ro_flags
-) WASMTIME_SSP_SYSCALL_NAME(sock_recv) __attribute__((__warn_unused_result__));
-
-__wasi_errno_t wasmtime_ssp_sock_send(
-#if !defined(WASMTIME_SSP_STATIC_CURFDS)
-    struct fd_table *curfds,
-#endif
-    __wasi_fd_t sock,
-    const __wasi_ciovec_t *si_data,
-    size_t si_data_len,
-    __wasi_siflags_t si_flags,
-    size_t *so_datalen
-) WASMTIME_SSP_SYSCALL_NAME(sock_send) __attribute__((__warn_unused_result__));
-
-__wasi_errno_t wasmtime_ssp_sock_shutdown(
+__wasi_errno_t wasmtime_ssp_fd_shutdown(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)
     struct fd_table *curfds,
 #endif
     __wasi_fd_t sock,
     __wasi_sdflags_t how
-) WASMTIME_SSP_SYSCALL_NAME(sock_shutdown) __attribute__((__warn_unused_result__));
+) WASMTIME_SSP_SYSCALL_NAME(fd_shutdown) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_sched_yield(void)
     WASMTIME_SSP_SYSCALL_NAME(sched_yield) __attribute__((__warn_unused_result__));
