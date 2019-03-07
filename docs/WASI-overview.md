@@ -77,7 +77,7 @@ surrounding environment that can do I/O on behalf of the program.
 
 WASI is starting with a basic POSIX-like set of syscall functions,
 though adapted to suit the needs of WebAssembly, such as in
-excluding functions such as fork and exec which aren't
+excluding functions such as fork and exec which aren't easily
 implementable in some of the places people want to run WebAssembly,
 and such as in adopting a capabilities-oriented design.
 
