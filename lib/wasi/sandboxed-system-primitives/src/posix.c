@@ -2483,14 +2483,12 @@ __wasi_errno_t wasmtime_ssp_sock_recv(
   struct fd_object *fo;
   __wasi_errno_t error = fd_object_get(curfds, &fo, sock, __WASI_RIGHT_FD_READ, 0);
   if (error != 0) {
-    free(hdr.msg_control);
     return error;
   }
 
   ssize_t datalen = recvmsg(fd_number(fo), &hdr, nflags);
   fd_object_release(fo);
   if (datalen < 0) {
-    free(hdr.msg_control);
     return convert_errno(errno);
   }
 
@@ -2500,7 +2498,6 @@ __wasi_errno_t wasmtime_ssp_sock_recv(
   *ro_flags = 0;
   if ((hdr.msg_flags & MSG_TRUNC) != 0)
     *ro_flags |= __WASI_SOCK_RECV_DATA_TRUNCATED;
-  free(hdr.msg_control);
   return 0;
 }
 
@@ -2522,8 +2519,6 @@ __wasi_errno_t wasmtime_ssp_sock_send(
 
   // Attach file descriptors if present.
   __wasi_errno_t error;
-  struct fd_object **fos = NULL;
-  size_t nfos = 0;
 
   // Send message.
   struct fd_object *fo;
@@ -2539,11 +2534,6 @@ __wasi_errno_t wasmtime_ssp_sock_send(
   }
 
 out:
-  // Free SCM_RIGHTS control message and associated file descriptors.
-  for (size_t i = 0; i < nfos; ++i)
-    fd_object_release(fos[i]);
-  free(fos);
-  free(hdr.msg_control);
   return error;
 }
 
