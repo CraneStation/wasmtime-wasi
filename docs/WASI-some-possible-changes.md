@@ -44,6 +44,11 @@ bytes it has read.
 These are very similar, and differ only in subtle ways. It'd make the API
 easier to understand if they were unified.
 
+## Trap instead of returning EFAULT
+
+POSIX system calls return EFAULT when given invalid pointers, however from an
+application perspective, it'd be more natural for them to just segfault.
+
 ## More detailed capability error reporting
 
 Replace `__WASI_ENOTCAPABLE` with error codes that indicate *which* capabilities
