@@ -87,7 +87,7 @@ We should look at this again.
 Truncating entries that don't fit into a buffer may be error-prone. Should
 we redesign how directory reading works?
 
-# symlinks
+## symlinks
 
 Symlinks are fairly UNIX-specific. Should we remove `__wasi_path_symlink`
 and `__wasi_path_readlink`?
