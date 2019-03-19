@@ -116,9 +116,8 @@ Outputs:
 
 Return the resolution of a clock.
 
-Implementations are required to return a non-zero value. A return value of
-the maximum representable timestamp indicates the specified clock is
-unsupported.
+Implementations are required to provide a non-zero value for supported clocks.
+For unsupported clocks, return [`__WASI_EINVAL`](#errno.inval).
 
 Note: This is similar to `clock_getres` in POSIX.
 
