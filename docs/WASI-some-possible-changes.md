@@ -39,6 +39,11 @@ So, it would be tidier from multiple perspectives if `read` could indicate
 that it had reached the end of a file or stream, independently of how many
 bytes it has read.
 
+## Merging read and recv
+
+These are very similar, and differ only in subtle ways. It'd make the API
+easier to understand if they were unified.
+
 ## More detailed capability error reporting
 
 Replace `__WASI_ENOTCAPABLE` with error codes that indicate *which* capabilities
