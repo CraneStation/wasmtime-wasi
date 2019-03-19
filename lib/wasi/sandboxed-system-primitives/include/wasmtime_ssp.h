@@ -427,6 +427,16 @@ _Static_assert(_Alignof(__wasi_subscription_t) == 8, "non-wasi data layout");
 #define WASMTIME_SSP_SYSCALL_NAME(name)
 #endif
 
+__wasi_errno_t wasmtime_ssp_args_get(
+    char **argv,
+    char *argv_buf
+) WASMTIME_SSP_SYSCALL_NAME(args_get) __attribute__((__warn_unused_result__));
+
+__wasi_errno_t wasmtime_ssp_args_sizes_get(
+    size_t *argc,
+    size_t *argv_buf_size
+) WASMTIME_SSP_SYSCALL_NAME(args_sizes_get) __attribute__((__warn_unused_result__));
+
 __wasi_errno_t wasmtime_ssp_clock_res_get(
     __wasi_clockid_t clock_id,
     __wasi_timestamp_t *resolution
@@ -437,6 +447,16 @@ __wasi_errno_t wasmtime_ssp_clock_time_get(
     __wasi_timestamp_t precision,
     __wasi_timestamp_t *time
 ) WASMTIME_SSP_SYSCALL_NAME(clock_time_get) __attribute__((__warn_unused_result__));
+
+__wasi_errno_t wasmtime_ssp_environ_get(
+    char **environ,
+    char *environ_buf
+) WASMTIME_SSP_SYSCALL_NAME(environ_get) __attribute__((__warn_unused_result__));
+
+__wasi_errno_t wasmtime_ssp_environ_sizes_get(
+    size_t *environ_count,
+    size_t *environ_buf_size
+) WASMTIME_SSP_SYSCALL_NAME(environ_sizes_get) __attribute__((__warn_unused_result__));
 
 __wasi_errno_t wasmtime_ssp_fd_close(
 #if !defined(WASMTIME_SSP_STATIC_CURFDS)

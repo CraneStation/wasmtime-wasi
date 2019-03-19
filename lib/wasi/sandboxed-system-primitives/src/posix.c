@@ -2577,3 +2577,35 @@ __wasi_errno_t wasmtime_ssp_sched_yield(void) {
     return convert_errno(errno);
   return 0;
 }
+
+__wasi_errno_t wasmtime_ssp_args_get(
+    char **argv,
+    char *argv_buf
+) {
+    return 0;
+}
+
+__wasi_errno_t wasmtime_ssp_args_sizes_get(
+    size_t *argc,
+    size_t *argv_buf_size
+) {
+    *argc = 0;
+    *argv_buf_size = 0;
+    return 0;
+}
+
+__wasi_errno_t wasmtime_ssp_environ_get(
+    char **environ,
+    char *environ_buf
+) {
+    return 0;
+}
+
+__wasi_errno_t wasmtime_ssp_environ_sizes_get(
+    size_t *environ_count,
+    size_t *environ_buf_size
+) {
+    *environ_count = 0;
+    *environ_buf_size = 0;
+    return 0;
+}

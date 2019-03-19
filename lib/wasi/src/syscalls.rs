@@ -136,6 +136,55 @@ macro_rules! syscalls {
 
 syscalls! {
 
+    pub unsafe extern "C" fn args_get(
+        vmctx: *mut VMContext,
+        argv: wasm32::uintptr_t,
+        argv_buf: wasm32::uintptr_t,
+    ) -> wasm32::__wasi_errno_t {
+        trace!(
+            "args_get(argv={:#x?}, argv_buf={:#x?})",
+            argv,
+            argv_buf,
+        );
+
+        // TODO: Implement command-line arguments.
+        return_encoded_errno(wasm32::__WASI_ESUCCESS)
+    }
+
+    pub unsafe extern "C" fn args_sizes_get(
+        vmctx: *mut VMContext,
+        argc: wasm32::uintptr_t,
+        argv_buf_size: wasm32::uintptr_t,
+    ) -> wasm32::__wasi_errno_t {
+        trace!(
+            "args_sizes_get(argc={:#x?}, argv_buf_size={:#x?})",
+            argc,
+            argv_buf_size,
+        );
+
+        let vmctx = &mut *vmctx;
+        let mut host_argc = match decode_usize_byref(vmctx, argc) {
+            Ok(host_argc) => host_argc,
+            Err(e) => return return_encoded_errno(e),
+        };
+        let mut host_argv_buf_size = match decode_usize_byref(vmctx, argv_buf_size) {
+            Ok(host_argv_buf_size) => host_argv_buf_size,
+            Err(e) => return return_encoded_errno(e),
+        };
+
+        // TODO: Implement command-line arguments.
+        host_argc = 0;
+        host_argv_buf_size = 0;
+
+        trace!("     | *argc={:?}", host_argc);
+        encode_usize_byref(vmctx, argc, host_argc).unwrap();
+
+        trace!("     | *argv_buf_size={:?}", host_argv_buf_size);
+        encode_usize_byref(vmctx, argv_buf_size, host_argv_buf_size).unwrap();
+
+        return_encoded_errno(wasm32::__WASI_ESUCCESS)
+    }
+
     pub unsafe extern "C" fn clock_res_get(
         vmctx: *mut VMContext,
         clock_id: wasm32::__wasi_clockid_t,
@@ -189,6 +238,55 @@ syscalls! {
         encode_timestamp_byref(vmctx, time, host_time).unwrap();
 
         return_encoded_errno(e)
+    }
+
+    pub unsafe extern "C" fn environ_get(
+        vmctx: *mut VMContext,
+        environ: wasm32::uintptr_t,
+        environ_buf: wasm32::uintptr_t,
+    ) -> wasm32::__wasi_errno_t {
+        trace!(
+            "environ_get(environ={:#x?}, environ_buf={:#x?})",
+            environ,
+            environ_buf,
+        );
+
+        // TODO: Implement environment variables.
+        return_encoded_errno(wasm32::__WASI_ESUCCESS)
+    }
+
+    pub unsafe extern "C" fn environ_sizes_get(
+        vmctx: *mut VMContext,
+        environ_count: wasm32::uintptr_t,
+        environ_buf_size: wasm32::uintptr_t,
+    ) -> wasm32::__wasi_errno_t {
+        trace!(
+            "environ_sizes_get(environ_count={:#x?}, environ_buf_size={:#x?})",
+            environ_count,
+            environ_buf_size,
+        );
+
+        let vmctx = &mut *vmctx;
+        let mut host_environ_count = match decode_usize_byref(vmctx, environ_count) {
+            Ok(host_environ_count) => host_environ_count,
+            Err(e) => return return_encoded_errno(e),
+        };
+        let mut host_environ_buf_size = match decode_usize_byref(vmctx, environ_buf_size) {
+            Ok(host_environ_buf_size) => host_environ_buf_size,
+            Err(e) => return return_encoded_errno(e),
+        };
+
+        // TODO: Implement environment variables.
+        host_environ_count = 0;
+        host_environ_buf_size = 0;
+
+        trace!("     | *environ_count={:?}", host_environ_count);
+        encode_usize_byref(vmctx, environ_count, host_environ_count).unwrap();
+
+        trace!("     | *environ_buf_size={:?}", host_environ_buf_size);
+        encode_usize_byref(vmctx, environ_buf_size, host_environ_buf_size).unwrap();
+
+        return_encoded_errno(wasm32::__WASI_ESUCCESS)
     }
 
     pub unsafe extern "C" fn fd_close(

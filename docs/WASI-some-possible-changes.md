@@ -3,10 +3,6 @@
 Currently WASI follows POSIX semantics, when applicable. However, some details
 of POSIX aren't unambiguously ideal.
 
-## Argv/argc, environment variables
-
-These are planned but not implemented yet.
-
 ## Move higher-level and unused errno code out of the core API.
 
 The core API currently defines errno codes such as `EDOM` which are

@@ -52,8 +52,12 @@ pub fn instantiate_wasi(
         }};
     }
 
+    signature!(args_get);
+    signature!(args_sizes_get);
     signature!(clock_res_get);
     signature!(clock_time_get);
+    signature!(environ_get);
+    signature!(environ_sizes_get);
     signature!(fd_close);
     signature!(fd_datasync);
     signature!(fd_pread);

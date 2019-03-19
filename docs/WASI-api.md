@@ -38,8 +38,12 @@ Source: https://github.com/NuxiNL/cloudabi
 
 ## System calls
 
+- [`__wasi_args_get()`](#args_get)
+- [`__wasi_args_sizes_get()`](#args_sizes_get)
 - [`__wasi_clock_res_get()`](#clock_res_get)
 - [`__wasi_clock_time_get()`](#clock_time_get)
+- [`__wasi_environ_get()`](#environ_get)
+- [`__wasi_environ_sizes_get()`](#environ_sizes_get)
 - [`__wasi_fd_advise()`](#fd_advise)
 - [`__wasi_fd_allocate()`](#fd_allocate)
 - [`__wasi_fd_close()`](#fd_close)
@@ -77,6 +81,36 @@ Source: https://github.com/NuxiNL/cloudabi
 - [`__wasi_sock_recv()`](#sock_recv)
 - [`__wasi_sock_send()`](#sock_send)
 - [`__wasi_sock_shutdown()`](#sock_shutdown)
+
+### <a href="#args_get" name="args_get"></a>`__wasi_args_get()`
+
+Read command-line argument data.
+
+The sizes of the buffers should match that returned by [`__wasi_args_sizes_get()`](#args_sizes_get).
+
+Inputs:
+
+- <a href="#args_get.argv" name="args_get.argv"></a><code>char \*\*<strong>argv</strong></code>
+
+    A pointer to a buffer to write the argument pointers.
+
+- <a href="#args_get.argv_buf" name="args_get.argv_buf"></a><code>char \*<strong>argv\_buf</strong></code>
+
+    A pointer to a buffer to write the argument string data.
+
+### <a href="#args_sizes_get" name="args_sizes_get"></a>`__wasi_args_sizes_get()`
+
+Return command-line argument data sizes.
+
+Outputs:
+
+- <a href="#args_sizes_get.argc" name="args_sizes_get.argc"></a><code>size\_t \*<strong>argc</strong></code>
+
+    The number of arguments.
+
+- <a href="#args_sizes_get.argv_buf_size" name="args_sizes_get.argv_buf_size"></a><code>size\_t \*<strong>argv\_buf\_size</strong></code>
+
+    The size of the argument string data.
 
 ### <a href="#clock_res_get" name="clock_res_get"></a>`__wasi_clock_res_get()`
 
@@ -123,6 +157,36 @@ Outputs:
 - <a href="#clock_time_get.time" name="clock_time_get.time"></a><code>[\_\_wasi\_timestamp\_t](#timestamp) <strong>time</strong></code>
 
     The time value of the clock.
+
+### <a href="#environ_get" name="environ_get"></a>`__wasi_environ_get()`
+
+Read environment variable data.
+
+The sizes of the buffers should match that returned by [`__wasi_environ_sizes_get()`](#environ_sizes_get).
+
+Inputs:
+
+- <a href="#environ_get.environ" name="environ_get.environ"></a><code>char \*\*<strong>environ</strong></code>
+
+    A pointer to a buffer to write the environment variable pointers.
+
+- <a href="#environ_get.environ_buf" name="environ_get.environ_buf"></a><code>char \*<strong>environ\_buf</strong></code>
+
+    A pointer to a buffer to write the environment variable string data.
+
+### <a href="#environ_sizes_get" name="environ_sizes_get"></a>`__wasi_environ_sizes_get()`
+
+Return command-line argument data sizes.
+
+Outputs:
+
+- <a href="#environ_sizes_get.environ_count" name="environ_sizes_get.environ_count"></a><code>size\_t \*<strong>environ\_count</strong></code>
+
+    The number of environment varialbles.
+
+- <a href="#environ_sizes_get.environ_buf_size" name="environ_sizes_get.environ_buf_size"></a><code>size\_t \*<strong>environ\_buf\_size</strong></code>
+
+    The size of the environment variable string data.
 
 ### <a href="#fd_advise" name="fd_advise"></a>`__wasi_fd_advise()`
 
