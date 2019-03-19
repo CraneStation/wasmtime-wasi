@@ -28,9 +28,9 @@ toolchains will be able to implement WASI as well!
 
 ### Rust
 
-WASI support in Rust currently lives here:
+To install a WASI-enabled Rust toolchain, follow the instructions here:
 
-https://github.com/alexcrichton/rust/tree/wasi
+https://github.com/alexcrichton/rust/releases/tag/wasi2
 
 Until now, Rust's WebAssembly support has had two main options, the
 Emscripten-based option, and the wasm32-unknown-unknown option. The latter
@@ -39,65 +39,35 @@ wasm32-unknown-wasi target, which is similar to wasm32-unknown-unknown in
 that it doesn't depend on Emscripten, but it can use WASI to provide a
 decent subset of libstd.
 
-Follow the upstream instructions for building Rust compiler, and then set
-the target to wasm32-unknown-wasi.
+### C/C++
 
-For a quick example, you can compile a simple hello world:
-
-```rust
-fn main() {
-    println!("Hello world!");
-}
-```
-
-with this toolchain. To run the resulting executable, see below.
-
-### C
-
-All the parts needed to support wasm are included in clang, lld, and
+All the parts needed to support wasm are included in upstream clang, lld, and
 compiler-rt, as of the LLVM 8.0 release. However, to use it, you'll need
 to build WebAssembly-targeted versions of the library parts, and it can
 be tricky to get all the CMake invocations lined up properly.
 
-To make things easier, we built a repository called
-[wasmception-wasi](https://github.com/CraneStation/wasmception-wasi/),
-which downloads the upstream versions of all of these things and builds
-a standalone "clang" and related utilities, along with a sysroot, all
-configured to work together.
+To make things easier, we provide
+[prebuilt packages](https://github.com/CraneStation/wasi-sdk/releases)
+that provide builds of Clang and sysroot libraries.
 
-For a quick example, you can compile a simple hello world:
-
-```c
-#include <stdio.h>
-
-int main(void) {
-    printf("Hello world!");
-    return 0;
-}
-```
-
-with this toolchain. To run the resulting executable, see below.
-
-### C++
-
-The notes for C above mostly support C++ too. Wasmception also builds
-a libcxxabi and libcxx from the LLVM sources. However, note that there
-are currently some [bugs](https://bugs.llvm.org/show_bug.cgi?id=40412)
-in clang which affect libcxx, so things like <iostreams> don't work yet.
+Note that there are currently some
+[bugs](https://bugs.llvm.org/show_bug.cgi?id=40412) in clang which affect
+libcxx, so things like <iostream> don't work yet.
 
 ## How can I run programs that use WASI?
 
-Currently the options are Wasmtime, and the browser polyfill.
+Currently the options are [Wasmtime], [Lucet], and the browser polyfill.
+
+[Wasmtime]: https://github.com/CraneStation/wasmtime
+[Lucet]: https://github.com/fastly/lucet/
 
 ### Wasmtime
 
-[Wasmtime]: is a non-Web WebAssembly engine which is part of the 
+[Wasmtime] is a non-Web WebAssembly engine which is part of the
 [CraneStation project](https://github.com/CraneStation/). To build
 it, download the code and build with `cargo build --release`. It can
 run WASI-using wasm programs by simply running `wasmtime foo.wasm`,
 or `cargo run --bin wasmtime foo.wasm`.
-
-[Wasmtime]: https://github.com/CraneStation/wasmtime
 
 ### The browser polyfill
 
