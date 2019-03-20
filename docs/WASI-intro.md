@@ -50,9 +50,9 @@ To make things easier, we provide
 [prebuilt packages](https://github.com/CraneStation/wasi-sdk/releases)
 that provide builds of Clang and sysroot libraries.
 
-Note that there are currently some
-[bugs](https://bugs.llvm.org/show_bug.cgi?id=40412) in clang which affect
-libcxx, so things like <iostream> don't work yet.
+Note that C++ support has a notable
+[bug](https://bugs.llvm.org/show_bug.cgi?id=40412) in clang which affects
+<iostream> in libcxx. This will be fixed in future versions.
 
 ## How can I run programs that use WASI?
 
