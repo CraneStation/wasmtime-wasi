@@ -119,6 +119,7 @@ pub fn instantiate_wasi(
         imports,
         &data_initializers,
         signatures.into_boxed_slice(),
+        None,
         Box::new(host_state),
     )
 }

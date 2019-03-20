@@ -13,9 +13,9 @@ readme = "README.md"
 wasmtime-runtime = { path = "../runtime" }
 wasmtime-environ = { path = "../environ" }
 wasmtime-jit = { path = "../jit" }
-cranelift-codegen = "0.28.0"
-cranelift-entity = "0.28.0"
-cranelift-wasm = "0.28.0"
+cranelift-codegen = "0.29.0"
+cranelift-entity = "0.29.0"
+cranelift-wasm = "0.29.0"
 target-lexicon = "0.2.0"
 cast = { version = "0.2.2", default-features = false }
 log = { version = "0.4.6", default-features = false }
