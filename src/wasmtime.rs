@@ -164,9 +164,7 @@ fn compute_argv(argv0: &str, arg_arg: &[String]) -> Vec<String> {
     // main wasm module, to avoid leaking path information.
     result.push(
         Path::new(argv0)
-            .components()
-            .next_back()
-            .map(Component::as_os_str)
+            .file_name()
             .and_then(OsStr::to_str)
             .unwrap_or("")
             .to_owned(),
